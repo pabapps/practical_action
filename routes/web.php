@@ -28,3 +28,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/users/get_all_users','UsersController@get_all_users');
 
 Route::resource('/users','UsersController');
+
+
+/**
+ * routes for designation
+ */
+//get the list of all designations
+Route::get('/get_all_designations','DesignationController@get_all_designations');
+Route::resource('/designation','DesignationController');

@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use App\Designation;
 use Datatables;
 use Crypt;
 use Auth;
-use App\User;
+use Response;
+use DB;
 
-class UsersController extends Controller
+class DesignationController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    
     public function __construct()
     {
         $this->middleware('auth');
@@ -24,37 +24,31 @@ class UsersController extends Controller
 
     public function index()
     {
-        return view('users.users_list');
+        return view('designations.designation_list');
     }
 
-    public function get_all_users(){
 
-        // dd("working on it");
+    public function get_all_designations(){
 
-        $query_get_all_users="
+        $query_designations="
         SELECT 
         id,
-        users.name,
-        users.email,
-        users.phone_num,
-        users.gender
-        FROM users
-        WHERE users.valid=1
+        position_name,
+        department_name
+        FROM designation
+        WHERE designation.valid=1
         ";
-        $users=DB::select($query_get_all_users);
-        $users_collection= collect($users);
-        // return Datatables::of(User::all())->make(true);
+        $designation=DB::select($query_designations);
+        $designation_collection= collect($designation);
     // dd($reservation_collection);
-        return Datatables::of($users_collection)
-        ->addColumn('action', function ($users_collection) {
-            return ' <a href="'. url('/users') . '/' . 
-            Crypt::encrypt($users_collection->id) . 
+        return Datatables::of($designation_collection)
+        ->addColumn('action', function ($designation_collection) {
+            return 
+
+            ' <a href="'. url('/programs') . '/' . 
+            Crypt::encrypt($designation_collection->id) . 
             '/edit' .'"' . 
-            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>'.
-            ' <a href="'. url('/users') . '/' . 
-            Crypt::encrypt($users_collection->id) . 
-            '/edit' .'"' . 
-            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i>Delete</a>';
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
         })
         ->editColumn('id', '{{$id}}')
         ->setRowId('id')
@@ -69,7 +63,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return view("designations.designation_create");
     }
 
     /**
@@ -80,7 +74,13 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $designation = new Designation;
+        $designation->position_name = $request->designation_name;
+        $designation->department_name = $request->department_name;
+        $designation->valid = 1; //valid
+        $designation->save();
+
+        return redirect()->action('DesignationController@index');
     }
 
     /**
@@ -102,12 +102,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $user_id=Crypt::decrypt($id);
-
-        $user = User::where('valid',  1)->where('id',$user_id)->first();
-
-        return view('users.user_edit')->with('user',$user);
-
+        //
     }
 
     /**
