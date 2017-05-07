@@ -50,7 +50,11 @@ class UsersController extends Controller
             return ' <a href="'. url('/users') . '/' . 
             Crypt::encrypt($users_collection->id) . 
             '/edit' .'"' . 
-            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>'.
+            ' <a href="'. url('/users') . '/' . 
+            Crypt::encrypt($users_collection->id) . 
+            '/edit' .'"' . 
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i>Delete</a>';
         })
         ->editColumn('id', '{{$id}}')
         ->setRowId('id')
@@ -98,7 +102,12 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user_id=Crypt::decrypt($id);
+
+        $user = User::where('valid',  1)->where('id',$user_id)->first();
+
+        dd($user);
+
     }
 
     /**
