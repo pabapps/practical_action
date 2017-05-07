@@ -112,7 +112,7 @@
           </a>
           <ul class="treeview-menu">
             
-            <li {!! Request::is('*projects') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/programs'}}"><i class="fa fa-circle-o"></i>Project list</a></li>
+            <li {!! Request::is('*projects') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/projects'}}"><i class="fa fa-circle-o"></i>Project list</a></li>
             
             
           </ul>

@@ -13,13 +13,16 @@
 
 Route::get('/', function () {
     // return view('welcome');
-    return view('layout.main');
+    return view('auth.login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/base_home',function(){
+	return view('layout.main');
+});
 
 /**
  * routes for user controller
@@ -36,3 +39,38 @@ Route::resource('/users','UsersController');
 //get the list of all designations
 Route::get('/get_all_designations','DesignationController@get_all_designations');
 Route::resource('/designation','DesignationController');
+
+
+/**
+ * routes for project controller
+ */
+
+//get the list of all projects
+Route::get('/get_all_projects','ProjectController@get_all_projects');
+
+Route::resource("/projects",'ProjectController');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

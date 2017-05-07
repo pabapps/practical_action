@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Projects;
 use Datatables;
 use Crypt;
 use Auth;
@@ -16,10 +17,47 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        return view('projects.projects_list');
     }
+
+
+     public function get_all_projects(){
+
+        $query_sales_center="
+        SELECT 
+        id,
+        project_name,
+        swif_code
+        FROM projects
+        WHERE projects.completion_status=1
+        ";
+        $sales_center=DB::select($query_sales_center);
+        $sales_center_collection= collect($sales_center);
+    // dd($reservation_collection);
+        return Datatables::of($sales_center_collection)
+        ->addColumn('action', function ($sales_center_collection) {
+            return 
+
+            ' <a href="'. url('/programs') . '/' . 
+            Crypt::encrypt($sales_center_collection->id) . 
+            '/edit' .'"' . 
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
+        })
+        ->editColumn('id', '{{$id}}')
+        ->setRowId('id')
+        ->make(true);
+
+
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -28,7 +66,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view("projects.project_create");
     }
 
     /**
@@ -39,7 +77,17 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $program_name = $request->program_name;
+        $swif_code = $request->swif_code;
+
+        $program = new Projects;
+        $program->project_name = $program_name;
+        $program->swif_code = $swif_code;
+        $program->save();
+
+        // dd("working");
+
+        return redirect()->action('ProjectController@index');
     }
 
     /**
