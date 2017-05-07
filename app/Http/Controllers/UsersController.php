@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use Datatables;
+use Crypt;
+use Auth;
+use App\User;
 
 class UsersController extends Controller
 {
@@ -19,7 +24,38 @@ class UsersController extends Controller
 
     public function index()
     {
-        dd("working on it");
+        return view('users.users_list');
+    }
+
+    public function get_all_users(){
+
+        // dd("working on it");
+
+        $query_get_all_users="
+        SELECT 
+        id,
+        users.name,
+        users.email,
+        users.phone_num,
+        users.gender
+        FROM users
+        WHERE users.valid=1
+        ";
+        $users=DB::select($query_get_all_users);
+        $users_collection= collect($users);
+        // return Datatables::of(User::all())->make(true);
+    // dd($reservation_collection);
+        return Datatables::of($users_collection)
+        ->addColumn('action', function ($users_collection) {
+            return ' <a href="'. url('/users') . '/' . 
+            Crypt::encrypt($users_collection->id) . 
+            '/edit' .'"' . 
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
+        })
+        ->editColumn('id', '{{$id}}')
+        ->setRowId('id')
+        ->make(true);
+
     }
 
     /**
