@@ -131,7 +131,13 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd("working on it");
+        Projects::where('id', $id)
+          ->update(['project_name' => $request->program_name,
+            'project_code' => $request->project_code
+            ]);
+
+        $request->session()->flash('alert-success', 'data has been successfully updated!');
+        return redirect()->action('ProjectController@index'); 
     }
 
     /**
