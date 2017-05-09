@@ -115,7 +115,9 @@ class ProjectController extends Controller
         $project = Projects::where('id',$project_id)->first();
 
 
-        dd($project);
+        // dd($project);
+
+        return view('projects.project_edit')->with('project',$project);
 
 
     }
@@ -129,7 +131,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd("working on it");
     }
 
     /**

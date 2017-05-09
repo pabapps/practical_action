@@ -5,7 +5,7 @@
 		<!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
       <div class="box-header with-border">
-        <h3 class="box-title">Create New Project</h3>
+        <h3 class="box-title">Edit existing project</h3>
 
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      {!! Form::open(array('route' => array('projects.update', $reservation_details->reservation_master_id), 'id' => 'reservation_form', 'method'=>'PUT')) !!}
+      {!! Form::open(array('route' => array('projects.update', $project->id), 'id' => 'project-edit-form', 'method'=>'PUT')) !!}
 
       <div class="box-body">
         <div class="row">
@@ -21,7 +21,7 @@
 
            <div class="form-group">
             <label>Name</label>
-            <input type="text" class="form-control" name="program_name" id="program-name" placeholder="Name of the program" value="{{old('program_name')}}" required>   
+            <input type="text" class="form-control" name="program_name" id="program-name" placeholder="Name of the program"  value="{{$project->project_name}}" required>   
           </div>
 
         </div>
@@ -29,7 +29,7 @@
         <div class="col-md-6">
             <div class="form-group">
             <label>Project Code</label>
-            <input type="number" class="form-control" name="project_code" id="project-code" placeholder="please enter the code" value="{{old('project_code')}}" required>   
+            <input type="number" class="form-control" name="project_code" id="project-code" placeholder="please enter the code" value="{{$project->project_code}}" required>   
           </div>
 
         </div>
