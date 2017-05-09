@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Role;
+use Datatables;
+use Crypt;
+use Auth;
+use Response;
+use DB;
 
 class RoleController extends Controller
 {
@@ -43,7 +49,15 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $role = new Role;
+
+        $role->name = $request->role_name;
+        $role->display_name = $request->display_name;
+        $role->description = $request->description;
+
+        $role->save();
+
+        // dd("done");
     }
 
     /**

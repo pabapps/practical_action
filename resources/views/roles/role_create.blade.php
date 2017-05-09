@@ -5,7 +5,7 @@
       <!-- SELECT2 EXAMPLE -->
       <div class="box box-default">
         <div class="box-header with-border">
-          <h3 class="box-title">Select2</h3>
+          <h3 class="box-title">Create a new role</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -30,7 +30,7 @@
 
               <div class="form-group">
                 <label>Description</label>
-                <input type="text" class="form-control" type="text" id="description" name="description" placeholder="just give a shot description of this role" value="{{ old('description') }}" >   
+                <input type="text" class="form-control" type="text" id="description" name="description" placeholder="just give a short description of this role" value="{{ old('description') }}" required >   
 
               </div>
             </div>
@@ -79,12 +79,12 @@
   $("#role-form").validate({
    rules: {
     // simple rule, converted to {required:true}
-    username: {"required":true, "minlength": 2}
+    role_name: {"required":true, "minlength": 2}
     
 
   },
   messages: {
-    username: {"required":"Please specify your username", "minlength": "minlength"}
+    role_name: {"required":"Please specify a unique name", "minlength": "minlength"}
     
   }
 });
