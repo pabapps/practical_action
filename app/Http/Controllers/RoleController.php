@@ -26,10 +26,40 @@ class RoleController extends Controller
     
     public function index()
     {
-        
 
+        return view('roles.role_list');
 
     }
+
+
+    public function get_all_roles(){
+       $query_all_roles="
+       SELECT 
+       id,
+       name,
+       display_name,
+       description
+       FROM roles
+       ";
+       $roles = DB::select($query_all_roles);
+
+       // dd($roles);
+
+       $rolls_collection = collect($roles);
+    // dd($reservation_collection);
+       return Datatables::of($rolls_collection)
+       ->addColumn('action', function ($rolls_collection) {
+        return 
+
+        ' <a href="'. url('/roles') . '/' . 
+        Crypt::encrypt($rolls_collection->id) . 
+        '/edit' .'"' . 
+        'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
+    })
+       ->editColumn('id', '{{$id}}')
+       ->setRowId('id')
+       ->make(true);
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -56,6 +86,8 @@ class RoleController extends Controller
         $role->description = $request->description;
 
         $role->save();
+
+        return redirect()->action('RoleController@index');
 
         // dd("done");
     }

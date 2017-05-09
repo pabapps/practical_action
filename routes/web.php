@@ -55,6 +55,9 @@ Route::resource("/projects",'ProjectController');
 /**
  * routes for all the roles 
  */
+//get all the roles
+Route::get('/roles/get_all_roles','RoleController@get_all_roles');
+
 Route::resource('/roles','RoleController');
 
 
