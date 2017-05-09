@@ -52,7 +52,10 @@ Route::resource("/projects",'ProjectController');
 
 
 
-
+/**
+ * routes for all the roles 
+ */
+Route::resource('/roles','RoleController');
 
 
 
