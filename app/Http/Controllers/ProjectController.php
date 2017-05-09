@@ -31,7 +31,7 @@ class ProjectController extends Controller
 
      public function get_all_projects(){
 
-        $query_sales_center="
+        $query_get_all_projects="
         SELECT 
         id,
         project_name,
@@ -39,15 +39,15 @@ class ProjectController extends Controller
         FROM projects
         WHERE projects.completion_status=1
         ";
-        $sales_center=DB::select($query_sales_center);
-        $sales_center_collection= collect($sales_center);
+        $projects=DB::select($query_get_all_projects);
+        $projects_collection= collect($projects);
     // dd($reservation_collection);
-        return Datatables::of($sales_center_collection)
-        ->addColumn('action', function ($sales_center_collection) {
+        return Datatables::of($projects_collection)
+        ->addColumn('action', function ($projects_collection) {
             return 
 
             ' <a href="'. url('/programs') . '/' . 
-            Crypt::encrypt($sales_center_collection->id) . 
+            Crypt::encrypt($projects_collection->id) . 
             '/edit' .'"' . 
             'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
         })
