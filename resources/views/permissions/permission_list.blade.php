@@ -12,15 +12,15 @@
             <div class="box-header">
               <h3 class="box-title">Data Table</h3>
             </div>
-            <a href="/permissions/create"><h1>Create new permission</h1></a>
+            <a href="permissions/create"><h1>Create new permission</h1></a>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="products" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>id</th>
-                  <th>Swif Code</th>
-                  <th>Name</th>
+                  <th>Unique Name</th>
+                  <th>Display Name</th>
+                  <th>Description</th>
                   <th>Edit</th>
                 </tr>
                 </thead>
@@ -29,9 +29,9 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>id</th>
-                  <th>Swif Code</th>
-                  <th>Name</th>
+                  <th>Unique Name</th>
+                  <th>Display Name</th>
+                  <th>Description</th>
                   <th>Edit</th>
                 </tr>
                 </tfoot>
@@ -54,18 +54,18 @@
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script>
 $(document).ready(function() {
-  // var table = $('#products').DataTable( {
-  //   "processing": true,
-  //   "serverSide": true,
-  //   "ajax": "{{URL::to('/')}}/get_all_projects",
-  //   "columns": [
-  //   { "data": "id" },
-  //   { "data": "swif_code" },
-  //   { "data": "project_name" },
-  //   { "data": "action", name: 'action', orderable: false, searchable: false}
-  //   ],
-  //   "order": [[1, 'asc']]
-  // } );
+  var table = $('#products').DataTable( {
+    "processing": true,
+    "serverSide": true,
+    "ajax": "{{URL::to('/')}}/permissions/get_all_permissions",
+    "columns": [
+    { "data": "name" },
+    { "data": "display_name" },
+    { "data": "description" },
+    { "data": "action", name: 'action', orderable: false, searchable: false}
+    ],
+    "order": [[1, 'asc']]
+  } );
 });
 </script>
 @endsection

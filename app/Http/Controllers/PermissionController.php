@@ -28,10 +28,10 @@ class PermissionController extends Controller
         $query_get_all_permission="
         SELECT 
         id,
-        project_name,
-        swif_code
-        FROM projects
-        WHERE projects.completion_status=1
+        name,
+        display_name,
+        description
+        FROM permissions
         ";
         $permissions=DB::select($query_get_all_permission);
         $permissions_collection= collect($permissions);
@@ -40,7 +40,7 @@ class PermissionController extends Controller
         ->addColumn('action', function ($permissions_collection) {
             return 
 
-            ' <a href="'. url('/programs') . '/' . 
+            ' <a href="'. url('/permissions') . '/' . 
             Crypt::encrypt($permissions_collection->id) . 
             '/edit' .'"' . 
             'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
