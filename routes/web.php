@@ -62,8 +62,10 @@ Route::resource('/roles','RoleController');
 
 
 
-
-
+/**
+ * routes for permissions
+ */
+Route::resource('/permissions','PermissionController');
 
 
 

@@ -12,7 +12,7 @@
             <div class="box-header">
               <h3 class="box-title">Data Table</h3>
             </div>
-            <a href="roles/create"><h1>Create new Project</h1></a>
+            <a href="roles/create"><h1>Create new Role</h1></a>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="products" class="table table-bordered table-hover">
