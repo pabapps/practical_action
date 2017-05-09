@@ -18,7 +18,7 @@ class CreateProject extends Migration
 
             $table->increments('id');
             $table->string('project_name');
-            $table->integer('swif_code');
+            $table->integer('project_code');
             $table->tinyInteger('valid')->default(1); // 1 = valid, 0 = invalid (basically deleted or not)
             $table->tinyInteger('completion_status')->default(1); //0 =postpone, 1 = onging, 2 = done (basically deleted or not)
             $table->timestamps();

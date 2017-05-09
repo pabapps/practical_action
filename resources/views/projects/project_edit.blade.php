@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      {!! Form::open(array('route'=>'projects.store', 'files'=>true, 'id'=>'customer_form')) !!}
+      {!! Form::open(array('route' => array('projects.update', $reservation_details->reservation_master_id), 'id' => 'reservation_form', 'method'=>'PUT')) !!}
 
       <div class="box-body">
         <div class="row">

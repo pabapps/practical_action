@@ -35,7 +35,7 @@ class ProjectController extends Controller
         SELECT 
         id,
         project_name,
-        swif_code
+        project_code
         FROM projects
         WHERE projects.completion_status=1
         ";
@@ -46,7 +46,7 @@ class ProjectController extends Controller
         ->addColumn('action', function ($projects_collection) {
             return 
 
-            ' <a href="'. url('/programs') . '/' . 
+            ' <a href="'. url('/projects') . '/' . 
             Crypt::encrypt($projects_collection->id) . 
             '/edit' .'"' . 
             'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
@@ -78,11 +78,11 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $program_name = $request->program_name;
-        $swif_code = $request->swif_code;
+        $project_code = $request->project_code;
 
         $program = new Projects;
         $program->project_name = $program_name;
-        $program->swif_code = $swif_code;
+        $program->project_code = $project_code;
         $program->save();
 
         // dd("working");
@@ -109,7 +109,15 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        $project_id=Crypt::decrypt($id);
+
+
+        $project = Projects::where('id',$project_id)->first();
+
+
+        dd($project);
+
+
     }
 
     /**

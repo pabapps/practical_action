@@ -19,7 +19,7 @@
                 <thead>
                 <tr>
                   <th>id</th>
-                  <th>Swif Code</th>
+                  <th>project Code</th>
                   <th>Name</th>
                   <th>Edit</th>
                 </tr>
@@ -30,7 +30,7 @@
                 <tfoot>
                 <tr>
                   <th>id</th>
-                  <th>Swif Code</th>
+                  <th>project Code</th>
                   <th>Name</th>
                   <th>Edit</th>
                 </tr>
@@ -60,7 +60,7 @@ $(document).ready(function() {
     "ajax": "{{URL::to('/')}}/get_all_projects",
     "columns": [
     { "data": "id" },
-    { "data": "swif_code" },
+    { "data": "project_code" },
     { "data": "project_name" },
     { "data": "action", name: 'action', orderable: false, searchable: false}
     ],

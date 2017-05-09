@@ -18,7 +18,6 @@ class CreateDesignation extends Migration
 
             $table->increments('id');
             $table->string('position_name');
-            $table->string('department_name');
             $table->smallInteger('valid')->default(1); // 1 = valid , 0 = invalid 
             $table->timestamps();
         });
