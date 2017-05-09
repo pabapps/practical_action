@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Role;
+use App\Permission;
+use Datatables;
+use Crypt;
+use Auth;
+use Response;
+use DB;
 
 class PermissionController extends Controller
 {
@@ -23,7 +30,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return view('permissions.permission_create');
     }
 
     /**
@@ -34,7 +41,18 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $permission = new Permission;
+
+        $permission->name = $request->permission_name;
+        $permission->display_name = $request->display_name;
+        $permission->description = $request->description;
+
+        $permission->save();
+
+        return redirect()->action('PermissionController@index');
+
+        // dd('done');
+
     }
 
     /**
