@@ -6,6 +6,9 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -79,4 +82,26 @@ class RegisterController extends Controller
             'valid'=>1,
         ]);
     }
+
+    public function register(Request $request)
+    {   
+
+        // dd($request->all());
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        // $this->guard()->login($user);
+
+        $request->session()->flash('alert-success', 'data has been successfully added!');
+        return redirect()->back();
+
+        // return $this->registered($request, $user)?: redirect($this->redirectPath());
+
+
+
+    }
+
+
+
 }
