@@ -20,7 +20,34 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        return view('permissions.permission_list');
+    }
+
+
+    public function get_all_permissions(){
+        $query_get_all_permission="
+        SELECT 
+        id,
+        project_name,
+        swif_code
+        FROM projects
+        WHERE projects.completion_status=1
+        ";
+        $permissions=DB::select($query_get_all_permission);
+        $permissions_collection= collect($permissions);
+    // dd($reservation_collection);
+        return Datatables::of($permissions_collection)
+        ->addColumn('action', function ($permissions_collection) {
+            return 
+
+            ' <a href="'. url('/programs') . '/' . 
+            Crypt::encrypt($permissions_collection->id) . 
+            '/edit' .'"' . 
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
+        })
+        ->editColumn('id', '{{$id}}')
+        ->setRowId('id')
+        ->make(true);
     }
 
     /**

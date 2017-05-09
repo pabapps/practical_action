@@ -65,6 +65,9 @@ Route::resource('/roles','RoleController');
 /**
  * routes for permissions
  */
+//route for all the permissions
+Route::get('/permissions/get_all_permissions','PermissionController@get_all_permissions');
+
 Route::resource('/permissions','PermissionController');
 
 
