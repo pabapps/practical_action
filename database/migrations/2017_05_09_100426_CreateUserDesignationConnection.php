@@ -13,12 +13,11 @@ class CreateUserDesignationConnection extends Migration
      */
     public function up()
     {
-        Schema::create('user_designation_department_connection', function (Blueprint $table) {
+        Schema::create('user_designation_connection', function (Blueprint $table) {
              
             $table->increments('id');
             $table->integer('designation_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('department_id')->unsigned();
             $table->tinyInteger('valid')->default(1); // 1 = valid, 0 = invalid (basically deleted or not)
             $table->timestamps();
 
@@ -29,8 +28,6 @@ class CreateUserDesignationConnection extends Migration
             $table->foreign('designation_id')->references('id')->on('designation')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->foreign('department_id')->references('id')->on('department')
-                ->onUpdate('cascade')->onDelete('cascade');            
 
 
         });

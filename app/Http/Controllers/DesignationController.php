@@ -100,7 +100,11 @@ class DesignationController extends Controller
         
         $designation_id=Crypt::decrypt($id);
 
-        $designation = Designation::where('id',$designation_id)->first();
+        $designation = DB::table('designation')->join('department','department.id','=','designation.department_id')
+        ->select('designation.id','designation.position_name','designation.department_id','department.department')
+        ->where('designation.valid',1)->first();
+
+        // dd($designation);
 
         return view('designations.designation_edit')->with('designation',$designation);
 
@@ -116,8 +120,10 @@ class DesignationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
+
         Designation::where('id', $id)
-          ->update(['position_name' => $request->designation_name]);
+          ->update(['position_name' => $request->designation_name,'department_id' => $request->department_id]);
 
         $request->session()->flash('alert-success', 'data has been successfully updated!');
         return redirect()->action('DesignationController@index'); 
