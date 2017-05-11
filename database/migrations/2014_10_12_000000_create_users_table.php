@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('phone_num');
             $table->string('gender',20);
             $table->date('joining_date');
-            $table->date('quitting_date');
+            $table->date('quitting_date')->nullable();
             $table->tinyInteger('valid')->default(1);
             $table->integer('line_manager_id')->unsigned()->nullable();
             $table->integer('matrix_manager_id')->unsigned()->nullable();

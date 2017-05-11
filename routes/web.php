@@ -72,7 +72,10 @@ Route::resource('/permissions','PermissionController');
 
 
 
-
+/**
+ * routes for all teh departments
+ */
+Route::resource('/departments','DepartmentController');
 
 
 

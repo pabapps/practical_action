@@ -19,6 +19,7 @@ class CreateUserProjectConnection extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('project_id')->unsigned();
+            $table->time('allocated_time');
             $table->tinyInteger('valid')->default(1); // 1 = valid, 0 = invalid (basically deleted or not)
             $table->timestamps();
 

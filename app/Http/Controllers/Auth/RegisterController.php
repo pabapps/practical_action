@@ -72,13 +72,14 @@ class RegisterController extends Controller
      * @return User
      */
     protected function create(array $data)
-    {
+    {   
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'phone_num'=>$data['phone_num'],
             'gender'=>$data['gender'],
+            'joining_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $data['joining_date'])->toDateString(),
             'valid'=>1,
         ]);
     }
