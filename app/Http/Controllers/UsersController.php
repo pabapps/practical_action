@@ -63,9 +63,21 @@ class UsersController extends Controller
     }
 
 
-    public function get_line_managers(Request $request){
+    public function get_line_managers(Request $request){ 
 
-        
+        $id = $request->id;
+
+        $search_term = $request->input('term');
+
+        $query_users= "
+        SELECT users.id , users.name AS text
+        FROM users WHERE users.id!= '$id' AND users.name LIKE '%{$search_term}%' AND users.valid=1";
+
+        $users = DB::select($query_users);
+
+        // dd($users);
+
+        return response()->json($users);
 
     }
 

@@ -148,11 +148,12 @@
       placeholder: 'Select an option',
       ajax: {
         dataType: 'json',
-        url: '{{URL::to('/')}}/get_designations_for_select2',
+        url: '{{URL::to('/')}}/users/get_line_managers',
         delay: 250,
         data: function(params) {
           return {
-            term: params.term
+            term: params.term,
+            id : "{{$user->id}}"
           }
         },
         processResults: function (data, params) {
@@ -169,11 +170,12 @@
       placeholder: 'Select an option',
       ajax: {
         dataType: 'json',
-        url: '{{URL::to('/')}}/get_designations_for_select2',
+        url: '{{URL::to('/')}}/users/get_line_managers',
         delay: 250,
         data: function(params) {
           return {
-            term: params.term
+            term: params.term,
+            id : "{{$user->id}}"
           }
         },
         processResults: function (data, params) {
@@ -190,7 +192,7 @@
       placeholder: 'Select an option',
       ajax: {
         dataType: 'json',
-        url: '{{URL::to('/')}}/get_designations_for_select2',
+        url: '{{URL::to('/')}}/select2/select2_all_designations',
         delay: 250,
         data: function(params) {
           return {

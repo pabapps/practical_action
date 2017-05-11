@@ -41,6 +41,10 @@ Route::resource('/users','UsersController');
  */
 //get the list of all designations
 Route::get('/get_all_designations','DesignationController@get_all_designations');
+
+//route for select2 to fetch all teh designations
+Route::get('/select2/select2_all_designations','DesignationController@select2_all_designations');
+
 Route::resource('/designation','DesignationController');
 
 

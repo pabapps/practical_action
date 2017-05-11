@@ -97,7 +97,7 @@ class DesignationController extends Controller
      */
     public function edit($id)
     {
-        
+
         $designation_id=Crypt::decrypt($id);
 
         $designation = DB::table('designation')->join('department','department.id','=','designation.department_id')
@@ -123,7 +123,7 @@ class DesignationController extends Controller
         // dd($request->all());
 
         Designation::where('id', $id)
-          ->update(['position_name' => $request->designation_name,'department_id' => $request->department_id]);
+        ->update(['position_name' => $request->designation_name,'department_id' => $request->department_id]);
 
         $request->session()->flash('alert-success', 'data has been successfully updated!');
         return redirect()->action('DesignationController@index'); 
@@ -139,4 +139,36 @@ class DesignationController extends Controller
     {
         //
     }
+
+    public function select2_all_designations(Request $request){
+
+        $search_term = $request->input('term');
+
+        $query_designations= "
+        SELECT designation.id , CONCAT(designation.position_name , ' | ',department.department) AS text
+        FROM designation
+        JOIN department
+        ON department.id = designation.department_id
+        WHERE designation.position_name LIKE '%{$search_term}%' AND designation.valid=1";
+
+        $users = DB::select($query_designations);
+
+        // dd($users);
+
+        return response()->json($users);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
