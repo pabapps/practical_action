@@ -30,22 +30,28 @@ class DesignationController extends Controller
 
     public function get_all_designations(){
 
-        $query_designations="
-        SELECT 
-        id,
-        position_name,
-        department_name
-        FROM designation
-        WHERE designation.valid=1
-        ";
-        $designation=DB::select($query_designations);
-        $designation_collection= collect($designation);
+        // $query_designations="
+        // SELECT 
+        // id,
+        // position_name
+        // FROM designation
+        // WHERE designation.valid=1
+        // ";
+
+        $query_designations =  DB::table('designation')->select(['id', 'position_name'])->where('valid',1)->get();
+
+
+        // dd($query_designations);
+
+
+        // $designation=DB::select($query_designations);
+        $designation_collection= collect($query_designations);
     // dd($reservation_collection);
         return Datatables::of($designation_collection)
         ->addColumn('action', function ($designation_collection) {
             return 
 
-            ' <a href="'. url('/programs') . '/' . 
+            ' <a href="'. url('/designation') . '/' . 
             Crypt::encrypt($designation_collection->id) . 
             '/edit' .'"' . 
             'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
@@ -101,7 +107,14 @@ class DesignationController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $designation_id=Crypt::decrypt($id);
+
+        $designation = Designation::where('id',$designation_id)->first();
+
+        return view('designations.designation_edit')->with('designation',$designation);
+
+
     }
 
     /**
