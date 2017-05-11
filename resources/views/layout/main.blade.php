@@ -118,20 +118,6 @@
           </ul>
         </li>
 
-        <li {!! Request::is('*designations*') ? ' class="active treeview"' : ' class="treeview"' !!}>
-          <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>Designation</span>
-            <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            
-            <li {!! Request::is('*designations') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/designation'}}"><i class="fa fa-circle-o"></i>Designation list</a></li>
-            
-            
-          </ul>
-        </li>
-
         <li {!! Request::is('*deparments*') ? ' class="active treeview"' : ' class="treeview"' !!}>
           <a href="#">
             <i class="fa fa-files-o"></i>
@@ -141,6 +127,20 @@
           <ul class="treeview-menu">
             
             <li {!! Request::is('*deparments') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/departments'}}"><i class="fa fa-circle-o"></i>Department list</a></li>
+            
+            
+          </ul>
+        </li>
+
+        <li {!! Request::is('*designations*') ? ' class="active treeview"' : ' class="treeview"' !!}>
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>Designation</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            
+            <li {!! Request::is('*designations') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/designation'}}"><i class="fa fa-circle-o"></i>Designation list</a></li>
             
             
           </ul>

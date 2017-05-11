@@ -20,6 +20,7 @@
                 <tr>
                   <th>id</th>
                   <th>Position</th>
+                  <th>Department</th>
                   <th>Edit</th>
                 </tr>
                 </thead>
@@ -30,6 +31,7 @@
                 <tr>
                   <th>id</th>
                   <th>Position</th>
+                  <th>Department</th>
                   <th>Edit</th>
                 </tr>
                 </tfoot>
@@ -59,6 +61,7 @@ $(document).ready(function() {
     "columns": [
     { "data": "id" },
     { "data": "position_name" },
+    { "data": "department" },
     { "data": "action", name: 'action', orderable: false, searchable: false}
     ],
     "order": [[1, 'asc']]

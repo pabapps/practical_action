@@ -30,7 +30,9 @@ class DesignationController extends Controller
 
     public function get_all_designations(){
 
-        $query_designations =  DB::table('designation')->select(['id', 'position_name'])->where('valid',1)->get();
+        // $query_designations =  DB::table('designation')->select(['id', 'position_name'])->where('valid',1)->get();
+        $query_designations =  DB::table('designation')->join('department','designation.department_id', '=', 'department.id')
+        ->select('designation.id','designation.position_name','department.department')->where('designation.valid',1)->get();
 
         $designation_collection= collect($query_designations);
     // dd($reservation_collection);
@@ -69,6 +71,7 @@ class DesignationController extends Controller
     {
         $designation = new Designation;
         $designation->position_name = $request->designation_name;
+        $designation->department_id = $request->department_id;
         $designation->valid = 1; //valid
         $designation->save();
 

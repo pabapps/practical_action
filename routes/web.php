@@ -77,6 +77,10 @@ Route::resource('/permissions','PermissionController');
  */
 //route for all the departments
 Route::get('/departments/get_all_departments','DepartmentController@get_all_departments');
+
+//get the valid departments for a ajax request
+Route::get('/ajax/ajax_get_departments','DepartmentController@ajax_get_departments');
+
 Route::resource('/departments','DepartmentController');
 
 

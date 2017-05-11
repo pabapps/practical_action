@@ -120,6 +120,23 @@ class DepartmentController extends Controller
     	return redirect()->action('DepartmentController@index'); 
     }
 
+
+    public function ajax_get_departments(Request $request){
+
+        $search_term = $request->input('term');
+
+        $query_departments= "
+        SELECT department.id , department.department AS text
+        FROM department WHERE department.department LIKE '%{$search_term}%' AND department.valid=1";
+
+        $departments = DB::select($query_departments);
+
+    
+        return response()->json($departments);
+
+    }
+
+
     /**
      * Remove the specified resource from storage.
      *

@@ -37,7 +37,17 @@
         </div>
         <!-- /.col -->
         <div class="col-md-6">  
-          
+          <div class="form-group">
+            <label>Department name</label>
+            <!-- <input type="text" class="form-control" name="sales_name" id="sales-name" placeholder="Enter sales center name" required>    -->
+            <div class="row">
+              <div class="col-lg-11" style="padding-right:0;">
+                <select id="department-id" name="department_id" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" required>
+
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- /.col -->
       </div>
@@ -77,26 +87,30 @@
 <script type="text/javascript">
 $( document ).ready(function() {
 
- 
 
-  
+  $('#department-id').select2({
+    placeholder: 'Select an option',
+    ajax: {
+      dataType: 'json',
+      url: '{{URL::to('/')}}/ajax/ajax_get_departments',
+      delay: 250,
+      data: function(params) {
+        return {
+          term: params.term
+        }
+      },
+      processResults: function (data, params) {
+        params.page = params.page || 1;
+        return {
+          results: data
+        };
+      },
+    }
+  });
 
-  $("#designation-create-form").validate({
-   rules: {
-    // simple rule, converted to {required:true}
-    designation_name: {"required":true, "minlength": 2},
-    department_name: {"required":true, "minlength": 2},
-    
-    // compound rule
 
-  },
-  messages: {
-    designation_name: {"required":"Please specify the name", "minlength": "minlength"},
-    department_name: {"required":"Please specify the name", "minlength": "minlength"},
-    
-  }
 });
-  </script>
-  @endsection
+</script>
+@endsection
 
 
