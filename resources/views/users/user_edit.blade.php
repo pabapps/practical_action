@@ -99,9 +99,7 @@
           </div>
 
           <div class="form-group">
-            <!-- description -->
-
-            <button type="submit" class="btn btn-primary center-block ">Register</button>
+            <button type="submit" class="btn btn-primary center-block ">Update</button>
           </div>
           <!-- /.row -->
 
