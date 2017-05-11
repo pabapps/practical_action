@@ -126,7 +126,11 @@ class DesignationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Designation::where('id', $id)
+          ->update(['position_name' => $request->designation_name]);
+
+        $request->session()->flash('alert-success', 'data has been successfully updated!');
+        return redirect()->action('DesignationController@index'); 
     }
 
     /**
