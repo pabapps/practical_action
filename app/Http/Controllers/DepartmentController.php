@@ -97,7 +97,11 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        //
+    	$department_id=Crypt::decrypt($id);
+
+    	$department = Department::where('id',$department_id)->first();
+
+    	return view('departments.department_edit')->with('department',$department);
     }
 
     /**
@@ -109,7 +113,11 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+    	Department::where('id', $id)
+    	->update(['department' => $request->department_name]);
+
+    	$request->session()->flash('alert-success', 'data has been successfully updated!');
+    	return redirect()->action('DepartmentController@index'); 
     }
 
     /**
