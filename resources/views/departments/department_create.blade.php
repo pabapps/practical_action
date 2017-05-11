@@ -5,7 +5,7 @@
 		<!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
       <div class="box-header with-border">
-        <h3 class="box-title">Create New Project</h3>
+        <h3 class="box-title">Create New Department</h3>
 
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -13,24 +13,21 @@
         </div>
       </div>
 
-      {!! Form::open(array('route'=>'projects.store', 'files'=>true, 'id'=>'customer_form')) !!}
+      {!! Form::open(array('route'=>'departments.store', 'files'=>true, 'id'=>'department-form')) !!}
 
       <div class="box-body">
         <div class="row">
           <div class="col-md-6">
 
            <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" name="program_name" id="program-name" placeholder="Name of the program" value="{{old('program_name')}}" required>   
+            <label>Department Name</label>
+            <input type="text" class="form-control" name="department_name" id="department-name" placeholder="please enter the name of the department" value="{{old('department_name')}}" required>   
           </div>
 
         </div>
         <!-- /.col -->
         <div class="col-md-6">
-            <div class="form-group">
-            <label>Project Code</label>
-            <input type="number" class="form-control" name="project_code" id="project-code" placeholder="please enter the code" value="{{old('project_code')}}" required>   
-          </div>
+            
 
         </div>
         <!-- /.col -->

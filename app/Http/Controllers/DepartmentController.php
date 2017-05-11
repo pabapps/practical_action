@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Designation;
+use App\Department;
+use Datatables;
+use Crypt;
+use Auth;
+use Response;
+use DB;
 
 class DepartmentController extends Controller
 {
@@ -11,6 +18,13 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     public function index()
     {
         //
@@ -23,7 +37,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('departments.department_create');
     }
 
     /**
@@ -34,7 +48,14 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $department = new Department;
+
+        $department->department = $request->department_name;
+        $department->valid = 1;
+
+        $department->save();
+
+        return redirect()->action('DepartmentController@index');
     }
 
     /**

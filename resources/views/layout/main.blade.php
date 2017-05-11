@@ -140,7 +140,7 @@
           </a>
           <ul class="treeview-menu">
             
-            <li {!! Request::is('*deparments') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/designation'}}"><i class="fa fa-circle-o"></i>Designation list</a></li>
+            <li {!! Request::is('*deparments') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/departments'}}"><i class="fa fa-circle-o"></i>Department list</a></li>
             
             
           </ul>
