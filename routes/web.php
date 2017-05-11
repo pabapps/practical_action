@@ -75,6 +75,8 @@ Route::resource('/permissions','PermissionController');
 /**
  * routes for all teh departments
  */
+//route for all the departments
+Route::get('/departments/get_all_departments','DepartmentController@get_all_departments');
 Route::resource('/departments','DepartmentController');
 
 

@@ -30,21 +30,8 @@ class DesignationController extends Controller
 
     public function get_all_designations(){
 
-        // $query_designations="
-        // SELECT 
-        // id,
-        // position_name
-        // FROM designation
-        // WHERE designation.valid=1
-        // ";
-
         $query_designations =  DB::table('designation')->select(['id', 'position_name'])->where('valid',1)->get();
 
-
-        // dd($query_designations);
-
-
-        // $designation=DB::select($query_designations);
         $designation_collection= collect($query_designations);
     // dd($reservation_collection);
         return Datatables::of($designation_collection)

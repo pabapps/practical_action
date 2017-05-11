@@ -21,13 +21,33 @@ class DepartmentController extends Controller
     
     public function __construct()
     {
-        $this->middleware('auth');
+    	$this->middleware('auth');
     }
 
 
     public function index()
     {
-        //
+    	return view('departments.department_list');
+    }
+
+    public function get_all_departments(){
+
+    	$query_departments =  DB::table('department')->select(['id', 'department'])->where('valid',1)->get();
+
+    	$department_collection = collect($query_departments);
+    // dd($reservation_collection);
+    	return Datatables::of($department_collection)
+    	->addColumn('action', function ($department_collection) {
+    		return 
+
+    		' <a href="'. url('/departments') . '/' . 
+    		Crypt::encrypt($department_collection->id) . 
+    		'/edit' .'"' . 
+    		'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
+    	})
+    	->editColumn('id', '{{$id}}')
+    	->setRowId('id')
+    	->make(true);
     }
 
     /**
@@ -37,7 +57,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view('departments.department_create');
+    	return view('departments.department_create');
     }
 
     /**
@@ -48,14 +68,14 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        $department = new Department;
+    	$department = new Department;
 
-        $department->department = $request->department_name;
-        $department->valid = 1;
+    	$department->department = $request->department_name;
+    	$department->valid = 1;
 
-        $department->save();
+    	$department->save();
 
-        return redirect()->action('DepartmentController@index');
+    	return redirect()->action('DepartmentController@index');
     }
 
     /**
