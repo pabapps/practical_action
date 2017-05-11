@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Validator;
 use DB;
 use Datatables;
 use Crypt;
@@ -125,7 +126,11 @@ class UsersController extends Controller
 
         $user = User::where('valid',  1)->where('id',$user_id)->first();
 
-        return view('users.user_edit')->with('user',$user);
+        $date = date_create($user->joining_date);
+
+        $date = date_format($date, "d-m-Y");
+
+        return view('users.user_edit')->with('user',$user)->with('date',$date);
 
     }
 
@@ -138,7 +143,22 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request->all());
+
+        if(!empty($request->password) && !empty($request->password_confirm)){
+
+            if($request->password != $request->password_confirm){
+
+                $request->session()->flash('alert-danger', 'password does not match!');
+
+                return redirect()->back();
+            }
+
+        }
+
+
+
+
     }
 
     /**

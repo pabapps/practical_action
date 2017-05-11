@@ -13,7 +13,7 @@
           </div>
         </div>
         <!-- /.box-header -->
-        {!! Form::open(array('route' => array('users.update', $user->id), 'id' => 'product_form', 'method'=>'PUT')) !!}
+        {!! Form::open(array('route' => array('users.update', $user->id), 'id' => 'user-edit-form', 'method'=>'PATCH')) !!}
 
 
         <div class="box-body">
@@ -35,6 +35,15 @@
               <div class="form-group">
                 <label>line manager</label>
                 <select id="line-manager" name="line_manager" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]">
+                  @if(isset($user->line_manager_id))
+                  <option value='{{$user->line_manager_id}}' selected>{{$designation->department}}</option>
+                  @endif
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Designation</label>
+                <select id="designation" name="designation" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]">
 
                 </select>
               </div>
@@ -42,16 +51,11 @@
 
               <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control" id="password" name="password"placeholder="Enter password" >
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" >
 
               </div>
 
-               <div class="form-group">
-                  <label>Designation</label>
-                  <select id="designation" name="designation" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]">
 
-                  </select>
-                </div>
 
             </div>
 
@@ -81,14 +85,28 @@
                 <div class="form-group">
                   <label>Matrix Manager</label>
                   <select id="matrix-manager" name="matrix_manager" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]">
-
+                    @if(isset($user->matrix_manager_id))
+                    <option value='{{$user->line_manager_id}}' selected>{{$designation->department}}</option>
+                    @endif
                   </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Joining date:</label>
+
+                  <div class="input-group date">
+                    <div class="input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="text" class="form-control pull-right" name="joining_date" data-date-format="dd-mm-yyyy" id="joining-date" placeholder="joining date" value="{{$date}}">
+                  </div>
+                  <!-- /.input group -->
                 </div>
 
 
                 <div class="form-group">
                   <label>Confirm password</label>
-                  <input type="password" class="form-control" id="password_confirm" name="password_confirmation"placeholder="please enter your password again" >
+                  <input type="password" class="form-control" id="password_confirm" name="password_confirm"placeholder="please enter your password again" >
 
                 </div>
 
@@ -139,6 +157,12 @@
   <script type="text/javascript">
 
   $( document ).ready(function() {
+
+
+    $('#joining-date').datepicker({
+      autoclose: true
+
+    });
 
 
 
@@ -206,17 +230,10 @@
       }
     });
 
-
-
-
-
-
-
-
   });
 
-  </script>
-  @endsection
+    </script>
+    @endsection
 
 
 

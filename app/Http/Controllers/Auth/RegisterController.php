@@ -60,6 +60,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'phone_num'=>'required',
+            'joining_date'=>'required',
             'gender'=>'required',
         ]);
     }
