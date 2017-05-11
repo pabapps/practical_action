@@ -76,7 +76,6 @@ class DesignationController extends Controller
     {
         $designation = new Designation;
         $designation->position_name = $request->designation_name;
-        $designation->department_name = $request->department_name;
         $designation->valid = 1; //valid
         $designation->save();
 

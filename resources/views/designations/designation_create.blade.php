@@ -37,36 +37,21 @@
         </div>
         <!-- /.col -->
         <div class="col-md-6">  
-          <div class="form-group">
-
-            <label>Department Name</label>
-            <div class="row">
-              <div class="col-lg-11 " style="padding-right:0;">
-                <input type="text" class="form-control" name="department_name" id="department-name" placeholder="Enter the department" required>   
-              </div>
-            </div>
-          </div>
-        
           
-          <!-- coa_id -->
-          
-             
-
-        <!-- /.form-group -->
+        </div>
+        <!-- /.col -->
       </div>
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
-    <div class="form-group">
-      <!-- description -->
+      <!-- /.row -->
+      <div class="form-group">
+        <!-- description -->
 
-      <button type="submit" class="btn btn-primary center-block btn-flat">Submit</button>
+        <button type="submit" class="btn btn-primary center-block btn-flat">Submit</button>
+      </div>
     </div>
+    {!! Form::close() !!}
+    <!-- /.box-body -->
+
   </div>
-  {!! Form::close() !!}
-  <!-- /.box-body -->
-
-</div>
 
 
 </section>
@@ -108,7 +93,7 @@ $( document ).ready(function() {
   messages: {
     designation_name: {"required":"Please specify the name", "minlength": "minlength"},
     department_name: {"required":"Please specify the name", "minlength": "minlength"},
-   
+    
   }
 });
   </script>

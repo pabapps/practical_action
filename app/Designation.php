@@ -12,8 +12,5 @@ class Designation extends Model
 
 
 
-    public function designation_connection()
-    {
-        return $this->hasOne('App\UserDesignationConnection','designation_id');
-    }
+    
 }
