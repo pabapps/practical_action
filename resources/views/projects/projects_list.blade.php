@@ -10,7 +10,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Data Table</h3>
+              <h3 class="box-title">Project Lists</h3>
             </div>
             <a href="projects/create"><h1>Create new Project</h1></a>
             <!-- /.box-header -->

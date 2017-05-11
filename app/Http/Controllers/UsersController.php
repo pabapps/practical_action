@@ -62,6 +62,13 @@ class UsersController extends Controller
 
     }
 
+
+    public function get_line_managers(Request $request){
+
+        
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -30,6 +30,9 @@ Route::get('/base_home',function(){
 //get the list of all the valid users
 Route::get('/users/get_all_users','UsersController@get_all_users');
 
+//fetch all the users as a line manager
+Route::get('/users/get_line_managers','UsersController@get_line_managers');
+
 Route::resource('/users','UsersController');
 
 
