@@ -33,6 +33,9 @@ Route::get('/users/get_all_users','UsersController@get_all_users');
 //fetch all the users as a line manager
 Route::get('/users/get_line_managers','UsersController@get_line_managers');
 
+//user - projects connection view
+Route::get('/user/{id}/user_projects','UsersController@user_projects');
+
 Route::resource('/users','UsersController');
 
 

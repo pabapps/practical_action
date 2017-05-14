@@ -10,6 +10,7 @@ use Crypt;
 use Auth;
 use App\User;
 use App\UserDesignationModel;
+use App\UserProjectModel;
 
 class UsersController extends Controller
 {
@@ -52,11 +53,11 @@ class UsersController extends Controller
             return ' <a href="'. url('/users') . '/' . 
             Crypt::encrypt($users_collection->id) . 
             '/edit' .'"' . 
-            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>'.
-            ' <a href="'. url('/users') . '/' . 
+            'class="btn btn-primary btn-danger"><i class="glyphicon "></i> Edit</a>'.
+            ' <a href="'. url('/user') . '/' . 
             Crypt::encrypt($users_collection->id) . 
-            '/edit' .'"' . 
-            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i>Projects</a>';
+            '/user_projects' .'"' . 
+            'class="btn btn-primary btn-success"><i class="glyphicon "></i>Projects</a>';
         })
         ->editColumn('id', '{{$id}}')
         ->setRowId('id')
@@ -274,9 +275,39 @@ class UsersController extends Controller
 
         return redirect()->action('UsersController@index');
 
+    }
+
+    /**
+     * creating/edting user projects
+     */
+
+    public function user_projects(Request $request , $id){
+
+        $user_id=Crypt::decrypt($id);
+
+        $user = User::where('id',$user_id)->first();
+
+        return view('users.user_projects_list')->with('user',$user);
+
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Remove the specified resource from storage.
