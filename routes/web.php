@@ -42,6 +42,9 @@ Route::get('/user/get_valid_projects','UsersController@get_valid_projects');
 //select the project cofe
 Route::get('/user/get_project_description','UsersController@get_project_description');
 
+//route for posting user-projects connection
+Route::post('/user/submit_porjects','UsersController@submit_projects');
+
 Route::resource('/users','UsersController');
 
 

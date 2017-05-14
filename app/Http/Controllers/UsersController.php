@@ -317,7 +317,7 @@ class UsersController extends Controller
      */
 
     public  function get_project_description(Request $request){
-        
+
         $project_id = $request->name;
 
         $project_code = DB::table('projects')->select('project_code')
@@ -326,6 +326,60 @@ class UsersController extends Controller
         // dd($project_code);
         
         return response()->json($project_code);
+
+
+    }
+
+    /**
+     * store/update the projects for a user
+     */
+
+    public function submit_projects(Request $request){
+
+        // dd($request->all());
+
+        $user_id = $request->user_id;
+
+        $projects_data = $request->data;
+
+        //storing new projects
+        
+        foreach ($projects_data as $project) {
+
+            $days = $project[2];
+
+            // start by converting to seconds
+            $seconds = ($days * 8 * 3600);
+
+            //converting seconds into hour
+            
+            $seconds_to_hours = ($seconds / 3600);
+            $hours = floor($seconds_to_hours);    
+            $fraction_hour = $seconds_to_hours - $hours ;
+
+            //converting fraction hours into minutes
+            
+            $fraction_minutes = ($fraction_hour * 60);
+
+            $minutes = ceil($fraction_minutes);
+
+
+            $user_projects = new UserProjectModel;
+
+            $user_projects->user_id = $user_id;    
+            $user_projects->project_id = $project[4];
+            $user_projects->allocated_time = $hours. ' hours ' . $minutes . ' mins';
+            $user_projects->save();
+
+            
+            
+
+
+        }
+
+        dd("done");
+
+
 
 
     }

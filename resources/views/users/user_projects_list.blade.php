@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      {!! Form::open(array('route'=>'projects.store', 'files'=>true, 'id'=>'customer_form')) !!}
+      {!! Form::open(array('url'=>'/user/submit_porjects', 'id'=>'project-issue-form')) !!}
 
       <div class="box-body">
         <div class="row">
@@ -192,6 +192,8 @@
 
           project_table.row.add(entry).draw(false);
 
+          $("#total").val(total);
+
           $("#project-code").val(''),  
           $("#project-days").val('');  
 
@@ -224,6 +226,33 @@
         .remove()
         .draw();
       });
+
+  $( "#project-issue-form" ).submit(function(event){
+  //validation
+
+  event.preventDefault();
+
+
+  var $form = $( this ),
+  url = $form.attr( "action" ),
+  token = $("[name='_token']").val(),
+  page_num=1,
+  diff_form=$("#search_form");
+  
+  if(project_data.length>0){
+    $.post( url, {'user_id':'{{$user->id}}','data':project_data, 'form_data': $form.serializeArray(), '_token': token }, function( data ) {
+
+    }).done(function() {
+
+      // window.location.assign('{{URL::to('/')}}/reservation');
+
+    });
+  }else{
+
+    // alert("please fill in the details before submitting");
+
+  }
+});
 
 
 
