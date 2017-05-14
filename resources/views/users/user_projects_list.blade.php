@@ -27,7 +27,7 @@
         </div>
         <!-- /.col -->
         <div class="col-md-6">
-            <div class="form-group">
+          <div class="form-group">
             <label>Email</label>
             <input type="email" class="form-control" name="user_email" id="user-email" placeholder="please enter the code" value="{{$user->email}}" readonly>   
           </div>
@@ -37,80 +37,116 @@
       </div>
       <!-- /.row -->
       <div class="row">
-    <div class="col-lg-12">
-      <table id="recieve-voucher-table" class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th style="text-align: center; width:50%;">Project name</th>
-            <th style="text-align: center; width:20%;">Project code</th>
-            <th style="text-align: center; width:20%">Allocated hours</th>
-            <th style="text-align: center;">Add</th>
-          </tr>
-        </thead>
+        <div class="col-lg-12">
+          <table id="recieve-voucher-table" class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th style="text-align: center; width:50%;">Project name</th>
+                <th style="text-align: center; width:20%;">Project code</th>
+                <th style="text-align: center; width:20%">Allocat hours</th>
+                <th style="text-align: center;">Add</th>
+              </tr>
+            </thead>
 
-        <thead>
+            <thead>
 
-          <tr>
-            <form id="voucher-info">
-              <th>
-                <select style="width: 100%; margin-left:8px;" class="form-control select2" id="project-name" name="project_name">
-                </select>
+              <tr>
+                <form id="voucher-info">
+                  <th>
+                    <select style="width: 100%; margin-left:8px;" class="form-control select2" id="project-name" name="project_name">
+                    </select>
 
-              </th>
-              <th ><input type="text" style="width: 100%; margin-left: 8px;" name="project_code" class="form-control" id="project-code" placeholder readonly ></th>
-              <th ><input type="text" style="width: 100%; margin-left: 8px; margin-right: 8px" name="project_hours" class="form-control" id="project-hours" ></th>
-              <th><button type="button" id="add" style="width: 100%; margin-left: 8px;" class="btn btn-primary btn-block btn-flat">Add</button></th>
+                  </th>
+                  <th ><input type="text" style="width: 100%; margin-left: 8px;" name="project_code" class="form-control" id="project-code" placeholder readonly ></th>
+                  <th ><input type="number" min="0"  step="0.01" style="width: 100%; margin-left: 8px; margin-right: 8px" name="project_hours" class="form-control" id="project-hours" ></th>
+                  <th><button type="button" id="add" style="width: 100%; margin-left: 8px;" class="btn btn-primary btn-block btn-flat">Add</button></th>
 
-            </tr>
-          </thead>
+                </tr>
+              </thead>
 
-          <tbody>
+              <tbody>
 
-          </tbody>
+              </tbody>
 
-        </table>
+            </table>
 
-        <div class="col-lg-4 pull-right">
-          <span class="">Total:</span><input type="text" name="amount" class="col-lg-10 pull-right" id="total-amount" placeholder="Total Amount" readonly>
+            <div class="col-lg-4 pull-right">
+              <span class="">Total:</span><input type="text" name="amount" class="col-lg-10 pull-right" id="total-amount" placeholder="Total Amount" readonly>
+            </div>
+
+
+          </div>
         </div>
-
-
+        <button type="submit" class="btn btn-primary center-block btn-flat">Submit</button>
       </div>
-    </div>
-    <button type="submit" class="btn btn-primary center-block btn-flat">Submit</button>
-    </div>
-    {!! Form::close() !!}
-    <!-- /.box-body -->
+      {!! Form::close() !!}
+      <!-- /.box-body -->
 
+    </div>
+    <!-- /.box -->
+  </section>
+
+  @if (count($errors) > 0)
+  <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+    </ul>
   </div>
-  <!-- /.box -->
-</section>
-
-@if (count($errors) > 0)
-<div class="alert alert-danger">
-  <ul>
-    @foreach ($errors->all() as $error)
-    <li>{{ $error }}</li>
-    @endforeach
-  </ul>
-</div>
-@endif
-@endsection
+  @endif
+  @endsection
 
 
 
-@section('script')
+  @section('script')
 
-<script type="text/javascript">
-$( document ).ready(function() {
-
-  
+  <script type="text/javascript">
+  $( document ).ready(function() {
 
 
+    $('#project-name').select2({
+      placeholder: 'Select an option',
+      ajax: {
+        dataType: 'json',
+        url: '{{URL::to('/')}}/user/get_valid_projects',
+        delay: 250,
+        data: function(params) {
+          return {
+            term: params.term
+          }
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          return {
+            results: data
+          };
+        },
+      }
+    });
 
 
 
-});
+    $("#project-name").change(function(){
+
+      var project_id=$("#project-name").val();
+
+      var jqxhr = $.get( "{{URL::to('/')}}/user/get_project_description", { name: project_id },function(data) {
+
+        // console.log(data.project_code);
+
+        $('#project-code').val(data.project_code);
+
+      });
+
+
+
+    });
+
+
+
+
+  });
 
 
 

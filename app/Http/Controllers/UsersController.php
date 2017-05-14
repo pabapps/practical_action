@@ -293,6 +293,42 @@ class UsersController extends Controller
 
     }
 
+    //select the projects for the users where the user the might perticipate
+
+    public  function get_valid_projects(Request $request){
+
+        $search_term = $request->input('term');
+
+        // dd("working on it");
+        $query_projects= "
+        SELECT id, project_name AS text FROM projects
+        WHERE project_name LIKE '%{$search_term}%' AND valid=1 AND completion_status=1";
+
+        $projects = DB::select($query_projects);
+
+        // dd($users);
+
+        return response()->json($projects);
+
+    }
+
+    /**
+     * fetching the project description
+     */
+
+    public  function get_project_description(Request $request){
+        
+        $project_id = $request->name;
+
+        $project_code = DB::table('projects')->select('project_code')
+        ->where('id',$project_id)->first();
+
+        // dd($project_code);
+        
+        return response()->json($project_code);
+
+
+    }
 
 
 

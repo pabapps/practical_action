@@ -36,6 +36,12 @@ Route::get('/users/get_line_managers','UsersController@get_line_managers');
 //user - projects connection view
 Route::get('/user/{id}/user_projects','UsersController@user_projects');
 
+//select all the valid projects
+Route::get('/user/get_valid_projects','UsersController@get_valid_projects');
+
+//select the project cofe
+Route::get('/user/get_project_description','UsersController@get_project_description');
+
 Route::resource('/users','UsersController');
 
 
