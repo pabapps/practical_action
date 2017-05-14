@@ -287,7 +287,18 @@ class UsersController extends Controller
 
         $user = User::where('id',$user_id)->first();
 
+        $user_projects = DB::table('users_projects_connection')
+        ->join('projects','projects.id', '=' ,'users_projects_connection.project_id')
+        ->select('projects.project_name', 'projects.project_code','users_projects_connection.allocated_time')
+        ->where('users_projects_connection.user_id',$user_id)->get();
+
+        dd($user_projects);
+
+
+
         return view('users.user_projects_list')->with('user',$user);
+
+
 
 
 
