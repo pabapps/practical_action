@@ -9,6 +9,7 @@ use Datatables;
 use Crypt;
 use Auth;
 use App\User;
+use App\UserDesignationModel;
 
 class UsersController extends Controller
 {
@@ -152,10 +153,119 @@ class UsersController extends Controller
                 $request->session()->flash('alert-danger', 'password does not match!');
 
                 return redirect()->back();
+            }else{
+
+                $user = User::where('id',$id)->update(['password'=>bcrypt($request->password)]);
+
             }
 
         }
 
+        /**
+         * checking the line manager and the martix manager,
+         * both managers cannot be the same person. 
+         */
+
+        if(!empty($request->line_manager) && !empty($request->matrix_manager)){
+
+            if($request->line_manager == $request->matrix_manager){
+
+                $request->session()->flash('alert-danger', 'line manager and matrix cannot be the same person!');
+
+                return redirect()->back();
+
+            }else{
+
+                $user = User::where('id',$id)->update(['line_manager_id'=>$request->line_manager,
+                    'matrix_manager_id'=>$request->matrix_manager]);
+            }
+
+        }
+
+        //updating name
+        if(!empty($request->name)){
+
+            $user = User::where('id',$id)->update(['name'=>$request->name]);
+
+        }
+
+        //updating email
+        if(!empty($request->email)){
+
+            $user = User::where('id',$id)->update(['email'=>$request->email]);
+
+        }
+
+        //updating phone number
+
+        if(!empty($request->phone_num)){
+
+            $user = User::where('id',$id)->update(['phone_num'=>$request->phone_num]);
+
+        }
+
+        //updating gender
+        if(!empty($request->gender)){
+
+            $user = User::where('id',$id)->update(['gender'=>$request->gender]);
+
+        }
+
+        //updating user designation
+        if(!empty($request->designation)){
+
+
+            $user_designation = UserDesignationModel::where('user_id',$id)->where('valid',1)->first();
+
+            //checking if the object is null or not
+            if(!is_null($designation_id)){
+
+                //checking if the existing designation id is same as the requested id 
+                //if not same then update the existing designation id to valid 0
+                //and create a new designation
+                if($user_designation->designation_id != $request->designation){
+
+                    $designation = UserDesignationModel::where('user_id',$id)->update(['valid'=>0]);
+
+                    $designation = new UserDesignationModel;
+                    $designation->user_id = $id;
+                    $designation->designation_id = $request->designation;
+                    $designation->valid=1 ;
+
+                    $designation->save();
+
+                }
+
+            }else{
+
+                //if old data does not exist, create a designation for this user
+
+                $designation = new UserDesignationModel;
+                $designation->user_id = $id;
+                $designation->designation_id = $request->designation;
+                $designation->valid=1 ;
+
+                $designation->save();
+
+
+            }
+
+            
+
+        }
+
+        //updating the joining date
+
+        if(!empty($request->joining_date)){
+
+            $user = User::where('id',$id)->update(['joining_date'=>$request->joining_date]);
+
+        }
+
+
+        $request->session()->flash('alert-success', 'data has been updated');
+
+        return redirect()->back();
 
 
 
