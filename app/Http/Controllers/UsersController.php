@@ -56,7 +56,7 @@ class UsersController extends Controller
             ' <a href="'. url('/users') . '/' . 
             Crypt::encrypt($users_collection->id) . 
             '/edit' .'"' . 
-            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i>Delete</a>';
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i>Projects</a>';
         })
         ->editColumn('id', '{{$id}}')
         ->setRowId('id')
