@@ -290,38 +290,86 @@ class UsersController extends Controller
         $user_projects = DB::table('users_projects_connection')
         ->join('projects','projects.id', '=' ,'users_projects_connection.project_id')
         ->select('projects.project_name', 'projects.project_code','users_projects_connection.allocated_time')
-        ->where('users_projects_connection.user_id',$user_id)->get();
+        ->where('users_projects_connection.user_id',$user_id)
+        ->where('users_projects_connection.valid',1)->get();
 
-        dd($user_projects);
+        // dd($user_projects);
+
+        foreach ($user_projects as $project) {
+
+         $time = $project->allocated_time;
+
+         $time = str_replace("hours","",$time);
+
+         $time = str_replace("mins","",$time);
+         $array = str_split($time);
+
+           // dd($array);
+
+         $hour = '';
+         $mins = '';
+         $bool_hour = true;
+
+         foreach ($array as $val) {
+
+             if(is_numeric($val) && $bool_hour){
+                $hour  = $hour.''.$val;
+            }else{
+                $bool_hour = false;
+            }
+
+            if(is_numeric($val) && !$bool_hour){
+                $mins  = $mins.''.$val;
+            }
 
 
+        }
 
-        return view('users.user_projects_list')->with('user',$user);
+        $hour = (int)$hour;
+        $mins = (int)$mins;
+
+        //convetring hours into days
+        $days = $hour/8;
+        // dd($days);
+        $mins = (($mins/60)/8);
+
+        $total = $days+$mins;
+
+        dd(round($total,2));
 
 
-
-
+        
 
     }
+
+
+
+    return view('users.user_projects_list')->with('user',$user);
+
+
+
+
+
+}
 
     //select the projects for the users where the user the might perticipate
 
-    public  function get_valid_projects(Request $request){
+public  function get_valid_projects(Request $request){
 
-        $search_term = $request->input('term');
+    $search_term = $request->input('term');
 
         // dd("working on it");
-        $query_projects= "
-        SELECT id, project_name AS text FROM projects
-        WHERE project_name LIKE '%{$search_term}%' AND valid=1 AND completion_status=1";
+    $query_projects= "
+    SELECT id, project_name AS text FROM projects
+    WHERE project_name LIKE '%{$search_term}%' AND valid=1 AND completion_status=1";
 
-        $projects = DB::select($query_projects);
+    $projects = DB::select($query_projects);
 
         // dd($users);
 
-        return response()->json($projects);
+    return response()->json($projects);
 
-    }
+}
 
     /**
      * fetching the project description
@@ -373,6 +421,8 @@ class UsersController extends Controller
             $fraction_minutes = ($fraction_hour * 60);
 
             $minutes = ceil($fraction_minutes);
+
+            // dd($hours . ' '. $minutes);
 
 
             $user_projects = new UserProjectModel;
