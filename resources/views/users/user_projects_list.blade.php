@@ -38,12 +38,12 @@
       <!-- /.row -->
       <div class="row">
         <div class="col-lg-12">
-          <table id="recieve-voucher-table" class="table table-bordered table-hover">
+          <table id="project-table" class="table table-bordered table-hover">
             <thead>
               <tr>
                 <th style="text-align: center; width:50%;">Project name</th>
                 <th style="text-align: center; width:20%;">Project code</th>
-                <th style="text-align: center; width:20%">Allocat hours</th>
+                <th style="text-align: center; width:20%">Allocat days</th>
                 <th style="text-align: center;">Add</th>
               </tr>
             </thead>
@@ -58,7 +58,7 @@
 
                   </th>
                   <th ><input type="text" style="width: 100%; margin-left: 8px;" name="project_code" class="form-control" id="project-code" placeholder readonly ></th>
-                  <th ><input type="number" min="0"  step="0.01" style="width: 100%; margin-left: 8px; margin-right: 8px" name="project_hours" class="form-control" id="project-hours" ></th>
+                  <th ><input type="number" min="0"  step="0.01" style="width: 100%; margin-left: 8px; margin-right: 8px" name="project_days" class="form-control" id="project-days" ></th>
                   <th><button type="button" id="add" style="width: 100%; margin-left: 8px;" class="btn btn-primary btn-block btn-flat">Add</button></th>
 
                 </tr>
@@ -71,7 +71,7 @@
             </table>
 
             <div class="col-lg-4 pull-right">
-              <span class="">Total:</span><input type="text" name="amount" class="col-lg-10 pull-right" id="total-amount" placeholder="Total Amount" readonly>
+              <span class="">Total:</span><input type="text" name="amount" class="col-lg-10 pull-right" id="total" placeholder="Total" readonly>
             </div>
 
 
@@ -100,8 +100,12 @@
 
 
   @section('script')
+  <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+  <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+  <script src="{{asset('dist/js/utils.js')}}"></script>
 
   <script type="text/javascript">
+
   $( document ).ready(function() {
 
 
@@ -138,15 +142,93 @@
         $('#project-code').val(data.project_code);
 
       });
+    });
+
+    var project_data = [];
+    var total = 0 ;
+
+    var project_table = $("#project-table").DataTable({
+      "searching": false,
+      "paging": false,
+      "ordering": false,
+      "autoWidth": false
+    });
 
 
+    $('#add').click(function(event){
+      event.preventDefault();
+
+      var project_text = $("#project-name option:selected").text(),
+      project_id = $("#project-name").val(),
+      project_code = $("#project-code").val(),
+      project_days = $("#project-days").val();
+
+      if(isBlank(!project_id) && isBlank(!project_days)){
+
+        var entry = [
+        project_text,
+        project_code,
+        project_days,
+        '<button class="btn btn-danger btn-block delete-button" id="' + '">Delete</button>',
+        project_id
+        ];
+
+        var project_id=entry[4];
+        var booleanValue=true;
+        if(project_data.length>=1){
+          for(i=0; i<project_data.length; i++){
+            if(project_data[i][4]==project_id){
+              booleanValue=false;
+
+            }
+          }
+        }
+
+        if(booleanValue){
+
+          project_data.push(entry);
+
+          total = total + 1;
+
+          project_table.row.add(entry).draw(false);
+
+          $("#project-code").val(''),  
+          $("#project-days").val('');  
+
+        }else{
+          alert("this project has already been entered");  
+        }
+      }else{
+        alert("please fill the row properly");
+      }
 
     });
 
 
+  //delete row on button click
+  $('#project-table tbody').on( 'click', '.delete-button', function () {
+    event.preventDefault();
+    //get the index of 
+    var index = project_table
+    .row( $(this).parents('tr') )
+    .index();
+
+    total = total - 1;
+    // console.log(total);
+        //remove index from data
+        $('#total').val(total);
+        project_data.splice(index,1);
+
+        project_table
+        .row( $(this).parents('tr') )
+        .remove()
+        .draw();
+      });
 
 
-  });
+
+
+});
 
 
 
