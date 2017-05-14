@@ -131,7 +131,12 @@ class UsersController extends Controller
 
         $date = date_format($date, "d-m-Y");
 
-        return view('users.user_edit')->with('user',$user)->with('date',$date);
+        $matrix_manager = User::where('id', $user->matrix_manager_id)->first();
+
+        $line_manager = User::where('id', $user->line_manager_id)->first();
+
+        return view('users.user_edit')->with('user',$user)->with('date',$date)->with('matrix_manager',$matrix_manager)
+        ->with('line_manager',$line_manager);
 
     }
 
@@ -218,7 +223,7 @@ class UsersController extends Controller
             $user_designation = UserDesignationModel::where('user_id',$id)->where('valid',1)->first();
 
             //checking if the object is null or not
-            if(!is_null($designation_id)){
+            if(!is_null($user_designation)){
 
                 //checking if the existing designation id is same as the requested id 
                 //if not same then update the existing designation id to valid 0
@@ -258,14 +263,16 @@ class UsersController extends Controller
 
         if(!empty($request->joining_date)){
 
-            $user = User::where('id',$id)->update(['joining_date'=>$request->joining_date]);
+            $user = User::where('id',$id)->update(['joining_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $request->joining_date)->toDateString()]);
 
         }
 
 
         $request->session()->flash('alert-success', 'data has been updated');
 
-        return redirect()->back();
+        // return redirect()->back();
+
+        return redirect()->action('UsersController@index');
 
 
 

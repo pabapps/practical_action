@@ -36,7 +36,9 @@
                 <label>line manager</label>
                 <select id="line-manager" name="line_manager" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]">
                   @if(isset($user->line_manager_id))
-                  <option value='{{$user->line_manager_id}}' selected>{{$designation->department}}</option>
+
+                  <option value='{{$line_manager->id}}' selected>{{$line_manager->name}}</option>
+                  
                   @endif
                 </select>
               </div>
@@ -86,7 +88,7 @@
                   <label>Matrix Manager</label>
                   <select id="matrix-manager" name="matrix_manager" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]">
                     @if(isset($user->matrix_manager_id))
-                    <option value='{{$user->line_manager_id}}' selected>{{$designation->department}}</option>
+                    <option value='{{$matrix_manager->id}}' selected>{{$matrix_manager->name}}</option>
                     @endif
                   </select>
                 </div>
