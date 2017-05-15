@@ -84,6 +84,70 @@
 
     </div>
     <!-- /.box -->
+
+  <div class="modal fade" id="add-new-customer" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom: 0px;height: 50px;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title">Add New Customer</h3>
+      </div>
+      <div class="modal-body">
+        
+        <div class="form-group">
+          <label>Customer Name</label>
+          <input type="text" id="customer-name-modal"name="customer_name_modal" class="form-control"placeholder="enter the customer name">
+        </div>
+  
+
+        <div class="form-group">
+          <label>Organisation Name</label>
+          <input type="text" id="organisation-name-modal" name="organisation_name_modal" class="form-control" placeholder="enter the organisation name">
+        </div>
+      
+
+
+      
+        <div class="form-group">
+          <label>Customer Phone Number</label>
+          <input type="number" id="phone-num-modal"name="phone_num_modal" class="form-control"placeholder="enter the customer phone number">
+        </div>
+      
+
+
+
+      
+        <div class="form-group">
+          <label>Customer Email Address</label>
+          <input type="email" id="email-modal"name="email_modal" class="form-control"placeholder="enter the customer e-mail">
+        </div>
+      
+
+
+      
+        <div class="form-group">
+          <label>Customer Address</label>
+          <input type="text" id="address-modal"name="address_modal" class="form-control"placeholder="enter the customer address">
+        </div>
+      
+
+        </div>
+
+      <div class="modal-footer">
+        <div class="col-lg-12 entry_panel_body ">
+          <h3></h3>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
   </section>
 
   @if (count($errors) > 0)
@@ -160,7 +224,7 @@
     var jqxhr = $.get( "{{URL::to('/')}}/user/user_connected_project", { id: user_id },function(data) {
 
             // working
-            console.log(data);
+            // console.log(data);
             $.each(data, function( index, value ) {
               var entry = [
               value.project_name,
@@ -255,6 +319,7 @@
         .draw();
       });
 
+
   $( "#project-issue-form" ).submit(function(event){
   //validation
 
@@ -281,6 +346,19 @@
 
   }
 });
+
+
+ 
+$('#project-table tbody').on( 'click', 'td', function () {
+    var cell = project_table.cell( this );
+    console.log(cell.data());
+
+    $('#add-new-customer').modal('show');
+    // cell.data( cell.data() + 1 ).draw();
+    // note - call draw() to update the table's draw state with the new data
+} );
+
+
 
 
 

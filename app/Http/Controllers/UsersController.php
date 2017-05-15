@@ -356,40 +356,170 @@ class UsersController extends Controller
 
         $projects_data = $request->data;
 
-        //storing new projects
-        
+        // dd($projects_data);
+
+        //checking for the previous data
+        //if the current user already has some projects but those
+        //projects needed to removed due to wrong entry
+        $previous_projects = UserProjectModel::where('user_id',$user_id)->where('valid',1)->get();
+
+        $data_found = false;
+
         foreach ($projects_data as $project) {
 
-            $days = $project[2];
+            foreach ($previous_projects as $old_project) {
 
-            // start by converting to seconds
-            $seconds = ($days * 8 * 3600);
+                //if the project exist 
+                if($project[4] == $old_project->project_id){
 
-            //converting seconds into hour
+                    //yes the project exist now check if there's any difference in the allocated days
+                    if($project[2] != $old_project->allocated_days){
+                        //there is a difference 
+                        //then update that data only 
+
+                        $new_day = floatval($project[2]);
+
+                        $old_day = floatval($old_project->allocated_days);
+
+                        $days = $new_day;
+
+                        // start by converting to seconds
+                        $seconds = ($days * 8 * 3600);
+
+                        //converting seconds into hour
+
+                        $seconds_to_hours = ($seconds / 3600);
+                        $hours = floor($seconds_to_hours);    
+                        $fraction_hour = $seconds_to_hours - $hours ;
+
+                        //converting fraction hours into minutes
+
+                        $fraction_minutes = ($fraction_hour * 60);
+
+                        $minutes = ceil($fraction_minutes);
+
+                        $allocated_time = $hours. ' hours ' . $minutes . ' mins';
+
+
+                        UserProjectModel::where('user_id',$user_id)->where('project_id',$old_project->project_id)
+                        ->update(['allocated_time'=>$allocated_time,'allocated_days'=>$new_day]);
+
+                        $data_found = true;
+
+                        break;
+
+                    }else{
+                        //if there is no difference, do nothing
+                        $data_found = true;
+                        break;
+                    }
+
+                }
+
+                $data_found = false;
+            }
+
+            //need to create new entry
+            if(!$data_found){
+
+                $days = $project[2];
+
+                // start by converting to seconds
+                $seconds = ($days * 8 * 3600);
+
+                //converting seconds into hour
+
+                $seconds_to_hours = ($seconds / 3600);
+                $hours = floor($seconds_to_hours);    
+                $fraction_hour = $seconds_to_hours - $hours ;
+
+                //converting fraction hours into minutes
+
+                $fraction_minutes = ($fraction_hour * 60);
+
+                $minutes = ceil($fraction_minutes);
+
+                // dd($hours . ' '. $minutes);
+
+
+                $user_projects = new UserProjectModel;
+
+                $user_projects->user_id = $user_id;    
+                $user_projects->project_id = $project[4];
+                $user_projects->allocated_time = $hours. ' hours ' . $minutes . ' mins';
+                $user_projects->allocated_days = $project[2];
+                $user_projects->save();
+
+            }
             
-            $seconds_to_hours = ($seconds / 3600);
-            $hours = floor($seconds_to_hours);    
-            $fraction_hour = $seconds_to_hours - $hours ;
+        }
 
-            //converting fraction hours into minutes
-            
-            $fraction_minutes = ($fraction_hour * 60);
+        //soft delete data
 
-            $minutes = ceil($fraction_minutes);
+        $data_found = false;
 
-            // dd($hours . ' '. $minutes);
+        foreach ($previous_projects as $old_project) {
 
+            foreach ($projects_data as $project) {
+                
+                if($old_project->project_id == $project[4]){
 
-            $user_projects = new UserProjectModel;
+                    $data_found = true;
+                    break;
 
-            $user_projects->user_id = $user_id;    
-            $user_projects->project_id = $project[4];
-            $user_projects->allocated_time = $hours. ' hours ' . $minutes . ' mins';
-            $user_projects->allocated_days = $project[2];
-            $user_projects->save();
+                }
+            }
+            if(!$data_found){
 
+                UserProjectModel::where('user_id',$user_id)->where('project_id',$old_project->project_id)
+                ->update(['valid'=>0]);
+                break;
+
+            }
+
+            $data_found = false;
 
         }
+
+
+
+
+        // dd($previous_projects);
+
+        //storing new projects
+        
+        // foreach ($projects_data as $project) {
+
+        //     $days = $project[2];
+
+        //     // start by converting to seconds
+        //     $seconds = ($days * 8 * 3600);
+
+        //     //converting seconds into hour
+        
+        //     $seconds_to_hours = ($seconds / 3600);
+        //     $hours = floor($seconds_to_hours);    
+        //     $fraction_hour = $seconds_to_hours - $hours ;
+
+        //     //converting fraction hours into minutes
+        
+        //     $fraction_minutes = ($fraction_hour * 60);
+
+        //     $minutes = ceil($fraction_minutes);
+
+        //     // dd($hours . ' '. $minutes);
+
+
+        //     $user_projects = new UserProjectModel;
+
+        //     $user_projects->user_id = $user_id;    
+        //     $user_projects->project_id = $project[4];
+        //     $user_projects->allocated_time = $hours. ' hours ' . $minutes . ' mins';
+        //     $user_projects->allocated_days = $project[2];
+        //     $user_projects->save();
+
+
+        // }
 
         dd("done");
 
