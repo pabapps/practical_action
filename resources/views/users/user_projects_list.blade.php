@@ -80,7 +80,7 @@
         <button type="submit" class="btn btn-primary center-block btn-flat">Submit</button>
       </div>
       {!! Form::close() !!}
-      <!-- /.box-body -->
+      
 
     </div>
     <!-- /.box -->
@@ -153,6 +153,34 @@
       "ordering": false,
       "autoWidth": false
     });
+
+    //displaying previous project data
+    var user_id = "{{$user->id}}";
+
+    var jqxhr = $.get( "{{URL::to('/')}}/user/user_connected_project", { id: user_id },function(data) {
+
+            // working
+            console.log(data);
+            $.each(data, function( index, value ) {
+              var entry = [
+              value.project_name,
+              value.project_code,
+              value.allocated_days,
+              '<button class="btn btn-danger btn-block delete-button" id="' + '">Delete</button>',
+              value.project_id
+
+              ];
+
+              project_data.push(entry);
+              project_table.row.add(entry).draw(false);
+
+              total = total + 1;
+
+              $("#total").val(total);
+            });
+
+          });
+
 
 
     $('#add').click(function(event){

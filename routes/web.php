@@ -39,11 +39,14 @@ Route::get('/user/{id}/user_projects','UsersController@user_projects');
 //select all the valid projects
 Route::get('/user/get_valid_projects','UsersController@get_valid_projects');
 
-//select the project cofe
+//select the project code
 Route::get('/user/get_project_description','UsersController@get_project_description');
 
 //route for posting user-projects connection
 Route::post('/user/submit_porjects','UsersController@submit_projects');
+
+//route for selecting the existing projects for the users
+Route::get('/user/user_connected_project','UsersController@user_connected_project'); 
 
 Route::resource('/users','UsersController');
 
