@@ -85,68 +85,48 @@
     </div>
     <!-- /.box -->
 
-  <div class="modal fade" id="add-new-customer" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header" style="border-bottom: 0px;height: 50px;">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h3 class="modal-title">Add New Customer</h3>
-      </div>
-      <div class="modal-body">
-        
-        <div class="form-group">
-          <label>Customer Name</label>
-          <input type="text" id="customer-name-modal"name="customer_name_modal" class="form-control"placeholder="enter the customer name">
-        </div>
-  
+    <div class="modal fade" id="add-new-customer" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="border-bottom: 0px;height: 50px;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h3 class="modal-title">Edit</h3>
+          </div>
+          <div class="modal-body">
 
-        <div class="form-group">
-          <label>Organisation Name</label>
-          <input type="text" id="organisation-name-modal" name="organisation_name_modal" class="form-control" placeholder="enter the organisation name">
-        </div>
-      
+            <div class="form-group">
+              <label>Project Name</label>
+              <input type="text" id="project-name-modal" name="allocate_days_modal" class="form-control" readonly>
+            </div>
 
-
-      
-        <div class="form-group">
-          <label>Customer Phone Number</label>
-          <input type="number" id="phone-num-modal"name="phone_num_modal" class="form-control"placeholder="enter the customer phone number">
-        </div>
-      
+            <div class="form-group">
+              <label>Project Code</label>
+              <input type="text" id="allocate-days-modal" name="allocate_days_modal" class="form-control" readonly>
+            </div>
 
 
 
-      
-        <div class="form-group">
-          <label>Customer Email Address</label>
-          <input type="email" id="email-modal"name="email_modal" class="form-control"placeholder="enter the customer e-mail">
-        </div>
-      
+            <div class="form-group">
+              <label>Allocate Days</label>
+              <input type="text" id="allocate-days-modal" name="allocate_days_modal" class="form-control" >
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <div class="col-lg-12 entry_panel_body ">
+              <h3></h3>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
 
 
-      
-        <div class="form-group">
-          <label>Customer Address</label>
-          <input type="text" id="address-modal"name="address_modal" class="form-control"placeholder="enter the customer address">
-        </div>
-      
-
-        </div>
-
-      <div class="modal-footer">
-        <div class="col-lg-12 entry_panel_body ">
-          <h3></h3>
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
-
-      
     </div>
-  </div>
-</div>
 
   </section>
 
@@ -243,60 +223,83 @@
               $("#total").val(total);
             });
 
+          }).done(function(){
+
+            $('#project-table tbody').on( 'click', 'tr', function () {
+              var cell = project_table.cell( this );
+              console.log(cell.data());
+
+              data = project_table.row( this ).data();
+
+
+              // console.log( project_table.rows().data() );
+
+              console.log( data[0] );
+
+
+              $('#add-new-customer').modal('show');
+              $("#project-name-modal").val(data[0]);
+              $("#allocate-days-modal").val(data[1]);
+              $("#allocate-days-modal").val(data[2]);
+            // cell.data( cell.data() + 1 ).draw();
+            // note - call draw() to update the table's draw state with the new data
+          } );
+
+
           });
 
 
 
-    $('#add').click(function(event){
-      event.preventDefault();
+          $('#add').click(function(event){
+            event.preventDefault();
 
-      var project_text = $("#project-name option:selected").text(),
-      project_id = $("#project-name").val(),
-      project_code = $("#project-code").val(),
-      project_days = $("#project-days").val();
+            var project_text = $("#project-name option:selected").text(),
+            project_id = $("#project-name").val(),
+            project_code = $("#project-code").val(),
+            project_days = $("#project-days").val();
 
-      if(isBlank(!project_id) && isBlank(!project_days)){
+            if(isBlank(!project_id) && isBlank(!project_days)){
 
-        var entry = [
-        project_text,
-        project_code,
-        project_days,
-        '<button class="btn btn-danger btn-block delete-button" id="' + '">Delete</button>',
-        project_id
-        ];
+              var entry = [
+              project_text,
+              project_code,
+              project_days,
+              '<button class="btn btn-danger btn-block delete-button" id="' + '">Delete</button>',
+              project_id
+              ];
 
-        var project_id=entry[4];
-        var booleanValue=true;
-        if(project_data.length>=1){
-          for(i=0; i<project_data.length; i++){
-            if(project_data[i][4]==project_id){
-              booleanValue=false;
+              var project_id=entry[4];
+              var booleanValue=true;
+              if(project_data.length>=1){
+                for(i=0; i<project_data.length; i++){
+                  if(project_data[i][4]==project_id){
+                    booleanValue=false;
 
+                  }
+                }
+              }
+
+              if(booleanValue){
+
+                project_data.push(entry);
+
+                total = total + 1;
+
+                project_table.row.add(entry).draw(false);
+
+                $("#total").val(total);
+
+                $("#project-code").val(''),  
+                $("#project-days").val('');  
+
+              }else{
+                alert("this project has already been entered");  
+              }
+            }else{
+              alert("please fill the row properly");
             }
-          }
-        }
 
-        if(booleanValue){
-
-          project_data.push(entry);
-
-          total = total + 1;
-
-          project_table.row.add(entry).draw(false);
-
-          $("#total").val(total);
-
-          $("#project-code").val(''),  
-          $("#project-days").val('');  
-
-        }else{
-          alert("this project has already been entered");  
-        }
-      }else{
-        alert("please fill the row properly");
-      }
-
-    });
+          });
 
 
   //delete row on button click
@@ -348,15 +351,7 @@
 });
 
 
- 
-$('#project-table tbody').on( 'click', 'td', function () {
-    var cell = project_table.cell( this );
-    console.log(cell.data());
 
-    $('#add-new-customer').modal('show');
-    // cell.data( cell.data() + 1 ).draw();
-    // note - call draw() to update the table's draw state with the new data
-} );
 
 
 
