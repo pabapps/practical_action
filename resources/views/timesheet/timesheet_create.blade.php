@@ -28,7 +28,9 @@
 
            <div class="form-group">
             <label>Name</label>
-            <input type="text" class="form-control" name="name" id="name"  value="{{old('program_name')}}" readonly>   
+            @if(isset($user_info->id))
+            <input type="text" class="form-control" name="name" id="name"  value="{{$user_info->name}}" readonly>   
+            @endif
           </div>
 
         </div>
@@ -36,7 +38,9 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Designation</label>
-            <input type="number" class="form-control" name="project_code" id="project-code"  value="{{old('project_code')}}" readonly>   
+            @if(isset($user_info->id))
+            <input type="text" class="form-control" name="project_code" id="project-code"  value="{{$user_info->position_name}}" readonly>   
+            @endif
           </div>
 
         </div>
@@ -100,95 +104,97 @@
           </button>
           <h3 class="modal-title">create new time sheet entry</h3>
         </div>
+
         <div class="modal-body">
-
-          <div class="form-group">
+          <div class="form-group" >
             <label>Project Name</label>
-            <input type="text" id="project-name-modal"name="project_name_modal" class="form-control"  required>
+            <select id="project-name-modal" name="project_name_modal"  class="form-control " required>
+              <option value="project_management">Project Management</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+          <label>Date:</label>
+
+          <div class="input-group date">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <input type="text" class="form-control pull-right" name="checkin" data-date-format="dd-mm-yyyy" id="entry-date" required>
           </div>
+          <!-- /.input group -->
+        </div>
+
+        <div class="bootstrap-timepicker ">
+          <div class="form-group">
+            <label>Start Time:</label>
+
+            <div class="input-group">
+              <input type="text" class="form-control timepicker" id="start-time" name="start_time" required>
+
+              <div class="input-group-addon">
+                <i class="fa fa-clock-o"></i>
+              </div>
+            </div>
+            <!-- /.input group -->
+          </div>
+        </div>
+
+        <div class="bootstrap-timepicker ">
 
           <div class="form-group">
-            <label>Date:</label>
+            <label>End Time:</label>
 
-            <div class="input-group date">
+            <div class="input-group">
+              <input type="text" class="form-control timepicker" id="end-time" name="end_time" required>
+
               <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
+                <i class="fa fa-clock-o"></i>
               </div>
-              <input type="text" class="form-control pull-right" name="checkin" data-date-format="dd-mm-yyyy" id="entry-date" required>
             </div>
             <!-- /.input group -->
           </div>
 
-          <div class="bootstrap-timepicker ">
-            <div class="form-group">
-              <label>Start Time:</label>
-
-              <div class="input-group">
-                <input type="text" class="form-control timepicker" id="start-time" name="start_time" required>
-
-                <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
-                </div>
-              </div>
-              <!-- /.input group -->
-            </div>
-          </div>
-
-          <div class="bootstrap-timepicker ">
-
-            <div class="form-group">
-              <label>End Time:</label>
-
-              <div class="input-group">
-                <input type="text" class="form-control timepicker" id="end-time" name="end_time" required>
-
-                <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
-                </div>
-              </div>
-              <!-- /.input group -->
-            </div>
-
-          </div>
-
-
-          <div class="form-group">
-            <label>Activity</label>
-            <select id="transaction-type" name="transaction_type"  class="form-control" required>
-                <option value="project_management">Project Management</option>
-                <option value="monitoring_evalution">Monitoring & Evalution</option>
-                <option value="field_visit">Field visit</option>
-                <option value="training">Training</option>
-                <option value="meeting_outside_office">Meeting (Outside Office)</option>
-                <option value="meeting_inside_office">Meeting (Inside Office)</option>
-              </select>
-          </div>
-
-          <div class="form-group">
-            <label>Location</label>
-            <input type="text" id="project-name-modal"name="project_name_modal" class="form-control" placeholder="Dhaka...." required>
-          </div>
-
-          <div class="form-group">
-            <label>Remarks</label>
-            <input type="text" id="remarks-modal"name="remarks_modal" class="form-control" placeholder="a short description of what you did.....(optional)" required>
-          </div>
-
-
         </div>
 
-        <div class="modal-footer">
-          <div class="col-lg-12 entry_panel_body ">
-            <h3></h3>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+
+        <div class="form-group">
+          <label>Activity</label>
+          <select id="transaction-type" name="transaction_type"  class="form-control" required>
+            <option value="project_management">Project Management</option>
+            <option value="monitoring_evalution">Monitoring & Evalution</option>
+            <option value="field_visit">Field visit</option>
+            <option value="training">Training</option>
+            <option value="meeting_outside_office">Meeting (Outside Office)</option>
+            <option value="meeting_inside_office">Meeting (Inside Office)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" id="location-modal" name="location_modal" class="form-control" placeholder="Dhaka...." required>
+        </div>
+
+        <div class="form-group">
+          <label>Remarks</label>
+          <input type="text" id="remarks-modal"name="remarks_modal" class="form-control" placeholder="a short description of what you did.....(optional)" required>
         </div>
 
 
       </div>
+
+      <div class="modal-footer">
+        <div class="col-lg-12 entry_panel_body ">
+          <h3></h3>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+
     </div>
   </div>
+</div>
 
 </section>
 
