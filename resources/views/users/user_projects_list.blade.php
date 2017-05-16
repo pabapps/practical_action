@@ -336,16 +336,14 @@
 
   var $form = $( this ),
   url = $form.attr( "action" ),
-  token = $("[name='_token']").val(),
-  page_num=1,
-  diff_form=$("#search_form");
+  token = $("[name='_token']").val();
   
   if(project_data.length>0){
     $.post( url, {'user_id':'{{$user->id}}','data':project_data, 'form_data': $form.serializeArray(), '_token': token }, function( data ) {
 
     }).done(function() {
 
-      // window.location.assign('{{URL::to('/')}}/reservation');
+      window.location.assign('{{URL::to('/')}}/users');
 
     });
   }else{

@@ -146,6 +146,20 @@
           </ul>
         </li>
 
+        <li {!! Request::is('*timesheet*') ? ' class="active treeview"' : ' class="treeview"' !!}>
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>Time Sheet</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            
+            <li {!! Request::is('*timesheet') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/designation'}}"><i class="fa fa-circle-o"></i>Designation list</a></li>
+            
+            
+          </ul>
+        </li>
+
 
         <li {!! Request::is('*Settings*') ? ' class="active treeview"' : ' class="treeview"' !!}>
           <a href="#">
