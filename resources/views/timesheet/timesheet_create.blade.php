@@ -20,7 +20,6 @@
         </div>
       </div>
 
-      {!! Form::open(array('route'=>'projects.store', 'files'=>true, 'id'=>'customer_form')) !!}
 
       <div class="box-body">
         <div class="row">
@@ -48,7 +47,6 @@
       </div>
       
     </div>
-    {!! Form::close() !!}
     <!-- /.box-body -->
   </div>
   <div class="box">
@@ -105,96 +103,110 @@
           <h3 class="modal-title">create new time sheet entry</h3>
         </div>
 
+        {!! Form::open(['method'=>'POST', 'action'=>['TimeSheetController@store'], 'id'=>'time-sheet-form']) !!}
+
         <div class="modal-body">
           <div class="form-group" >
             <label>Project Name</label>
             <select id="project-name-modal" name="project_name_modal"  class="form-control " required>
-              <option value="project_management">Project Management</option>
+              @if(isset($user_projects))
+              @foreach($user_projects as $project)
+              <option value="{{$project->project_id}}">{{$project->project_name}} </option>
+              @endforeach
+              @endif
+              
             </select>
-        </div>
-
-        <div class="form-group">
-          <label>Date:</label>
-
-          <div class="input-group date">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
-            </div>
-            <input type="text" class="form-control pull-right" name="checkin" data-date-format="dd-mm-yyyy" id="entry-date" required>
           </div>
-          <!-- /.input group -->
-        </div>
-
-        <div class="bootstrap-timepicker ">
-          <div class="form-group">
-            <label>Start Time:</label>
-
-            <div class="input-group">
-              <input type="text" class="form-control timepicker" id="start-time" name="start_time" required>
-
-              <div class="input-group-addon">
-                <i class="fa fa-clock-o"></i>
-              </div>
-            </div>
-            <!-- /.input group -->
-          </div>
-        </div>
-
-        <div class="bootstrap-timepicker ">
 
           <div class="form-group">
-            <label>End Time:</label>
+            <label>Date:</label>
 
-            <div class="input-group">
-              <input type="text" class="form-control timepicker" id="end-time" name="end_time" required>
-
+            <div class="input-group date">
               <div class="input-group-addon">
-                <i class="fa fa-clock-o"></i>
+                <i class="fa fa-calendar"></i>
               </div>
+              <input type="text" class="form-control pull-right" name="checkin" data-date-format="dd-mm-yyyy" id="entry-date" required>
             </div>
             <!-- /.input group -->
           </div>
 
+          <div class="bootstrap-timepicker ">
+            <div class="form-group">
+              <label>Start Time:</label>
+
+              <div class="input-group">
+                <input type="text" class="form-control timepicker" id="start-time" name="start_time" required>
+
+                <div class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </div>
+              </div>
+              <!-- /.input group -->
+            </div>
+          </div>
+
+          <div class="bootstrap-timepicker ">
+
+            <div class="form-group">
+              <label>End Time:</label>
+
+              <div class="input-group">
+                <input type="text" class="form-control timepicker" id="end-time" name="end_time" required>
+
+                <div class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </div>
+              </div>
+              <!-- /.input group -->
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+            <label>Activity</label>
+            <select id="transaction-type" name="transaction_type"  class="form-control" required>
+              <option value="project_management">Project Management</option>
+              <option value="monitoring_evalution">Monitoring & Evalution</option>
+              <option value="field_visit">Field visit</option>
+              <option value="training">Training</option>
+              <option value="meeting_outside_office">Meeting (Outside Office)</option>
+              <option value="meeting_inside_office">Meeting (Inside Office)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" id="location-modal" name="location_modal" class="form-control" placeholder="Dhaka...." required>
+          </div>
+
+          <div class="form-group">
+            <label>Remarks</label>
+            <input type="text" id="remarks-modal"name="remarks_modal" class="form-control" placeholder="a short description of what you did.....(optional)">
+          </div>
+
+           <div class="form-group hidden">
+            <label>User id</label>
+            @if(isset($user_info->id))
+            <input type="text" class="form-control" name="project_code" id="project-code"  value="{{$user_info->id}}" readonly>   
+            @endif
+          </div>
+
+
         </div>
 
-
-        <div class="form-group">
-          <label>Activity</label>
-          <select id="transaction-type" name="transaction_type"  class="form-control" required>
-            <option value="project_management">Project Management</option>
-            <option value="monitoring_evalution">Monitoring & Evalution</option>
-            <option value="field_visit">Field visit</option>
-            <option value="training">Training</option>
-            <option value="meeting_outside_office">Meeting (Outside Office)</option>
-            <option value="meeting_inside_office">Meeting (Inside Office)</option>
-          </select>
+        <div class="modal-footer">
+          <div class="col-lg-12 entry_panel_body ">
+            <h3></h3>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
         </div>
-
-        <div class="form-group">
-          <label>Location</label>
-          <input type="text" id="location-modal" name="location_modal" class="form-control" placeholder="Dhaka...." required>
-        </div>
-
-        <div class="form-group">
-          <label>Remarks</label>
-          <input type="text" id="remarks-modal"name="remarks_modal" class="form-control" placeholder="a short description of what you did.....(optional)" required>
-        </div>
-
+        {!! Form::close() !!}
 
       </div>
-
-      <div class="modal-footer">
-        <div class="col-lg-12 entry_panel_body ">
-          <h3></h3>
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-
     </div>
   </div>
-</div>
 
 </section>
 
@@ -244,12 +256,39 @@ $( document ).ready(function() {
   });
 
 
+
+  
+  $( "#time-sheet-form" ).submit(function( event ) {
+    // Stop form from submitting normally
+    
+    event.preventDefault();
+    
+    console.log("testing");
+
+    var $form = $( this ),
+    url = $form.attr( "action" );
+
+    // Send the data using post
+    var posting = $.post( url, $form.serialize() );
+    // Put the results in a div
+    posting.done(function( data ) {
+
+
+
+    });
+
+    
+
+
+  });
+
+
 });
 
 
 
 
-</script>
-@endsection
+  </script>
+  @endsection
 
 
