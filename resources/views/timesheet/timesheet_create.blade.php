@@ -104,7 +104,7 @@
 
           <div class="form-group">
             <label>Project Name</label>
-            <input type="text" id="project-name-modal"name="project_name_modal" class="form-control" placeholder="enter the customer name">
+            <input type="text" id="project-name-modal"name="project_name_modal" class="form-control"  required>
           </div>
 
           <div class="form-group">
@@ -114,7 +114,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <input type="text" class="form-control pull-right" name="checkin" data-date-format="dd-mm-yyyy" id="entry-date" >
+              <input type="text" class="form-control pull-right" name="checkin" data-date-format="dd-mm-yyyy" id="entry-date" required>
             </div>
             <!-- /.input group -->
           </div>
@@ -153,16 +153,25 @@
 
 
           <div class="form-group">
-            <label>Customer Email Address</label>
-            <input type="email" id="email-modal"name="email_modal" class="form-control"placeholder="enter the customer e-mail">
+            <label>Activity</label>
+            <select id="transaction-type" name="transaction_type"  class="form-control" required>
+                <option value="project_management">Project Management</option>
+                <option value="monitoring_evalution">Monitoring & Evalution</option>
+                <option value="field_visit">Field visit</option>
+                <option value="training">Training</option>
+                <option value="meeting_outside_office">Meeting (Outside Office)</option>
+                <option value="meeting_inside_office">Meeting (Inside Office)</option>
+              </select>
           </div>
 
-
-
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" id="project-name-modal"name="project_name_modal" class="form-control" placeholder="Dhaka...." required>
+          </div>
 
           <div class="form-group">
-            <label>Customer Address</label>
-            <input type="text" id="address-modal"name="address_modal" class="form-control"placeholder="enter the customer address">
+            <label>Remarks</label>
+            <input type="text" id="remarks-modal"name="remarks_modal" class="form-control" placeholder="a short description of what you did.....(optional)" required>
           </div>
 
 
