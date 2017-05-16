@@ -85,7 +85,7 @@
     </div>
     <!-- /.box -->
 
-    <div class="modal fade" id="add-new-customer" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="project-modal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header" style="border-bottom: 0px;height: 50px;">
@@ -96,6 +96,8 @@
           </div>
           <div class="modal-body">
 
+
+
             <div class="form-group">
               <label>Project Name</label>
               <input type="text" id="project-name-modal" name="allocate_days_modal" class="form-control" readonly>
@@ -103,14 +105,19 @@
 
             <div class="form-group">
               <label>Project Code</label>
-              <input type="text" id="allocate-days-modal" name="allocate_days_modal" class="form-control" readonly>
+              <input type="text" id="project-code-modal" name="allocate_code_modal" class="form-control" readonly>
             </div>
 
 
 
             <div class="form-group">
               <label>Allocate Days</label>
-              <input type="text" id="allocate-days-modal" name="allocate_days_modal" class="form-control" >
+              <input type="number" id="allocate-days-modal" name="allocate_days_modal" class="form-control" >
+            </div>
+
+            <div class="form-group" hidden>
+              <label>project_id</label>
+              <input type="number" id="project-id-modal" name="project_id_modal" class="form-control" >
             </div>
 
           </div>
@@ -118,10 +125,12 @@
           <div class="modal-footer">
             <div class="col-lg-12 entry_panel_body ">
               <h3></h3>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary" id="modal-button" >Submit</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
+
+          
 
 
         </div>
@@ -227,22 +236,18 @@
 
             $('#project-table tbody').on( 'click', 'tr', function () {
               var cell = project_table.cell( this );
-              console.log(cell.data());
 
               data = project_table.row( this ).data();
 
+              if(data!=null && data.length>0){
 
-              // console.log( project_table.rows().data() );
-
-              console.log( data[0] );
-
-
-              $('#add-new-customer').modal('show');
-              $("#project-name-modal").val(data[0]);
-              $("#allocate-days-modal").val(data[1]);
-              $("#allocate-days-modal").val(data[2]);
-            // cell.data( cell.data() + 1 ).draw();
-            // note - call draw() to update the table's draw state with the new data
+                $('#project-modal').modal('show');
+                $("#project-name-modal").val(data[0]);
+                $("#project-code-modal").val(data[1]);
+                $("#allocate-days-modal").val(data[2]);
+                $("#project-id-modal").val(data[4]);
+              }
+            
           } );
 
 
@@ -350,7 +355,49 @@
   }
 });
 
+  $("#modal-button").click(function(){
 
+    var allocated_days = $("#allocate-days-modal").val();
+
+    var project_id =$("#project-id-modal").val();
+
+    var index ;
+
+    
+    for(var i=0; i<project_data.length ; i++){
+
+      if(project_data[i][4]==project_id){
+        index = i;
+        break;
+        
+      }
+
+    }
+
+    console.log(index);
+
+    project_table.row( index ).remove().draw();
+
+    project_data.splice(index,1);
+
+    var entry = [
+    $('#project-name-modal').val(),
+    $('#project-code-modal').val(),
+    allocated_days,
+    '<button class="btn btn-danger btn-block delete-button" id="' + '">Delete</button>',
+    project_id
+
+    ];
+
+    project_data.push(entry);
+    project_table.row.add(entry).draw(false);
+
+
+
+
+
+    $('#project-modal').modal('toggle');
+  });
 
 
 
