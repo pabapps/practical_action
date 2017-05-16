@@ -106,7 +106,10 @@ Route::get('/ajax/ajax_get_departments','DepartmentController@ajax_get_departmen
 Route::resource('/departments','DepartmentController');
 
 
-
+/**
+ * route for time sheet
+ */
+Route::resource('/timesheet','TimeSheetController');
 
 
 

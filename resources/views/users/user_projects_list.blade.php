@@ -43,7 +43,7 @@
               <tr>
                 <th style="text-align: center; width:50%;">Project name</th>
                 <th style="text-align: center; width:20%;">Project code</th>
-                <th style="text-align: center; width:20%">Allocat days</th>
+                <th style="text-align: center; width:20%">Allocate days</th>
                 <th style="text-align: center;">Add</th>
               </tr>
             </thead>
