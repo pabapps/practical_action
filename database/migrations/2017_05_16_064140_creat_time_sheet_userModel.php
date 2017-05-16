@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserProjectConnection extends Migration
+class CreatTimeSheetUserModel extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,19 @@ class CreateUserProjectConnection extends Migration
      */
     public function up()
     {
-        Schema::create('users_projects_connection', function (Blueprint $table) {
-
-
+        Schema::create('time_sheet_user', function (Blueprint $table) {
+             
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
             $table->integer('project_id')->unsigned();
-            $table->string('allocated_time');
-            $table->string('allocated_days');
+            $table->integer('user_id')->unsigned();
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->date('date');
+            $table->string('activity');
+            $table->string('remarks')->nullable();
+            $table->string('location');
             $table->tinyInteger('valid')->default(1); // 1 = valid, 0 = invalid (basically deleted or not)
+            $table->tinyInteger('sent_to_manager')->default(0); // 0 = data can de edited by the user, 1 = data sent to the manager
             $table->timestamps();
 
 
@@ -30,6 +34,7 @@ class CreateUserProjectConnection extends Migration
 
             $table->foreign('project_id')->references('id')->on('projects')
                 ->onUpdate('cascade')->onDelete('cascade');
+
 
 
         });
@@ -42,6 +47,6 @@ class CreateUserProjectConnection extends Migration
      */
     public function down()
     {
-        Schema::drop('users_projects_connection');
+        Schema::dropIfExists('time_sheet_user');
     }
 }

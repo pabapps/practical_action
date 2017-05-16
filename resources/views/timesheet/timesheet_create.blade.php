@@ -54,10 +54,9 @@
         <thead>
           <tr>
             <th>Projects</th>
-            <th>Allocated Time</th>
-            <th>Platform(s)</th>
-            <th>Engine version</th>
-            <th>CSS grade</th>
+            <th>Allocated Time(days)</th>
+            <th>Allocated Time(hours)</th>
+            <th>Remaining Time (hours)</th>
           </tr>
         </thead>
         <tbody>
@@ -65,20 +64,25 @@
             <td>Other browsers</td>
             <td>All others</td>
             <td>-</td>
-            <td>-</td>
             <td>U</td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <th>Rendering engine</th>
-            <th>Browser</th>
-            <th>Platform(s)</th>
-            <th>Engine version</th>
-            <th>CSS grade</th>
+            <th>Projects</th>
+            <th>Allocated Time(days)</th>
+            <th>Allocated Time(hours)</th>
+            <th>Remaining Time (hours)</th>
           </tr>
         </tfoot>
       </table>
+      <div class="form-group">
+
+        
+        <!-- <button type="submit" class="btn bg-navy btn-flat margin">.btn.bg-navy.btn-flat</button> -->
+        <button type="submit" class="btn bg-purple btn-flat margin">Save new entry</button>
+
+      </div>
     </div>
     <!-- /.box-body -->
   </div>
