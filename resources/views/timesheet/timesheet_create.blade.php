@@ -2,6 +2,9 @@
   @section('styles')
   <!-- DataTables -->
   <link rel="stylesheet" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker-bs3.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/datepicker/datepicker3.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
   @endsection
   @section('content')
 
@@ -50,7 +53,7 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-      <table id="example1" class="table table-bordered table-striped">
+      <table id="time-sheet-table" class="table table-bordered table-striped">
         <thead>
           <tr>
             <th>Projects</th>
@@ -78,15 +81,106 @@
       </table>
       <div class="form-group">
 
-        
+
         <!-- <button type="submit" class="btn bg-navy btn-flat margin">.btn.bg-navy.btn-flat</button> -->
-        <button type="submit" class="btn bg-purple btn-flat margin">Save new entry</button>
+        <button type="submit" data-toggle="modal" class="btn bg-purple btn-flat margin" data-target="#add-new-entry">Save new entry</button>
 
       </div>
     </div>
     <!-- /.box-body -->
   </div>
   <!-- /.box -->
+  
+  <div class="modal fade" id="add-new-entry" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="border-bottom: 0px;height: 50px;">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h3 class="modal-title">create new time sheet entry</h3>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label>Project Name</label>
+            <input type="text" id="project-name-modal"name="project_name_modal" class="form-control" placeholder="enter the customer name">
+          </div>
+
+          <div class="form-group">
+            <label>Date:</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right" name="checkin" data-date-format="dd-mm-yyyy" id="entry-date" >
+            </div>
+            <!-- /.input group -->
+          </div>
+
+          <div class="bootstrap-timepicker ">
+            <div class="form-group">
+              <label>Start Time:</label>
+
+              <div class="input-group">
+                <input type="text" class="form-control timepicker" id="start-time" name="start_time" required>
+
+                <div class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </div>
+              </div>
+              <!-- /.input group -->
+            </div>
+          </div>
+
+          <div class="bootstrap-timepicker ">
+
+            <div class="form-group">
+              <label>End Time:</label>
+
+              <div class="input-group">
+                <input type="text" class="form-control timepicker" id="end-time" name="end_time" required>
+
+                <div class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </div>
+              </div>
+              <!-- /.input group -->
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+            <label>Customer Email Address</label>
+            <input type="email" id="email-modal"name="email_modal" class="form-control"placeholder="enter the customer e-mail">
+          </div>
+
+
+
+
+          <div class="form-group">
+            <label>Customer Address</label>
+            <input type="text" id="address-modal"name="address_modal" class="form-control"placeholder="enter the customer address">
+          </div>
+
+
+        </div>
+
+        <div class="modal-footer">
+          <div class="col-lg-12 entry_panel_body ">
+            <h3></h3>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
 </section>
 
 @if (count($errors) > 0)
@@ -105,13 +199,34 @@
 @section('script')
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
+<script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+<script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
+
 <script type="text/javascript">
 $( document ).ready(function() {
 
 
-  $("#example1").DataTable();
+  $("#time-sheet-table").DataTable();
 
+  $('#entry-date').datepicker({
+    autoclose: true
 
+  });
+
+  $("#entry-date").datepicker('setDate', new Date());
+
+  $("#start-time").timepicker({
+    showMeridian:false,
+    showSeconds:true,
+    showInputs: false
+  });
+
+  $("#end-time").timepicker({
+    showMeridian:false,
+    showSeconds:true,
+    showInputs: false
+  });
 
 
 });
