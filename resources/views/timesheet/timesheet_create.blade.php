@@ -66,16 +66,29 @@
         </thead>
         <tbody>
 
-            @if(isset($final_array))
-            @foreach($final_array as $projects)
-            <tr>
-              <td>{{$projects['project_name']}}</td>
-              <td>{{$projects['allocated_days']}}</td>
-              <td>{{$projects['allocated_time']}}</td>
-              <td>{{$projects['final_deducted_time']}}</td>
-            </tr>
-            @endforeach
-            @endif
+          @if(isset($final_array))
+          @foreach($final_array as $projects)
+          <tr>
+            <td>{{$projects['project_name']}}</td>
+            <td>{{$projects['allocated_days']}}</td>
+            <td>{{$projects['allocated_time']}}</td>
+            <td>{{$projects['final_deducted_time']}}</td>
+          </tr>
+          @endforeach
+          @else
+          @foreach($user_projects as $projects)
+          <tr>
+            <td>{{$projects->project_name}}</td>
+            <td>{{$projects->allocated_days}}</td>
+            <td>{{$projects->allocated_time}}</td>
+            <td>--</td>
+          </tr>
+          @endforeach
+          
+
+          @endif
+
+
 
 
           

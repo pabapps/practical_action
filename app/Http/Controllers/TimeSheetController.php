@@ -135,6 +135,14 @@ class TimeSheetController extends Controller
 
                 $minutes = ceil($fraction_minutes);
 
+                if($minutes == 60){
+
+                    $hours ++;
+
+                    $minutes = 0;
+
+                }
+
                 $final_deducted_time = $hours. ' hours ' . $minutes . ' mins';
 
 
@@ -142,7 +150,9 @@ class TimeSheetController extends Controller
                     'project_name'=> $project_name,
                     'allocated_days'=> $allocated_days,
                     'allocated_time'=> $time_sheet->allocated_time,
-                    'final_deducted_time'=>$final_deducted_time
+                    'final_deducted_time'=>$final_deducted_time,
+                    'project_id'=>$time_sheet->project_id
+
                     );
 
                 $counter++;
@@ -152,10 +162,57 @@ class TimeSheetController extends Controller
             
         }
 
-        // dd($final_array);
+        
 
-        return view('timesheet.timesheet_create')->with('user_projects',$user_projects)->with('user_info',$user_info[0])
-        ->with('final_array',$final_array);
+        
+
+        foreach ($user_projects as $u_project) {
+
+            $counter = 0;
+
+            $missing_project_id = -1;
+
+            foreach ($final_array as $array) {
+                if($array['project_id'] == $u_project->project_id ){                   
+                     $missing_project_id = -1;
+                     break;
+                }else{
+                    $missing_project_id = $u_project->project_id;
+
+                }
+                $counter ++;
+            }
+
+
+            if($missing_project_id != -1){
+                $counter++;
+                $final_array[$counter] = array(
+                    'project_name'=> $u_project->project_name,
+                    'allocated_days'=> $u_project->allocated_days,
+                    'allocated_time'=> $u_project->allocated_time,
+                    'final_deducted_time'=>'-',
+                    'project_id'=>$time_sheet->project_id
+
+                    );
+            }
+
+        }
+
+
+
+
+
+        // dd($final_array);
+        if(count($final_array)>0) {
+            return view('timesheet.timesheet_create')->with('user_projects',$user_projects)->with('user_info',$user_info[0])
+            ->with('final_array',$final_array);
+
+        }else{
+
+            return view('timesheet.timesheet_create')->with('user_projects',$user_projects)->with('user_info',$user_info[0]);
+        }
+
+        
     }
 
     /**
