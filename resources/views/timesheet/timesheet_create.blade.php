@@ -65,12 +65,20 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Other browsers</td>
-            <td>All others</td>
-            <td>-</td>
-            <td>U</td>
-          </tr>
+
+            @if(isset($final_array))
+            @foreach($final_array as $projects)
+            <tr>
+              <td>{{$projects['project_name']}}</td>
+              <td>{{$projects['allocated_days']}}</td>
+              <td>{{$projects['allocated_time']}}</td>
+              <td>{{$projects['final_deducted_time']}}</td>
+            </tr>
+            @endforeach
+            @endif
+
+
+          
         </tbody>
         <tfoot>
           <tr>
@@ -185,7 +193,7 @@
             <input type="text" id="remarks-modal"name="remarks_modal" class="form-control" placeholder="a short description of what you did.....(optional)">
           </div>
 
-           <div class="form-group hidden">
+          <div class="form-group hidden">
             <label>User id</label>
             @if(isset($user_info->id))
             <input type="text" class="form-control" name="user_id" id="user-id"  value="{{$user_info->id}}" readonly>   
@@ -290,7 +298,7 @@ $( document ).ready(function() {
 
 
 
-  </script>
-  @endsection
+</script>
+@endsection
 
 

@@ -60,8 +60,102 @@ class TimeSheetController extends Controller
     	->select('projects.project_name','users_projects_connection.project_id','users_projects_connection.allocated_time',
     		'users_projects_connection.allocated_days')->where('users_projects_connection.user_id',$user->id)->where('users_projects_connection.valid',1)->get();
 
+        // dd($user_projects);
 
-        return view('timesheet.timesheet_create')->with('user_projects',$user_projects)->with('user_info',$user_info[0]);
+        /**
+         * use time sheet details
+         */
+        // $user_time_sheet = DB::table('time_sheet_user')
+        // ->select('project_id','start_time','end_time')->where('user_id',$user->id)->where('valid',1)->get();
+
+        $query_time_sheet = "
+        SELECT project_id, TIME_TO_SEC(TIMEDIFF(end_time,start_time)) diff FROM time_sheet_user WHERE user_id='$user->id'";
+
+        $user_time_sheet = DB::select($query_time_sheet);
+
+        // dd($user_time_sheet);
+
+        $not_exist = true;
+
+        $array = array();
+
+        foreach ($user_time_sheet as $time_sheet) {
+
+            $not_exist = true;
+
+            if(array_key_exists ( $time_sheet->project_id ,  $array )){
+
+                $val = $array[$time_sheet->project_id];
+
+                $val = $val + $time_sheet->diff;
+
+                $array[$time_sheet->project_id] = $val ;
+
+                $not_exist = false;
+
+            }
+
+            if($not_exist){
+                $array[$time_sheet->project_id] = $time_sheet->diff ;
+            }
+        }
+
+
+        $final_array = array();
+        $counter = 0;
+
+        foreach ($user_projects as $time_sheet) {
+
+            if(array_key_exists ( $time_sheet->project_id , $array )){
+
+                $user_seconds = $array[$time_sheet->project_id];
+
+                $allocated_days = $time_sheet->allocated_days;
+
+                $project_name = $time_sheet->project_name;
+
+                $days = floatval($allocated_days);
+
+                // start by converting to seconds
+                
+                $seconds = ($days * 8 * 3600);
+
+                $deducted_seconds = $seconds - $user_seconds;
+
+
+                //converting seconds into hour
+
+                $seconds_to_hours = ($deducted_seconds / 3600);
+                $hours = floor($seconds_to_hours);    
+                $fraction_hour = $seconds_to_hours - $hours ;
+
+                //converting fraction hours into minutes
+
+                $fraction_minutes = ($fraction_hour * 60);
+
+                $minutes = ceil($fraction_minutes);
+
+                $final_deducted_time = $hours. ' hours ' . $minutes . ' mins';
+
+
+                $final_array[$counter] = array(
+                    'project_name'=> $project_name,
+                    'allocated_days'=> $allocated_days,
+                    'allocated_time'=> $time_sheet->allocated_time,
+                    'final_deducted_time'=>$final_deducted_time
+                    );
+
+                $counter++;
+
+
+            }
+            
+        }
+
+        // dd($final_array);
+
+        return view('timesheet.timesheet_create')->with('user_projects',$user_projects)->with('user_info',$user_info[0])
+        ->with('final_array',$final_array);
     }
 
     /**
