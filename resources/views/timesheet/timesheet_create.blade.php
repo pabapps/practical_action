@@ -125,7 +125,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <input type="text" class="form-control pull-right" name="checkin" data-date-format="dd-mm-yyyy" id="entry-date" required>
+              <input type="text" class="form-control pull-right" name="entry_date" data-date-format="dd-mm-yyyy" id="entry-date" required>
             </div>
             <!-- /.input group -->
           </div>
@@ -165,7 +165,7 @@
 
           <div class="form-group">
             <label>Activity</label>
-            <select id="transaction-type" name="transaction_type"  class="form-control" required>
+            <select id="activity" name="activity"  class="form-control" required>
               <option value="project_management">Project Management</option>
               <option value="monitoring_evalution">Monitoring & Evalution</option>
               <option value="field_visit">Field visit</option>
@@ -188,7 +188,7 @@
            <div class="form-group hidden">
             <label>User id</label>
             @if(isset($user_info->id))
-            <input type="text" class="form-control" name="project_code" id="project-code"  value="{{$user_info->id}}" readonly>   
+            <input type="text" class="form-control" name="user_id" id="user-id"  value="{{$user_info->id}}" readonly>   
             @endif
           </div>
 
@@ -273,7 +273,9 @@ $( document ).ready(function() {
     // Put the results in a div
     posting.done(function( data ) {
 
+      $('#add-new-entry').modal('toggle');
 
+      location.reload();
 
     });
 
