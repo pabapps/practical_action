@@ -112,6 +112,8 @@ Route::resource('/departments','DepartmentController');
 //fetching the projects that are related to the user for timesheet
 Route::get('/timesheet/get_user_projecs','TimeSheetController@get_user_projecs');
 
+Route::get('/timesheet/project_details_for_timesheet/{id}','TimeSheetController@project_details_for_timesheet');
+
 Route::resource('/timesheet','TimeSheetController');
 
 

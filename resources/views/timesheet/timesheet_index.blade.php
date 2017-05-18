@@ -1,19 +1,22 @@
 	@extends('layout.main')
-	@section('content')
+  @section('styles')
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
+  @endsection
 
-	<section class="content">
-		<!-- SELECT2 EXAMPLE -->
+  @section('content')
+
+  <section class="content">
+    <!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
       <div class="box-header with-border">
-        <h3 class="box-title">Time Sheet Index</h3>
+        <h3 class="box-title">Time Sheet Log</h3>
 
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
           <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
         </div>
       </div>
-
-      {!! Form::open(array('route'=>'projects.store', 'files'=>true, 'id'=>'customer_form')) !!}
 
       <div class="box-body">
         <div class="row">
@@ -32,15 +35,43 @@
         <div class="col-md-6">
           <div class="form-group">
 
-            <button type="submit" class="btn btn-primary" style="margin-top: 25px">Show log</button>
+            <button type="submit" id="project-select-id" class="btn btn-primary" style="margin-top: 25px">Show log</button>
 
           </div>
         </div>
       </div>
       <!-- /.row -->
+
+      <div class="box-body">
+        <table id="time-sheet-log" class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Project Name</th>
+              <th>Star date</th>
+              <th>End date</th>
+              <th>Activity</th>
+              <th>Edit</th>
+
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Project Name</th>
+              <th>Star date</th>
+              <th>End date</th>
+              <th>Activity</th>
+              <th>Edit</th>
+
+            </tr>
+          </tfoot>
+        </table>
+      </div>
       
     </div>
-    {!! Form::close() !!}
+    
     <!-- /.box-body -->
 
   </div>
@@ -61,6 +92,9 @@
 
 
 @section('script')
+
+<script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 
 <script type="text/javascript">
 $( document ).ready(function() {
@@ -86,6 +120,50 @@ $( document ).ready(function() {
     }
   });
 
+  
+
+  $( "#project-select-id" ).click(function() {
+
+    event.preventDefault();
+
+    var project_id = $('#project-id').val();
+
+    if(project_id == null){
+
+      alert("OPS! please select a project.");
+
+      return;
+
+    }else{
+
+      var array =[];
+      var count = 0;
+
+
+
+      var table = $('#time-sheet-log').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ajax": "{{URL::to('/')}}/timesheet/project_details_for_timesheet/"+project_id,
+        "columns": [
+        { "data": "project_name" },
+        { "data": "start_time" },
+        { "data": "end_time" },
+        { "data": "activity" },
+        { "data": "action", name: 'action', orderable: false, searchable: false}
+        ],
+        "order": [[1, 'asc']]
+      } );
+      table.destroy();
+
+
+    }
+
+  });
+
+
+
+
 
 
 
@@ -97,7 +175,7 @@ $( document ).ready(function() {
 
 
 
-</script>
-@endsection
+  </script>
+  @endsection
 
 

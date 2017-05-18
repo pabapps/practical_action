@@ -50,14 +50,50 @@ class TimeSheetController extends Controller
         JOIN users_projects_connection
         ON users_projects_connection.project_id = projects.id AND 
         users_projects_connection.user_id='$user->id' AND users_projects_connection.valid=1
-        WHERE projects.project_name LIKE '%{$search_term}%' AND projects.valid=1
-
-        ";
+        WHERE projects.project_name LIKE '%{$search_term}%' AND projects.valid=1";
 
         $projects = DB::select($query_projects);
 
     
         return response()->json($projects);
+
+    }
+
+    /**
+     * fetching all the relavent timesheet info/log that the user had previously entered for this project
+     */
+
+    public function project_details_for_timesheet(Request $request,$id){
+
+        $user = AUTH::user();
+
+        $time_sheet_log = DB::table('time_sheet_user')
+        ->join('projects','time_sheet_user.project_id','=','projects.id')
+        ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.start_time',
+            'time_sheet_user.end_time','time_sheet_user.date','time_sheet_user.activity')
+        ->where('time_sheet_user.user_id',$user->id)->where('time_sheet_user.valid',1)
+        ->where('time_sheet_user.sent_to_manager',0)->where('time_sheet_user.project_id',$id)->get();
+
+        // dd($time_sheet_log);
+
+        // return response()->json($time_sheet_log);
+
+        $time_collection = collect($time_sheet_log);
+    // dd($reservation_collection);
+        return Datatables::of($time_collection)
+        ->addColumn('action', function ($time_collection) {
+            return 
+
+            ' <a href="'. url('/timesheet') . '/' . 
+            Crypt::encrypt($time_collection->id) . 
+            '/edit' .'"' . 
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
+        })
+        ->editColumn('id', '{{$id}}')
+        ->setRowId('id')
+        ->make(true);
+
+
 
     }
 
@@ -295,7 +331,7 @@ class TimeSheetController extends Controller
      */
     public function edit($id)
     {
-        //
+        dd("working on it");
     }
 
     /**

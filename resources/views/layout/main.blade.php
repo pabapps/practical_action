@@ -155,7 +155,7 @@
           <ul class="treeview-menu">
             
             <li {!! Request::is('*timesheet') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/timesheet/create'}}"><i class="fa fa-circle-o"></i>Create Time Sheet</a></li>
-            <li {!! Request::is('*timesheet') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/timesheet'}}"><i class="fa fa-circle-o"></i>Time index</a></li>
+            <li {!! Request::is('*timesheet') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/timesheet'}}"><i class="fa fa-circle-o"></i>Time Log</a></li>
             
             
           </ul>
