@@ -33,13 +33,6 @@
 
         </div>
         <!-- /.col -->
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Project Code</label>
-            <input type="number" class="form-control" name="project_code" id="project-code" placeholder="please enter the code" value="{{old('project_code')}}" required>   
-          </div>
-
-        </div>
 
 
         <div class="col-md-6">
@@ -50,7 +43,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <input type="text" class="form-control pull-right" name="entry_date" data-date-format="dd-mm-yyyy" id="entry-date" required>
+              <input type="text" class="form-control pull-right" name="entry_date" data-date-format="dd-mm-yyyy" id="entry-date" value="{{$date}}" required>
             </div>
             <!-- /.input group -->
           </div>
@@ -62,7 +55,7 @@
               <label>Start Time:</label>
 
               <div class="input-group">
-                <input type="text" class="form-control timepicker" id="start-time" name="start_time" required>
+                <input type="text" class="form-control timepicker" id="start-time" name="start_time" value="{{$time_sheet_data->start_time}}" required>
 
                 <div class="input-group-addon">
                   <i class="fa fa-clock-o"></i>
@@ -80,7 +73,7 @@
               <label>End Time:</label>
 
               <div class="input-group">
-                <input type="text" class="form-control timepicker" id="end-time" name="end_time" required>
+                <input type="text" class="form-control timepicker" id="end-time" name="end_time" value="{{$time_sheet_data->end_time}}" required>
 
                 <div class="input-group-addon">
                   <i class="fa fa-clock-o"></i>
@@ -96,6 +89,7 @@
           <div class="form-group">
             <label>Activity</label>
             <select id="activity" name="activity"  class="form-control" required>
+               <option value="{{$time_sheet_data->activity}}" selected>{{$time_sheet_data->activity}}</option> 
               <option value="project management">Project Management</option>
               <option value="monitoring evalution">Monitoring & Evalution</option>
               <option value="field visit">Field visit</option>
@@ -109,21 +103,21 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Location</label>
-            <input type="text" id="location-modal" name="location_modal" class="form-control" placeholder="Dhaka...." required>
+            <input type="text" id="location-modal" name="location_modal" class="form-control" placeholder="Dhaka...." value="{{$time_sheet_data->location}}" required>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label>Remarks</label>
-            <input type="text" id="remarks-modal"name="remarks_modal" class="form-control" placeholder="a short description of what you did.....(optional)">
+            <input type="text" id="remarks-modal"name="remarks_modal" class="form-control" placeholder="a short description of what you did.....(optional)" value="{{$time_sheet_data->remarks}}">
           </div>
         </div>
 
         <div class="form-group hidden">
             <label>User id</label>
-            @if(isset($user_info->id))
-            <input type="text" class="form-control" name="user_id" id="user-id"  value="{{$user_info->id}}" readonly>   
+            @if(isset($user_id))
+            <input type="text" class="form-control" name="user_id" id="user-id"  value="{{$user_id}}" readonly>   
             @endif
           </div>
 
@@ -173,12 +167,13 @@ $( document ).ready(function() {
 
   });
 
-  $("#entry-date").datepicker('setDate', new Date());
+  
 
   $("#start-time").timepicker({
     showMeridian:false,
     showSeconds:true,
     showInputs: false
+    
   });
 
   $("#end-time").timepicker({

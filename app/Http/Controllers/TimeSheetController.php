@@ -341,18 +341,26 @@ class TimeSheetController extends Controller
      */
     public function edit($id){
 
+        $user = Auth::user();
+
+        $user_id = $user->id;
+
         $time_sheet_id=Crypt::decrypt($id);
         
 
         $time_sheet_data = UserTimeSheetModel::findOrFail($time_sheet_id);
 
-        // dd($time_sheet_data->project_id);
+        $date = $time_sheet_data->date;
+
+        $date=date_create($date);
+        $date =  date_format($date,"d-m-Y");
 
         $project = Projects::findOrFail($time_sheet_data->project_id);
 
-        // dd($projects);
+        
 
-        return view('timesheet.timesheet_edit')->with('time_sheet_data',$time_sheet_data)->with('project',$project);
+        return view('timesheet.timesheet_edit')->with('time_sheet_data',$time_sheet_data)->with('project',$project)
+        ->with('date',$date)->with('user_id',$user_id);
 
 
 
