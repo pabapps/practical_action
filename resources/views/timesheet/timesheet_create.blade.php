@@ -84,14 +84,7 @@
             <td>--</td>
           </tr>
           @endforeach
-          
-
           @endif
-
-
-
-
-          
         </tbody>
         <tfoot>
           <tr>

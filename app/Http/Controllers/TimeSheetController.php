@@ -29,7 +29,7 @@ class TimeSheetController extends Controller
 
     public function index()
     {
-        //
+        dd("working on it");
     }
 
     /**
@@ -69,7 +69,7 @@ class TimeSheetController extends Controller
         // ->select('project_id','start_time','end_time')->where('user_id',$user->id)->where('valid',1)->get();
 
         $query_time_sheet = "
-        SELECT project_id, TIME_TO_SEC(TIMEDIFF(end_time,start_time)) diff FROM time_sheet_user WHERE user_id='$user->id'";
+        SELECT project_id, TIME_TO_SEC(TIMEDIFF(end_time,start_time)) diff FROM time_sheet_user WHERE user_id='$user->id' AND valid=1 AND sent_to_manager=0";
 
         $user_time_sheet = DB::select($query_time_sheet);
 
