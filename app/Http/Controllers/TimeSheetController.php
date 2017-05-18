@@ -12,6 +12,7 @@ use App\User;
 use App\UserDesignationModel;
 use App\UserProjectModel;
 use App\UserTimeSheetModel;
+use App\Projects;
 
 
 class TimeSheetController extends Controller
@@ -54,7 +55,7 @@ class TimeSheetController extends Controller
 
         $projects = DB::select($query_projects);
 
-    
+
         return response()->json($projects);
 
     }
@@ -102,7 +103,7 @@ class TimeSheetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
 
     	$user = Auth::user();
@@ -119,6 +120,15 @@ class TimeSheetController extends Controller
     	/**
     	 * list of the projects in which a user is connected along with their time sheet data
     	 */
+
+        if(count($user_info)==0){
+
+
+            $request->session()->flash('alert-danger', 'This user designation has not been assigned yet. Please do that first!');
+
+            return redirect()->back();
+
+        }
 
     	$user_projects = DB::table('users_projects_connection')
     	->join('projects','projects.id', '=','users_projects_connection.project_id')
@@ -239,46 +249,46 @@ class TimeSheetController extends Controller
 
             foreach ($final_array as $array) {
                 if($array['project_id'] == $u_project->project_id ){                   
-                     $missing_project_id = -1;
-                     break;
-                }else{
-                    $missing_project_id = $u_project->project_id;
+                   $missing_project_id = -1;
+                   break;
+               }else{
+                $missing_project_id = $u_project->project_id;
 
-                }
-                $counter ++;
             }
-
-
-            if($missing_project_id != -1){
-                $counter++;
-                $final_array[$counter] = array(
-                    'project_name'=> $u_project->project_name,
-                    'allocated_days'=> $u_project->allocated_days,
-                    'allocated_time'=> $u_project->allocated_time,
-                    'final_deducted_time'=>'-',
-                    'project_id'=>$time_sheet->project_id
-
-                    );
-            }
-
+            $counter ++;
         }
+
+
+        if($missing_project_id != -1){
+            $counter++;
+            $final_array[$counter] = array(
+                'project_name'=> $u_project->project_name,
+                'allocated_days'=> $u_project->allocated_days,
+                'allocated_time'=> $u_project->allocated_time,
+                'final_deducted_time'=>'-',
+                'project_id'=>$time_sheet->project_id
+
+                );
+        }
+
+    }
 
 
 
 
 
         // dd($final_array);
-        if(count($final_array)>0) {
-            return view('timesheet.timesheet_create')->with('user_projects',$user_projects)->with('user_info',$user_info[0])
-            ->with('final_array',$final_array);
+    if(count($final_array)>0) {
+        return view('timesheet.timesheet_create')->with('user_projects',$user_projects)->with('user_info',$user_info[0])
+        ->with('final_array',$final_array);
 
-        }else{
+    }else{
 
-            return view('timesheet.timesheet_create')->with('user_projects',$user_projects)->with('user_info',$user_info[0]);
-        }
-
-        
+        return view('timesheet.timesheet_create')->with('user_projects',$user_projects)->with('user_info',$user_info[0]);
     }
+
+
+}
 
     /**
      * Store a newly created resource in storage.
@@ -329,9 +339,23 @@ class TimeSheetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        dd("working on it");
+    public function edit($id){
+
+        $time_sheet_id=Crypt::decrypt($id);
+        
+
+        $time_sheet_data = UserTimeSheetModel::findOrFail($time_sheet_id);
+
+        // dd($time_sheet_data->project_id);
+
+        $project = Projects::findOrFail($time_sheet_data->project_id);
+
+        // dd($projects);
+
+        return view('timesheet.timesheet_edit')->with('time_sheet_data',$time_sheet_data)->with('project',$project);
+
+
+
     }
 
     /**

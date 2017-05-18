@@ -47,6 +47,7 @@
           <thead>
             <tr>
               <th>Project Name</th>
+              <th>Date</th>
               <th>Star date</th>
               <th>End date</th>
               <th>Activity</th>
@@ -60,6 +61,7 @@
           <tfoot>
             <tr>
               <th>Project Name</th>
+              <th>Date</th>
               <th>Star date</th>
               <th>End date</th>
               <th>Activity</th>
@@ -136,17 +138,14 @@ $( document ).ready(function() {
 
     }else{
 
-      var array =[];
-      var count = 0;
-
-
-
       var table = $('#time-sheet-log').DataTable( {
         "processing": true,
         "serverSide": true,
+        "bDestroy": true,
         "ajax": "{{URL::to('/')}}/timesheet/project_details_for_timesheet/"+project_id,
         "columns": [
         { "data": "project_name" },
+        { "data": "date" },
         { "data": "start_time" },
         { "data": "end_time" },
         { "data": "activity" },
@@ -154,7 +153,7 @@ $( document ).ready(function() {
         ],
         "order": [[1, 'asc']]
       } );
-      table.destroy();
+      
 
 
     }
