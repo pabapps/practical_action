@@ -29,7 +29,36 @@ class TimeSheetController extends Controller
 
     public function index()
     {
-        dd("working on it");
+        return view('timesheet.timesheet_index');
+    }
+
+    /**
+     * fetching only those projects for a user that has been assigned by the user's manager
+     */
+
+    public function get_user_projecs(Request $request){
+
+        $user = AUTH::user();
+
+        $search_term = $request->input('term');
+
+        $query_projects= "
+        SELECT
+        projects.id AS id,
+        projects.project_name AS text
+        FROM projects
+        JOIN users_projects_connection
+        ON users_projects_connection.project_id = projects.id AND 
+        users_projects_connection.user_id='$user->id' AND users_projects_connection.valid=1
+        WHERE projects.project_name LIKE '%{$search_term}%' AND projects.valid=1
+
+        ";
+
+        $projects = DB::select($query_projects);
+
+    
+        return response()->json($projects);
+
     }
 
     /**

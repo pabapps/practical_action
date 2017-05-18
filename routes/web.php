@@ -109,6 +109,9 @@ Route::resource('/departments','DepartmentController');
 /**
  * route for time sheet
  */
+//fetching the projects that are related to the user for timesheet
+Route::get('/timesheet/get_user_projecs','TimeSheetController@get_user_projecs');
+
 Route::resource('/timesheet','TimeSheetController');
 
 
