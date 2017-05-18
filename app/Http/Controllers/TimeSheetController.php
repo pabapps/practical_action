@@ -130,10 +130,10 @@ class TimeSheetController extends Controller
 
         }
 
-    	$user_projects = DB::table('users_projects_connection')
-    	->join('projects','projects.id', '=','users_projects_connection.project_id')
-    	->select('projects.project_name','users_projects_connection.project_id','users_projects_connection.allocated_time',
-    		'users_projects_connection.allocated_days')->where('users_projects_connection.user_id',$user->id)->where('users_projects_connection.valid',1)->get();
+        $user_projects = DB::table('users_projects_connection')
+        ->join('projects','projects.id', '=','users_projects_connection.project_id')
+        ->select('projects.project_name','users_projects_connection.project_id','users_projects_connection.allocated_time',
+          'users_projects_connection.allocated_days')->where('users_projects_connection.user_id',$user->id)->where('users_projects_connection.valid',1)->get();
 
         // dd($user_projects);
 
@@ -249,9 +249,9 @@ class TimeSheetController extends Controller
 
             foreach ($final_array as $array) {
                 if($array['project_id'] == $u_project->project_id ){                   
-                   $missing_project_id = -1;
-                   break;
-               }else{
+                 $missing_project_id = -1;
+                 break;
+             }else{
                 $missing_project_id = $u_project->project_id;
 
             }
@@ -375,7 +375,17 @@ class TimeSheetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        UserTimeSheetModel::where('id', $id)
+        ->update(['start_time' => $request->start_time,'end_time' => $request->end_time,
+            'date'=> \Carbon\Carbon::createFromFormat('d-m-Y', $request->entry_date)->toDateString(),'activity'=>$request->activity,'remarks'=>$request->remarks_modal,
+            'location'=>$request->location_modal]);
+
+        $request->session()->flash('alert-success', 'data has been successfully updated!');
+        return redirect()->action('TimeSheetController@index'); 
+
+
+
     }
 
     /**
