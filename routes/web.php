@@ -126,6 +126,9 @@ Route::get('/timesheet/get_submitted_users','TimeSheetController@get_submitted_u
 
 Route::get('/timesheet/time_log_for_submitted_users/{id}','TimeSheetController@time_log_for_submitted_users');
 
+//previous/submitted time logs for the users
+Route::get('/timesheet/old_time_logs_users','TimeSheetController@old_time_logs_users');
+
 Route::resource('/timesheet','TimeSheetController');
 
 

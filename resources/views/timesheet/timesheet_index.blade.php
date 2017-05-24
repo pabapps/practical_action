@@ -43,8 +43,10 @@
         <div class="col-md-1">
           <div class="form-group">
 
-            <button type="submit" id="#" class="btn btn-success" style="margin-top: 25px">Previous/submitted logs</button>
+            <a href="{{URL::to('/')}}/timesheet/old_time_logs_users">
 
+            <button type="button"  class="btn btn-success" style="margin-top: 25px">Previous/submitted logs</button>
+          </a>
           </div>
         </div>
 

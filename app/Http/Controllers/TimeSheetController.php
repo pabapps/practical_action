@@ -490,7 +490,11 @@ class TimeSheetController extends Controller
         ->setRowId('id')
         ->make(true);
 
-        
+    }
+
+    public function old_time_logs_users(){
+
+        return view('timesheet.previous_time_log_users');
 
     }
 
