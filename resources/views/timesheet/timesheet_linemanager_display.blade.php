@@ -23,8 +23,8 @@
           <div class="col-md-6">
 
            <div class="form-group">
-            <label>Please select on of the projects</label>
-            <select id="project-id" name="project_id"  style="width: 100%;" class="col-lg-8 form-control select2" >
+            <label>Please select one of the users</label>
+            <select id="user-id" name="user_id"  style="width: 100%;" class="col-lg-8 form-control select2" >
 
             </select>
           </div>
@@ -113,11 +113,11 @@
 $( document ).ready(function() {
 
 
-  $('#project-id').select2({
+  $('#user-id').select2({
     placeholder: 'Select an option',
     ajax: {
       dataType: 'json',
-      url: '{{URL::to('/')}}/timesheet/get_user_projecs',
+      url: '{{URL::to('/')}}/timesheet/get_submitted_users',
       delay: 250,
       data: function(params) {
         return {

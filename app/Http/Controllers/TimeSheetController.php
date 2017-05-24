@@ -435,6 +435,28 @@ class TimeSheetController extends Controller
 
     }
 
+    /**
+     * selecting the users which is user a particular line manager
+     */
+
+    public function get_submitted_users(Request $request){
+
+        $user = Auth::user();
+
+        $search_term = $request->input('term');
+
+        $query_sub_users= "
+        SELECT users.id , users.name AS text
+        FROM users
+        WHERE users.name LIKE '%{$search_term}%' AND users.valid=1 AND users.line_manager_id='$user->id'";
+
+        $sub_users = DB::select($query_sub_users);
+
+    
+        return response()->json($sub_users);
+
+    }
+
 
 
 

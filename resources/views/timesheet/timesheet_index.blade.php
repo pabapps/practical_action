@@ -23,7 +23,7 @@
           <div class="col-md-6">
 
            <div class="form-group">
-            <label>Please select on of the projects</label>
+            <label>Please select one of the projects</label>
             <select id="project-id" name="project_id"  style="width: 100%;" class="col-lg-8 form-control select2" >
 
             </select>
