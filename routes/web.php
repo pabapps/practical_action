@@ -114,6 +114,9 @@ Route::get('/timesheet/get_user_projecs','TimeSheetController@get_user_projecs')
 
 Route::get('/timesheet/project_details_for_timesheet/{id}','TimeSheetController@project_details_for_timesheet');
 
+//route for sending time log for the porjects to their respective line manager
+Route::post('/timesheet/send_to_linemanager','TimeSheetController@send_to_linemanager');
+
 Route::resource('/timesheet','TimeSheetController');
 
 

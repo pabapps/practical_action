@@ -72,11 +72,15 @@
         </table>
       </div>
 
+      {!! Form::open(array('url'=>'/timesheet/send_to_linemanager', 'id'=>'participant-form')) !!}
+
       <div class="form-group">
 
         <button type="submit" id="time-sheet-submit" class="btn btn-primary">Submit</button>
 
       </div>
+
+      {!! Form::close() !!}
       
     </div>
     
@@ -168,15 +172,50 @@ $( document ).ready(function() {
   });
 
 
-  $( "#time-sheet-submit" ).click(function() {
+  $( "#participant-form" ).submit(function(event){
+
+    event.preventDefault();
+
+    var array = [],count = 0;
+
+    if(table === undefined){
+
+      alert("please select a project first");
+
+      return;
+
+    }
 
 
     table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
       var data = this.data();
-      
-      console.log(data);
 
-    } );
+      array[count] = data['id'];
+
+      count++;
+      
+
+    });
+
+    var $form = $( this ),
+    url = $form.attr( "action" ),
+    token = $("[name='_token']").val();
+
+    $.post( url, {'array_time_log':array, '_token': token }, function( data ) {
+
+    }).done(function() {
+
+      alert("your time sheet has been sent to your line manager!");
+
+      location.reload();
+
+      // window.location.assign('{{URL::to('/')}}/set_trainer');
+    });
+
+
+
+
+
 
   });
 

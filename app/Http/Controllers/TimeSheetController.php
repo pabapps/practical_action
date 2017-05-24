@@ -88,7 +88,7 @@ class TimeSheetController extends Controller
             ' <a href="'. url('/timesheet') . '/' . 
             Crypt::encrypt($time_collection->id) . 
             '/edit' .'"' . 
-            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Details</a>';
         })
         ->editColumn('id', '{{$id}}')
         ->setRowId('id')
@@ -398,4 +398,51 @@ class TimeSheetController extends Controller
     {
         //
     }
+
+    /**
+     * sending the time log sheet to the line manager af an specific user
+     */
+
+
+    public function send_to_linemanager(Request $request){
+
+        // dd($request->all());
+
+        $array = $request->array_time_log;
+
+        $user = Auth::user();
+
+        foreach ($array as $single_value) {
+
+            DB::table('time_sheet_user')
+            ->where('id', $single_value)
+            ->where('user_id', $user->id)
+            ->update(['sent_to_manager' => 1]);
+
+        }
+
+        
+
+        dd("working");
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
