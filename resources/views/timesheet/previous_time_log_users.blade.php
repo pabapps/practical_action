@@ -145,7 +145,7 @@ $('#search_form').submit(function( event ){
   }
 
 
-  console.log(not_empty);
+  
 
   if(not_empty){
 
@@ -165,28 +165,20 @@ $('#search_form').submit(function( event ){
 
     var table = $('#chart-of-account').DataTable( {
       "processing": true,
-      "serverSide": true,
-      "paging": false,
-      "retrieve": true,
-      "lengthChange": false,
-      "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
+        "serverSide": true,
+      "bDestroy": true,
       "ajax": "{{URL::to('/')}}/timesheet/previous_details_time_log_users/"+start_date+"/"+end_date,
       "columns": [
-      { "data": "id" },
-      { "data": "supplier_name" },
-      { "data": "supplier_contact_no" },
-      { "data": "sales_center_name" },
-      { "data": "from_date" },
-      { "data": "to_date" },
-      { "data": "Link", name: 'link', orderable: false, searchable: false}
+      { "data": "project_name" },
+      { "data": "date" },
+      { "data": "start_time" },
+      { "data": "end_time" },
+      { "data": "activity" },
+      { "data": "action", name: 'action', orderable: false, searchable: false}
       ],
       "order": [[1, 'asc']]
     } );
 
-    table.destroy();
   }else{
     alert("please set the dates!");
     return;

@@ -502,10 +502,38 @@ class TimeSheetController extends Controller
     public function previous_details_time_log_users(Request $request,$start_date,$end_date){
 
 
+        $user = Auth::user();
+
         $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->toDateString();
 
         $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
 
+
+        $time_sheet_log = DB::table('time_sheet_user')
+        ->join('projects','time_sheet_user.project_id','=','projects.id')
+        ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.start_time',
+            'time_sheet_user.end_time','time_sheet_user.date','time_sheet_user.activity')
+        ->where('time_sheet_user.user_id',$user->id)->where('time_sheet_user.valid',1)
+        ->where('time_sheet_user.sent_to_manager',1)
+        ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
+
+
+        // dd($time_sheet_log);
+
+        $time_collection = collect($time_sheet_log);
+    // dd($reservation_collection);
+        return Datatables::of($time_collection)
+        ->addColumn('action', function ($time_collection) {
+            return 
+
+            ' <a href="'. url('/timesheet') . '/' . 
+            Crypt::encrypt($time_collection->id) . 
+            '/edit' .'"' . 
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Details</a>';
+        })
+        ->editColumn('id', '{{$id}}')
+        ->setRowId('id')
+        ->make(true);
         
 
     }
