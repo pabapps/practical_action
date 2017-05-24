@@ -35,7 +35,7 @@
         <div class="col-md-6">
           <div class="form-group">
 
-            <button type="submit" id="project-select-id" class="btn btn-primary" style="margin-top: 25px">Show log</button>
+            <button type="submit" id="user-select-id" class="btn btn-primary" style="margin-top: 25px">Show log</button>
 
           </div>
         </div>
@@ -135,15 +135,15 @@ $( document ).ready(function() {
 
   var table;
 
-  $( "#project-select-id" ).click(function() {
+  $( "#user-select-id" ).click(function() {
 
     event.preventDefault();
 
-    var project_id = $('#project-id').val();
+    var user_id = $('#user-id').val();
 
-    if(project_id == null){
+    if(user_id == null){
 
-      alert("OPS! please select a project.");
+      alert("OPS! please select an user.");
 
       return;
 
@@ -153,7 +153,7 @@ $( document ).ready(function() {
         "processing": true,
         "serverSide": true,
         "bDestroy": true,
-        "ajax": "{{URL::to('/')}}/timesheet/project_details_for_timesheet/"+project_id,
+        "ajax": "{{URL::to('/')}}/timesheet/time_log_for_submitted_users/"+user_id,
         "columns": [
         { "data": "project_name" },
         { "data": "date" },
