@@ -117,6 +117,8 @@ Route::get('/timesheet/project_details_for_timesheet/{id}','TimeSheetController@
 //route for sending time log for the porjects to their respective line manager
 Route::post('/timesheet/send_to_linemanager','TimeSheetController@send_to_linemanager');
 
+Route::get('/timesheet/display_line_manager','TimeSheetController@display_line_manager');
+
 Route::resource('/timesheet','TimeSheetController');
 
 

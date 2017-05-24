@@ -429,6 +429,13 @@ class TimeSheetController extends Controller
     }
 
 
+    public function display_line_manager(){
+
+        dd("working on it");
+
+    }
+
+
 
 
 
