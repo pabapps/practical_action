@@ -32,11 +32,21 @@
         </div>
         <!-- /.col -->
 
-        <div class="col-md-6">
+        <div class="col-md-1">
           <div class="form-group">
 
             <button type="submit" id="user-select-id" class="btn btn-primary" style="margin-top: 25px">Show log</button>
 
+          </div>
+        </div>
+
+        <div class="col-md-1">
+          <div class="form-group">
+
+            <a href="{{URL::to('/')}}/timesheet/old_time_logs_users">
+
+            <button type="button"  class="btn btn-success" style="margin-top: 25px">Previous/submitted logs</button>
+          </a>
           </div>
         </div>
       </div>
@@ -209,7 +219,7 @@ $( document ).ready(function() {
 
       location.reload();
 
-      // window.location.assign('{{URL::to('/')}}/set_trainer');
+      
     });
 
   });

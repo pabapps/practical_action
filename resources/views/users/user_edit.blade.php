@@ -46,7 +46,9 @@
               <div class="form-group">
                 <label>Designation</label>
                 <select id="designation" name="designation" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]">
-
+                  @if(isset($user_designation->position_name))
+                  <option value='{{$matrix_manager->id}}' selected>{{$user_designation->position_name}}</option>
+                  @endif
                 </select>
               </div>
 

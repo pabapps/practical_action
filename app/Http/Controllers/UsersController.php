@@ -11,6 +11,7 @@ use Auth;
 use App\User;
 use App\UserDesignationModel;
 use App\UserProjectModel;
+use App\Designation;
 
 class UsersController extends Controller
 {
@@ -136,8 +137,21 @@ class UsersController extends Controller
 
         $line_manager = User::where('id', $user->line_manager_id)->first();
 
-        return view('users.user_edit')->with('user',$user)->with('date',$date)->with('matrix_manager',$matrix_manager)
-        ->with('line_manager',$line_manager);
+        $user_designation_connection = UserDesignationModel::where('user_id',$user->id)
+        ->where('valid',1)->first();
+
+        if(is_object($user_designation_connection)){
+
+            $user_designation = Designation::where('id',$user_designation_connection->designation_id)->first();
+
+            return view('users.user_edit')->with('user',$user)->with('date',$date)->with('matrix_manager',$matrix_manager)
+            ->with('line_manager',$line_manager)->with('user_designation',$user_designation);
+        }else{
+
+            return view('users.user_edit')->with('user',$user)->with('date',$date)->with('matrix_manager',$matrix_manager)
+            ->with('line_manager',$line_manager);
+
+        }
 
     }
 
@@ -461,7 +475,7 @@ class UsersController extends Controller
         foreach ($previous_projects as $old_project) {
 
             foreach ($projects_data as $project) {
-                
+
                 if($old_project->project_id == $project[4]){
 
                     $data_found = true;

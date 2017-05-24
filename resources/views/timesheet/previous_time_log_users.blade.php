@@ -165,7 +165,7 @@ $('#search_form').submit(function( event ){
 
     var table = $('#chart-of-account').DataTable( {
       "processing": true,
-        "serverSide": true,
+      "serverSide": true,
       "bDestroy": true,
       "ajax": "{{URL::to('/')}}/timesheet/previous_details_time_log_users/"+start_date+"/"+end_date,
       "columns": [
