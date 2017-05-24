@@ -156,6 +156,7 @@
             
             <li {!! Request::is('*timesheet') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/timesheet/create'}}"><i class="fa fa-circle-o"></i>Create Time Sheet</a></li>
             <li {!! Request::is('*timesheet') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/timesheet'}}"><i class="fa fa-circle-o"></i>Time Log</a></li>
+            <li {!! Request::is('*timesheet') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/timesheet/display_line_manager'}}"><i class="fa fa-circle-o"></i>Line Manager</a></li>
             
             
           </ul>

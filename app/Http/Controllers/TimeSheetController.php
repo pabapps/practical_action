@@ -431,7 +431,7 @@ class TimeSheetController extends Controller
 
     public function display_line_manager(){
 
-        dd("working on it");
+        return view('timesheet.timesheet_linemanager_display');
 
     }
 
