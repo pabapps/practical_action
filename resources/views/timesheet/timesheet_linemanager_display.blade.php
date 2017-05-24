@@ -48,8 +48,8 @@
             <tr>
               <th>Project Name</th>
               <th>Date</th>
-              <th>Star date</th>
-              <th>End date</th>
+              <th>Star time</th>
+              <th>End time</th>
               <th>Activity</th>
               <th>Edit</th>
 
@@ -62,8 +62,8 @@
             <tr>
               <th>Project Name</th>
               <th>Date</th>
-              <th>Star date</th>
-              <th>End date</th>
+              <th>Star time</th>
+              <th>End time</th>
               <th>Activity</th>
               <th>Edit</th>
 
@@ -211,11 +211,6 @@ $( document ).ready(function() {
 
       // window.location.assign('{{URL::to('/')}}/set_trainer');
     });
-
-
-
-
-
 
   });
 

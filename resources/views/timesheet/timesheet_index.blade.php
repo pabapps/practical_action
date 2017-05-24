@@ -32,13 +32,22 @@
         </div>
         <!-- /.col -->
 
-        <div class="col-md-6">
+        <div class="col-md-1">
           <div class="form-group">
 
-            <button type="submit" id="project-select-id" class="btn btn-primary" style="margin-top: 25px">Show log</button>
+            <button type="submit" id="project-select-id" class="btn btn-primary" style="margin-top: 25px">Show logs</button>
 
           </div>
         </div>
+        
+        <div class="col-md-1">
+          <div class="form-group">
+
+            <button type="submit" id="#" class="btn btn-success" style="margin-top: 25px">Previous/submitted logs</button>
+
+          </div>
+        </div>
+
       </div>
       <!-- /.row -->
 

@@ -471,7 +471,7 @@ class TimeSheetController extends Controller
         ->where('time_sheet_user.user_id',$id)->where('time_sheet_user.valid',1)
         ->where('time_sheet_user.sent_to_manager',1)->get();
 
-        dd($time_sheet_log);
+        // dd($time_sheet_log);
 
         // return response()->json($time_sheet_log);
 
