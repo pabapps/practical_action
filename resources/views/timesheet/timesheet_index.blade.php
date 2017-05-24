@@ -71,10 +71,17 @@
           </tfoot>
         </table>
       </div>
+
+      <div class="form-group">
+
+        <button type="submit" id="time-sheet-submit" class="btn btn-primary">Submit</button>
+
+      </div>
       
     </div>
     
     <!-- /.box-body -->
+
 
   </div>
   <!-- /.box -->
@@ -122,7 +129,7 @@ $( document ).ready(function() {
     }
   });
 
-  
+  var table;
 
   $( "#project-select-id" ).click(function() {
 
@@ -138,7 +145,7 @@ $( document ).ready(function() {
 
     }else{
 
-      var table = $('#time-sheet-log').DataTable( {
+      table = $('#time-sheet-log').DataTable( {
         "processing": true,
         "serverSide": true,
         "bDestroy": true,
@@ -159,6 +166,20 @@ $( document ).ready(function() {
     }
 
   });
+
+
+  $( "#time-sheet-submit" ).click(function() {
+
+
+    table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+      var data = this.data();
+      
+      console.log(data);
+
+    } );
+
+  });
+
 
 
 
