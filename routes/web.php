@@ -129,6 +129,10 @@ Route::get('/timesheet/time_log_for_submitted_users/{id}','TimeSheetController@t
 //previous/submitted time logs for the users
 Route::get('/timesheet/old_time_logs_users','TimeSheetController@old_time_logs_users');
 
+//details of the previous time log for the user
+Route::get('/timesheet/previous_details_time_log_users/{start_date}/{end_date}',
+	'TimeSheetController@previous_details_time_log_users');
+
 Route::resource('/timesheet','TimeSheetController');
 
 

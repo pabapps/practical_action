@@ -163,30 +163,30 @@ $('#search_form').submit(function( event ){
 
 
 
-    // var table = $('#chart-of-account').DataTable( {
-    //   "processing": true,
-    //   "serverSide": true,
-    //   "paging": false,
-    //   "retrieve": true,
-    //   "lengthChange": false,
-    //   "searching": true,
-    //   "ordering": true,
-    //   "info": true,
-    //   "autoWidth": false,
-    //   "ajax": "{{URL::to('/')}}/reservation/request_for_checked_out/"+start_date+"/"+end_date,
-    //   "columns": [
-    //   { "data": "id" },
-    //   { "data": "supplier_name" },
-    //   { "data": "supplier_contact_no" },
-    //   { "data": "sales_center_name" },
-    //   { "data": "from_date" },
-    //   { "data": "to_date" },
-    //   { "data": "Link", name: 'link', orderable: false, searchable: false}
-    //   ],
-    //   "order": [[1, 'asc']]
-    // } );
+    var table = $('#chart-of-account').DataTable( {
+      "processing": true,
+      "serverSide": true,
+      "paging": false,
+      "retrieve": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "ajax": "{{URL::to('/')}}/timesheet/previous_details_time_log_users/"+start_date+"/"+end_date,
+      "columns": [
+      { "data": "id" },
+      { "data": "supplier_name" },
+      { "data": "supplier_contact_no" },
+      { "data": "sales_center_name" },
+      { "data": "from_date" },
+      { "data": "to_date" },
+      { "data": "Link", name: 'link', orderable: false, searchable: false}
+      ],
+      "order": [[1, 'asc']]
+    } );
 
-    // table.destroy();
+    table.destroy();
   }else{
     alert("please set the dates!");
     return;

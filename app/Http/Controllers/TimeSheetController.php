@@ -499,6 +499,18 @@ class TimeSheetController extends Controller
     }
 
 
+    public function previous_details_time_log_users(Request $request,$start_date,$end_date){
+
+
+        $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->toDateString();
+
+        $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
+
+        
+
+    }
+
+
 
 
 
