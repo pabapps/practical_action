@@ -37,7 +37,7 @@ class TimeSheetController extends Controller
      * fetching only those projects for a user that has been assigned by the user's manager
      */
 
-    public function get_user_projecs(Request $request){
+    public function get_user_projects(Request $request){
 
         $user = AUTH::user();
 
@@ -61,19 +61,24 @@ class TimeSheetController extends Controller
     }
 
     /**
-     * fetching all the relavent timesheet info/log that the user had previously entered for this project
+     * fetching all the relavent timesheet info/log that the user had entered for this project but didnot submit
+     * the data to the manager
      */
 
-    public function project_details_for_timesheet(Request $request,$id){
+    public function project_details_for_timesheet(Request $request,$id,$month){
 
         $user = AUTH::user();
+
+        $date_string = explode("-", $month);
 
         $time_sheet_log = DB::table('time_sheet_user')
         ->join('projects','time_sheet_user.project_id','=','projects.id')
         ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.start_time',
             'time_sheet_user.end_time','time_sheet_user.date','time_sheet_user.activity')
         ->where('time_sheet_user.user_id',$user->id)->where('time_sheet_user.valid',1)
-        ->where('time_sheet_user.sent_to_manager',0)->where('time_sheet_user.project_id',$id)->get();
+        ->where('time_sheet_user.sent_to_manager',0)->where('time_sheet_user.project_id',$id)
+        ->whereMonth('time_sheet_user.date',$date_string[0])
+        ->whereYear('time_sheet_user.date',$date_string[1])->get();
 
         // dd($time_sheet_log);
 
@@ -152,6 +157,15 @@ class TimeSheetController extends Controller
         $not_exist = true;
 
         $array = array();
+
+        /**
+         * If the project_id already exist, we are just adding the new time value with the existing 
+         * time value to get an updated time value which is again is being saved in the array with the same
+         * project_id key.
+         *
+         * However, if the project_id doesnot exist then we are creating a new array with the project_id
+         * as key.
+         */
 
         foreach ($user_time_sheet as $time_sheet) {
 
