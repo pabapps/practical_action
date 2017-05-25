@@ -133,22 +133,21 @@ class TimeSheetController extends Controller
         $user_projects = DB::table('users_projects_connection')
         ->join('projects','projects.id', '=','users_projects_connection.project_id')
         ->select('projects.project_name','users_projects_connection.project_id','users_projects_connection.allocated_time',
-          'users_projects_connection.allocated_days')->where('users_projects_connection.user_id',$user->id)->where('users_projects_connection.valid',1)->get();
+          'users_projects_connection.allocated_days')
+        ->where('users_projects_connection.user_id',$user->id)
+        ->where('users_projects_connection.valid',1)->get();
 
         // dd($user_projects);
 
         /**
          * use time sheet details
          */
-        // $user_time_sheet = DB::table('time_sheet_user')
-        // ->select('project_id','start_time','end_time')->where('user_id',$user->id)->where('valid',1)->get();
 
         $query_time_sheet = "
-        SELECT project_id, TIME_TO_SEC(TIMEDIFF(end_time,start_time)) diff FROM time_sheet_user WHERE user_id='$user->id' AND valid=1 AND sent_to_manager=0";
+        SELECT project_id, TIME_TO_SEC(TIMEDIFF(end_time,start_time)) 
+        diff FROM time_sheet_user WHERE user_id='$user->id' AND valid=1";
 
         $user_time_sheet = DB::select($query_time_sheet);
-
-        // dd($user_time_sheet);
 
         $not_exist = true;
 
@@ -235,11 +234,7 @@ class TimeSheetController extends Controller
 
             }
             
-        }
-
-        
-
-        
+        }        
 
         foreach ($user_projects as $u_project) {
 
@@ -272,10 +267,6 @@ class TimeSheetController extends Controller
         }
 
     }
-
-
-
-
 
         // dd($final_array);
     if(count($final_array)>0) {
