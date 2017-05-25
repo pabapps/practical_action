@@ -580,6 +580,26 @@ class TimeSheetController extends Controller
 
     }
 
+    /**
+     * 
+     */
+    
+    public function get_all_users_for_accounts(Request $request){        
+
+
+        $search_term = $request->input('term');
+
+        $query_sub_users= "
+        SELECT users.id , users.name AS text
+        FROM users
+        WHERE users.name LIKE '%{$search_term}%' AND users.valid=1";
+
+        $sub_users = DB::select($query_sub_users);
+
+
+        return response()->json($sub_users);
+
+    }
 
 
 

@@ -153,7 +153,7 @@ $( document ).ready(function() {
     placeholder: 'Select an option',
     ajax: {
       dataType: 'json',
-      url: '{{URL::to('/')}}/timesheet/get_submitted_users',
+      url: '{{URL::to('/')}}/timesheet/get_all_users_for_accounts',
       delay: 250,
       data: function(params) {
         return {
