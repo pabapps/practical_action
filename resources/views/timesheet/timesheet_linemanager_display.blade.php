@@ -2,6 +2,7 @@
   @section('styles')
   <!-- DataTables -->
   <link rel="stylesheet" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/datepicker/datepicker3.css')}}">
   @endsection
 
   @section('content')
@@ -31,6 +32,20 @@
 
         </div>
         <!-- /.col -->
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Month</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right onchange" name="start_date" data-date-format="dd-mm-yyyy" id="month" placeholder="Month">
+            </div>
+            <!-- /.input group -->
+          </div>
+        </div>
 
         <div class="col-md-1">
           <div class="form-group">
@@ -118,9 +133,20 @@
 
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
 
 <script type="text/javascript">
 $( document ).ready(function() {
+
+  $('#month').datepicker({
+
+     format: "mm-yyyy",
+    startView: "months", 
+    minViewMode: "months",
+
+    autoclose: true
+
+  });
 
 
   $('#user-id').select2({
@@ -151,9 +177,11 @@ $( document ).ready(function() {
 
     var user_id = $('#user-id').val();
 
-    if(user_id == null){
+    var month = $("#month").datepicker({ dateFormat: 'dd-mm-yy' }).val();
 
-      alert("OPS! please select an user.");
+    if(user_id == null || month == ""){
+
+      alert("OPS! please select an user and the month.");
 
       return;
 
@@ -163,7 +191,7 @@ $( document ).ready(function() {
         "processing": true,
         "serverSide": true,
         "bDestroy": true,
-        "ajax": "{{URL::to('/')}}/timesheet/time_log_for_submitted_users/"+user_id,
+        "ajax": "{{URL::to('/')}}/timesheet/time_log_for_submitted_users/"+user_id+"/"+month,
         "columns": [
         { "data": "project_name" },
         { "data": "date" },

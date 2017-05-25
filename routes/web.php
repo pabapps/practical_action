@@ -124,7 +124,7 @@ Route::get('/timesheet/display_line_manager','TimeSheetController@display_line_m
 //route for gethering the users who have submitted their time sheet to their line managers
 Route::get('/timesheet/get_submitted_users','TimeSheetController@get_submitted_users');
 
-Route::get('/timesheet/time_log_for_submitted_users/{id}','TimeSheetController@time_log_for_submitted_users');
+Route::get('/timesheet/time_log_for_submitted_users/{id}/{month}','TimeSheetController@time_log_for_submitted_users');
 
 //previous/submitted time logs for the users
 Route::get('/timesheet/old_time_logs_users','TimeSheetController@old_time_logs_users');

@@ -466,15 +466,18 @@ class TimeSheetController extends Controller
      * selecting only those time logs that have been sent to the line manager
      */
     
-    public function time_log_for_submitted_users($id){
+    public function time_log_for_submitted_users($id,$month){
 
+        $date_string = explode("-", $month);
 
          $time_sheet_log = DB::table('time_sheet_user')
         ->join('projects','time_sheet_user.project_id','=','projects.id')
         ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.start_time',
             'time_sheet_user.end_time','time_sheet_user.date','time_sheet_user.activity')
         ->where('time_sheet_user.user_id',$id)->where('time_sheet_user.valid',1)
-        ->where('time_sheet_user.sent_to_manager',1)->get();
+        ->where('time_sheet_user.sent_to_manager',1)
+        ->whereMonth('time_sheet_user.date',$date_string[0])
+        ->whereYear('time_sheet_user.date',$date_string[1])->get();
 
         // dd($time_sheet_log);
 
