@@ -133,6 +133,10 @@ Route::get('/timesheet/old_time_logs_users','TimeSheetController@old_time_logs_u
 Route::get('/timesheet/previous_details_time_log_users/{start_date}/{end_date}',
 	'TimeSheetController@previous_details_time_log_users');
 
+//route for accounts manager, the data that line manager sends to the accounts manager 
+Route::get('/timesheet/time_log_accounts_display','TimeSheetController@time_log_accounts_display');
+
+
 Route::resource('/timesheet','TimeSheetController');
 
 
