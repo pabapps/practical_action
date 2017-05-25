@@ -26,6 +26,7 @@ class CreatTimeSheetUserModel extends Migration
             $table->string('location');
             $table->tinyInteger('valid')->default(1); // 1 = valid, 0 = invalid (basically deleted or not)
             $table->tinyInteger('sent_to_manager')->default(0); // 0 = data can de edited by the user, 1 = data sent to the manager
+            $table->tinyInteger('sent_to_accounts')->default(0); // 0 = data can de edited by the line manager, 1 = data sent to the accounts 
             $table->timestamps();
 
 

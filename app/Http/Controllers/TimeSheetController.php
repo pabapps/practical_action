@@ -258,9 +258,9 @@ class TimeSheetController extends Controller
 
             foreach ($final_array as $array) {
                 if($array['project_id'] == $u_project->project_id ){                   
-                 $missing_project_id = -1;
-                 break;
-             }else{
+                   $missing_project_id = -1;
+                   break;
+               }else{
                 $missing_project_id = $u_project->project_id;
 
             }
@@ -457,7 +457,7 @@ class TimeSheetController extends Controller
 
         $sub_users = DB::select($query_sub_users);
 
-    
+
         return response()->json($sub_users);
 
     }
@@ -470,12 +470,13 @@ class TimeSheetController extends Controller
 
         $date_string = explode("-", $month);
 
-         $time_sheet_log = DB::table('time_sheet_user')
+        $time_sheet_log = DB::table('time_sheet_user')
         ->join('projects','time_sheet_user.project_id','=','projects.id')
         ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.start_time',
             'time_sheet_user.end_time','time_sheet_user.date','time_sheet_user.activity')
         ->where('time_sheet_user.user_id',$id)->where('time_sheet_user.valid',1)
         ->where('time_sheet_user.sent_to_manager',1)
+        ->where('time_sheet_user.sent_to_accounts',0)
         ->whereMonth('time_sheet_user.date',$date_string[0])
         ->whereYear('time_sheet_user.date',$date_string[1])->get();
 
@@ -499,6 +500,30 @@ class TimeSheetController extends Controller
         ->make(true);
 
     }
+
+
+    /**
+     * 
+     */
+    
+    public function submit_to_accounts_manager(Request $request){
+
+        $array = $request->array_time_log;
+
+        foreach ($array as $single_value) {
+
+            DB::table('time_sheet_user')
+            ->where('id', $single_value)
+            ->update(['sent_to_accounts' => 1]);
+
+        }
+
+        dd("working");
+
+
+    }
+
+
 
     public function old_time_logs_users(){
 
@@ -551,7 +576,7 @@ class TimeSheetController extends Controller
      */
     public function time_log_accounts_display(){
 
-        dd("working on it");
+        return view('timesheet.timesheet_accountmanager_display');
 
     }
 

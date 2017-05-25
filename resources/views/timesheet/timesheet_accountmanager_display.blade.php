@@ -11,7 +11,7 @@
     <!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
       <div class="box-header with-border">
-        <h3 class="box-title">Time Sheet Log</h3>
+        <h3 class="box-title">Time sheet log for accounts</h3>
 
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -218,7 +218,7 @@ $( document ).ready(function() {
 
     if(table === undefined){
 
-      alert("please select a project first");
+      alert("please fill the table first");
 
       return;
 
@@ -243,9 +243,9 @@ $( document ).ready(function() {
 
     }).done(function() {
 
-      alert("your time sheet has been sent to your line manager!");
+      // alert("your time sheet has been sent to your line manager!");
 
-      location.reload();
+      // location.reload();
 
       
     });

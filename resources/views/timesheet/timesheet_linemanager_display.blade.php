@@ -11,7 +11,7 @@
     <!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
       <div class="box-header with-border">
-        <h3 class="box-title">Time Sheet Log</h3>
+        <h3 class="box-title">Time sheet log for managers</h3>
 
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -97,7 +97,7 @@
         </table>
       </div>
 
-      {!! Form::open(array('url'=>'/timesheet/send_to_linemanager', 'id'=>'participant-form')) !!}
+      {!! Form::open(array('url'=>'/timesheet/submit_to_accounts_manager', 'id'=>'participant-form')) !!}
 
       <div class="form-group">
 
@@ -218,7 +218,7 @@ $( document ).ready(function() {
 
     if(table === undefined){
 
-      alert("please select a project first");
+      alert("please fill the table first");
 
       return;
 
@@ -243,9 +243,9 @@ $( document ).ready(function() {
 
     }).done(function() {
 
-      alert("your time sheet has been sent to your line manager!");
+      // /alert("your time sheet has been sent to the accounts manager!");
 
-      location.reload();
+      // location.reload();
 
       
     });
