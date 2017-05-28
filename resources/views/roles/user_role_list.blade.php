@@ -12,15 +12,15 @@
             <div class="box-header">
               <h3 class="box-title">Data Table</h3>
             </div>
-            <a href="designation/create"><h1>Create new Designation</h1></a>
+            
             <!-- /.box-header -->
             <div class="box-body">
               <table id="products" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>id</th>
-                  <th>Position</th>
-                  <th>Department</th>
+                  <th>User Name</th>
+                  <th>Role</th>
                   <th>Edit</th>
                 </tr>
                 </thead>
@@ -28,12 +28,6 @@
 
                 </tbody>
                 <tfoot>
-                <tr>
-                  <th>id</th>
-                  <th>Position</th>
-                  <th>Department</th>
-                  <th>Edit</th>
-                </tr>
                 </tfoot>
               </table>
             </div>
@@ -57,11 +51,11 @@ $(document).ready(function() {
   var table = $('#products').DataTable( {
     "processing": true,
     "serverSide": true,
-    "ajax": "{{URL::to('/')}}/get_all_designations",
+    "ajax": "{{URL::to('/')}}/role/get_all_users_role",
     "columns": [
     { "data": "id" },
-    { "data": "position_name" },
-    { "data": "department" },
+    { "data": "name" },
+    { "data": "roles_name" },
     { "data": "action", name: 'action', orderable: false, searchable: false}
     ],
     "order": [[1, 'asc']]

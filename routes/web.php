@@ -83,6 +83,12 @@ Route::get('/roles/get_all_roles','RoleController@get_all_roles');
 //route for user role
 Route::get('/roles/user_roles','RoleController@user_roles');
 
+//get all roles for the users
+Route::get('/role/get_all_users_role','RoleController@get_all_users_role');
+
+//submit user role
+Route::post('/roles/submit_user_role','RoleController@submit_user_role');
+
 Route::resource('/roles','RoleController');
 
 

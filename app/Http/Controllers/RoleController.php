@@ -33,22 +33,22 @@ class RoleController extends Controller
 
 
     public function get_all_roles(){
-       $query_all_roles="
-       SELECT 
-       id,
-       name,
-       display_name,
-       description
-       FROM roles
-       ";
-       $roles = DB::select($query_all_roles);
+     $query_all_roles="
+     SELECT 
+     id,
+     name,
+     display_name,
+     description
+     FROM roles
+     ";
+     $roles = DB::select($query_all_roles);
 
        // dd($roles);
 
-       $rolls_collection = collect($roles);
+     $rolls_collection = collect($roles);
     // dd($reservation_collection);
-       return Datatables::of($rolls_collection)
-       ->addColumn('action', function ($rolls_collection) {
+     return Datatables::of($rolls_collection)
+     ->addColumn('action', function ($rolls_collection) {
         return 
 
         ' <a href="'. url('/roles') . '/' . 
@@ -56,10 +56,10 @@ class RoleController extends Controller
         '/edit' .'"' . 
         'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
     })
-       ->editColumn('id', '{{$id}}')
-       ->setRowId('id')
-       ->make(true);
-   }
+     ->editColumn('id', '{{$id}}')
+     ->setRowId('id')
+     ->make(true);
+ }
 
     /**
      * Show the form for creating a new resource.
@@ -99,7 +99,39 @@ class RoleController extends Controller
      */
     public function user_roles(){
 
-        dd("working on it");
+        return view('roles.user_role_list');
+
+    }
+
+
+    public function get_all_users_role(){
+        // dd("working on it");
+
+        $user_roles = DB::table('users')
+        ->leftJoin('role_user','role_user.user_id','=','users.id')
+        ->leftJoin('roles','roles.id','=','role_user.role_id')
+        ->select('users.id','users.name','roles.name AS roles_name')->get();
+
+        $user_role_collection = collect($user_roles);
+    // dd($reservation_collection);
+        return Datatables::of($user_role_collection)
+        ->addColumn('action', function ($user_role_collection) {
+            return 
+
+            ' <a href="'. url('/designation') . '/' . 
+            Crypt::encrypt($user_role_collection->id) . 
+            '/edit' .'"' . 
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
+        })
+        ->editColumn('id', '{{$id}}')
+        ->setRowId('id')
+        ->make(true);
+
+    }
+
+    public function submit_user_role(Request $request){
+
+        dd("workign on it");
 
     }
 
