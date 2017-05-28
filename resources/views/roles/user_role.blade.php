@@ -5,7 +5,7 @@
 		<!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
       <div class="box-header with-border">
-        <h3 class="box-title">Create a new designation</h3>
+        <h3 class="box-title">Assign a role to this user</h3>
 
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -25,11 +25,13 @@
            <!-- product type -->
 
            <div class="form-group">
-            <label>Name of the Designation</label>
+            <label>Name</label>
             <!-- <input type="text" class="form-control" name="sales_name" id="sales-name" placeholder="Enter sales center name" required>    -->
             <div class="row">
               <div class="col-lg-11" style="padding-right:0;">
-                <input type="text" class="form-control" name="designation_name" id="designation-name" placeholder="Enter the designation" required>
+                @if(isset($user->id))
+                <input type="text" class="form-control" name="user_name" id="user-name" value="{{$user->name}}" readonly>
+                @endif
               </div>
             </div>
           </div>
@@ -38,12 +40,14 @@
         <!-- /.col -->
         <div class="col-md-6">  
           <div class="form-group">
-            <label>Department name</label>
+            <label>Roles</label>
             <!-- <input type="text" class="form-control" name="sales_name" id="sales-name" placeholder="Enter sales center name" required>    -->
             <div class="row">
               <div class="col-lg-11" style="padding-right:0;">
                 <select id="department-id" name="department_id" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" required>
-
+                  @if(isset($role->id))
+                  <option value='{{$role->id}}' selected>{{$role->name}}</option>
+                  @endif
                 </select>
               </div>
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Role;
+use App\User;
 use Datatables;
 use Crypt;
 use Auth;
@@ -154,7 +155,17 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        dd("workign on it");
+        $user_id=Crypt::decrypt($id);
+
+        $user = User::findOrFail($user_id);
+
+        $role = DB::table('roles')
+        ->join('role_user','roles.id','=','role_id')
+        ->select('roles.name','roles.id')
+        ->where('role_user.user_id',$user_id)->get();
+
+        return view('roles.user_role')->with('user',$user)->with('role',$role);
+        
     }
 
     /**
