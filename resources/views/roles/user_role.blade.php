@@ -44,7 +44,7 @@
             <!-- <input type="text" class="form-control" name="sales_name" id="sales-name" placeholder="Enter sales center name" required>    -->
             <div class="row">
               <div class="col-lg-11" style="padding-right:0;">
-                <select id="department-id" name="department_id" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" required>
+                <select id="role-id" name="role_id" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" required>
                   @if(isset($role->id))
                   <option value='{{$role->id}}' selected>{{$role->name}}</option>
                   @endif
@@ -92,11 +92,11 @@
 $( document ).ready(function() {
 
 
-  $('#department-id').select2({
+  $('#role-id').select2({
     placeholder: 'Select an option',
     ajax: {
       dataType: 'json',
-      url: '{{URL::to('/')}}/ajax/ajax_get_departments',
+      url: '{{URL::to('/')}}/role/ajax/get_all_roles',
       delay: 250,
       data: function(params) {
         return {

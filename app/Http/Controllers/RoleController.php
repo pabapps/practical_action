@@ -34,22 +34,22 @@ class RoleController extends Controller
 
 
     public function get_all_roles(){
-     $query_all_roles="
-     SELECT 
-     id,
-     name,
-     display_name,
-     description
-     FROM roles
-     ";
-     $roles = DB::select($query_all_roles);
+       $query_all_roles="
+       SELECT 
+       id,
+       name,
+       display_name,
+       description
+       FROM roles
+       ";
+       $roles = DB::select($query_all_roles);
 
        // dd($roles);
 
-     $rolls_collection = collect($roles);
+       $rolls_collection = collect($roles);
     // dd($reservation_collection);
-     return Datatables::of($rolls_collection)
-     ->addColumn('action', function ($rolls_collection) {
+       return Datatables::of($rolls_collection)
+       ->addColumn('action', function ($rolls_collection) {
         return 
 
         ' <a href="'. url('/roles') . '/' . 
@@ -57,10 +57,10 @@ class RoleController extends Controller
         '/edit' .'"' . 
         'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
     })
-     ->editColumn('id', '{{$id}}')
-     ->setRowId('id')
-     ->make(true);
- }
+       ->editColumn('id', '{{$id}}')
+       ->setRowId('id')
+       ->make(true);
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -167,6 +167,23 @@ class RoleController extends Controller
         return view('roles.user_role')->with('user',$user)->with('role',$role);
         
     }
+
+    public function ajax_get_all_roles(Request $request){
+
+       $search_term = $request->input('term');
+
+       $role_query = "
+       SELECT roles.id, roles.name AS text
+       FROM roles 
+       WHERE roles.name LIKE '%{$search_term}%'";
+
+       $roles = DB::select($role_query);
+
+        // dd($users);
+
+       return response()->json($roles);
+
+   }
 
     /**
      * Update the specified resource in storage.

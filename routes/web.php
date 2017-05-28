@@ -89,6 +89,8 @@ Route::get('/role/get_all_users_role','RoleController@get_all_users_role');
 //submit user role
 Route::post('/roles/submit_user_role','RoleController@submit_user_role');
 
+Route::get('/role/ajax/get_all_roles','RoleController@ajax_get_all_roles');
+
 Route::resource('/roles','RoleController');
 
 
