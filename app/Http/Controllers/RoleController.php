@@ -118,7 +118,7 @@ class RoleController extends Controller
         ->addColumn('action', function ($user_role_collection) {
             return 
 
-            ' <a href="'. url('/designation') . '/' . 
+            ' <a href="'. url('/roles') . '/' . 
             Crypt::encrypt($user_role_collection->id) . 
             '/edit' .'"' . 
             'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
@@ -154,7 +154,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        dd("workign on it");
     }
 
     /**
