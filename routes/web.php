@@ -80,6 +80,9 @@ Route::resource("/projects",'ProjectController');
 //get all the roles
 Route::get('/roles/get_all_roles','RoleController@get_all_roles');
 
+//route for user role
+Route::get('/roles/user_roles','RoleController@user_roles');
+
 Route::resource('/roles','RoleController');
 
 

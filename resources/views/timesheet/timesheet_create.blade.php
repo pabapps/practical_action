@@ -180,12 +180,19 @@
           <div class="form-group">
             <label>Activity</label>
             <select id="activity" name="activity"  class="form-control" required>
-              <option value="project management">Project Management</option>
-              <option value="monitoring evalution">Monitoring & Evalution</option>
-              <option value="field visit">Field visit</option>
-              <option value="training">Training</option>
-              <option value="meeting (outside office)">Meeting (Outside Office)</option>
-              <option value="meeting (inside office)">Meeting (Inside Office)</option>
+              <option value="Project Management">Project Management</option>
+              <option value="Financial/Grants management">Financial/Grants management</option>
+              <option value="Communicaiton/Documentation">Communication/Documentation</option>
+              <option value="Knowledge mgt">Knowledge mgt</option>
+              <option value="meeting">Meeting</option>
+              <option value="Workshop/Training">Workshop/Training</option>
+              <option value="Exposure visit">Exposure visit</option>
+              <option value="Field visit">Field visit</option>
+              <option value="It support">It support</option>
+              <option value="Administrative work">Adminstrative work</option>
+              <option value="Logistic support">Logistic support</option>
+              <option value="HR management">HR management</option>
+              <option value="Monitoring">Monitoring</option>
             </select>
           </div>
 

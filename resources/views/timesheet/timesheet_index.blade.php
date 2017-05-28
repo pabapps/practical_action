@@ -21,7 +21,7 @@
 
       <div class="box-body">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
 
            <div class="form-group">
             <label>Please select one of the projects</label>

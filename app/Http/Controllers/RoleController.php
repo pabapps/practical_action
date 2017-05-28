@@ -93,6 +93,17 @@ class RoleController extends Controller
     }
 
     /**
+     * [user_roles description]
+     * displays the user_role page
+     * @return [type] [description]
+     */
+    public function user_roles(){
+
+        dd("working on it");
+
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
