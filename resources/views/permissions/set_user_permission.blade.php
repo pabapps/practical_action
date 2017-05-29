@@ -38,7 +38,7 @@
       <!-- /.row -->
       <div class="row">
         <div class="col-lg-12">
-          <table id="project-table" class="table table-bordered table-hover">
+          <table id="permission-table" class="table table-bordered table-hover">
             <thead>
               <tr>
                 <th style="text-align: center; width:25%;">Permission name</th>
@@ -147,32 +147,38 @@
     });
 
     
+    var permission_data = [];
+    var total = 0 ;
 
+    var permission_table = $("#permission-table").DataTable({
+      "searching": false,
+      "paging": false,
+      "ordering": false,
+      "autoWidth": false
+    });
 
 
     $('#add').click(function(event){
       event.preventDefault();
 
-      var project_text = $("#project-name option:selected").text(),
-      project_id = $("#project-name").val(),
-      project_code = $("#project-code").val(),
-      project_days = $("#project-days").val();
+      var permission_name = $("#permission-name option:selected").text(),
+      permisson_id = $("#permission-name").val(),
+      permission_description = $("#project-code").val();
 
-      if(isBlank(!project_id) && isBlank(!project_days)){
+      if(isBlank(!permisson_id)){
 
         var entry = [
-        project_text,
-        project_code,
-        project_days,
+        permission_name,
+        permission_description,
         '<button class="btn btn-danger btn-block delete-button" id="' + '">Delete</button>',
-        project_id
+        permisson_id
         ];
 
-        var project_id=entry[4];
-        var booleanValue=true;
-        if(project_data.length>=1){
-          for(i=0; i<project_data.length; i++){
-            if(project_data[i][4]==project_id){
+        var project_id = entry[3];
+        var booleanValue = true;
+        if(permission_data.length >= 1){
+          for(i=0; i<permission_data.length; i++){
+            if(permission_data[i][3] == permisson_id){
               booleanValue=false;
 
             }
@@ -181,19 +187,18 @@
 
         if(booleanValue){
 
-          project_data.push(entry);
+          permission_data.push(entry);
 
           total = total + 1;
 
-          project_table.row.add(entry).draw(false);
+          permission_table.row.add(entry).draw(false);
 
           $("#total").val(total);
 
-          $("#project-code").val(''),  
-          $("#project-days").val('');  
+          $("#project-code").val('');  
 
         }else{
-          alert("this project has already been entered");  
+          alert("this permission has already been entered");  
         }
       }else{
         alert("please fill the row properly");
