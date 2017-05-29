@@ -104,6 +104,16 @@ Route::get('/permissions/get_all_permissions','PermissionController@get_all_perm
 //role permission list
 Route::get('/permissions/roles_list','PermissionController@roles_list');
 
+//ajax request for user-role-permissions details
+Route::get('/permissions/user_role_permissions_details','PermissionController@user_role_permissions_details');
+
+//ajax request of permission for an user
+Route::get('/permissions/get_permissions_for_roles','PermissionController@get_permissions_for_roles');
+
+//ajax request for permission details
+Route::get('/permissions/permission_details','PermissionController@permission_details'); 
+
+
 Route::resource('/permissions','PermissionController');
 
 

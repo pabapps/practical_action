@@ -20,7 +20,6 @@
                 <tr>
                   <th>User</th>
                   <th>Role</th>
-                  <th>Permissions</th>
                   <th>Edit</th>
                 </tr>
                 </thead>
@@ -51,24 +50,23 @@
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script>
 $(document).ready(function() {
-  // var table = $('#products').DataTable( {
-  //   "processing": true,
-  //   "serverSide": true,
-  //   "paging": true,
-  //   "lengthChange": true,
-  //   "searching": true,
-  //   "ordering": true,
-  //   "info": true,
-  //   "autoWidth": false,
-  //   "ajax": "{{URL::to('/')}}/permissions/get_all_permissions",
-  //   "columns": [
-  //   { "data": "name" },
-  //   { "data": "display_name" },
-  //   { "data": "description" },
-  //   { "data": "action", name: 'action', orderable: false, searchable: false}
-  //   ],
-  //   "order": [[1, 'asc']]
-  // } );
+  var table = $('#role-permission-table').DataTable( {
+    "processing": true,
+    "serverSide": true,
+    "paging": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
+    "ajax": "{{URL::to('/')}}/permissions/user_role_permissions_details",
+    "columns": [
+    { "data": "name" },
+    { "data": "role" },
+    { "data": "action", name: 'action', orderable: false, searchable: false}
+    ],
+    "order": [[1, 'asc']]
+  } );
 });
 </script>
 @endsection
