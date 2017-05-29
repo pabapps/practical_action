@@ -15,7 +15,7 @@
             
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="products" class="table table-bordered table-hover">
+              <table id="user-role-table" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>id</th>
@@ -48,7 +48,7 @@
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script>
 $(document).ready(function() {
-  var table = $('#products').DataTable( {
+  var table = $('#user-role-table').DataTable( {
     "processing": true,
     "serverSide": true,
     "paging": true,
@@ -56,7 +56,7 @@ $(document).ready(function() {
     "searching": true,
     "ordering": true,
     "info": true,
-    "autoWidth": true,
+    "autoWidth": false,
     "ajax": "{{URL::to('/')}}/role/get_all_users_role",
     "columns": [
     { "data": "id" },

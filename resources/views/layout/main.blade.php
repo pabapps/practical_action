@@ -176,7 +176,7 @@
             <li {!! Request::is('*Settings') ? ' class="active"' : null !!} ><a href="{{URL::to('/') . '/roles'}}"><i class="fa fa-circle-o"></i>Roles</a></li>
             <li {!! Request::is('*Settings') ? ' class="active"' : null !!} ><a href="{{URL::to('/') . '/permissions'}}"><i class="fa fa-circle-o"></i>Permissions</a></li>
             <li {!! Request::is('*Settings') ? ' class="active"' : null !!} ><a href="{{URL::to('/') . '/roles/user_roles'}}"><i class="fa fa-circle-o"></i>User Roles</a></li>
-            <li {!! Request::is('*Settings') ? ' class="active"' : null !!} ><a href="{{URL::to('/') . '/permission/role_permission'}}"><i class="fa fa-circle-o"></i>Role permission</a></li>
+            <li {!! Request::is('*Settings') ? ' class="active"' : null !!} ><a href="{{URL::to('/') . '/permissions/roles_list'}}"><i class="fa fa-circle-o"></i>Role permission</a></li>
           </ul>
         </li>    
       </ul>

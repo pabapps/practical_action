@@ -101,6 +101,9 @@ Route::resource('/roles','RoleController');
 //route for all the permissions
 Route::get('/permissions/get_all_permissions','PermissionController@get_all_permissions');
 
+//role permission list
+Route::get('/permissions/roles_list','PermissionController@roles_list');
+
 Route::resource('/permissions','PermissionController');
 
 

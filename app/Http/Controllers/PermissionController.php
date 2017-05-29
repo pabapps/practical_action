@@ -82,6 +82,13 @@ class PermissionController extends Controller
 
     }
 
+
+    public function roles_list(){
+
+        return view('permissions.permission_role_list');
+
+    }
+
     /**
      * Display the specified resource.
      *

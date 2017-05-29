@@ -10,17 +10,17 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Permission Table</h3>
+              <h3 class="box-title">User role permission table</h3>
             </div>
             <a href="permissions/create"><h1>Create new permission</h1></a>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="products" class="table table-bordered table-hover">
+              <table id="role-permission-table" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Unique Name</th>
-                  <th>Display Name</th>
-                  <th>Description</th>
+                  <th>User</th>
+                  <th>Role</th>
+                  <th>Permissions</th>
                   <th>Edit</th>
                 </tr>
                 </thead>
@@ -29,10 +29,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>Unique Name</th>
-                  <th>Display Name</th>
-                  <th>Description</th>
-                  <th>Edit</th>
+                  
                 </tr>
                 </tfoot>
               </table>
@@ -54,24 +51,24 @@
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script>
 $(document).ready(function() {
-  var table = $('#products').DataTable( {
-    "processing": true,
-    "serverSide": true,
-    "paging": true,
-    "lengthChange": true,
-    "searching": true,
-    "ordering": true,
-    "info": true,
-    "autoWidth": false,
-    "ajax": "{{URL::to('/')}}/permissions/get_all_permissions",
-    "columns": [
-    { "data": "name" },
-    { "data": "display_name" },
-    { "data": "description" },
-    { "data": "action", name: 'action', orderable: false, searchable: false}
-    ],
-    "order": [[1, 'asc']]
-  } );
+  // var table = $('#products').DataTable( {
+  //   "processing": true,
+  //   "serverSide": true,
+  //   "paging": true,
+  //   "lengthChange": true,
+  //   "searching": true,
+  //   "ordering": true,
+  //   "info": true,
+  //   "autoWidth": false,
+  //   "ajax": "{{URL::to('/')}}/permissions/get_all_permissions",
+  //   "columns": [
+  //   { "data": "name" },
+  //   { "data": "display_name" },
+  //   { "data": "description" },
+  //   { "data": "action", name: 'action', orderable: false, searchable: false}
+  //   ],
+  //   "order": [[1, 'asc']]
+  // } );
 });
 </script>
 @endsection
