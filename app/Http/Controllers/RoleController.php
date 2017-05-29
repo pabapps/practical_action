@@ -34,22 +34,22 @@ class RoleController extends Controller
 
 
     public function get_all_roles(){
-       $query_all_roles="
-       SELECT 
-       id,
-       name,
-       display_name,
-       description
-       FROM roles
-       ";
-       $roles = DB::select($query_all_roles);
+     $query_all_roles="
+     SELECT 
+     id,
+     name,
+     display_name,
+     description
+     FROM roles
+     ";
+     $roles = DB::select($query_all_roles);
 
        // dd($roles);
 
-       $rolls_collection = collect($roles);
+     $rolls_collection = collect($roles);
     // dd($reservation_collection);
-       return Datatables::of($rolls_collection)
-       ->addColumn('action', function ($rolls_collection) {
+     return Datatables::of($rolls_collection)
+     ->addColumn('action', function ($rolls_collection) {
         return 
 
         ' <a href="'. url('/roles') . '/' . 
@@ -57,10 +57,10 @@ class RoleController extends Controller
         '/edit' .'"' . 
         'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
     })
-       ->editColumn('id', '{{$id}}')
-       ->setRowId('id')
-       ->make(true);
-   }
+     ->editColumn('id', '{{$id}}')
+     ->setRowId('id')
+     ->make(true);
+ }
 
     /**
      * Show the form for creating a new resource.
@@ -132,7 +132,53 @@ class RoleController extends Controller
 
     public function submit_user_role(Request $request){
 
-        dd("workign on it");
+        $user_id = $request->user_id;
+
+        $role_id = $request->role_id;
+
+        //checking if the user already has a role
+        $already_exist = false;
+
+
+        $role_from_database = "
+        SELECT role_id
+        FROM role_user WHERE user_id='$user_id'";
+
+        $role_from_database = DB::select($role_from_database);
+
+        if(sizeof($role_from_database)>=1){
+
+            //user role exist
+            $already_exist = true; 
+
+            //update the existing role with the new role
+            
+            DB::table('role_user')->where('user_id', '=',$user_id)->delete();
+
+            $role = Role::where('id',$role_id)->first();
+
+            $user = User::findOrFail($user_id);
+
+            $user->attachRole($role); 
+
+            $request->session()->flash('alert-success', 'This person role has been assigned as '.$role->name.'!');
+            return redirect()->back(); 
+
+
+        }else{
+
+            //use has no role 
+            //assign a role to this user
+            $role = Role::where('id',$role_id)->first();
+
+            $user = User::findOrFail($user_id);
+
+            $user->attachRole($role); 
+
+            $request->session()->flash('alert-success', 'This person role has been assigned as '.$role->name.'!');
+            return redirect()->back(); 
+
+        }
 
     }
 
@@ -170,20 +216,20 @@ class RoleController extends Controller
 
     public function ajax_get_all_roles(Request $request){
 
-       $search_term = $request->input('term');
+     $search_term = $request->input('term');
 
-       $role_query = "
-       SELECT roles.id, roles.name AS text
-       FROM roles 
-       WHERE roles.name LIKE '%{$search_term}%'";
+     $role_query = "
+     SELECT roles.id, roles.name AS text
+     FROM roles 
+     WHERE roles.name LIKE '%{$search_term}%'";
 
-       $roles = DB::select($role_query);
+     $roles = DB::select($role_query);
 
         // dd($users);
 
-       return response()->json($roles);
+     return response()->json($roles);
 
-   }
+ }
 
     /**
      * Update the specified resource in storage.

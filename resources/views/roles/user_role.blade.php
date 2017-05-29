@@ -36,6 +36,12 @@
             </div>
           </div>
 
+          <div class="col-lg-11 hidden" >
+            @if(isset($user->id))
+            <input type="text" class="form-control" name="user_id" id="user-id" value="{{$user->id}}" readonly>
+            @endif
+          </div>
+
         </div>
         <!-- /.col -->
         <div class="col-md-6">  

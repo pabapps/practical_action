@@ -51,6 +51,12 @@ $(document).ready(function() {
   var table = $('#products').DataTable( {
     "processing": true,
     "serverSide": true,
+    "paging": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": true,
     "ajax": "{{URL::to('/')}}/role/get_all_users_role",
     "columns": [
     { "data": "id" },
