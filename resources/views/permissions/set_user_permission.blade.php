@@ -273,7 +273,7 @@
 
     }).done(function() {
 
-      // window.location.assign('{{URL::to('/')}}/users');
+      window.location.assign('{{URL::to('/')}}/permissions/roles_list');
 
     });
   }else{

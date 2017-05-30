@@ -260,7 +260,12 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $permission_id = Crypt::decrypt($id);
+
+        $permission = Permission::where('id',$permission_id)->first();
+
+        dd($permission);
+
     }
 
     /**
