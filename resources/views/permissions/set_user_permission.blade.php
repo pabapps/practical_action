@@ -271,9 +271,19 @@
   if(permission_data.length>0){
     $.post( url, {'user_id':'{{$user->id}}','data':permission_data, 'form_data': $form.serializeArray(), '_token': token }, function( data ) {
 
-    }).done(function() {
+    }).done(function(value) {
 
-      window.location.assign('{{URL::to('/')}}/permissions/roles_list');
+      if(value == -1){
+
+        alert("sorry you don't the permission to modify");
+
+      }else{
+
+        window.location.assign('{{URL::to('/')}}/permissions/roles_list');
+
+      }
+
+      
 
     });
   }else{

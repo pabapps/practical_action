@@ -34,22 +34,22 @@ class RoleController extends Controller
 
 
     public function get_all_roles(){
-     $query_all_roles="
-     SELECT 
-     id,
-     name,
-     display_name,
-     description
-     FROM roles
-     ";
-     $roles = DB::select($query_all_roles);
+       $query_all_roles="
+       SELECT 
+       id,
+       name,
+       display_name,
+       description
+       FROM roles
+       ";
+       $roles = DB::select($query_all_roles);
 
        // dd($roles);
 
-     $rolls_collection = collect($roles);
+       $rolls_collection = collect($roles);
     // dd($reservation_collection);
-     return Datatables::of($rolls_collection)
-     ->addColumn('action', function ($rolls_collection) {
+       return Datatables::of($rolls_collection)
+       ->addColumn('action', function ($rolls_collection) {
         return 
 
         ' <a href="'. url('/roles') . '/' . 
@@ -57,10 +57,10 @@ class RoleController extends Controller
         '/role_edit' .'"' . 
         'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
     })
-     ->editColumn('id', '{{$id}}')
-     ->setRowId('id')
-     ->make(true);
- }
+       ->editColumn('id', '{{$id}}')
+       ->setRowId('id')
+       ->make(true);
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -217,26 +217,33 @@ class RoleController extends Controller
 
     public function ajax_get_all_roles(Request $request){
 
-     $search_term = $request->input('term');
+       $search_term = $request->input('term');
 
-     $role_query = "
-     SELECT roles.id, roles.name AS text
-     FROM roles 
-     WHERE roles.name LIKE '%{$search_term}%'";
+       $role_query = "
+       SELECT roles.id, roles.name AS text
+       FROM roles 
+       WHERE roles.name LIKE '%{$search_term}%'";
 
-     $roles = DB::select($role_query);
+       $roles = DB::select($role_query);
 
         // dd($users);
 
-     return response()->json($roles);
+       return response()->json($roles);
 
- }
+   }
 
- public function role_edit($id){
+   public function role_edit($id){
 
-    dd("working on it");
+    $role_id = Crypt::decrypt($id);
 
- }
+    $role = Role::where('id',$role_id)->first();
+
+    // dd($role);
+
+    return view('roles.role_edit')->with('role',$role);
+
+
+   }
 
 
     /**
@@ -248,7 +255,13 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Role::where('id', $id)
+        ->update(['name' => $request->role_name,
+            'display_name' => $request->display_name,
+            'description' => $request->description]);
+
+        $request->session()->flash('alert-success', 'data has been successfully updated!');
+        return redirect()->action('RoleController@index');   
     }
 
     /**

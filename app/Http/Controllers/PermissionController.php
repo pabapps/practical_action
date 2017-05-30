@@ -179,31 +179,42 @@ class PermissionController extends Controller
 
     public function submit_role_permission(Request $request){
 
-        $user_id = $request->user_id;
+        $user = Auth::user();
 
-        $permissions = $request->data;
+        if($user->hasRole(['Admin'])){
+
+            $user_id = $request->user_id;
+
+            $permissions = $request->data;
 
         //fetching the user role
-        
-        $role_id = DB::table('role_user')->select('role_id')->where('user_id',$user_id)->first();
 
-        $role = Role::where('id',$role_id->role_id)->first();
+            $role_id = DB::table('role_user')->select('role_id')->where('user_id',$user_id)->first();
+
+            $role = Role::where('id',$role_id->role_id)->first();
 
         //deleting previous premission for this role
-        DB::table('permission_role')->where('role_id', '=',$role_id->role_id)->delete();
+            DB::table('permission_role')->where('role_id', '=',$role_id->role_id)->delete();
 
-        foreach ($permissions as $array) {
+            foreach ($permissions as $array) {
 
             // dd($array[3]);
 
-            $permission = Permission::where('id',$array[3])->first();
+                $permission = Permission::where('id',$array[3])->first();
 
-            $role->attachPermission($permission);
+                $role->attachPermission($permission);
+
+            }
+
+            dd("done");
+        }else{
+
+            $value = -1;
+
+            return json_encode($value);
+
 
         }
-
-        dd("done");
-
 
 
 
@@ -277,7 +288,7 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
 
         Permission::where('id', $id)
         ->update(['name' => $request->permission_name,
