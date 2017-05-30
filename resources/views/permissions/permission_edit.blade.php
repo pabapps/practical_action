@@ -5,7 +5,7 @@
       <!-- SELECT2 EXAMPLE -->
       <div class="box box-default">
         <div class="box-header with-border">
-          <h3 class="box-title">Create new permission</h3>
+          <h3 class="box-title">Edit permission</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -13,7 +13,7 @@
           </div>
         </div>
         <!-- /.box-header -->
-        {!! Form::open(array('route'=>'permissions.store', 'files'=>true, 'id'=>'permission-form')) !!}
+        {!! Form::open(array('route' => array('permissions.update', $permission->id), 'id' => 'permission-edit-form', 'method'=>'PUT')) !!}
 
         
         <div class="box-body">
@@ -24,13 +24,13 @@
 
               <div class="form-group">
                 <label>Name</label>
-                <input type="text" class="form-control" type="text" id="permission-name"name="permission_name" placeholder="Enter a unique name for this permission" value="{{ old('permission_name') }}" >   
+                <input type="text" class="form-control" type="text" id="permission-name" name="permission_name" placeholder="Enter a unique name for this permission" value="{{ $permission->name }}" >   
 
               </div>
 
               <div class="form-group">
                 <label>Description</label>
-                <input type="text" class="form-control" type="text" id="description" name="description" placeholder="just give a short description of this permission" value="{{ old('description') }}" required >   
+                <input type="text" class="form-control" type="text" id="description" name="description" placeholder="just give a short description of this permission" value="{{ $permission->description }}" required >   
 
               </div>
             </div>
@@ -39,7 +39,7 @@
 
               <div class="form-group">
                 <label>Display name</label>
-                <input type="text" class="form-control" name="display_name" id="display-name" placeholder="Enter a name that might not be unique" value="{{old('display_name')}}" required>   
+                <input type="text" class="form-control" name="display_name" id="display-name" placeholder="Enter a name that might not be unique" value="{{$permission->display_name}}" required>   
               </div>
             </div>
           </div>

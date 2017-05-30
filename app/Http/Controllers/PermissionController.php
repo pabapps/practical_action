@@ -228,7 +228,7 @@ class PermissionController extends Controller
         $counter = 0;
 
         foreach ($permission_id as $permission) {
-            
+
             $database_permission = Permission::where('id',$permission->permission_id)->first();
 
             $permission_array[$counter] = array(
@@ -264,7 +264,7 @@ class PermissionController extends Controller
 
         $permission = Permission::where('id',$permission_id)->first();
 
-        dd($permission);
+        return view('permissions.permission_edit')->with('permission',$permission);
 
     }
 
@@ -277,7 +277,16 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+
+        Permission::where('id', $id)
+        ->update(['name' => $request->permission_name,
+            'display_name' => $request->display_name,
+            'description' => $request->description]);
+
+        $request->session()->flash('alert-success', 'data has been successfully updated!');
+        return redirect()->action('PermissionController@index');   
+
     }
 
     /**

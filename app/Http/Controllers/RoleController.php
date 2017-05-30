@@ -54,7 +54,7 @@ class RoleController extends Controller
 
         ' <a href="'. url('/roles') . '/' . 
         Crypt::encrypt($rolls_collection->id) . 
-        '/edit' .'"' . 
+        '/role_edit' .'"' . 
         'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
     })
      ->editColumn('id', '{{$id}}')
@@ -201,6 +201,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+
         $user_id=Crypt::decrypt($id);
 
         $user = User::findOrFail($user_id);
@@ -230,6 +231,13 @@ class RoleController extends Controller
      return response()->json($roles);
 
  }
+
+ public function role_edit($id){
+
+    dd("working on it");
+
+ }
+
 
     /**
      * Update the specified resource in storage.

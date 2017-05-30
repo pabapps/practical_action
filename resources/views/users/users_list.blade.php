@@ -12,7 +12,6 @@
             <div class="box-header">
               <h3 class="box-title">Data Table</h3>
             </div>
-            <a href="users/create"><h1>Create new User</h1></a>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="products" class="table table-bordered table-hover">
@@ -61,6 +60,12 @@ $(document).ready(function() {
   var table = $('#products').DataTable( {
     "processing": true,
     "serverSide": true,
+    "paging": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
     "ajax": "{{URL::to('/')}}/users/get_all_users",
     "columns": [
     { "data": "id" },
