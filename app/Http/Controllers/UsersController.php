@@ -12,6 +12,7 @@ use App\User;
 use App\UserDesignationModel;
 use App\UserProjectModel;
 use App\Designation;
+use App\Role;
 
 class UsersController extends Controller
 {
@@ -279,6 +280,30 @@ class UsersController extends Controller
         if(!empty($request->joining_date)){
 
             $user = User::where('id',$id)->update(['joining_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $request->joining_date)->toDateString()]);
+
+        }
+
+        //creating the roles of an user
+        if(!empty($request->role_id)){
+
+            //removing any previous roles
+            DB::table('role_user')->where('user_id', '=',$id)->delete();
+
+            $roles = $request->role_id;
+
+            //saving the new roles
+
+            foreach ($roles as $role) {
+
+                $role_object = Role::where('id',$role)->first();
+
+                $user = User::findOrFail($id);
+
+                $user->attachRole($role_object); 
+
+            }
+
+
 
         }
 

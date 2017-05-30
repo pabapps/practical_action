@@ -50,7 +50,7 @@
             <!-- <input type="text" class="form-control" name="sales_name" id="sales-name" placeholder="Enter sales center name" required>    -->
             <div class="row">
               <div class="col-lg-11" style="padding-right:0;">
-                <select id="role-id" name="role_id" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" required>
+                <select id="role-id" name="role_id" placeholder="" style="width: 100%;" multiple="multiple" class="col-lg-8 form-control select2 validate[required]" required>
                   @if(isset($role->id))
                   <option value='{{$role->id}}' selected>{{$role->name}}</option>
                   @endif
@@ -117,6 +117,7 @@ $( document ).ready(function() {
       },
     }
   });
+  
 
 
 });

@@ -274,4 +274,60 @@ class RoleController extends Controller
     {
         //
     }
+
+    /**
+     * [roles_for_specific_user description]
+     * @param  Request $return [user_id]
+     * @return [$roles]          [roles details]
+     */
+    public function roles_for_specific_user(Request $request){
+
+        $user_id = $request->user_id;
+
+        $role_ids = DB::table('role_user')->select('role_id')->where('user_id',$user_id)->get();
+
+        $counter = 0;
+        $role_array = array();
+
+
+        foreach ($role_ids as $role_id) {
+
+            
+            $role = Role::where('id',$role_id->role_id)->first();
+
+            $role_array[$counter] = array(
+                'name'=>$role->name,
+                'description'=>$role->description
+                );
+            $counter++;
+
+        }
+
+        // dd($role_array);
+
+        return json_encode($role_array);
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

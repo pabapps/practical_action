@@ -60,6 +60,19 @@
               </div>
 
 
+              <div class="form-group">
+                <label>Roles</label>
+                <!-- <input type="text" class="form-control" name="sales_name" id="sales-name" placeholder="Enter sales center name" required>    -->
+                <div class="row">
+                  <div class="col-lg-11" style="padding-right:0;">
+                    <select id="role-id" name="role_id[]" placeholder="" style="width: 100%;" multiple="multiple" class="col-lg-8 form-control select2 validate[required]" required>
+                      @if(isset($role->id))
+                      <option value='{{$role->id}}' selected>{{$role->name}}</option>
+                      @endif
+                    </select>
+                  </div>
+                </div>
+              </div>
 
             </div>
 
@@ -119,11 +132,29 @@
             </div>
 
           </div>
+          <!-- /.row -->
 
-          <div class="form-group">
+          <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Role Table</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table class="table table-bordered" id="role-table">
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Role</th>
+                  <th>Description</th>
+                </tr>
+                
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
             <button type="submit" class="btn btn-primary center-block ">Update</button>
           </div>
-          <!-- /.row -->
 
         </div>
         {!! Form::close() !!}
@@ -235,6 +266,50 @@
     });
 
   });
+
+
+    $('#role-id').select2({
+      placeholder: 'Select an option',
+      ajax: {
+        dataType: 'json',
+        url: '{{URL::to('/')}}/role/ajax/get_all_roles',
+        delay: 250,
+        data: function(params) {
+          return {
+            term: params.term
+          }
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          return {
+            results: data
+          };
+        },
+      }
+    });
+
+
+    //ajax request
+    $.get( "{{URL::to('/')}}/roles/roles_for_specific_user",{ user_id: "{{$user->id}}" }, function( role_array ) {
+      console.log(role_array);
+
+      var object = JSON.parse(role_array);
+
+      var count = 1;
+
+       var trHTML = '';
+
+      for (var i = 0; i < object.length; i++) { 
+        
+         trHTML += '<tr><td>' + count + '</td><td>' + object[i].name + '</td><td>' + object[i].description+ '</td></tr>';
+
+         count++;
+      }
+
+       $('#role-table').append(trHTML);
+
+
+    });
 
     </script>
     @endsection

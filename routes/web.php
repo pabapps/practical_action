@@ -94,6 +94,9 @@ Route::get('/role/ajax/get_all_roles','RoleController@ajax_get_all_roles');
 //role edit route
 Route::get('/roles/{id}/role_edit','RoleController@role_edit');
 
+//show roles for an specific user
+Route::get('/roles/roles_for_specific_user','RoleController@roles_for_specific_user');
+
 Route::resource('/roles','RoleController');
 
 
