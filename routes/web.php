@@ -111,8 +111,13 @@ Route::get('/permissions/user_role_permissions_details','PermissionController@us
 Route::get('/permissions/get_permissions_for_roles','PermissionController@get_permissions_for_roles');
 
 //ajax request for permission details
-Route::get('/permissions/permission_details','PermissionController@permission_details'); 
+Route::get('/permissions/permission_details','PermissionController@permission_details');
 
+//submit the role permission 
+Route::post('/permissions/submit_role_permission','PermissionController@submit_role_permission');
+
+//ajax get existing permissions for a role
+Route::get('/permissions/get_old_permissions_roles','PermissionController@get_old_permissions_roles');
 
 Route::resource('/permissions','PermissionController');
 

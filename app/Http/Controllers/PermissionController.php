@@ -131,7 +131,7 @@ class PermissionController extends Controller
 
         if(sizeof($role_id)>=1){
             //redirect to premission setting page
-            
+
             $user = User::findOrFail($user_id);
 
             return view('permissions.set_user_permission')->with('user',$user);
@@ -175,6 +175,82 @@ class PermissionController extends Controller
 
 
     }
+
+
+    public function submit_role_permission(Request $request){
+
+        $user_id = $request->user_id;
+
+        $permissions = $request->data;
+
+        //fetching the user role
+        
+        $role_id = DB::table('role_user')->select('role_id')->where('user_id',$user_id)->first();
+
+        $role = Role::where('id',$role_id->role_id)->first();
+
+        //deleting previous premission for this role
+        DB::table('permission_role')->where('role_id', '=',$role_id->role_id)->delete();
+
+        foreach ($permissions as $array) {
+
+            // dd($array[3]);
+
+            $permission = Permission::where('id',$array[3])->first();
+
+            $role->attachPermission($permission);
+
+        }
+
+        dd("done");
+
+
+
+
+    }
+
+    /**
+     * ajax request view(permissions.set_user_permission)
+     */
+
+    public function get_old_permissions_roles(Request $request){
+
+        $user_id = $request->id;
+
+        $role_id = DB::table('role_user')->select('role_id')->where('user_id',$user_id)->first();
+
+        $role = Role::where('id',$role_id->role_id)->first();
+
+        $permission_id = DB::table('permission_role')->select('permission_id')
+        ->where('role_id',$role_id->role_id)->get();
+
+        $permission_array = array();
+        $counter = 0;
+
+        foreach ($permission_id as $permission) {
+            
+            $database_permission = Permission::where('id',$permission->permission_id)->first();
+
+            $permission_array[$counter] = array(
+                'id'                    => $database_permission->id,
+                'permission_name'       => $database_permission->name,
+                'description'           => $database_permission->description
+                );
+
+            $counter++;
+
+        }
+
+        // dd($permission_array);
+
+        return response()->json($permission_array);
+
+    }
+
+
+
+
+
 
     /**
      * Show the form for editing the specified resource.

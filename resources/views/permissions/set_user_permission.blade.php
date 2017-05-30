@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      {!! Form::open(array('url'=>'/user/submit_porjects', 'id'=>'project-issue-form')) !!}
+      {!! Form::open(array('url'=>'/permissions/submit_role_permission', 'id'=>'role-permission-form')) !!}
 
       <div class="box-body">
         <div class="row">
@@ -157,61 +157,91 @@
       "autoWidth": false
     });
 
+    var user_id = "{{$user->id}}";
 
-    $('#add').click(function(event){
-      event.preventDefault();
+    var jqxhr = $.get( "{{URL::to('/')}}/permissions/get_old_permissions_roles", { id: user_id },function(data) {
 
-      var permission_name = $("#permission-name option:selected").text(),
-      permisson_id = $("#permission-name").val(),
-      permission_description = $("#project-code").val();
+            // working
+            // console.log(data);
+            $.each(data, function( index, value ) {
+              var entry = [
+              value.permission_name,
+              value.description,
+              '<button class="btn btn-danger btn-block delete-button" id="' + '">Delete</button>',
+              value.id
 
-      if(isBlank(!permisson_id)){
+              ];
 
-        var entry = [
-        permission_name,
-        permission_description,
-        '<button class="btn btn-danger btn-block delete-button" id="' + '">Delete</button>',
-        permisson_id
-        ];
+              permission_data.push(entry);
+              permission_table.row.add(entry).draw(false);
 
-        var project_id = entry[3];
-        var booleanValue = true;
-        if(permission_data.length >= 1){
-          for(i=0; i<permission_data.length; i++){
-            if(permission_data[i][3] == permisson_id){
-              booleanValue=false;
+              total = total + 1;
 
+              $("#total").val(total);
+            });
+
+          }).done(function(){
+
+
+
+          });
+
+
+
+          $('#add').click(function(event){
+            event.preventDefault();
+
+            var permission_name = $("#permission-name option:selected").text(),
+            permisson_id = $("#permission-name").val(),
+            permission_description = $("#project-code").val();
+
+            if(isBlank(!permisson_id)){
+
+              var entry = [
+              permission_name,
+              permission_description,
+              '<button class="btn btn-danger btn-block delete-button" id="' + '">Delete</button>',
+              permisson_id
+              ];
+
+              var project_id = entry[3];
+              var booleanValue = true;
+              if(permission_data.length >= 1){
+                for(i=0; i<permission_data.length; i++){
+                  if(permission_data[i][3] == permisson_id){
+                    booleanValue=false;
+
+                  }
+                }
+              }
+
+              if(booleanValue){
+
+                permission_data.push(entry);
+
+                total = total + 1;
+
+                permission_table.row.add(entry).draw(false);
+
+                $("#total").val(total);
+
+                $("#project-code").val('');  
+
+              }else{
+                alert("this permission has already been entered");  
+              }
+            }else{
+              alert("please fill the row properly");
             }
-          }
-        }
 
-        if(booleanValue){
-
-          permission_data.push(entry);
-
-          total = total + 1;
-
-          permission_table.row.add(entry).draw(false);
-
-          $("#total").val(total);
-
-          $("#project-code").val('');  
-
-        }else{
-          alert("this permission has already been entered");  
-        }
-      }else{
-        alert("please fill the row properly");
-      }
-
-    });
+          });
 
 
   //delete row on button click
-  $('#project-table tbody').on( 'click', '.delete-button', function () {
+  $('#permission-table tbody').on( 'click', '.delete-button', function () {
     event.preventDefault();
     //get the index of 
-    var index = project_table
+    var index = permission_table
     .row( $(this).parents('tr') )
     .index();
 
@@ -219,16 +249,16 @@
     // console.log(total);
         //remove index from data
         $('#total').val(total);
-        project_data.splice(index,1);
+        permission_data.splice(index,1);
 
-        project_table
+        permission_table
         .row( $(this).parents('tr') )
         .remove()
         .draw();
       });
 
 
-  $( "#project-issue-form" ).submit(function(event){
+  $( "#role-permission-form" ).submit(function(event){
   //validation
 
   event.preventDefault();
@@ -238,17 +268,17 @@
   url = $form.attr( "action" ),
   token = $("[name='_token']").val();
   
-  if(project_data.length>0){
-    $.post( url, {'user_id':'{{$user->id}}','data':project_data, 'form_data': $form.serializeArray(), '_token': token }, function( data ) {
+  if(permission_data.length>0){
+    $.post( url, {'user_id':'{{$user->id}}','data':permission_data, 'form_data': $form.serializeArray(), '_token': token }, function( data ) {
 
     }).done(function() {
 
-      window.location.assign('{{URL::to('/')}}/users');
+      // window.location.assign('{{URL::to('/')}}/users');
 
     });
   }else{
 
-    // alert("please fill in the details before submitting");
+    alert("please fill in the details before submitting");
 
   }
 });
