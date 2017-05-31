@@ -92,19 +92,16 @@ class PermissionController extends Controller
 
     public function user_role_permissions_details(){
 
-        $user_role = DB::table('users')
-        ->leftJoin('role_user','users.id','=','role_user.user_id')
-        ->leftJoin('roles','role_user.role_id','=','roles.id')
-        ->select('users.name','users.id','roles.name AS role')->get();
+        $roles = DB::table('roles')->select('id','name','description')->get();
 
-        $user_role_collection= collect($user_role);
+        $role_collection= collect($roles);
     // dd($reservation_collection);
-        return Datatables::of($user_role_collection)
-        ->addColumn('action', function ($user_role_collection) {
+        return Datatables::of($role_collection)
+        ->addColumn('action', function ($role_collection) {
             return 
 
             ' <a href="'. url('/permissions') . '/' . 
-            Crypt::encrypt($user_role_collection->id) . 
+            Crypt::encrypt($role_collection->id) . 
             '' .'"' . 
             'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
         })
@@ -122,25 +119,11 @@ class PermissionController extends Controller
      */
     public function show(Request $request,$id)
     {
-        $user_id=Crypt::decrypt($id);
+        $role_id=Crypt::decrypt($id);
 
-        //checking if the role exists or not
-        $role_id = DB::table('role_user')
-        ->select('role_id')
-        ->where('user_id',$user_id)->get();
+        $role = Role::where('id',$role_id)->first();
 
-        if(sizeof($role_id)>=1){
-            //redirect to premission setting page
-
-            $user = User::findOrFail($user_id);
-
-            return view('permissions.set_user_permission')->with('user',$user);
-
-        }else{
-            //role doesn't exist so set the role first
-            $request->session()->flash('alert-warning', 'Please set the role first');
-            return redirect()->back(); 
-        }
+        return view('permissions.set_user_permission')->with('role',$role);
 
 
     }
@@ -183,18 +166,16 @@ class PermissionController extends Controller
 
         if($user->hasRole(['Admin'])){
 
-            $user_id = $request->user_id;
+            $role_id = $request->user_id;
 
             $permissions = $request->data;
 
         //fetching the user role
 
-            $role_id = DB::table('role_user')->select('role_id')->where('user_id',$user_id)->first();
-
-            $role = Role::where('id',$role_id->role_id)->first();
+            $role = Role::where('id',$role_id)->first();
 
         //deleting previous premission for this role
-            DB::table('permission_role')->where('role_id', '=',$role_id->role_id)->delete();
+            DB::table('permission_role')->where('role_id', '=',$role_id)->delete();
 
             foreach ($permissions as $array) {
 
@@ -226,14 +207,12 @@ class PermissionController extends Controller
 
     public function get_old_permissions_roles(Request $request){
 
-        $user_id = $request->id;
+        $role_id = $request->id;
 
-        $role_id = DB::table('role_user')->select('role_id')->where('user_id',$user_id)->first();
-
-        $role = Role::where('id',$role_id->role_id)->first();
+        $role = Role::where('id',$role_id)->first();
 
         $permission_id = DB::table('permission_role')->select('permission_id')
-        ->where('role_id',$role_id->role_id)->get();
+        ->where('role_id',$role_id)->get();
 
         $permission_array = array();
         $counter = 0;

@@ -20,16 +20,16 @@
           <div class="col-md-6">
 
            <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Name of the program" value="{{$user->name}}" readonly>   
+            <label>Role</label>
+            <input type="text" class="form-control" name="name" id="name"  value="{{$role->name}}" readonly>   
           </div>
 
         </div>
         <!-- /.col -->
         <div class="col-md-6">
           <div class="form-group">
-            <label>Email</label>
-            <input type="email" class="form-control" name="user_email" id="user-email" placeholder="please enter the code" value="{{$user->email}}" readonly>   
+            <label>Description</label>
+            <input type="email" class="form-control" name="user_email" id="user-email"  value="{{$role->description}}" readonly>   
           </div>
 
         </div>
@@ -157,9 +157,9 @@
       "autoWidth": false
     });
 
-    var user_id = "{{$user->id}}";
+    var role_id = "{{$role->id}}";
 
-    var jqxhr = $.get( "{{URL::to('/')}}/permissions/get_old_permissions_roles", { id: user_id },function(data) {
+    var jqxhr = $.get( "{{URL::to('/')}}/permissions/get_old_permissions_roles", { id: role_id },function(data) {
 
             // working
             // console.log(data);
@@ -269,7 +269,7 @@
   token = $("[name='_token']").val();
   
   if(permission_data.length>0){
-    $.post( url, {'user_id':'{{$user->id}}','data':permission_data, 'form_data': $form.serializeArray(), '_token': token }, function( data ) {
+    $.post( url, {'user_id':'{{$role->id}}','data':permission_data, 'form_data': $form.serializeArray(), '_token': token }, function( data ) {
 
     }).done(function(value) {
 

@@ -18,8 +18,8 @@
               <table id="role-permission-table" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>User</th>
                   <th>Role</th>
+                  <th>Description</th>
                   <th>Edit</th>
                 </tr>
                 </thead>
@@ -62,7 +62,7 @@ $(document).ready(function() {
     "ajax": "{{URL::to('/')}}/permissions/user_role_permissions_details",
     "columns": [
     { "data": "name" },
-    { "data": "role" },
+    { "data": "description" },
     { "data": "action", name: 'action', orderable: false, searchable: false}
     ],
     "order": [[1, 'asc']]
