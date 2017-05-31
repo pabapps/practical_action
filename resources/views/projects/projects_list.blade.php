@@ -21,6 +21,8 @@
                   <th>id</th>
                   <th>project Code</th>
                   <th>Name</th>
+                  <th>Start date</th>
+                  <th>End date</th>
                   <th>Edit</th>
                 </tr>
                 </thead>
@@ -29,10 +31,6 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>id</th>
-                  <th>project Code</th>
-                  <th>Name</th>
-                  <th>Edit</th>
                 </tr>
                 </tfoot>
               </table>
@@ -57,11 +55,19 @@ $(document).ready(function() {
   var table = $('#products').DataTable( {
     "processing": true,
     "serverSide": true,
+    "paging": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
     "ajax": "{{URL::to('/')}}/get_all_projects",
     "columns": [
     { "data": "id" },
     { "data": "project_code" },
     { "data": "project_name" },
+    { "data": "start_date" },
+    { "data": "end_date" },
     { "data": "action", name: 'action', orderable: false, searchable: false}
     ],
     "order": [[1, 'asc']]

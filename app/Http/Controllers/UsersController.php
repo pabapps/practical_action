@@ -341,7 +341,8 @@ class UsersController extends Controller
         $user_projects = DB::table('users_projects_connection')
         ->join('projects','projects.id', '=' ,'users_projects_connection.project_id')
         ->select('projects.project_name', 'projects.project_code','users_projects_connection.allocated_time',
-            'users_projects_connection.project_id','users_projects_connection.allocated_days')
+            'users_projects_connection.project_id','users_projects_connection.allocated_days',
+            'users_projects_connection.allocate_days_percent')
         ->where('users_projects_connection.user_id',$user_id)
         ->where('users_projects_connection.valid',1)->get();
 

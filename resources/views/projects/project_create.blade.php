@@ -24,12 +24,36 @@
             <input type="text" class="form-control" name="program_name" id="program-name" placeholder="Name of the program" value="{{old('program_name')}}" required>   
           </div>
 
+          <div class="form-group">
+            <label>Start date:</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right" name="start_date" data-date-format="dd-mm-yyyy" id="start-date" placeholder="joining date" >
+            </div>
+            <!-- /.input group -->
+          </div>
+
         </div>
         <!-- /.col -->
         <div class="col-md-6">
-            <div class="form-group">
+          <div class="form-group">
             <label>Project Code</label>
             <input type="number" class="form-control" name="project_code" id="project-code" placeholder="please enter the code" value="{{old('project_code')}}" required>   
+          </div>
+
+          <div class="form-group">
+            <label>End date:</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right" name="end_date" data-date-format="dd-mm-yyyy" id="end-date" placeholder="joining date" >
+            </div>
+            <!-- /.input group -->
           </div>
 
         </div>
@@ -63,12 +87,23 @@
 
 
 @section('script')
+<script src="{{asset('dist/js/utils.js')}}"></script>
+<script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+<script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 
 <script type="text/javascript">
 $( document ).ready(function() {
 
-  
 
+  $('#start-date').datepicker({
+    autoclose: true
+
+  });
+
+  $('#end-date').datepicker({
+    autoclose: true
+
+  });
 
 
 
@@ -78,7 +113,7 @@ $( document ).ready(function() {
 
 
 
-  </script>
-  @endsection
+</script>
+@endsection
 
 

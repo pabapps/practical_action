@@ -41,9 +41,10 @@
           <table id="project-table" class="table table-bordered table-hover">
             <thead>
               <tr>
-                <th style="text-align: center; width:50%;">Project name</th>
+                <th style="text-align: center; width:30%;">Project name</th>
                 <th style="text-align: center; width:20%;">Project code</th>
                 <th style="text-align: center; width:20%">Allocate days</th>
+                <th style="text-align: center; width:20%">Allocate time (%)</th>
                 <th style="text-align: center;">Add</th>
               </tr>
             </thead>
@@ -59,6 +60,7 @@
                   </th>
                   <th ><input type="text" style="width: 100%; margin-left: 8px;" name="project_code" class="form-control" id="project-code" placeholder readonly ></th>
                   <th ><input type="number" min="0"  step="0.01" style="width: 100%; margin-left: 8px; margin-right: 8px" name="project_days" class="form-control" id="project-days" ></th>
+                  <th ><input type="number" min="0"  step="0.01" style="width: 100%; margin-left: 8px; margin-right: 8px" name="project_time" class="form-control" id="project-time" ></th>
                   <th><button type="button" id="add" style="width: 100%; margin-left: 8px;" class="btn btn-primary btn-block btn-flat">Add</button></th>
 
                 </tr>
@@ -113,6 +115,11 @@
             <div class="form-group">
               <label>Allocate Days</label>
               <input type="number" id="allocate-days-modal" name="allocate_days_modal" class="form-control" >
+            </div>
+
+            <div class="form-group">
+              <label>Allocate Time(%)</label>
+              <input type="number" id="allocate-time-modal" name="allocate_time_modal" class="form-control" >
             </div>
 
             <div class="form-group" hidden>
@@ -219,6 +226,7 @@
               value.project_name,
               value.project_code,
               value.allocated_days,
+              value.allocate_days_percent,
               '<button class="btn btn-danger btn-block delete-button" id="' + '">Delete</button>',
               value.project_id
 
@@ -241,11 +249,14 @@
 
               if(data!=null && data.length>0){
 
+                // console.log(data);
+
                 $('#project-modal').modal('show');
                 $("#project-name-modal").val(data[0]);
                 $("#project-code-modal").val(data[1]);
                 $("#allocate-days-modal").val(data[2]);
-                $("#project-id-modal").val(data[4]);
+                $("#project-id-modal").val(data[5]);
+                $("#allocate-time-modal").val(data[3]);
               }
             
           } );
@@ -261,7 +272,8 @@
             var project_text = $("#project-name option:selected").text(),
             project_id = $("#project-name").val(),
             project_code = $("#project-code").val(),
-            project_days = $("#project-days").val();
+            project_days = $("#project-days").val(),
+            project_days_percent = $("#project-time").val();
 
             if(isBlank(!project_id) && isBlank(!project_days)){
 
@@ -269,15 +281,16 @@
               project_text,
               project_code,
               project_days,
+              project_days_percent,
               '<button class="btn btn-danger btn-block delete-button" id="' + '">Delete</button>',
               project_id
               ];
 
-              var project_id=entry[4];
+              var project_id=entry[5];
               var booleanValue=true;
               if(project_data.length>=1){
                 for(i=0; i<project_data.length; i++){
-                  if(project_data[i][4]==project_id){
+                  if(project_data[i][5]==project_id){
                     booleanValue=false;
 
                   }
@@ -295,7 +308,8 @@
                 $("#total").val(total);
 
                 $("#project-code").val(''),  
-                $("#project-days").val('');  
+                $("#project-days").val(''),
+                $("#project-time").val('');  
 
               }else{
                 alert("this project has already been entered");  
@@ -382,6 +396,7 @@
     $('#project-name-modal').val(),
     $('#project-code-modal').val(),
     allocated_days,
+    $('#allocate-time-modal').val(),
     '<button class="btn btn-danger btn-block delete-button" id="' + '">Delete</button>',
     project_id
 

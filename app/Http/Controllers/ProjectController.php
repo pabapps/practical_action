@@ -35,7 +35,9 @@ class ProjectController extends Controller
         SELECT 
         id,
         project_name,
-        project_code
+        project_code,
+        start_date,
+        end_date
         FROM projects
         WHERE projects.completion_status=1
         ";
@@ -80,9 +82,16 @@ class ProjectController extends Controller
         $program_name = $request->program_name;
         $project_code = $request->project_code;
 
+        $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->start_date)->toDateString();
+
+        $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->end_date)->toDateString();
+
         $program = new Projects;
         $program->project_name = $program_name;
         $program->project_code = $project_code;
+        $program->start_date = $start_date;
+        $program->end_date = $end_date;
+
         $program->save();
 
         // dd("working");
@@ -114,10 +123,19 @@ class ProjectController extends Controller
 
         $project = Projects::where('id',$project_id)->first();
 
+        $start_date = date_create($project->start_date);
+
+        $start_date = date_format($start_date, "d-m-Y");
+
+        $end_date = date_create($project->end_date);
+
+        $end_date = date_format($end_date,"d-m-Y");
+
 
         // dd($project);
 
-        return view('projects.project_edit')->with('project',$project);
+        return view('projects.project_edit')->with('project',$project)
+        ->with('start_date',$start_date)->with('end_date',$end_date);
 
 
     }
@@ -130,10 +148,19 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   
+
+        // dd($request->all());
+
+        $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->start_date)->toDateString();
+
+        $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->end_date)->toDateString();
+
         Projects::where('id', $id)
           ->update(['project_name' => $request->program_name,
-            'project_code' => $request->project_code
+            'project_code' => $request->project_code,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
             ]);
 
         $request->session()->flash('alert-success', 'data has been successfully updated!');
