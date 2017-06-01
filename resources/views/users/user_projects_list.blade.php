@@ -290,23 +290,72 @@
                 $("#allocate-days-modal").val(data[2]);
                 $("#project-id-modal").val(data[5]);
                 $("#allocate-time-modal").val(data[3]);
+
+
+                $( "#allocate-days-modal" ).keyup(function() {
+
+                  var project_days = $("#allocate-days-modal").val();
+
+                  if(project_days.length>=1){
+                    var value = parseFloat(project_days);
+
+                    if(value >360){
+
+                      alert("ops! allocated days cannot be more than 360 days.");
+
+                      return
+                    }
+
+                 value = (value/360) * (100) //converting days into percentage
+
+                 value = value.toFixed(2);
+
+                 $('#allocate-time-modal').val(value);
+               }
+
+             });
+
+
+                $("#allocate-time-modal").keyup(function(){
+
+
+                  var value = parseFloat($("#allocate-time-modal").val());
+
+                  if(value.length<1 ||  value > 100){
+
+                    alert("ops! allocated time cannot be more than 100%.");
+
+                    return
+
+                  }
+
+                  value = (value/100)*(12); //12 is the number of months in an year
+
+                  pre_calculated_days = value * 30; //on an average 30 days in a month
+
+                  pre_calculated_days = Math.round(pre_calculated_days);
+
+                  $('#allocate-days-modal').val(pre_calculated_days);
+                });
+
+
               }
 
-            } );
+            });
 
 
-          });
+});
 
 
 
-          $('#add').click(function(event){
-            event.preventDefault();
+  $('#add').click(function(event){
+    event.preventDefault();
 
-            var project_text = $("#project-name option:selected").text(),
-            project_id = $("#project-name").val(),
-            project_code = $("#project-code").val(),
-            project_days = $("#project-days").val(),
-            project_days_percent = $("#project-time").val();
+    var project_text = $("#project-name option:selected").text(),
+    project_id = $("#project-name").val(),
+    project_code = $("#project-code").val(),
+    project_days = $("#project-days").val(),
+    project_days_percent = $("#project-time").val();
 
             //converting days into percentage
             var pre_calculated_percent = -1;
@@ -468,11 +517,7 @@
 
     var project_id =$("#project-id-modal").val();
 
-    console.log(project_id);
-
-    
-
-    
+    //finding out the index where the data is in the project_data array    
     for(var i=0; i<project_data.length ; i++){
 
       if(project_data[i][5]==project_id){
