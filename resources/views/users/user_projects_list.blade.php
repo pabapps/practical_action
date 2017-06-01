@@ -189,6 +189,39 @@
       }
     });
 
+    //applying readonly property on the project-time
+
+    $( "#project-days" ).keyup(function() {
+
+      var value = $("#project-days").val();
+
+      if(value.length>=1){
+
+        $('#project-time').prop('readonly', true);
+      }else{
+
+        $('#project-time').prop('readonly', false);
+
+      }
+
+    });
+
+    //applying readonly property ont he project-days
+    $( "#project-time" ).keyup(function() {
+
+      var value = $("#project-time").val();
+
+      if(value.length>=1){
+
+        $('#project-days').prop('readonly', true);
+      }else{
+
+        $('#project-days').prop('readonly', false);
+
+      }
+
+    });
+
 
 
     $("#project-name").change(function(){
@@ -258,8 +291,8 @@
                 $("#project-id-modal").val(data[5]);
                 $("#allocate-time-modal").val(data[3]);
               }
-            
-          } );
+
+            } );
 
 
           });
@@ -275,7 +308,7 @@
             project_days = $("#project-days").val(),
             project_days_percent = $("#project-time").val();
 
-            if(isBlank(!project_id) && isBlank(!project_days)){
+            if(isBlank(!project_id) && (isBlank(!project_days) || isBlank(!project_days_percent))){
 
               var entry = [
               project_text,
@@ -357,7 +390,7 @@
 
     }).done(function() {
 
-      window.location.assign('{{URL::to('/')}}/users');
+      // window.location.assign('{{URL::to('/')}}/users');
 
     });
   }else{
@@ -373,12 +406,14 @@
 
     var project_id =$("#project-id-modal").val();
 
-    var index ;
+    console.log(project_id);
+
+    
 
     
     for(var i=0; i<project_data.length ; i++){
 
-      if(project_data[i][4]==project_id){
+      if(project_data[i][5]==project_id){
         index = i;
         break;
         
@@ -386,7 +421,7 @@
 
     }
 
-    console.log(index);
+    // console.log(index);
 
     project_table.row( index ).remove().draw();
 
@@ -404,9 +439,6 @@
 
     project_data.push(entry);
     project_table.row.add(entry).draw(false);
-
-
-
 
 
     $('#project-modal').modal('toggle');

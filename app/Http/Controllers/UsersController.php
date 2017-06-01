@@ -411,10 +411,16 @@ class UsersController extends Controller
             foreach ($previous_projects as $old_project) {
 
                 //if the project exist 
-                if($project[4] == $old_project->project_id){
+                if($project[5] == $old_project->project_id){
 
                     //yes the project exist now check if there's any difference in the allocated days
                     if($project[2] != $old_project->allocated_days){
+
+
+                        if($project[3] == null){
+                            dd("here");
+                        }
+
                         //there is a difference 
                         //then update that data only 
 
@@ -486,7 +492,7 @@ class UsersController extends Controller
                 $user_projects = new UserProjectModel;
 
                 $user_projects->user_id = $user_id;    
-                $user_projects->project_id = $project[4];
+                $user_projects->project_id = $project[5];
                 $user_projects->allocated_time = $hours. ' hours ' . $minutes . ' mins';
                 $user_projects->allocated_days = $project[2];
                 $user_projects->save();
@@ -503,7 +509,7 @@ class UsersController extends Controller
 
             foreach ($projects_data as $project) {
 
-                if($old_project->project_id == $project[4]){
+                if($old_project->project_id == $project[5]){
 
                     $data_found = true;
                     break;
@@ -521,46 +527,6 @@ class UsersController extends Controller
             $data_found = false;
 
         }
-
-
-
-
-        // dd($previous_projects);
-
-        //storing new projects
-        
-        // foreach ($projects_data as $project) {
-
-        //     $days = $project[2];
-
-        //     // start by converting to seconds
-        //     $seconds = ($days * 8 * 3600);
-
-        //     //converting seconds into hour
-        
-        //     $seconds_to_hours = ($seconds / 3600);
-        //     $hours = floor($seconds_to_hours);    
-        //     $fraction_hour = $seconds_to_hours - $hours ;
-
-        //     //converting fraction hours into minutes
-        
-        //     $fraction_minutes = ($fraction_hour * 60);
-
-        //     $minutes = ceil($fraction_minutes);
-
-        //     // dd($hours . ' '. $minutes);
-
-
-        //     $user_projects = new UserProjectModel;
-
-        //     $user_projects->user_id = $user_id;    
-        //     $user_projects->project_id = $project[4];
-        //     $user_projects->allocated_time = $hours. ' hours ' . $minutes . ' mins';
-        //     $user_projects->allocated_days = $project[2];
-        //     $user_projects->save();
-
-
-        // }
 
         dd("done");
 
