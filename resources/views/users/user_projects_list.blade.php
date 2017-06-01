@@ -308,6 +308,66 @@
             project_days = $("#project-days").val(),
             project_days_percent = $("#project-time").val();
 
+            //converting days into percentage
+            var pre_calculated_percent = -1;
+
+            if(project_days.length>=1){
+
+              var value = parseFloat(project_days);
+
+              if(value >360){
+
+                alert("ops! allocated days cannot be more than 360 days.");
+
+                return
+              }
+
+              value = (value/360) * (100) //converting days into percentage
+
+              value = value.toFixed(2);
+
+              pre_calculated_percent = value;
+
+            }
+
+            if(pre_calculated_percent != -1){
+              project_days_percent = pre_calculated_percent;
+            }
+
+            // console.log(project_days_percent);
+
+            //converting percent into days
+
+            var pre_calculated_days = -1;
+
+            if(project_days_percent.length>=1){
+
+              var value = parseFloat(project_days_percent);
+
+              if(value > 100){
+
+                alert("ops! allocated time cannot be more than 100%.");
+
+                return
+
+              }
+
+              value = (value/100)*(12); //12 is the number of months in an year
+
+              pre_calculated_days = value * 30; //on an average 30 days in a month
+
+              pre_calculated_days = Math.round(pre_calculated_days);
+
+            }
+
+            if(pre_calculated_days != -1){
+              project_days = pre_calculated_days;
+            }
+
+
+            // console.log(project_days)
+            
+
             if(isBlank(!project_id) && (isBlank(!project_days) || isBlank(!project_days_percent))){
 
               var entry = [
@@ -342,7 +402,9 @@
 
                 $("#project-code").val(''),  
                 $("#project-days").val(''),
-                $("#project-time").val('');  
+                $("#project-time").val('');
+                $('#project-time').prop('readonly', false);
+                $('#project-days').prop('readonly', false);  
 
               }else{
                 alert("this project has already been entered");  
