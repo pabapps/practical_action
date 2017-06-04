@@ -88,10 +88,6 @@
         </tbody>
         <tfoot>
           <tr>
-            <th>Projects</th>
-            <th>Allocated Time(days)</th>
-            <th>Allocated Time(hours)</th>
-            <th>Remaining Time (hours)</th>
           </tr>
         </tfoot>
       </table>
@@ -147,22 +143,22 @@
           <div class="form-group">
             <label>Time</label>
             <select id="time-sheet" name="time_sheet"  class="form-control" required>
-              <option value="30 mins">30 mins</option>
-              <option value="1 hour">1 hour</option>
-              <option value="1 hour 30 mins">1 hour 30 mins</option>
-              <option value="2 hours">2 hours</option>
-              <option value="2 hours 30 mins">2 hours 30 mins</option>
-              <option value="3 hours">3 hours</option>
-              <option value="3 hours 30 mins">3 hours 30 mins</option>
-              <option value="4 hours">4 hours</option>
-              <option value="4 hours 30 mins">4 hours 30 mins</option>
-              <option value="5 hours">5 hours</option>
-              <option value="5 hours 30 mins">5 hours 30 mins</option>
-              <option value="6 hours">6 hours</option>
-              <option value="6 hours 30 mins">6 hours 30 mins</option>
-              <option value="7 hours">7 hours</option>
-              <option value="7 hours 30 mins">7 hours 30 mins</option>
-              <option value="8 hours">8 hours</option>
+              <option value="3000">30 mins</option>
+              <option value="010000">1 hour</option>
+              <option value="013000">1 hour 30 mins</option>
+              <option value="020000">2 hours</option>
+              <option value="023000">2 hours 30 mins</option>
+              <option value="030000">3 hours</option>
+              <option value="033000">3 hours 30 mins</option>
+              <option value="040000">4 hours</option>
+              <option value="043000">4 hours 30 mins</option>
+              <option value="050000">5 hours</option>
+              <option value="053000">5 hours 30 mins</option>
+              <option value="060000">6 hours</option>
+              <option value="063000">6 hours 30 mins</option>
+              <option value="070000">7 hours</option>
+              <option value="073000">7 hours 30 mins</option>
+              <option value="080000">8 hours</option>
             </select>
           </div>
 
@@ -270,7 +266,7 @@ $( document ).ready(function() {
 
       $('#add-new-entry').modal('toggle');
 
-      // location.reload();
+      location.reload();
 
     });
 

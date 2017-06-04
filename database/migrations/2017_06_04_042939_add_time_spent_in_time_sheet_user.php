@@ -15,7 +15,7 @@ class AddTimeSpentInTimeSheetUser extends Migration
     {
         Schema::table('time_sheet_user', function (Blueprint $table) {
 
-            $table->string('time_spent');
+            $table->time('time_spent');
             
         });
     }
