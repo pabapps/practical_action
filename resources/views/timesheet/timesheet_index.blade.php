@@ -21,7 +21,7 @@
 
       <div class="box-body">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-3">
 
            <div class="form-group">
             <label>Please select one of the projects</label>
@@ -33,15 +33,31 @@
         </div>
         <!-- /.col -->
 
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
-            <label>Month</label>
+            <label>Start date</label>
 
             <div class="input-group date">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <input type="text" class="form-control pull-right onchange" name="start_date" data-date-format="dd-mm-yyyy" id="month" placeholder="Month">
+              <input type="text" class="form-control pull-right onchange" name="start_date"
+               data-date-format="dd-mm-yyyy" id="start-date" placeholder="Month">
+            </div>
+            <!-- /.input group -->
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>End date</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right onchange" name="end_date"
+               data-date-format="dd-mm-yyyy" id="end-date" placeholder="Month">
             </div>
             <!-- /.input group -->
           </div>
@@ -139,12 +155,11 @@
 <script type="text/javascript">
 $( document ).ready(function() {
 
-  $('#month').datepicker({
+  $('#start-date').datepicker({
+    autoclose: true
 
-     format: "mm-yyyy",
-    startView: "months", 
-    minViewMode: "months",
-
+  });
+  $('#end-date').datepicker({
     autoclose: true
 
   });

@@ -66,7 +66,7 @@
                 </tr>
               </thead>
 
-              <tbody>
+              <tbody align="center">
 
               </tbody>
 
@@ -241,7 +241,7 @@
     var total = 0 ;
 
     var project_table = $("#project-table").DataTable({
-      "searching": false,
+      "searching": true,
       "paging": false,
       "ordering": false,
       "autoWidth": false
