@@ -144,38 +144,27 @@
             <!-- /.input group -->
           </div>
 
-          <div class="bootstrap-timepicker ">
-            <div class="form-group">
-              <label>Start Time:</label>
-
-              <div class="input-group">
-                <input type="text" class="form-control timepicker" id="start-time" name="start_time" required>
-
-                <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
-                </div>
-              </div>
-              <!-- /.input group -->
-            </div>
+          <div class="form-group">
+            <label>Time</label>
+            <select id="activity" name="activity"  class="form-control" required>
+              <option value="30 mins">30 mins</option>
+              <option value="1 hour">1 hour</option>
+              <option value="1 hour 30 mins">1 hour 30 mins</option>
+              <option value="2 hours">2 hours</option>
+              <option value="2 hours 30 mins">2 hours 30 mins</option>
+              <option value="3 hours">3 hours</option>
+              <option value="3 hours 30 mins">3 hours 30 mins</option>
+              <option value="4 hours">4 hours</option>
+              <option value="4 hours 30 mins">4 hours 30 mins</option>
+              <option value="5 hours">5 hours</option>
+              <option value="5 hours 30 mins">5 hours 30 mins</option>
+              <option value="6 hours">6 hours</option>
+              <option value="6 hours 30 mins">6 hours 30 mins</option>
+              <option value="7 hours">7 hours</option>
+              <option value="7 hours 30 mins">7 hours 30 mins</option>
+              <option value="8 hours">8 hours</option>
+            </select>
           </div>
-
-          <div class="bootstrap-timepicker ">
-
-            <div class="form-group">
-              <label>End Time:</label>
-
-              <div class="input-group">
-                <input type="text" class="form-control timepicker" id="end-time" name="end_time" required>
-
-                <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
-                </div>
-              </div>
-              <!-- /.input group -->
-            </div>
-
-          </div>
-
 
           <div class="form-group">
             <label>Activity</label>
@@ -263,21 +252,6 @@ $( document ).ready(function() {
   });
 
   $("#entry-date").datepicker('setDate', new Date());
-
-  $("#start-time").timepicker({
-    showMeridian:false,
-    showSeconds:true,
-    showInputs: false
-  });
-
-  $("#end-time").timepicker({
-    showMeridian:false,
-    showSeconds:true,
-    showInputs: false
-  });
-
-
-
   
   $( "#time-sheet-form" ).submit(function( event ) {
     // Stop form from submitting normally

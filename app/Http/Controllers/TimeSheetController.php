@@ -113,6 +113,8 @@ class TimeSheetController extends Controller
 
     	$user = Auth::user();
 
+        // dd("working");
+
 
     	/**
     	 * user id, name and designation 
@@ -148,139 +150,140 @@ class TimeSheetController extends Controller
          * use time sheet details
          */
 
-        $query_time_sheet = "
-        SELECT project_id, TIME_TO_SEC(TIMEDIFF(end_time,start_time)) 
-        diff FROM time_sheet_user WHERE user_id='$user->id' AND valid=1";
+    //     $query_time_sheet = "
+    //     SELECT project_id, TIME_TO_SEC(TIMEDIFF(end_time,start_time)) 
+    //     diff FROM time_sheet_user WHERE user_id='$user->id' AND valid=1";
 
-        $user_time_sheet = DB::select($query_time_sheet);
+    //     $user_time_sheet = DB::select($query_time_sheet);
 
-        $not_exist = true;
+    //     $not_exist = true;
 
-        $array = array();
+    //     $array = array();
 
-        /**
-         * If the project_id already exist, we are just adding the new time value with the existing 
-         * time value to get an updated time value which is again is being saved in the array with the same
-         * project_id key.
-         *
-         * However, if the project_id doesnot exist then we are creating a new array with the project_id
-         * as key.
-         */
+    //     /**
+    //      * If the project_id already exist, we are just adding the new time value with the existing 
+    //      * time value to get an updated time value which is again is being saved in the array with the same
+    //      * project_id key.
+    //      *
+    //      * However, if the project_id doesnot exist then we are creating a new array with the project_id
+    //      * as key.
+    //      */
 
-        foreach ($user_time_sheet as $time_sheet) {
+    //     foreach ($user_time_sheet as $time_sheet) {
 
-            $not_exist = true;
+    //         $not_exist = true;
 
-            if(array_key_exists ( $time_sheet->project_id ,  $array )){
+    //         if(array_key_exists ( $time_sheet->project_id ,  $array )){
 
-                $val = $array[$time_sheet->project_id];
+    //             $val = $array[$time_sheet->project_id];
 
-                $val = $val + $time_sheet->diff;
+    //             $val = $val + $time_sheet->diff;
 
-                $array[$time_sheet->project_id] = $val ;
+    //             $array[$time_sheet->project_id] = $val ;
 
-                $not_exist = false;
+    //             $not_exist = false;
 
-            }
+    //         }
 
-            if($not_exist){
-                $array[$time_sheet->project_id] = $time_sheet->diff ;
-            }
-        }
+    //         if($not_exist){
+    //             $array[$time_sheet->project_id] = $time_sheet->diff ;
+    //         }
+    //     }
 
 
-        $final_array = array();
-        $counter = 0;
+    //     $final_array = array();
+    //     $counter = 0;
 
-        foreach ($user_projects as $time_sheet) {
+    //     foreach ($user_projects as $time_sheet) {
 
-            if(array_key_exists ( $time_sheet->project_id , $array )){
+    //         if(array_key_exists ( $time_sheet->project_id , $array )){
 
-                $user_seconds = $array[$time_sheet->project_id];
+    //             $user_seconds = $array[$time_sheet->project_id];
 
-                $allocated_days = $time_sheet->allocated_days;
+    //             $allocated_days = $time_sheet->allocated_days;
 
-                $project_name = $time_sheet->project_name;
+    //             $project_name = $time_sheet->project_name;
 
-                $days = floatval($allocated_days);
+    //             $days = floatval($allocated_days);
 
-                // start by converting to seconds
+    //             // start by converting to seconds
                 
-                $seconds = ($days * 8 * 3600);
+    //             $seconds = ($days * 8 * 3600);
 
-                $deducted_seconds = $seconds - $user_seconds;
-
-
-                //converting seconds into hour
-
-                $seconds_to_hours = ($deducted_seconds / 3600);
-                $hours = floor($seconds_to_hours);    
-                $fraction_hour = $seconds_to_hours - $hours ;
-
-                //converting fraction hours into minutes
-
-                $fraction_minutes = ($fraction_hour * 60);
-
-                $minutes = ceil($fraction_minutes);
-
-                if($minutes == 60){
-
-                    $hours ++;
-
-                    $minutes = 0;
-
-                }
-
-                $final_deducted_time = $hours. ' hours ' . $minutes . ' mins';
+    //             $deducted_seconds = $seconds - $user_seconds;
 
 
-                $final_array[$counter] = array(
-                    'project_name'=> $project_name,
-                    'allocated_days'=> $allocated_days,
-                    'allocated_time'=> $time_sheet->allocated_time,
-                    'final_deducted_time'=>$final_deducted_time,
-                    'project_id'=>$time_sheet->project_id
+    //             //converting seconds into hour
 
-                    );
+    //             $seconds_to_hours = ($deducted_seconds / 3600);
+    //             $hours = floor($seconds_to_hours);    
+    //             $fraction_hour = $seconds_to_hours - $hours ;
 
-                $counter++;
+    //             //converting fraction hours into minutes
+
+    //             $fraction_minutes = ($fraction_hour * 60);
+
+    //             $minutes = ceil($fraction_minutes);
+
+    //             if($minutes == 60){
+
+    //                 $hours ++;
+
+    //                 $minutes = 0;
+
+    //             }
+
+    //             $final_deducted_time = $hours. ' hours ' . $minutes . ' mins';
 
 
-            }
+    //             $final_array[$counter] = array(
+    //                 'project_name'=> $project_name,
+    //                 'allocated_days'=> $allocated_days,
+    //                 'allocated_time'=> $time_sheet->allocated_time,
+    //                 'final_deducted_time'=>$final_deducted_time,
+    //                 'project_id'=>$time_sheet->project_id
+
+    //                 );
+
+    //             $counter++;
+
+
+    //         }
             
-        }        
+    //     }        
 
-        foreach ($user_projects as $u_project) {
+    //     foreach ($user_projects as $u_project) {
 
-            $counter = 0;
+    //         $counter = 0;
 
-            $missing_project_id = -1;
+    //         $missing_project_id = -1;
 
-            foreach ($final_array as $array) {
-                if($array['project_id'] == $u_project->project_id ){                   
-                   $missing_project_id = -1;
-                   break;
-               }else{
-                $missing_project_id = $u_project->project_id;
+    //         foreach ($final_array as $array) {
+    //             if($array['project_id'] == $u_project->project_id ){                   
+    //                $missing_project_id = -1;
+    //                break;
+    //            }else{
+    //             $missing_project_id = $u_project->project_id;
 
-            }
-            $counter ++;
-        }
+    //         }
+    //         $counter ++;
+    //     }
 
 
-        if($missing_project_id != -1){
-            $counter++;
-            $final_array[$counter] = array(
-                'project_name'=> $u_project->project_name,
-                'allocated_days'=> $u_project->allocated_days,
-                'allocated_time'=> $u_project->allocated_time,
-                'final_deducted_time'=>'-',
-                'project_id'=>$time_sheet->project_id
+    //     if($missing_project_id != -1){
+    //         $counter++;
+    //         $final_array[$counter] = array(
+    //             'project_name'=> $u_project->project_name,
+    //             'allocated_days'=> $u_project->allocated_days,
+    //             'allocated_time'=> $u_project->allocated_time,
+    //             'final_deducted_time'=>'-',
+    //             'project_id'=>$time_sheet->project_id
 
-                );
-        }
+    //             );
+    //     }
 
-    }
+    // }
+        $final_array = array() ;
 
         // dd($final_array);
     if(count($final_array)>0) {
