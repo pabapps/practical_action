@@ -501,7 +501,7 @@
 
     }).done(function() {
 
-      // window.location.assign('{{URL::to('/')}}/users');
+      window.location.assign('{{URL::to('/')}}/users');
 
     });
   }else{
