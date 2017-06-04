@@ -146,7 +146,7 @@
 
           <div class="form-group">
             <label>Time</label>
-            <select id="activity" name="activity"  class="form-control" required>
+            <select id="time-sheet" name="time_sheet"  class="form-control" required>
               <option value="30 mins">30 mins</option>
               <option value="1 hour">1 hour</option>
               <option value="1 hour 30 mins">1 hour 30 mins</option>
@@ -270,7 +270,7 @@ $( document ).ready(function() {
 
       $('#add-new-entry').modal('toggle');
 
-      location.reload();
+      // location.reload();
 
     });
 

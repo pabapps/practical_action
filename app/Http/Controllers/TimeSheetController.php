@@ -312,8 +312,7 @@ class TimeSheetController extends Controller
 
         $user_time_sheet->project_id = $request->project_name_modal;
         $user_time_sheet->user_id = $request->user_id;
-        $user_time_sheet->start_time = $request->start_time;
-        $user_time_sheet->end_time = $request->end_time;
+        $user_time_sheet->time_spent = $request->time_sheet;
         $user_time_sheet->date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->entry_date)->toDateString();
         $user_time_sheet->activity = $request->activity;
 
