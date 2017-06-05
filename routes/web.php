@@ -144,9 +144,6 @@ Route::resource('/departments','DepartmentController');
 /**
  * route for time sheet
  */
-//fetching the projects that are related to the user for timesheet
-Route::get('/timesheet/get_user_projects','TimeSheetController@get_user_projects');
-
 Route::get('/timesheet/project_details_for_timesheet/{id}/{month}','TimeSheetController@project_details_for_timesheet');
 
 //route for sending time log for the porjects to their respective line manager

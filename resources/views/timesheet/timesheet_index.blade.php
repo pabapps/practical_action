@@ -25,7 +25,16 @@
 
            <div class="form-group">
             <label>Please select one of the projects</label>
-            <select id="project-id" name="project_id"  style="width: 100%;" class="col-lg-8 form-control select2" >
+            <select id="project-id" name="project_id"  style="width: 100%;" class="col-lg-8 form-control" >
+
+              @if(isset($project_list))
+              @foreach($project_list as $project)
+                <option value="{{$project->project_id}}">{{$project->project_name}}</option>
+              @endforeach
+              <option value="all">All</option>
+              @else
+              <option value="-1">No projecs has been assigned for you yet</option>
+              @endif
 
             </select>
           </div>
@@ -42,7 +51,7 @@
                 <i class="fa fa-calendar"></i>
               </div>
               <input type="text" class="form-control pull-right onchange" name="start_date"
-               data-date-format="dd-mm-yyyy" id="start-date" placeholder="Month">
+              data-date-format="dd-mm-yyyy" id="start-date" placeholder="Month">
             </div>
             <!-- /.input group -->
           </div>
@@ -57,7 +66,7 @@
                 <i class="fa fa-calendar"></i>
               </div>
               <input type="text" class="form-control pull-right onchange" name="end_date"
-               data-date-format="dd-mm-yyyy" id="end-date" placeholder="Month">
+              data-date-format="dd-mm-yyyy" id="end-date" placeholder="Month">
             </div>
             <!-- /.input group -->
           </div>
@@ -162,27 +171,6 @@ $( document ).ready(function() {
   $('#end-date').datepicker({
     autoclose: true
 
-  });
-
-
-  $('#project-id').select2({
-    placeholder: 'Select an option',
-    ajax: {
-      dataType: 'json',
-      url: '{{URL::to('/')}}/timesheet/get_user_projects',
-      delay: 250,
-      data: function(params) {
-        return {
-          term: params.term
-        }
-      },
-      processResults: function (data, params) {
-        params.page = params.page || 1;
-        return {
-          results: data
-        };
-      },
-    }
   });
 
   var table;
