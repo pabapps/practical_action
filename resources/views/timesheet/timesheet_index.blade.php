@@ -191,7 +191,7 @@ $( document ).ready(function() {
     if(calcDaysBetween(start_date_1, end_date_1) < 0){
       alert('"start" date cannot be more than "end" date');
       return;
-    };
+    }
 
     if(project_id == -1){
 

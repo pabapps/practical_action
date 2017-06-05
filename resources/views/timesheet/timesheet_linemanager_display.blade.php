@@ -82,29 +82,7 @@
         </div>
       </div>
       <!-- /.row -->
-      <div class="box-body hidden">
-        <div class="row">
-          <div class="col-md-3">
-
-           <div class="form-group">
-            <label>Please select one of the projects</label>
-            <select id="project-id" name="project_id"  style="width: 100%;" class="col-lg-8 form-control" >
-
-              @if(isset($project_list))
-              @foreach($project_list as $project)
-              <option value="{{$project->project_id}}">{{$project->project_name}}</option>
-              @endforeach
-              <option value="all">All</option>
-              @else
-              <option value="-1">No projecs has been assigned for you yet</option>
-              @endif
-
-            </select>
-          </div>
-
-        </div>
-      </div>
-    </div>
+      
 
       <div class="box-body">
         <table id="time-sheet-log" class="table table-bordered table-hover">
@@ -166,7 +144,7 @@
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
-
+<script src="{{asset('dist/js/utils.js')}}"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
 
@@ -208,9 +186,27 @@ $( document ).ready(function() {
 
     var user_id = $('#user-id').val();
 
-    var month = $("#month").datepicker({ dateFormat: 'dd-mm-yy' }).val();
+    
+    var start_date = $("#start-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
 
-    if(user_id == null || month == ""){
+    var end_date = $("#end-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
+
+    var start_date_1=  $("#start-date").datepicker('getDate');
+    var end_date_1=$("#end-date").datepicker('getDate');
+
+    
+    if(start_date=="" || end_date==""){
+      alert("please select a start date and an end date");
+      return;
+    }
+
+
+    if(calcDaysBetween(start_date_1, end_date_1) < 0){
+      alert('"start" date cannot be more than "end" date');
+      return;
+    }
+
+    if(user_id == null ){
 
       alert("OPS! please select an user and the month.");
 
@@ -222,12 +218,11 @@ $( document ).ready(function() {
         "processing": true,
         "serverSide": true,
         "bDestroy": true,
-        "ajax": "{{URL::to('/')}}/timesheet/time_log_for_submitted_users/"+user_id+"/"+month,
+        "ajax": "{{URL::to('/')}}/timesheet/time_log_for_submitted_users/"+user_id+"/"+start_date+"/"+end_date,
         "columns": [
         { "data": "project_name" },
         { "data": "date" },
-        { "data": "start_time" },
-        { "data": "end_time" },
+        { "data": "time_spent" },
         { "data": "activity" },
         { "data": "action", name: 'action', orderable: false, searchable: false}
         ],
