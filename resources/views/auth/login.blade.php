@@ -27,7 +27,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
       <div class="login-logo">
-        <h2>Practical Action Bangladesh</h2>
+        <h2>Practical Action Bangladeshasdsad</h2>
     </div>
     <!-- /.login-logo -->
     @if (count($errors) > 0)
