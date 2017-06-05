@@ -64,8 +64,7 @@
             <tr>
               <th>Project Name</th>
               <th>Date</th>
-              <th>Star time</th>
-              <th>End time</th>
+              <th>Time</th>
               <th>Activity</th>
               <th>Options</th>
             </tr>
@@ -75,12 +74,7 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>Project Name</th>
-              <th>Date</th>
-              <th>Star time</th>
-              <th>End time</th>
-              <th>Activity</th>
-              <th>Options</th>
+              
             </tr>
           </tfoot>
         </table>
@@ -171,8 +165,7 @@ $('#search_form').submit(function( event ){
       "columns": [
       { "data": "project_name" },
       { "data": "date" },
-      { "data": "start_time" },
-      { "data": "end_time" },
+      { "data": "time_spent" },
       { "data": "activity" },
       { "data": "action", name: 'action', orderable: false, searchable: false}
       ],

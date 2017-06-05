@@ -571,8 +571,7 @@ class TimeSheetController extends Controller
 
         $time_sheet_log = DB::table('time_sheet_user')
         ->join('projects','time_sheet_user.project_id','=','projects.id')
-        ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.start_time',
-            'time_sheet_user.end_time','time_sheet_user.date','time_sheet_user.activity')
+        ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.time_spent','time_sheet_user.date','time_sheet_user.activity')
         ->where('time_sheet_user.user_id',$user->id)->where('time_sheet_user.valid',1)
         ->where('time_sheet_user.sent_to_manager',1)
         ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();

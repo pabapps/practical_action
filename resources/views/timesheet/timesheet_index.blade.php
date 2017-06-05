@@ -120,7 +120,7 @@
 
       <div class="form-group">
 
-        <button type="submit" id="time-sheet-submit" class="btn btn-primary">Submit</button>
+        <button type="submit" id="time_sheet" class="btn btn-primary">Submit</button>
 
       </div>
 
