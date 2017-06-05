@@ -29,12 +29,14 @@
 
               <div class="form-group">
                 <label>Phone</label>
-                <input type="number" class="form-control" id="phone-num" name="phone_num" placeholder="please enter the phone number" value="{{ $user->phone_num }}">   
+                <input type="number" class="form-control" id="phone-num" name="phone_num" 
+                placeholder="please enter the phone number" value="{{ $user->phone_num }}">   
               </div>
 
               <div class="form-group">
                 <label>line manager</label>
-                <select id="line-manager" name="line_manager" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]">
+                <select id="line-manager" name="line_manager" placeholder="" style="width: 100%;" 
+                class="col-lg-8 form-control select2 validate[required]">
                   @if(isset($user->line_manager_id))
 
                   <option value='{{$line_manager->id}}' selected>{{$line_manager->name}}</option>
@@ -45,9 +47,10 @@
 
               <div class="form-group">
                 <label>Designation</label>
-                <select id="designation" name="designation" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]">
+                <select id="designation" name="designation" placeholder="" style="width: 100%;" 
+                class="col-lg-8 form-control select2 validate[required]">
                   @if(isset($user_designation->position_name))
-                  <option value='{{$matrix_manager->id}}' selected>{{$user_designation->position_name}}</option>
+                  <option value='{{$user_designation->id}}' selected>{{$user_designation->position_name}}</option>
                   @endif
                 </select>
               </div>
@@ -65,7 +68,8 @@
                 <!-- <input type="text" class="form-control" name="sales_name" id="sales-name" placeholder="Enter sales center name" required>    -->
                 <div class="row">
                   <div class="col-lg-11" style="padding-right:0;">
-                    <select id="role-id" name="role_id[]" placeholder="" style="width: 100%;" multiple="multiple" class="col-lg-8 form-control select2 validate[required]" required>
+                    <select id="role-id" name="role_id[]" placeholder="" style="width: 100%;" multiple="multiple"
+                     class="col-lg-8 form-control select2 validate[required]" >
                       @if(isset($role->id))
                       <option value='{{$role->id}}' selected>{{$role->name}}</option>
                       @endif
@@ -123,7 +127,8 @@
 
                 <div class="form-group">
                   <label>Confirm password</label>
-                  <input type="password" class="form-control" id="password_confirm" name="password_confirm"placeholder="please enter your password again" >
+                  <input type="password" class="form-control" id="password_confirm" name="password_confirm"
+                  placeholder="please enter your password again" >
 
                 </div>
 

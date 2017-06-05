@@ -128,6 +128,7 @@ class UsersController extends Controller
     {
         $user_id=Crypt::decrypt($id);
 
+
         $user = User::where('valid',  1)->where('id',$user_id)->first();
 
         $date = date_create($user->joining_date);
@@ -138,8 +139,10 @@ class UsersController extends Controller
 
         $line_manager = User::where('id', $user->line_manager_id)->first();
 
-        $user_designation_connection = UserDesignationModel::where('user_id',$user->id)
+        $user_designation_connection = UserDesignationModel::where('user_id',$user_id)
         ->where('valid',1)->first();
+
+        
 
         if(is_object($user_designation_connection)){
 
@@ -258,6 +261,8 @@ class UsersController extends Controller
                 }
 
             }else{
+
+                
 
                 //if old data does not exist, create a designation for this user
 
