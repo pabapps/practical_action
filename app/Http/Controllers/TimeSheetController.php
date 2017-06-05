@@ -409,7 +409,7 @@ class TimeSheetController extends Controller
     {
 
         UserTimeSheetModel::where('id', $id)
-        ->update(['start_time' => $request->start_time,'end_time' => $request->end_time,
+        ->update(['time_spent'=>$request->time_sheet,
             'date'=> \Carbon\Carbon::createFromFormat('d-m-Y', $request->entry_date)->toDateString(),'activity'=>$request->activity,'remarks'=>$request->remarks_modal,
             'location'=>$request->location_modal]);
 
