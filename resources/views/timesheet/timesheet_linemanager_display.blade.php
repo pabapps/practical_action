@@ -21,7 +21,7 @@
 
       <div class="box-body">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-3">
 
            <div class="form-group">
             <label>Please select one of the users</label>
@@ -33,15 +33,31 @@
         </div>
         <!-- /.col -->
 
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
-            <label>Month</label>
+            <label>Start date</label>
 
             <div class="input-group date">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <input type="text" class="form-control pull-right onchange" name="start_date" data-date-format="dd-mm-yyyy" id="month" placeholder="Month">
+              <input type="text" class="form-control pull-right onchange" name="start_date"
+              data-date-format="dd-mm-yyyy" id="start-date" placeholder="start">
+            </div>
+            <!-- /.input group -->
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>End date</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right onchange" name="end_date"
+              data-date-format="dd-mm-yyyy" id="end-date" placeholder="end">
             </div>
             <!-- /.input group -->
           </div>
@@ -66,6 +82,29 @@
         </div>
       </div>
       <!-- /.row -->
+      <div class="box-body hidden">
+        <div class="row">
+          <div class="col-md-3">
+
+           <div class="form-group">
+            <label>Please select one of the projects</label>
+            <select id="project-id" name="project_id"  style="width: 100%;" class="col-lg-8 form-control" >
+
+              @if(isset($project_list))
+              @foreach($project_list as $project)
+              <option value="{{$project->project_id}}">{{$project->project_name}}</option>
+              @endforeach
+              <option value="all">All</option>
+              @else
+              <option value="-1">No projecs has been assigned for you yet</option>
+              @endif
+
+            </select>
+          </div>
+
+        </div>
+      </div>
+    </div>
 
       <div class="box-body">
         <table id="time-sheet-log" class="table table-bordered table-hover">
@@ -85,13 +124,6 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>Project Name</th>
-              <th>Date</th>
-              <th>Star time</th>
-              <th>End time</th>
-              <th>Activity</th>
-              <th>Edit</th>
-
             </tr>
           </tfoot>
         </table>
@@ -138,12 +170,11 @@
 <script type="text/javascript">
 $( document ).ready(function() {
 
-  $('#month').datepicker({
+  $('#start-date').datepicker({
+    autoclose: true
 
-     format: "mm-yyyy",
-    startView: "months", 
-    minViewMode: "months",
-
+  });
+  $('#end-date').datepicker({
     autoclose: true
 
   });
