@@ -30,7 +30,29 @@ class TimeSheetController extends Controller
 
     public function index()
     {
-        return view('timesheet.timesheet_index');
+
+        //user info
+        $user = Auth::user();
+
+        //selecting the projects that this user has been assigned
+        $project_list = DB::table('users_projects_connection')
+        ->join('projects','projects.id','=','users_projects_connection.project_id')
+        ->select('users_projects_connection.project_id','projects.project_name')
+        ->where('users_projects_connection.user_id',$user->id)
+        ->where('users_projects_connection.valid',1)
+        ->get();
+
+
+        //checking if the are any projects that has been assigned to this user or not
+        //if not then just show the page
+
+        if(count($project_list)>0){
+            return view('timesheet.timesheet_index')->with('project_list',$project_list);
+        }else{
+            return view('timesheet.timesheet_index');    
+        }                
+
+        
     }
 
     /**
@@ -273,9 +295,9 @@ class TimeSheetController extends Controller
 
             foreach ($final_array as $array) {
                 if($array['project_id'] == $u_project->project_id ){                   
-                 $missing_project_id = -1;
-                 break;
-             }else{
+                   $missing_project_id = -1;
+                   break;
+               }else{
                 $missing_project_id = $u_project->project_id;
 
             }
@@ -302,7 +324,7 @@ class TimeSheetController extends Controller
 
 
     }
-        
+
     if(count($final_array)>0) {
         return view('timesheet.timesheet_create')->with('user_projects',$user_projects)->with('user_info',$user_info[0])
         ->with('final_array',$final_array);
