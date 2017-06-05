@@ -30,12 +30,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>id</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Gender</th>
-                  <th>Edit</th>
+                  
                 </tr>
                 </tfoot>
               </table>

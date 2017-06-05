@@ -144,10 +144,7 @@ Route::resource('/departments','DepartmentController');
 /**
  * route for time sheet
  */
-//fetching the projects that are related to the user for timesheet
-Route::get('/timesheet/get_user_projects','TimeSheetController@get_user_projects');
-
-Route::get('/timesheet/project_details_for_timesheet/{id}/{month}','TimeSheetController@project_details_for_timesheet');
+Route::get('/timesheet/project_details_for_timesheet/{id}/{start_date}/{end_date}','TimeSheetController@project_details_for_timesheet');
 
 //route for sending time log for the porjects to their respective line manager
 Route::post('/timesheet/send_to_linemanager','TimeSheetController@send_to_linemanager');
@@ -162,7 +159,7 @@ Route::post('/timesheet/submit_to_accounts_manager','TimeSheetController@submit_
 //route for gethering the users who have submitted their time sheet to their line managers
 Route::get('/timesheet/get_submitted_users','TimeSheetController@get_submitted_users');
 
-Route::get('/timesheet/time_log_for_submitted_users/{id}/{month}','TimeSheetController@time_log_for_submitted_users');
+Route::get('/timesheet/time_log_for_submitted_users/{id}/{start_date}/{end_date}','TimeSheetController@time_log_for_submitted_users');
 
 //previous/submitted time logs for the users
 Route::get('/timesheet/old_time_logs_users','TimeSheetController@old_time_logs_users');

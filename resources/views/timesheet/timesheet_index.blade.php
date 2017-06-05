@@ -21,11 +21,20 @@
 
       <div class="box-body">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-3">
 
            <div class="form-group">
             <label>Please select one of the projects</label>
-            <select id="project-id" name="project_id"  style="width: 100%;" class="col-lg-8 form-control select2" >
+            <select id="project-id" name="project_id"  style="width: 100%;" class="col-lg-8 form-control" >
+
+              @if(isset($project_list))
+              @foreach($project_list as $project)
+              <option value="{{$project->project_id}}">{{$project->project_name}}</option>
+              @endforeach
+              <option value="all">All</option>
+              @else
+              <option value="-1">No projecs has been assigned for you yet</option>
+              @endif
 
             </select>
           </div>
@@ -33,15 +42,31 @@
         </div>
         <!-- /.col -->
 
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
-            <label>Month</label>
+            <label>Start date</label>
 
             <div class="input-group date">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <input type="text" class="form-control pull-right onchange" name="start_date" data-date-format="dd-mm-yyyy" id="month" placeholder="Month">
+              <input type="text" class="form-control pull-right onchange" name="start_date"
+              data-date-format="dd-mm-yyyy" id="start-date" placeholder="start">
+            </div>
+            <!-- /.input group -->
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>End date</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right onchange" name="end_date"
+              data-date-format="dd-mm-yyyy" id="end-date" placeholder="end">
             </div>
             <!-- /.input group -->
           </div>
@@ -74,8 +99,7 @@
             <tr>
               <th>Project Name</th>
               <th>Date</th>
-              <th>Star time</th>
-              <th>End time</th>
+              <th>Time</th>
               <th>Activity</th>
               <th>Edit</th>
 
@@ -86,13 +110,7 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>Project Name</th>
-              <th>Date</th>
-              <th>Star time</th>
-              <th>End time</th>
-              <th>Activity</th>
-              <th>Edit</th>
-
+              
             </tr>
           </tfoot>
         </table>
@@ -102,7 +120,7 @@
 
       <div class="form-group">
 
-        <button type="submit" id="time-sheet-submit" class="btn btn-primary">Submit</button>
+        <button type="submit" id="time_sheet" class="btn btn-primary">Submit</button>
 
       </div>
 
@@ -135,39 +153,17 @@
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
-
+<script src="{{asset('dist/js/utils.js')}}"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
 
-  $('#month').datepicker({
-
-     format: "mm-yyyy",
-    startView: "months", 
-    minViewMode: "months",
-
+  $('#start-date').datepicker({
     autoclose: true
 
   });
+  $('#end-date').datepicker({
+    autoclose: true
 
-
-  $('#project-id').select2({
-    placeholder: 'Select an option',
-    ajax: {
-      dataType: 'json',
-      url: '{{URL::to('/')}}/timesheet/get_user_projects',
-      delay: 250,
-      data: function(params) {
-        return {
-          term: params.term
-        }
-      },
-      processResults: function (data, params) {
-        params.page = params.page || 1;
-        return {
-          results: data
-        };
-      },
-    }
   });
 
   var table;
@@ -178,11 +174,28 @@ $( document ).ready(function() {
 
     var project_id = $('#project-id').val();
 
-    var month = $("#month").datepicker({ dateFormat: 'dd-mm-yy' }).val();
+    var start_date = $("#start-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
 
-    if(project_id == null || month == ""){
+    var end_date = $("#end-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
 
-      alert("OPS! please select a project and the month.");
+    var start_date_1=  $("#start-date").datepicker('getDate');
+    var end_date_1=$("#end-date").datepicker('getDate');
+
+    
+    if(start_date=="" || end_date==""){
+      alert("please select a start date and an end date");
+      return;
+    }
+
+
+    if(calcDaysBetween(start_date_1, end_date_1) < 0){
+      alert('"start" date cannot be more than "end" date');
+      return;
+    }
+
+    if(project_id == -1){
+
+      alert("It looks like you have not been assigned any projects yet.");
 
       return;
 
@@ -192,13 +205,12 @@ $( document ).ready(function() {
         "processing": true,
         "serverSide": true,
         "bDestroy": true,
-        "ajax": "{{URL::to('/')}}/timesheet/project_details_for_timesheet/"+project_id+"/"+month,
+        "ajax": "{{URL::to('/')}}/timesheet/project_details_for_timesheet/"+project_id+"/"+start_date+"/"+end_date,
         "columns": [
         { "data": "project_name" },
         { "data": "date" },
-        { "data": "start_time" },
-        { "data": "end_time" },
-        { "data": "activity" },
+        { "data": "time_spent" },
+        { "data": "activity" }, 
         { "data": "action", name: 'action', orderable: false, searchable: false}
         ],
         "order": [[1, 'asc']]
@@ -252,20 +264,7 @@ $( document ).ready(function() {
     });
 
 
-
-
-
-
   });
-
-
-
-
-
-
-
-
-
 
 
 });

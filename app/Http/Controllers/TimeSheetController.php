@@ -30,59 +30,67 @@ class TimeSheetController extends Controller
 
     public function index()
     {
-        return view('timesheet.timesheet_index');
+
+        //user info
+        $user = Auth::user();
+
+        //selecting the projects that this user has been assigned
+        $project_list = DB::table('users_projects_connection')
+        ->join('projects','projects.id','=','users_projects_connection.project_id')
+        ->select('users_projects_connection.project_id','projects.project_name')
+        ->where('users_projects_connection.user_id',$user->id)
+        ->where('users_projects_connection.valid',1)
+        ->get();
+
+
+        //checking if the are any projects that has been assigned to this user or not
+        //if not then just show the page
+
+        if(count($project_list)>0){
+            return view('timesheet.timesheet_index')->with('project_list',$project_list);
+        }else{
+            return view('timesheet.timesheet_index');    
+        }                
+
+        
     }
 
-    /**
-     * fetching only those projects for a user that has been assigned by the user's manager
-     */
-
-    public function get_user_projects(Request $request){
-
-        $user = AUTH::user();
-
-        $search_term = $request->input('term');
-
-        $query_projects= "
-        SELECT
-        projects.id AS id,
-        projects.project_name AS text
-        FROM projects
-        JOIN users_projects_connection
-        ON users_projects_connection.project_id = projects.id AND 
-        users_projects_connection.user_id='$user->id' AND users_projects_connection.valid=1
-        WHERE projects.project_name LIKE '%{$search_term}%' AND projects.valid=1";
-
-        $projects = DB::select($query_projects);
-
-
-        return response()->json($projects);
-
-    }
 
     /**
      * fetching all the relavent timesheet info/log that the user had entered for this project but didnot submit
      * the data to the manager
      */
 
-    public function project_details_for_timesheet(Request $request,$id,$month){
+    public function project_details_for_timesheet(Request $request,$id,$start_date,$end_date){
 
         $user = AUTH::user();
 
-        $date_string = explode("-", $month);
+        $time_sheet_log = "";
 
-        $time_sheet_log = DB::table('time_sheet_user')
-        ->join('projects','time_sheet_user.project_id','=','projects.id')
-        ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.start_time',
-            'time_sheet_user.end_time','time_sheet_user.date','time_sheet_user.activity')
-        ->where('time_sheet_user.user_id',$user->id)->where('time_sheet_user.valid',1)
-        ->where('time_sheet_user.sent_to_manager',0)->where('time_sheet_user.project_id',$id)
-        ->whereMonth('time_sheet_user.date',$date_string[0])
-        ->whereYear('time_sheet_user.date',$date_string[1])->get();
+        $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->toDateString();
+        $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
+
+        if($id=="all"){
+
+            $time_sheet_log = DB::table('time_sheet_user')
+            ->join('projects','projects.id','=','time_sheet_user.project_id')
+            ->select('time_sheet_user.id','projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
+            ->where('time_sheet_user.user_id',$user->id)
+            ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();            
+
+        }else{
+
+            $time_sheet_log = DB::table('time_sheet_user')
+            ->join('projects','projects.id','=','time_sheet_user.project_id')
+            ->select('time_sheet_user.id','projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
+            ->where('time_sheet_user.user_id',$user->id)
+            ->where('time_sheet_user.project_id',$id)
+            ->whereBetween('time_sheet_user.date',[$start_date,$end_date])
+            ->get();
+
+        }
 
         // dd($time_sheet_log);
-
-        // return response()->json($time_sheet_log);
 
         $time_collection = collect($time_sheet_log);
     // dd($reservation_collection);
@@ -112,6 +120,8 @@ class TimeSheetController extends Controller
     {
 
     	$user = Auth::user();
+
+        // dd("working");
 
 
     	/**
@@ -149,10 +159,11 @@ class TimeSheetController extends Controller
          */
 
         $query_time_sheet = "
-        SELECT project_id, TIME_TO_SEC(TIMEDIFF(end_time,start_time)) 
-        diff FROM time_sheet_user WHERE user_id='$user->id' AND valid=1";
+        SELECT project_id, time_spent FROM time_sheet_user WHERE user_id='$user->id' AND valid=1";
 
         $user_time_sheet = DB::select($query_time_sheet);
+
+        // dd($user_time_sheet);
 
         $not_exist = true;
 
@@ -173,20 +184,25 @@ class TimeSheetController extends Controller
 
             if(array_key_exists ( $time_sheet->project_id ,  $array )){
 
-                $val = $array[$time_sheet->project_id];
+                $time = $array[$time_sheet->project_id];
 
-                $val = $val + $time_sheet->diff;
+                $time2 = $time_sheet->time_spent;
 
-                $array[$time_sheet->project_id] = $val ;
+                $secs = strtotime($time2)-strtotime("00:00:00");
+
+                $result = date("H:i:s",strtotime($time)+$secs);
+
+                $array[$time_sheet->project_id] = $result ;
 
                 $not_exist = false;
 
             }
 
             if($not_exist){
-                $array[$time_sheet->project_id] = $time_sheet->diff ;
+                $array[$time_sheet->project_id] = $time_sheet->time_spent ;
             }
         }
+
 
 
         $final_array = array();
@@ -198,6 +214,11 @@ class TimeSheetController extends Controller
 
                 $user_seconds = $array[$time_sheet->project_id];
 
+                $parsed = date_parse($user_seconds);
+                $user_seconds = $parsed['hour'] * 3600 + $parsed['minute'] * 60 + $parsed['second'];
+
+
+
                 $allocated_days = $time_sheet->allocated_days;
 
                 $project_name = $time_sheet->project_name;
@@ -207,6 +228,7 @@ class TimeSheetController extends Controller
                 // start by converting to seconds
                 
                 $seconds = ($days * 8 * 3600);
+
 
                 $deducted_seconds = $seconds - $user_seconds;
 
@@ -233,7 +255,6 @@ class TimeSheetController extends Controller
 
                 $final_deducted_time = $hours. ' hours ' . $minutes . ' mins';
 
-
                 $final_array[$counter] = array(
                     'project_name'=> $project_name,
                     'allocated_days'=> $allocated_days,
@@ -248,7 +269,9 @@ class TimeSheetController extends Controller
 
             }
             
-        }        
+        }    
+
+        // dd($user_projects);
 
         foreach ($user_projects as $u_project) {
 
@@ -275,14 +298,19 @@ class TimeSheetController extends Controller
                 'allocated_days'=> $u_project->allocated_days,
                 'allocated_time'=> $u_project->allocated_time,
                 'final_deducted_time'=>'-',
-                'project_id'=>$time_sheet->project_id
+                'project_id'=>$u_project->project_id
 
                 );
+
+
         }
+
+
+
+
 
     }
 
-        // dd($final_array);
     if(count($final_array)>0) {
         return view('timesheet.timesheet_create')->with('user_projects',$user_projects)->with('user_info',$user_info[0])
         ->with('final_array',$final_array);
@@ -309,8 +337,7 @@ class TimeSheetController extends Controller
 
         $user_time_sheet->project_id = $request->project_name_modal;
         $user_time_sheet->user_id = $request->user_id;
-        $user_time_sheet->start_time = $request->start_time;
-        $user_time_sheet->end_time = $request->end_time;
+        $user_time_sheet->time_spent = $request->time_sheet;
         $user_time_sheet->date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->entry_date)->toDateString();
         $user_time_sheet->activity = $request->activity;
 
@@ -382,7 +409,7 @@ class TimeSheetController extends Controller
     {
 
         UserTimeSheetModel::where('id', $id)
-        ->update(['start_time' => $request->start_time,'end_time' => $request->end_time,
+        ->update(['time_spent'=>$request->time_sheet,
             'date'=> \Carbon\Carbon::createFromFormat('d-m-Y', $request->entry_date)->toDateString(),'activity'=>$request->activity,'remarks'=>$request->remarks_modal,
             'location'=>$request->location_modal]);
 
@@ -466,19 +493,21 @@ class TimeSheetController extends Controller
      * selecting only those time logs that have been sent to the line manager
      */
     
-    public function time_log_for_submitted_users($id,$month){
+    public function time_log_for_submitted_users($id,$start_date,$end_date){
 
-        $date_string = explode("-", $month);
+        $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->toDateString();
+        $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
+
+
 
         $time_sheet_log = DB::table('time_sheet_user')
         ->join('projects','time_sheet_user.project_id','=','projects.id')
-        ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.start_time',
-            'time_sheet_user.end_time','time_sheet_user.date','time_sheet_user.activity')
+        ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.time_spent',
+            'time_sheet_user.date','time_sheet_user.activity')
         ->where('time_sheet_user.user_id',$id)->where('time_sheet_user.valid',1)
         ->where('time_sheet_user.sent_to_manager',1)
         ->where('time_sheet_user.sent_to_accounts',0)
-        ->whereMonth('time_sheet_user.date',$date_string[0])
-        ->whereYear('time_sheet_user.date',$date_string[1])->get();
+        ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
 
         // dd($time_sheet_log);
 
@@ -544,10 +573,8 @@ class TimeSheetController extends Controller
 
         $time_sheet_log = DB::table('time_sheet_user')
         ->join('projects','time_sheet_user.project_id','=','projects.id')
-        ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.start_time',
-            'time_sheet_user.end_time','time_sheet_user.date','time_sheet_user.activity')
+        ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.time_spent','time_sheet_user.date','time_sheet_user.activity')
         ->where('time_sheet_user.user_id',$user->id)->where('time_sheet_user.valid',1)
-        ->where('time_sheet_user.sent_to_manager',1)
         ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
 
 

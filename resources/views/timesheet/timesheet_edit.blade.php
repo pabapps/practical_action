@@ -49,39 +49,28 @@
           </div>
         </div>
 
-        <div class="col-md-6">
-           <div class="bootstrap-timepicker ">
-            <div class="form-group">
-              <label>Start Time:</label>
-
-              <div class="input-group">
-                <input type="text" class="form-control timepicker" id="start-time" name="start_time" value="{{$time_sheet_data->start_time}}" required>
-
-                <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
-                </div>
-              </div>
-              <!-- /.input group -->
-            </div>
-          </div>
-        </div>
         
         <div class="col-md-6">
-          <div class="bootstrap-timepicker ">
-
-            <div class="form-group">
-              <label>End Time:</label>
-
-              <div class="input-group">
-                <input type="text" class="form-control timepicker" id="end-time" name="end_time" value="{{$time_sheet_data->end_time}}" required>
-
-                <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
-                </div>
-              </div>
-              <!-- /.input group -->
-            </div>
-
+          <div class="form-group">
+            <label>Time</label>
+            <select id="time-sheet" name="time_sheet"  class="form-control" required>
+              <option value="3000">30 mins</option>
+              <option value="010000">1 hour</option>
+              <option value="013000">1 hour 30 mins</option>
+              <option value="020000">2 hours</option>
+              <option value="023000">2 hours 30 mins</option>
+              <option value="030000">3 hours</option>
+              <option value="033000">3 hours 30 mins</option>
+              <option value="040000">4 hours</option>
+              <option value="043000">4 hours 30 mins</option>
+              <option value="050000">5 hours</option>
+              <option value="053000">5 hours 30 mins</option>
+              <option value="060000">6 hours</option>
+              <option value="063000">6 hours 30 mins</option>
+              <option value="070000">7 hours</option>
+              <option value="073000">7 hours 30 mins</option>
+              <option value="080000">8 hours</option>
+            </select>
           </div>
         </div>
 
@@ -89,13 +78,19 @@
           <div class="form-group">
             <label>Activity</label>
             <select id="activity" name="activity"  class="form-control" required>
-               <option value="{{$time_sheet_data->activity}}" selected>{{$time_sheet_data->activity}}</option> 
-              <option value="project management">Project Management</option>
-              <option value="monitoring evalution">Monitoring & Evalution</option>
-              <option value="field visit">Field visit</option>
-              <option value="training">Training</option>
-              <option value="meeting (outside office)">Meeting (Outside Office)</option>
-              <option value="meeting (inside office)">Meeting (Inside Office)</option>
+               <option value="Project Management">Project Management</option>
+              <option value="Financial/Grants management">Financial/Grants management</option>
+              <option value="Communicaiton/Documentation">Communication/Documentation</option>
+              <option value="Knowledge mgt">Knowledge mgt</option>
+              <option value="meeting">Meeting</option>
+              <option value="Workshop/Training">Workshop/Training</option>
+              <option value="Exposure visit">Exposure visit</option>
+              <option value="Field visit">Field visit</option>
+              <option value="It support">It support</option>
+              <option value="Administrative work">Adminstrative work</option>
+              <option value="Logistic support">Logistic support</option>
+              <option value="HR management">HR management</option>
+              <option value="Monitoring">Monitoring</option>
             </select>
           </div>
         </div>
@@ -168,19 +163,6 @@ $( document ).ready(function() {
   });
 
   
-
-  $("#start-time").timepicker({
-    showMeridian:false,
-    showSeconds:true,
-    showInputs: false
-    
-  });
-
-  $("#end-time").timepicker({
-    showMeridian:false,
-    showSeconds:true,
-    showInputs: false
-  });
 
 
 

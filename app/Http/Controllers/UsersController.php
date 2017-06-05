@@ -128,6 +128,7 @@ class UsersController extends Controller
     {
         $user_id=Crypt::decrypt($id);
 
+
         $user = User::where('valid',  1)->where('id',$user_id)->first();
 
         $date = date_create($user->joining_date);
@@ -138,8 +139,10 @@ class UsersController extends Controller
 
         $line_manager = User::where('id', $user->line_manager_id)->first();
 
-        $user_designation_connection = UserDesignationModel::where('user_id',$user->id)
+        $user_designation_connection = UserDesignationModel::where('user_id',$user_id)
         ->where('valid',1)->first();
+
+        
 
         if(is_object($user_designation_connection)){
 
@@ -258,6 +261,8 @@ class UsersController extends Controller
                 }
 
             }else{
+
+                
 
                 //if old data does not exist, create a designation for this user
 
@@ -417,10 +422,6 @@ class UsersController extends Controller
                     if($project[2] != $old_project->allocated_days){
 
 
-                        if($project[3] == null){
-                            dd("here");
-                        }
-
                         //there is a difference 
                         //then update that data only 
 
@@ -449,7 +450,7 @@ class UsersController extends Controller
 
 
                         UserProjectModel::where('user_id',$user_id)->where('project_id',$old_project->project_id)
-                        ->update(['allocated_time'=>$allocated_time,'allocated_days'=>$new_day]);
+                        ->update(['allocated_time'=>$allocated_time,'allocated_days'=>$new_day,'allocate_days_percent'=>$project[3]]);
 
                         $data_found = true;
 
@@ -470,6 +471,8 @@ class UsersController extends Controller
             if(!$data_found){
 
                 $days = $project[2];
+
+                $days_percentage = $project[3];
 
                 // start by converting to seconds
                 $seconds = ($days * 8 * 3600);
@@ -495,6 +498,7 @@ class UsersController extends Controller
                 $user_projects->project_id = $project[5];
                 $user_projects->allocated_time = $hours. ' hours ' . $minutes . ' mins';
                 $user_projects->allocated_days = $project[2];
+                $user_projects->allocate_days_percent = $project[3];
                 $user_projects->save();
 
             }
