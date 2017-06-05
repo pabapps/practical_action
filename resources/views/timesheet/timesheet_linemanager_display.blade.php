@@ -76,8 +76,8 @@
 
             <a href="{{URL::to('/')}}/timesheet/old_time_logs_users">
 
-            <button type="button"  class="btn btn-success" style="margin-top: 25px">Previous/submitted logs</button>
-          </a>
+              <button type="button"  class="btn btn-success" style="margin-top: 25px">Previous/submitted logs</button>
+            </a>
           </div>
         </div>
       </div>
@@ -90,8 +90,7 @@
             <tr>
               <th>Project Name</th>
               <th>Date</th>
-              <th>Star time</th>
-              <th>End time</th>
+              <th>Time</th>
               <th>Activity</th>
               <th>Edit</th>
 
@@ -218,6 +217,12 @@ $( document ).ready(function() {
         "processing": true,
         "serverSide": true,
         "bDestroy": true,
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
         "ajax": "{{URL::to('/')}}/timesheet/time_log_for_submitted_users/"+user_id+"/"+start_date+"/"+end_date,
         "columns": [
         { "data": "project_name" },

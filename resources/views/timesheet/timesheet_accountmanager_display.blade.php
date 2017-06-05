@@ -21,7 +21,7 @@
 
       <div class="box-body">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-3">
 
            <div class="form-group">
             <label>Please select one of the users</label>
@@ -33,15 +33,31 @@
         </div>
         <!-- /.col -->
 
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
-            <label>Month</label>
+            <label>Start date</label>
 
             <div class="input-group date">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <input type="text" class="form-control pull-right onchange" name="start_date" data-date-format="dd-mm-yyyy" id="month" placeholder="Month">
+              <input type="text" class="form-control pull-right onchange" name="start_date"
+              data-date-format="dd-mm-yyyy" id="start-date" placeholder="start">
+            </div>
+            <!-- /.input group -->
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>End date</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right onchange" name="end_date"
+              data-date-format="dd-mm-yyyy" id="end-date" placeholder="end">
             </div>
             <!-- /.input group -->
           </div>
@@ -60,8 +76,8 @@
 
             <a href="{{URL::to('/')}}/timesheet/old_time_logs_users">
 
-            <button type="button"  class="btn btn-success" style="margin-top: 25px">Previous/submitted logs</button>
-          </a>
+              <button type="button"  class="btn btn-success" style="margin-top: 25px">Previous/submitted logs</button>
+            </a>
           </div>
         </div>
       </div>
@@ -73,8 +89,7 @@
             <tr>
               <th>Project Name</th>
               <th>Date</th>
-              <th>Star time</th>
-              <th>End time</th>
+              <th>Time</th>
               <th>Activity</th>
               <th>Edit</th>
 
@@ -85,12 +100,6 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>Project Name</th>
-              <th>Date</th>
-              <th>Star time</th>
-              <th>End time</th>
-              <th>Activity</th>
-              <th>Edit</th>
 
             </tr>
           </tfoot>
@@ -134,16 +143,15 @@
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
-
+<script src="{{asset('dist/js/utils.js')}}"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
 
-  $('#month').datepicker({
+  $('#start-date').datepicker({
+    autoclose: true
 
-     format: "mm-yyyy",
-    startView: "months", 
-    minViewMode: "months",
-
+  });
+  $('#end-date').datepicker({
     autoclose: true
 
   });
@@ -177,9 +185,26 @@ $( document ).ready(function() {
 
     var user_id = $('#user-id').val();
 
-    var month = $("#month").datepicker({ dateFormat: 'dd-mm-yy' }).val();
+    var start_date = $("#start-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
 
-    if(user_id == null || month == ""){
+    var end_date = $("#end-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
+
+    var start_date_1=  $("#start-date").datepicker('getDate');
+    var end_date_1=$("#end-date").datepicker('getDate');
+
+    
+    if(start_date=="" || end_date==""){
+      alert("please select a start date and an end date");
+      return;
+    }
+
+
+    if(calcDaysBetween(start_date_1, end_date_1) < 0){
+      alert('"start" date cannot be more than "end" date');
+      return;
+    }
+
+    if(user_id == null ){
 
       alert("OPS! please select an user and the month.");
 
@@ -191,12 +216,17 @@ $( document ).ready(function() {
         "processing": true,
         "serverSide": true,
         "bDestroy": true,
-        "ajax": "{{URL::to('/')}}/timesheet/time_log_for_submitted_users/"+user_id+"/"+month,
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "ajax": "{{URL::to('/')}}/timesheet/time_log_for_submitted_users/"+user_id+"/"+start_date+"/"+end_date,
         "columns": [
         { "data": "project_name" },
         { "data": "date" },
-        { "data": "start_time" },
-        { "data": "end_time" },
+        { "data": "time_spent" },
         { "data": "activity" },
         { "data": "action", name: 'action', orderable: false, searchable: false}
         ],
@@ -251,15 +281,6 @@ $( document ).ready(function() {
     });
 
   });
-
-
-
-
-
-
-
-
-
 
 
 });
