@@ -61,24 +61,30 @@ class TimeSheetController extends Controller
      * the data to the manager
      */
 
-    public function project_details_for_timesheet(Request $request,$id,$month){
+    public function project_details_for_timesheet(Request $request,$id,$start_date,$end_date){
 
         $user = AUTH::user();
 
-        $date_string = explode("-", $month);
+        $time_sheet_log = "";
 
-        $time_sheet_log = DB::table('time_sheet_user')
-        ->join('projects','time_sheet_user.project_id','=','projects.id')
-        ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.start_time',
-            'time_sheet_user.end_time','time_sheet_user.date','time_sheet_user.activity')
-        ->where('time_sheet_user.user_id',$user->id)->where('time_sheet_user.valid',1)
-        ->where('time_sheet_user.sent_to_manager',0)->where('time_sheet_user.project_id',$id)
-        ->whereMonth('time_sheet_user.date',$date_string[0])
-        ->whereYear('time_sheet_user.date',$date_string[1])->get();
+        if($id=="all"){
 
-        // dd($time_sheet_log);
+            $time_sheet_log = DB::table('time_sheet_user')
+            ->join('projects','projects.id','=','time_sheet_user.project_id')
+            ->select('projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
+            ->where('time_sheet_user.user_id',$user->id)->get();            
 
-        // return response()->json($time_sheet_log);
+        }else{
+
+            $time_sheet_log = DB::table('time_sheet_user')
+            ->join('projects','projects.id','=','time_sheet_user.project_id')
+            ->select('time_sheet_user.id','projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
+            ->where('time_sheet_user.user_id',$user->id)
+            ->where('time_sheet_user.project_id',$id)->get();
+
+        }
+
+
 
         $time_collection = collect($time_sheet_log);
     // dd($reservation_collection);
