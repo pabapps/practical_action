@@ -67,12 +67,16 @@ class TimeSheetController extends Controller
 
         $time_sheet_log = "";
 
+        $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->toDateString();
+        $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
+
         if($id=="all"){
 
             $time_sheet_log = DB::table('time_sheet_user')
             ->join('projects','projects.id','=','time_sheet_user.project_id')
-            ->select('projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
-            ->where('time_sheet_user.user_id',$user->id)->get();            
+            ->select('time_sheet_user.id','projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
+            ->where('time_sheet_user.user_id',$user->id)
+            ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();            
 
         }else{
 
@@ -80,11 +84,13 @@ class TimeSheetController extends Controller
             ->join('projects','projects.id','=','time_sheet_user.project_id')
             ->select('time_sheet_user.id','projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
             ->where('time_sheet_user.user_id',$user->id)
-            ->where('time_sheet_user.project_id',$id)->get();
+            ->where('time_sheet_user.project_id',$id)
+            ->whereBetween('time_sheet_user.date',[$start_date,$end_date])
+            ->get();
 
         }
 
-
+        // dd($time_sheet_log);
 
         $time_collection = collect($time_sheet_log);
     // dd($reservation_collection);
