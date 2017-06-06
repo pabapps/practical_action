@@ -82,6 +82,7 @@
         <table id="time-log" class="table table-bordered table-hover">
           <thead>
             <tr>
+              <th>Name</th>
               <th>Project Name</th>
               <th>Date</th>
               <th>Time</th>
@@ -188,6 +189,7 @@ $('#search_form').submit(function( event ){
       "bDestroy": true,
       "ajax": "{{URL::to('/')}}/timesheet/lineManager_to_accountManager/old_records/"+user_id+"/"+start_date+"/"+end_date,
       "columns": [
+      { "data": "name" },
       { "data": "project_name" },
       { "data": "date" },
       { "data": "time_spent" },

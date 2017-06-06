@@ -76,6 +76,7 @@ class TimeSheetController extends Controller
             ->join('projects','projects.id','=','time_sheet_user.project_id')
             ->select('time_sheet_user.id','projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
             ->where('time_sheet_user.user_id',$user->id)
+            ->where('time_sheet_user.sent_to_manager',0)
             ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();            
 
         }else{
@@ -85,6 +86,7 @@ class TimeSheetController extends Controller
             ->select('time_sheet_user.id','projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
             ->where('time_sheet_user.user_id',$user->id)
             ->where('time_sheet_user.project_id',$id)
+            ->where('time_sheet_user.sent_to_manager',0)
             ->whereBetween('time_sheet_user.date',[$start_date,$end_date])
             ->get();
 
@@ -444,16 +446,19 @@ class TimeSheetController extends Controller
 
         $user = Auth::user();
 
+        //fetching the line manager
+        $line_manager_id = DB::table('users')
+        ->select('line_manager_id')
+        ->where('id',$user->id)->first();
+
         foreach ($array as $single_value) {
 
             DB::table('time_sheet_user')
             ->where('id', $single_value)
             ->where('user_id', $user->id)
-            ->update(['sent_to_manager' => 1]);
+            ->update(['sent_to_manager' => $line_manager_id->line_manager_id]);
 
         }
-
-        
 
         dd("working");
 
@@ -589,7 +594,64 @@ class TimeSheetController extends Controller
         $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
 
         if($id == "all"){
+
+            $user = Auth::user();
+
+            $time_sheet_log = DB::table('time_sheet_user')
+            ->join('projects','projects.id','=','time_sheet_user.project_id')
+            ->join('users','users.id','=','time_sheet_user.user_id')
+            ->select('time_sheet_user.id','time_sheet_user.activity','time_sheet_user.time_spent','time_sheet_user.date',
+                'projects.project_name','users.name')
+            ->where('time_sheet_user.sent_to_manager',$user->id)
+            ->where('time_sheet_user.valid',1)
+            ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
             
+
+            $time_collection = collect($time_sheet_log);
+            // dd($reservation_collection);
+            return Datatables::of($time_collection)
+            ->addColumn('action', function ($time_collection) {
+                return 
+
+                ' <a href="'. url('/timesheet') . '/' . 
+                Crypt::encrypt($time_collection->id) . 
+                '/edit' .'"' . 
+                'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Details</a>';
+            })
+            ->editColumn('id', '{{$id}}')
+            ->setRowId('id')
+            ->make(true);
+
+
+        }else{
+            $user = Auth::user();
+
+            $time_sheet_log = DB::table('time_sheet_user')
+            ->join('projects','projects.id','=','time_sheet_user.project_id')
+            ->join('users','users.id','=','time_sheet_user.user_id')
+            ->select('time_sheet_user.id','time_sheet_user.activity','time_sheet_user.time_spent','time_sheet_user.date',
+                'projects.project_name','users.name')
+            ->where('time_sheet_user.sent_to_manager',$user->id)
+            ->where('time_sheet_user.valid',1)
+            ->where('time_sheet_user.user_id',$id)
+            ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
+            
+
+            $time_collection = collect($time_sheet_log);
+            // dd($reservation_collection);
+            return Datatables::of($time_collection)
+            ->addColumn('action', function ($time_collection) {
+                return 
+
+                ' <a href="'. url('/timesheet') . '/' . 
+                Crypt::encrypt($time_collection->id) . 
+                '/edit' .'"' . 
+                'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Details</a>';
+            })
+            ->editColumn('id', '{{$id}}')
+            ->setRowId('id')
+            ->make(true);
+
         }
 
     }
@@ -609,6 +671,7 @@ class TimeSheetController extends Controller
         ->join('projects','time_sheet_user.project_id','=','projects.id')
         ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.time_spent','time_sheet_user.date','time_sheet_user.activity')
         ->where('time_sheet_user.user_id',$user->id)->where('time_sheet_user.valid',1)
+        ->where('time_sheet_user.sent_to_manager','!=',0)
         ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
 
 

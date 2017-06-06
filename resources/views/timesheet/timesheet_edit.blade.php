@@ -119,11 +119,20 @@
         <!-- /.col -->
       </div>
       <!-- /.row -->
+      @if($time_sheet_data->sent_to_manager != 0)
+      <div class="form-group hidden">
+
+        <button type="submit" class="btn btn-primary">Update</button>
+
+      </div>
+      @else
       <div class="form-group">
 
         <button type="submit" class="btn btn-primary">Update</button>
 
       </div>
+      @endif
+      
     </div>
     {!! Form::close() !!}
     <!-- /.box-body -->
