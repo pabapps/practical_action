@@ -657,6 +657,25 @@ class TimeSheetController extends Controller
     }
 
 
+    public function line_manager_refering_subordinates(Request $request){
+
+        
+
+        $array = $request->array_time_log;
+
+        foreach ($array as $single_value) {
+
+            DB::table('time_sheet_user')
+            ->where('id', $single_value)
+            ->update(['sent_to_manager' => 0]);
+
+        }
+
+        dd("working");
+
+    }
+
+
     public function previous_details_time_log_users(Request $request,$start_date,$end_date){
 
 
@@ -696,11 +715,14 @@ class TimeSheetController extends Controller
     }
 
     /**
-     * 
+     * time sheet details for the accounts to see and verify
      */
     public function time_log_accounts_display(){
 
-        return view('timesheet.timesheet_accountmanager_display');
+
+        $users = DB::table('users')->select('id','name')->get();
+
+        return view('timesheet.timesheet_accountmanager_display')->with('users',$users);
 
     }
 

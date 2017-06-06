@@ -162,6 +162,8 @@ Route::get('/timesheet/lineManager_to_accountManager','TimeSheetController@lineM
 Route::get('/timesheet/lineManager_to_accountManager/old_records/{id}/{start_date}/{end_date}',
 	'TimeSheetController@old_records_for_line_managers');
 
+Route::post('/timesheet/linemanager_refer_back_subordinate','TimeSheetController@line_manager_refering_subordinates');
+
 //route for gethering the users who have submitted their time sheet to their line managers
 Route::get('/timesheet/get_submitted_users','TimeSheetController@get_submitted_users');
 

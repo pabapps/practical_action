@@ -26,6 +26,11 @@
            <div class="form-group">
             <label>Please select one of the users</label>
             <select id="user-id" name="user_id"  style="width: 100%;" class="col-lg-8 form-control select2" >
+              @if(isset($users))
+              @foreach($users as $user)
+              <option value="{{$user->id}}">{{$user->name}}</option>
+              @endforeach
+              @endif
 
             </select>
           </div>
@@ -71,15 +76,7 @@
           </div>
         </div>
 
-        <div class="col-md-1">
-          <div class="form-group">
-
-            <a href="{{URL::to('/')}}/timesheet/old_time_logs_users">
-
-              <button type="button"  class="btn btn-success" style="margin-top: 25px">Previous/submitted logs</button>
-            </a>
-          </div>
-        </div>
+        
       </div>
       <!-- /.row -->
 
@@ -157,25 +154,7 @@ $( document ).ready(function() {
   });
 
 
-  $('#user-id').select2({
-    placeholder: 'Select an option',
-    ajax: {
-      dataType: 'json',
-      url: '{{URL::to('/')}}/timesheet/get_all_users_for_accounts',
-      delay: 250,
-      data: function(params) {
-        return {
-          term: params.term
-        }
-      },
-      processResults: function (data, params) {
-        params.page = params.page || 1;
-        return {
-          results: data
-        };
-      },
-    }
-  });
+  $("#user-id").select2();
 
   var table;
 
