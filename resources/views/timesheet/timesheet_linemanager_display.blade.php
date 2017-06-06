@@ -74,7 +74,7 @@
         <div class="col-md-1">
           <div class="form-group">
 
-            <a href="{{URL::to('/')}}/timesheet/old_time_logs_users">
+            <a href="{{URL::to('/')}}/timesheet/lineManager_to_accountManager">
 
               <button type="button"  class="btn btn-success" style="margin-top: 25px">Previous/submitted logs</button>
             </a>

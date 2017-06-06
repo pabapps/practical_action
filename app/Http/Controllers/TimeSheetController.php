@@ -281,9 +281,9 @@ class TimeSheetController extends Controller
 
             foreach ($final_array as $array) {
                 if($array['project_id'] == $u_project->project_id ){                   
-                   $missing_project_id = -1;
-                   break;
-               }else{
+                 $missing_project_id = -1;
+                 break;
+             }else{
                 $missing_project_id = $u_project->project_id;
 
             }
@@ -556,7 +556,41 @@ class TimeSheetController extends Controller
 
     public function old_time_logs_users(){
 
+
         return view('timesheet.previous_time_log_users');
+
+    }
+
+    /**
+     * displaying the page to show the table for the data that has been sent to the account manager
+     * from the line manager 
+     * @return [type] [description]
+     */
+    public function lineManager_to_accountManager(){
+
+        $line_manager = Auth::user();
+
+        //selecting only those users whose line manager is the current user
+        $sub_users = DB::table('users')
+        ->select('id','name')
+        ->where('line_manager_id',$line_manager->id)->get();
+
+        return view('timesheet.lineManager_to_accountManager')->with('sub_users',$sub_users);
+
+    }
+
+    /**
+     * fetching the details of the individual records on specific user from its line manager
+     */
+
+    public function old_records_for_line_managers(Request $request, $id, $start_date, $end_date){
+
+        $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->toDateString();
+        $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
+
+        if($id == "all"){
+            
+        }
 
     }
 

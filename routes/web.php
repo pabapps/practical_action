@@ -156,6 +156,12 @@ Route::get('/timesheet/display_line_manager','TimeSheetController@display_line_m
 //when the line manager sends the time log to the accounts manager
 Route::post('/timesheet/submit_to_accounts_manager','TimeSheetController@submit_to_accounts_manager');
 
+Route::get('/timesheet/lineManager_to_accountManager','TimeSheetController@lineManager_to_accountManager');
+
+//getting the details of the timesheet that has been sent to accounts from line manager
+Route::get('/timesheet/lineManager_to_accountManager/old_records/{id}/{start_date}/{end_date}',
+	'TimeSheetController@old_records_for_line_managers');
+
 //route for gethering the users who have submitted their time sheet to their line managers
 Route::get('/timesheet/get_submitted_users','TimeSheetController@get_submitted_users');
 
