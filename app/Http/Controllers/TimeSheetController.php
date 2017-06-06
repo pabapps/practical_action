@@ -283,9 +283,9 @@ class TimeSheetController extends Controller
 
             foreach ($final_array as $array) {
                 if($array['project_id'] == $u_project->project_id ){                   
-                 $missing_project_id = -1;
-                 break;
-             }else{
+                   $missing_project_id = -1;
+                   break;
+               }else{
                 $missing_project_id = $u_project->project_id;
 
             }
@@ -496,6 +496,7 @@ class TimeSheetController extends Controller
 
     /**
      * selecting only those time logs that have been sent to the line manager
+     * by the sub ordinates view(timesheet_linemanager)
      */
     
     public function time_log_for_submitted_users($id,$start_date,$end_date){
@@ -510,7 +511,7 @@ class TimeSheetController extends Controller
         ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.time_spent',
             'time_sheet_user.date','time_sheet_user.activity')
         ->where('time_sheet_user.user_id',$id)->where('time_sheet_user.valid',1)
-        ->where('time_sheet_user.sent_to_manager',1)
+        ->where('time_sheet_user.sent_to_manager','!=',0)
         ->where('time_sheet_user.sent_to_accounts',0)
         ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
 
@@ -659,7 +660,7 @@ class TimeSheetController extends Controller
 
     public function line_manager_refering_subordinates(Request $request){
 
-        
+
 
         $array = $request->array_time_log;
 
@@ -727,26 +728,45 @@ class TimeSheetController extends Controller
     }
 
     /**
-     * 
+     * timesheet details for accounts manager
+     * view(timesheet_accountmanager)
      */
     
-    public function get_all_users_for_accounts(Request $request){        
+    public function details_for_accounts_manager(Request $request,$id,$start_date,$end_date){
+
+        $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->toDateString();
+
+        $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
 
 
-        $search_term = $request->input('term');
-
-        $query_sub_users= "
-        SELECT users.id , users.name AS text
-        FROM users
-        WHERE users.name LIKE '%{$search_term}%' AND users.valid=1";
-
-        $sub_users = DB::select($query_sub_users);
+        $time_sheet_log = DB::table('time_sheet_user')
+        ->join('projects','time_sheet_user.project_id','=','projects.id')
+        ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.time_spent','time_sheet_user.date','time_sheet_user.activity')
+        ->where('time_sheet_user.user_id',$id)->where('time_sheet_user.valid',1)
+        ->where('time_sheet_user.sent_to_accounts',1)
+        ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
 
 
-        return response()->json($sub_users);
+        // dd($time_sheet_log);
+
+        $time_collection = collect($time_sheet_log);
+    // dd($reservation_collection);
+        return Datatables::of($time_collection)
+        ->addColumn('action', function ($time_collection) {
+            return 
+
+            ' <a href="'. url('/timesheet') . '/' . 
+            Crypt::encrypt($time_collection->id) . 
+            '/edit' .'"' . 
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Details</a>';
+        })
+        ->editColumn('id', '{{$id}}')
+        ->setRowId('id')
+        ->make(true);
+
+
 
     }
-
 
 
 

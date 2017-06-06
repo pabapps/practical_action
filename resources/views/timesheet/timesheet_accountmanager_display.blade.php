@@ -103,15 +103,6 @@
         </table>
       </div>
 
-      {!! Form::open(array('url'=>'/timesheet/send_to_linemanager', 'id'=>'participant-form')) !!}
-
-      <div class="form-group">
-
-        <button type="submit" id="time-sheet-submit" class="btn btn-primary">Submit</button>
-
-      </div>
-
-      {!! Form::close() !!}
       
     </div>
     
@@ -201,7 +192,7 @@ $( document ).ready(function() {
         "ordering": true,
         "info": true,
         "autoWidth": false,
-        "ajax": "{{URL::to('/')}}/timesheet/time_log_for_submitted_users/"+user_id+"/"+start_date+"/"+end_date,
+        "ajax": "{{URL::to('/')}}/timesheet/details_for_accounts_manager/"+user_id+"/"+start_date+"/"+end_date,
         "columns": [
         { "data": "project_name" },
         { "data": "date" },
@@ -219,47 +210,6 @@ $( document ).ready(function() {
   });
 
 
-  $( "#participant-form" ).submit(function(event){
-
-    event.preventDefault();
-
-    var array = [],count = 0;
-
-    if(table === undefined){
-
-      alert("please fill the table first");
-
-      return;
-
-    }
-
-
-    table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-      var data = this.data();
-
-      array[count] = data['id'];
-
-      count++;
-      
-
-    });
-
-    var $form = $( this ),
-    url = $form.attr( "action" ),
-    token = $("[name='_token']").val();
-
-    $.post( url, {'array_time_log':array, '_token': token }, function( data ) {
-
-    }).done(function() {
-
-      // alert("your time sheet has been sent to your line manager!");
-
-      // location.reload();
-
-      
-    });
-
-  });
 
 
 });
