@@ -416,7 +416,7 @@ class TimeSheetController extends Controller
             'location'=>$request->location_modal]);
 
         $request->session()->flash('alert-success', 'data has been successfully updated!');
-        return redirect()->action('TimeSheetController@index'); 
+        return redirect()->back(); 
 
 
 
@@ -757,7 +757,7 @@ class TimeSheetController extends Controller
 
             ' <a href="'. url('/timesheet') . '/' . 
             Crypt::encrypt($time_collection->id) . 
-            '/edit' .'"' . 
+            '/edit_by_accounts' .'"' . 
             'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Details</a>';
         })
         ->editColumn('id', '{{$id}}')
@@ -768,6 +768,32 @@ class TimeSheetController extends Controller
 
     }
 
+    /**
+     * If the accounts manager sees something if wrong with the timesheet, he can edit the existing time sheet
+     */
+    public function edit_by_accounts(Request $request, $id){
+
+        
+
+        $time_sheet_id=Crypt::decrypt($id);
+        
+
+        $time_sheet_data = UserTimeSheetModel::findOrFail($time_sheet_id);
+
+        $date = $time_sheet_data->date;
+
+        $date = date_create($date);
+        $date =  date_format($date,"d-m-Y");
+
+        $project = Projects::findOrFail($time_sheet_data->project_id);
+
+        
+
+        return view('timesheet.edit_by_accounts')->with('time_sheet_data',$time_sheet_data)->with('project',$project)
+        ->with('date',$date);
+
+
+    }
 
 
 

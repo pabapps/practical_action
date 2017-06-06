@@ -182,7 +182,8 @@ Route::get('/timesheet/time_log_accounts_display','TimeSheetController@time_log_
 Route::get('/timesheet/details_for_accounts_manager/{id}/{start_date}/{end_date}',
 	'TimeSheetController@details_for_accounts_manager');
 
-
+//if accoutns manager wants to edit the time sheet
+Route::get('/timesheet/{id}/edit_by_accounts','TimeSheetController@edit_by_accounts');
 
 
 Route::resource('/timesheet','TimeSheetController');
