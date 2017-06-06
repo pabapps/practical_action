@@ -203,7 +203,7 @@ class TimeSheetController extends Controller
             }
         }
 
-
+        //calculating the time, conveting days or the percentage into hours and mins
 
         $final_array = array();
         $counter = 0;
@@ -271,7 +271,7 @@ class TimeSheetController extends Controller
             
         }    
 
-        // dd($user_projects);
+        // checking if the project exists in the array 
 
         foreach ($user_projects as $u_project) {
 
