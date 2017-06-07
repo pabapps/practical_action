@@ -55,6 +55,10 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body">
+      <div class="form-group">
+        <button type="submit" data-toggle="modal" class="btn bg-purple btn-flat margin" data-target="#add-new-entry">Save new entry</button>
+
+      </div>
       <table id="time-sheet-table" class="table table-bordered table-striped">
         <thead>
           <tr>
@@ -91,13 +95,7 @@
           </tr>
         </tfoot>
       </table>
-      <div class="form-group">
-
-
-        <!-- <button type="submit" class="btn bg-navy btn-flat margin">.btn.bg-navy.btn-flat</button> -->
-        <button type="submit" data-toggle="modal" class="btn bg-purple btn-flat margin" data-target="#add-new-entry">Save new entry</button>
-
-      </div>
+      
     </div>
     <!-- /.box-body -->
   </div>
@@ -142,7 +140,7 @@
 
           <div class="form-group">
             <label>Time</label>
-            <select id="time-sheet" name="time_sheet"  class="form-control" required>
+            <select id="time-sheet" name="time_sheet" style="overflow-y: scroll;" class="form-control" required>
               <option value="3000">30 mins</option>
               <option value="010000">1 hour</option>
               <option value="013000">1 hour 30 mins</option>
@@ -240,7 +238,14 @@
 $( document ).ready(function() {
 
 
-  $("#time-sheet-table").DataTable();
+  $("#time-sheet-table").DataTable({
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
+
+  });
 
   $('#entry-date').datepicker({
     autoclose: true

@@ -116,6 +116,13 @@
             @endif
           </div>
 
+          <div class="form-group hidden">
+            
+            
+            <input type="text" class="form-control" name="user_timesheet" id="user-timesheet"  value="1" readonly>   
+            
+          </div>
+
         <!-- /.col -->
       </div>
       <!-- /.row -->

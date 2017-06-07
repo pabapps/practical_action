@@ -442,14 +442,28 @@ class TimeSheetController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
 
         UserTimeSheetModel::where('id', $id)
         ->update(['time_spent'=>$request->time_sheet,
             'date'=> \Carbon\Carbon::createFromFormat('d-m-Y', $request->entry_date)->toDateString(),'activity'=>$request->activity,'remarks'=>$request->remarks_modal,
             'location'=>$request->location_modal]);
 
-        $request->session()->flash('alert-success', 'data has been successfully updated!');
-        return redirect()->back(); 
+        $location = $request->user_timesheet;
+
+        if($location==1){
+
+            $request->session()->flash('alert-success', 'data has been successfully updated!');
+            return redirect()->action('TimeSheetController@index'); 
+
+        }else{
+
+            $request->session()->flash('alert-success', 'data has been successfully updated!');
+            return redirect()->action('TimeSheetController@time_log_accounts_display');
+
+        }
+
+        
 
 
 
