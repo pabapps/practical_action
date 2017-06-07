@@ -205,6 +205,12 @@ $( document ).ready(function() {
         "processing": true,
         "serverSide": true,
         "bDestroy": true,
+        "paging": false,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
         "ajax": "{{URL::to('/')}}/timesheet/project_details_for_timesheet/"+project_id+"/"+start_date+"/"+end_date,
         "columns": [
         { "data": "project_name" },

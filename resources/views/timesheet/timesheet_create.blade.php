@@ -266,7 +266,8 @@ $( document ).ready(function() {
 
       $('#add-new-entry').modal('toggle');
 
-      location.reload();
+      // location.reload();
+      window.location.assign('{{URL::to('/')}}/timesheet/create');
 
     });
 

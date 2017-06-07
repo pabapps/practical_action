@@ -189,6 +189,10 @@ Route::get('/timesheet/{id}/edit_by_accounts','TimeSheetController@edit_by_accou
 Route::resource('/timesheet','TimeSheetController');
 
 
+Route::get('/chart/test',function(){
+	return view('chartjs.test_chart');
+});
+
 
 
 

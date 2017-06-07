@@ -231,7 +231,7 @@ $( document ).ready(function() {
         "processing": true,
         "serverSide": true,
         "bDestroy": true,
-        "paging": true,
+        "paging": false,
         "lengthChange": true,
         "searching": true,
         "ordering": true,
@@ -336,9 +336,9 @@ $( document ).ready(function() {
 
     }).done(function() {
 
-      // /alert("your time sheet has been sent to the accounts manager!");
+      alert("The time sheet has been sent back for correction!");
 
-      // location.reload();
+      location.reload();
 
       
     });

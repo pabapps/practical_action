@@ -113,6 +113,23 @@ class TimeSheetController extends Controller
 
     }
 
+    function sum_the_time($time1, $time2) {
+      $times = array($time1, $time2);
+      $seconds = 0;
+      foreach ($times as $time)
+      {
+        list($hour,$minute,$second) = explode(':', $time);
+        $seconds += $hour*3600;
+        $seconds += $minute*60;
+        $seconds += $second;
+    }
+    $hours = floor($seconds/3600);
+    $seconds -= $hours*3600;
+    $minutes  = floor($seconds/60);
+    $seconds -= $minutes*60;
+    return "{$hours}:{$minutes}:{$seconds}";
+}
+
     /**
      * Show the form for creating a new resource.
      *
@@ -190,11 +207,13 @@ class TimeSheetController extends Controller
 
                 $time2 = $time_sheet->time_spent;
 
-                $secs = strtotime($time2)-strtotime("00:00:00");
+                // $secs = strtotime($time2)-strtotime("00:00:00");
 
-                $result = date("H:i:s",strtotime($time)+$secs);
+                // $result = date("H:i:s",strtotime($time)+$secs);
 
-                $array[$time_sheet->project_id] = $result ;
+
+                // $array[$time_sheet->project_id] = $result ;
+                $array[$time_sheet->project_id] = $this->sum_the_time($time,$time2);
 
                 $not_exist = false;
 
@@ -204,6 +223,8 @@ class TimeSheetController extends Controller
                 $array[$time_sheet->project_id] = $time_sheet->time_spent ;
             }
         }
+
+        // dd($array);
 
         //calculating the time, conveting days or the percentage into hours and mins
 
@@ -216,8 +237,20 @@ class TimeSheetController extends Controller
 
                 $user_seconds = $array[$time_sheet->project_id];
 
-                $parsed = date_parse($user_seconds);
-                $user_seconds = $parsed['hour'] * 3600 + $parsed['minute'] * 60 + $parsed['second'];
+                
+                list($hour,$minute,$second) = explode(':', $user_seconds);
+
+                    //converting hour into second
+                $hour = $hour * 60 * 60;
+
+                $minute = $minute * 60;
+
+                $total_time = $hour + $minute;
+
+                
+                
+
+                $user_seconds = $total_time;
 
 
 
@@ -773,7 +806,7 @@ class TimeSheetController extends Controller
      */
     public function edit_by_accounts(Request $request, $id){
 
-        
+
 
         $time_sheet_id=Crypt::decrypt($id);
         
