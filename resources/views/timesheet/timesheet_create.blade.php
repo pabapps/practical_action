@@ -56,7 +56,7 @@
     <!-- /.box-header -->
     <div class="box-body">
       <div class="form-group">
-        <button type="submit" data-toggle="modal" class="btn bg-purple btn-flat margin" data-target="#add-new-entry">Save new entry</button>
+        <button type="submit" data-toggle="modal" style="float: right;"class="btn bg-purple btn-flat margin" data-target="#add-new-entry">Add new entry</button>
 
       </div>
       <table id="time-sheet-table" class="table table-bordered table-striped">
