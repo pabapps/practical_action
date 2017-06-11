@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     // return view('welcome');
-    return view('auth.login');
+	return view('auth.login');
 });
 
 Auth::routes();
@@ -189,8 +189,28 @@ Route::get('/timesheet/{id}/edit_by_accounts','TimeSheetController@edit_by_accou
 Route::resource('/timesheet','TimeSheetController');
 
 
+Route::resource('/timeChart','TimeChartController');
+
+
 Route::get('/chart/test',function(){
-	return view('chartjs.test_chart');
+
+	$chartjs = app()->chartjs
+	->name('pieChartTest')
+	->type('doughnut')
+	->size(['width' => 120, 'height' => 60])
+	->labels(['Label x', 'Label y'])
+	->datasets([
+		[
+		'backgroundColor' => ['#FF6384', '#36A2EB'],
+		'hoverBackgroundColor' => ['#FF6384', '#36A2EB'],
+		'data' => [60, 40]
+		]
+		])
+	->options(['animation.animateRotate'=>true,'cutoutPercentage'=>50]);
+
+
+
+	return view('chartjs/chart', compact('chartjs'));
 });
 
 

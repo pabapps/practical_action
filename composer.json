@@ -6,12 +6,13 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "doctrine/dbal": "v2.5.12",
+        "fx3costa/laravelchartjs": "^2.2",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.3.0",
         "yajra/laravel-datatables-oracle": "^7.2",
-        "zizaco/entrust": "5.2.x-dev",
-        "doctrine/dbal": "v2.5.12"
+        "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
