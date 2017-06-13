@@ -34,98 +34,115 @@ class TimeChartController extends Controller
         $user = Auth::user();
 
         //getting all the projects that has been assigned to this user
-        // $user_projects = "
-        // SELECT 
-        // users_projects_connection.allocated_days,
-        // projects.id,
-        // projects.project_name
-        // FROM users_projects_connection
-        // JOIN projects
-        // ON projects.id=users_projects_connection.project_id
-        // WHERE users_projects_connection.user_id='$user->id' 
-        // AND users_projects_connection.valid=1
-        // ";
+        $user_projects = "
+        SELECT 
+        users_projects_connection.allocated_days,
+        projects.id,
+        projects.project_name
+        FROM users_projects_connection
+        JOIN projects
+        ON projects.id=users_projects_connection.project_id
+        WHERE users_projects_connection.user_id='$user->id' 
+        AND users_projects_connection.valid=1
+        ";
 
-        // $user_projects = DB::select($user_projects);
+        $user_projects = DB::select($user_projects);
 
-        // $time_array = array();
+        $time_array = array();
 
-        // $counter = 0;
+        $counter = 0;
 
-        // //user time spent on each projecs
+        //user time spent on each projecs
         
-        // foreach ($user_projects as $projects) {
+        foreach ($user_projects as $projects) {
 
 
-        //     $user_time = "
-        //     SELECT 
-        //     time_sheet_user.project_id,
-        //     SEC_TO_TIME(SUM(TIME_TO_SEC(time_sheet_user.time_spent))) AS time
-        //     FROM time_sheet_user
-        //     WHERE time_sheet_user.user_id='$user->id' AND time_sheet_user.project_id='$projects->id'
-        //     GROUP BY time_sheet_user.project_id
-        //     ";
+            $user_time = "
+            SELECT 
+            time_sheet_user.project_id,
+            SEC_TO_TIME(SUM(TIME_TO_SEC(time_sheet_user.time_spent))) AS time
+            FROM time_sheet_user
+            WHERE time_sheet_user.user_id='$user->id' AND time_sheet_user.project_id='$projects->id'
+            GROUP BY time_sheet_user.project_id
+            ";
 
-        //     $user_time = DB::select($user_time);
+            $user_time = DB::select($user_time);
 
-        //     if(count($user_time)>0){
+            if(count($user_time)>0){
 
-        //         $time_array[$counter] = $user_time;
+                $time_array[$counter] = $user_time;
 
-        //         $counter++;
-        //     }
+                $counter++;
+            }
 
-        // }
+        }
 
-        // // dd($time_array);
+        // dd($time_array);
 
-        // $time_percent = array();
+        $time_percent = array();
 
-        // $counter = 0;
+        $test_array = array();
 
-        // foreach ($time_array as $time) {
-        //     // dd($time[0]->project_id);
+        $test_project = array();
+        $remain_project = array();
 
-        //     foreach ($user_projects as $projects) {
-        //         //project matches
-        //         if($projects->id==$time[0]->project_id){
+        $counter = 0;
 
-        //             //conveting the project time into hours
-        //             $allocated_days = $projects->allocated_days;
+        foreach ($time_array as $time) {
+            // dd($time[0]->project_id);
 
-        //             $days = floatval($allocated_days);
+            foreach ($user_projects as $projects) {
+                //project matches
+                if($projects->id==$time[0]->project_id){
 
-        //             $hours = $days * 8 * 60;
+                    //conveting the project time into hours
+                    $allocated_days = $projects->allocated_days;
 
-        //             list($t_hour,$t_minute,$t_second) = explode(':', $time[0]->time);
+                    $days = floatval($allocated_days);
 
-        //             //converting the time into seconds
-        //             $t_minute = $t_minute + ($t_hour * 60);
+                    $hours = $days * 8 * 60;
 
-        //             //conveting into percent
-        //             $percent = ($t_minute/$hours) * 100;
+                    list($t_hour,$t_minute,$t_second) = explode(':', $time[0]->time);
 
-        //             $remaining_percent = 100 - $percent;
+                    //converting the time into seconds
+                    $t_minute = $t_minute + ($t_hour * 60);
 
-        //             $time_percent[$counter] = array(
-        //                 'project_name' => $projects->project_name,
-        //                 'remaining_hour' => $remaining_percent,
-        //                 'completed' => $percent 
-        //                 );
+                    //conveting into percent
+                    $percent = ($t_minute/$hours) * 100;
 
-        //             $counter++;
+                    $remaining_percent = 100 - $percent;
 
-        //         }
-        //     }
+                    $test_array[] = $percent;
 
-        // }
+                    $test_project[] = $projects->project_name;
+                    $remain[] = $remaining_percent;
+
+
+
+                    $time_percent[$counter] = array(
+                        'project_name' => $projects->project_name,
+                        'remaining_hour' => $remaining_percent,
+                        'completed' => $percent 
+                        );
+
+                    $counter++;
+
+                }
+            }
+
+        }
+
+        // dd($test_project);
         
-        $chart =  Charts::multi('line', 'highcharts')
-        ->colors(['#ff0000', '#00ff00', '#0000ff'])
-        ->labels(['One', 'Two', 'Three'])
-        ->dataset('Test 1', [1,2,3])
-        ->dataset('Test 2', [0,6,0])
-        ->dataset('Test 3', [3,4,1]);
+        $chart =  Charts::multi('bar', 'material')
+                ->responsive(true)
+                ->dimensions(0, 500)
+                ->colors(['#ff0000', '#00ff00', '#0000ff'])
+                ->labels($test_project)
+                ->dataset('Competed hour',$test_array)
+                ->dataset('Remaining Hour', $remain);
+        
+
         return view('chartjs/chart', ['chart' => $chart]);
 
         

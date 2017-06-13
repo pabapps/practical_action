@@ -232,7 +232,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
-        'Charts' => ConsoleTVs\Charts\Charts::class,
+        'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
 
     ],
 

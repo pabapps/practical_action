@@ -11,6 +11,9 @@
 		<div class="box box-danger">
 			<div class="box-header with-border">
 				<h3 class="box-title">Donut Chart</h3>
+				<div style="width:75%;">
+     {!! $chart->render() !!}
+</div>
 
 			</div>
 			<div class="box-body">
@@ -20,9 +23,9 @@
 		</div>
 	</div>
 
-	<div style="width:75%;">
-     {!! $chart->render() !!}
-</div>
+	
+
+
 </div>
 		
 
