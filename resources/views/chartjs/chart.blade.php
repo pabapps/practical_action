@@ -4,10 +4,25 @@
 
 	@endsection
 	@section('content')
-
+	 
 	<section class="content">
-		<div style="width:50%;">
-    {!! $chartjs->render() !!}
+		<div class="row">
+        <div class="col-md-6">
+		<div class="box box-danger">
+			<div class="box-header with-border">
+				<h3 class="box-title">Donut Chart</h3>
+
+			</div>
+			<div class="box-body">
+				<canvas id="pieChart" style="height:250px"></canvas>
+			</div>
+			<!-- /.box-body -->
+		</div>
+	</div>
+
+	<div style="width:75%;">
+     {!! $chart->render() !!}
+</div>
 </div>
 		
 
@@ -28,19 +43,20 @@
 
 
 	@section('script')
-	<script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
-	<script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
-	<script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
-	<script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
-	<script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
+	
 
+
+	
 	<script type="text/javascript">
 	$( document ).ready(function() {
 
 
 		
 
-	});
+
+
+
+});
 
 
 

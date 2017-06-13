@@ -203,6 +203,7 @@
 
     <!-- Main content -->
     <section class="content">
+      {!! Charts::assets() !!}
       <div class="flash-message">
         @foreach (['danger', 'warning', 'success', 'info'] as $msg)
         @if(Session::has('alert-' . $msg))
@@ -419,6 +420,8 @@
   <div class="control-sidebar-bg"></div>
 
 </div>
+
+
 <!-- ./wrapper -->
 
 <!-- jQuery 2.2.0 -->
