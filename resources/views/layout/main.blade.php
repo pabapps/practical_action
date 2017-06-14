@@ -41,7 +41,7 @@
     <header class="main-header">
 
       <!-- Logo -->
-      <a class="logo">
+      <a href="{{ url('/base_home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>P</b>A</span>
         <!-- logo for regular state and mobile devices -->
@@ -159,9 +159,12 @@
             
             <li {!! Request::is('*timesheet') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/timesheet/create'}}"><i class="fa fa-circle-o"></i>Create Time Sheet</a></li>
             <li {!! Request::is('*timesheet') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/timesheet'}}"><i class="fa fa-circle-o"></i>Time Log</a></li>
+            @role('Line Manager')
             <li {!! Request::is('*timesheet') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/timesheet/display_line_manager'}}"><i class="fa fa-circle-o"></i>Line Manager</a></li>
+            @endrole
+            @role('Accounts')
             <li {!! Request::is('*timesheet') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/timesheet/time_log_accounts_display'}}"><i class="fa fa-circle-o"></i>Accounts Manager</a></li>
-            
+            @endrole
             
           </ul>
         </li>

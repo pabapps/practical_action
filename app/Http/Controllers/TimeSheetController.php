@@ -13,6 +13,7 @@ use App\UserDesignationModel;
 use App\UserProjectModel;
 use App\UserTimeSheetModel;
 use App\Projects;
+use Entrust;
 
 
 class TimeSheetController extends Controller
@@ -316,9 +317,9 @@ class TimeSheetController extends Controller
 
             foreach ($final_array as $array) {
                 if($array['project_id'] == $u_project->project_id ){                   
-                   $missing_project_id = -1;
-                   break;
-               }else{
+                 $missing_project_id = -1;
+                 break;
+             }else{
                 $missing_project_id = $u_project->project_id;
 
             }
@@ -442,7 +443,7 @@ class TimeSheetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
 
         UserTimeSheetModel::where('id', $id)
         ->update(['time_spent'=>$request->time_sheet,
@@ -515,7 +516,20 @@ class TimeSheetController extends Controller
 
     public function display_line_manager(){
 
-        return view('timesheet.timesheet_linemanager_display');
+        if(Entrust::hasRole('Line Manager')){
+
+            return view('timesheet.timesheet_linemanager_display');
+
+        }else{
+
+            return redirect()->back();
+
+        }
+
+
+
+
+        
 
     }
 
@@ -768,9 +782,14 @@ class TimeSheetController extends Controller
     public function time_log_accounts_display(){
 
 
-        $users = DB::table('users')->select('id','name')->get();
+        if(Entrust::hasRole('Accounts')){
 
-        return view('timesheet.timesheet_accountmanager_display')->with('users',$users);
+            $users = DB::table('users')->select('id','name')->get();
+
+            return view('timesheet.timesheet_accountmanager_display')->with('users',$users);
+        }else{
+            return redirect()->back();
+        }
 
     }
 

@@ -113,7 +113,7 @@ class TimeChartController extends Controller
                     $test_array[] = $percent;
 
                     $test_project[] = $projects->project_name;
-                    $remain[] = $remaining_percent;
+                    $remain_project[] = $remaining_percent;
 
 
                     $counter++;
@@ -126,14 +126,14 @@ class TimeChartController extends Controller
         // dd($test_project);
         
         $chart =  Charts::multi('bar', 'highcharts')
-                ->title("Time graph")
+                ->title("Time completion graph")
                  ->elementLabel('Time(%)')
                 ->responsive(true)
-                ->dimensions(1000, 500)
+                ->dimensions(1000, 400)
                 ->colors(['#00ff00', '#ff0000'])
                 ->labels($test_project)
                 ->dataset('Competed (%) ',$test_array)
-                ->dataset('Remaining (%)', $remain);
+                ->dataset('Remaining (%)', $remain_project);
         
 
         return view('chartjs.chart', ['chart' => $chart]);
