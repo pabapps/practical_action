@@ -13,7 +13,9 @@
 					<div class="col-md-12">
 						<div class="row">
 							<div style="width:85%;">
+								@if(isset($chart))
 								{!! $chart->render() !!}
+								@endif
 							</div>
 						</div>
 					</div>
