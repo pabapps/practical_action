@@ -20,9 +20,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/base_home',function(){
-	return view('layout.main');
-});
 
 /**
  * routes for user controller
@@ -189,28 +186,8 @@ Route::get('/timesheet/{id}/edit_by_accounts','TimeSheetController@edit_by_accou
 Route::resource('/timesheet','TimeSheetController');
 
 
-Route::resource('/timeChart','TimeChartController');
+Route::resource('/base_home','TimeChartController');
 
-
-Route::get('/chart/test',function(){
-
-	$chartjs = app()->chartjs
-	->name('pieChartTest')
-	->type('pie')
-	->size(['width' => 400, 'height' => 200])
-	->labels(['Label x', 'Label y'])
-	->datasets([
-		[
-		'backgroundColor' => ['#FF6384', '#36A2EB'],
-		'hoverBackgroundColor' => ['#FF6384', '#36A2EB'],
-		'data' => [69, 59]
-		]
-		])
-	->options([]);
-
-
-	return view('chartjs/chart', compact('chartjs'));
-});
 
 
 

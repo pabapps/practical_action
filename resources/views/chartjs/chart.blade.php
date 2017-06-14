@@ -4,29 +4,22 @@
 
 	@endsection
 	@section('content')
-	 
+
 	<section class="content">
-		<div class="row">
-        <div class="col-md-6">
-		<div class="box box-danger">
+		<div class="box box-default">
 			<div class="box-header with-border">
-				<h3 class="box-title">Donut Chart</h3>
-				<div style="width:75%;">
-     {!! $chart->render() !!}
-</div>
+				<div class="box-body">
 
+					<div class="col-md-12">
+						<div class="row">
+							<div style="width:85%;">
+								{!! $chart->render() !!}
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="box-body">
-				<canvas id="pieChart" style="height:250px"></canvas>
-			</div>
-			<!-- /.box-body -->
 		</div>
-	</div>
-
-	
-
-
-</div>
 		
 
 
@@ -59,7 +52,7 @@
 
 
 
-});
+	});
 
 
 
