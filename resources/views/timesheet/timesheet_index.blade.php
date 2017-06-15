@@ -264,7 +264,7 @@ $( document ).ready(function() {
 
       alert("your time sheet has been sent to your line manager!");
 
-      location.reload();
+      // location.reload();
 
       // window.location.assign('{{URL::to('/')}}/set_trainer');
     });

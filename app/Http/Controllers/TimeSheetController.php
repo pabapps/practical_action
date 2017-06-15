@@ -14,6 +14,8 @@ use App\UserProjectModel;
 use App\UserTimeSheetModel;
 use App\Projects;
 use Entrust;
+use App\Mail\Welcome;
+use App\Mail\WelcomeAgain;
 
 
 class TimeSheetController extends Controller
@@ -499,6 +501,9 @@ class TimeSheetController extends Controller
         ->select('line_manager_id')
         ->where('id',$user->id)->first();
 
+        $line_manager = User::where('id',$line_manager_id->line_manager_id)->first();
+
+
         foreach ($array as $single_value) {
 
             DB::table('time_sheet_user')
@@ -507,6 +512,8 @@ class TimeSheetController extends Controller
             ->update(['sent_to_manager' => $line_manager_id->line_manager_id]);
 
         }
+
+        \Mail::to($line_manager)->send(new WelcomeAgain($user));
 
         dd("working");
 
