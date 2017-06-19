@@ -245,6 +245,7 @@ $( document ).ready(function() {
     "info": true,
     "autoWidth": false,
     "paging": false,
+    "scrollX": true,
 
   });
 

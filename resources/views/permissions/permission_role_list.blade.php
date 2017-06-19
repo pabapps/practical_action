@@ -59,6 +59,7 @@ $(document).ready(function() {
     "ordering": true,
     "info": true,
     "autoWidth": false,
+    "scrollX": true,
     "ajax": "{{URL::to('/')}}/permissions/user_role_permissions_details",
     "columns": [
     { "data": "name" },

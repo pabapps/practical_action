@@ -63,6 +63,7 @@ $(document).ready(function() {
     "ordering": true,
     "info": true,
     "autoWidth": false,
+    "scrollX": true,
     "ajax": "{{URL::to('/')}}/roles/get_all_roles",
     "columns": [
     { "data": "name" },
