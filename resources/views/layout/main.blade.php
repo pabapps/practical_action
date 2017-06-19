@@ -165,6 +165,7 @@
             @role('Accounts')
             <li {!! Request::is('*timesheet') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/timesheet/time_log_accounts_display'}}"><i class="fa fa-circle-o"></i>Accounts Manager</a></li>
             @endrole
+            <li {!! Request::is('*timesheet') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/timesheet_Reports'}}"><i class="fa fa-circle-o"></i>Reports</a></li>
             
           </ul>
         </li>

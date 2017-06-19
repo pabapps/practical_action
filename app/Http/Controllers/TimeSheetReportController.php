@@ -3,6 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use Datatables;
+use Crypt;
+use Auth;
+use App\User;
+use App\UserDesignationModel;
+use App\UserProjectModel;
+use App\UserTimeSheetModel;
+use App\Projects;
+use Entrust;
+use PDF;
 
 class TimeSheetReportController extends Controller
 {
@@ -11,9 +22,18 @@ class TimeSheetReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+
+        $users = DB::table('users')->select('id','name')->get();
+
+        return view('timesheet.reports.timeReport')->with('users',$users);
     }
 
     /**
