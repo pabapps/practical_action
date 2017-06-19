@@ -74,7 +74,7 @@
           </tbody>
           <tfoot>
             <tr>
-              
+
             </tr>
           </tfoot>
         </table>
@@ -161,6 +161,13 @@ $('#search_form').submit(function( event ){
       "processing": true,
       "serverSide": true,
       "bDestroy": true,
+      "paging": false,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "scrollX": true,
       "ajax": "{{URL::to('/')}}/timesheet/previous_details_time_log_users/"+start_date+"/"+end_date,
       "columns": [
       { "data": "project_name" },

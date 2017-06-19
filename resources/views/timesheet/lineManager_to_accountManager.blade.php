@@ -187,6 +187,13 @@ $('#search_form').submit(function( event ){
       "processing": true,
       "serverSide": true,
       "bDestroy": true,
+      "paging": false,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "scrollX": true,
       "ajax": "{{URL::to('/')}}/timesheet/lineManager_to_accountManager/old_records/"+user_id+"/"+start_date+"/"+end_date,
       "columns": [
       { "data": "name" },

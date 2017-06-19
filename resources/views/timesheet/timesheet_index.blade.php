@@ -211,6 +211,8 @@ $( document ).ready(function() {
         "ordering": true,
         "info": true,
         "autoWidth": false,
+        "scrollX": true,
+        "bDestroy": true,
         "ajax": "{{URL::to('/')}}/timesheet/project_details_for_timesheet/"+project_id+"/"+start_date+"/"+end_date,
         "columns": [
         { "data": "project_name" },

@@ -237,6 +237,7 @@ $( document ).ready(function() {
         "ordering": true,
         "info": true,
         "autoWidth": false,
+        "scrollX": true,
         "ajax": "{{URL::to('/')}}/timesheet/time_log_for_submitted_users/"+user_id+"/"+start_date+"/"+end_date,
         "columns": [
         { "data": "project_name" },

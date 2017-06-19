@@ -192,6 +192,7 @@ $( document ).ready(function() {
         "ordering": true,
         "info": true,
         "autoWidth": false,
+        "scrollX": true,
         "ajax": "{{URL::to('/')}}/timesheet/details_for_accounts_manager/"+user_id+"/"+start_date+"/"+end_date,
         "columns": [
         { "data": "project_name" },
