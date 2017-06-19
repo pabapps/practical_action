@@ -190,6 +190,12 @@ Route::get('/timesheet/pdf','TimeSheetController@test_pdf');
 Route::resource('/timesheet','TimeSheetController');
 
 
+/**
+ * time sheet reports
+ */
+Route::resource('/timesheet_Reports','TimeSheetReportController');
+
+
 Route::resource('/base_home','TimeChartController');
 
 
