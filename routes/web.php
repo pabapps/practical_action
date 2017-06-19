@@ -183,6 +183,10 @@ Route::get('/timesheet/details_for_accounts_manager/{id}/{start_date}/{end_date}
 Route::get('/timesheet/{id}/edit_by_accounts','TimeSheetController@edit_by_accounts');
 
 
+//testing pdf
+Route::get('/timesheet/pdf','TimeSheetController@test_pdf');
+
+
 Route::resource('/timesheet','TimeSheetController');
 
 

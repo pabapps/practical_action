@@ -180,6 +180,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
+        Elibyy\TCPDF\ServiceProvider::class,
 
     ],
 
@@ -233,6 +234,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
+        'PDF' => Elibyy\TCPDF\Facades\TCPDF::class
 
     ],
 

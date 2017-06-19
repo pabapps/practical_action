@@ -12,7 +12,8 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.3.0",
         "yajra/laravel-datatables-oracle": "^7.2",
-        "zizaco/entrust": "5.2.x-dev"
+        "zizaco/entrust": "5.2.x-dev",
+        "elibyy/tcpdf-laravel": "5.4.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

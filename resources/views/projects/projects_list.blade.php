@@ -61,6 +61,7 @@ $(document).ready(function() {
     "ordering": true,
     "info": true,
     "autoWidth": false,
+    "scrollX": true,
     "ajax": "{{URL::to('/')}}/get_all_projects",
     "columns": [
     { "data": "id" },

@@ -55,6 +55,13 @@ $(document).ready(function() {
   var table = $('#products').DataTable( {
     "processing": true,
     "serverSide": true,
+    "paging": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
+    "scrollX": true,
     "ajax": "{{URL::to('/')}}/departments/get_all_departments",
     "columns": [
     { "data": "id" },
