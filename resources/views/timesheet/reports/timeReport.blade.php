@@ -1,4 +1,9 @@
   @extends('layout.main')
+
+  @section('styles')
+  <link rel="stylesheet" href="{{asset('plugins/datepicker/datepicker3.css')}}">
+  @endsection
+
   @section('content')
 
   <section class="content">
@@ -13,7 +18,7 @@
         </div>
       </div>
 
-      {!! Form::open(array('route'=>'departments.store', 'files'=>true, 'id'=>'department-form')) !!}
+      {!! Form::open(array('route'=>'timesheet_Reports.store', 'files'=>true, 'id'=>'department-form')) !!}
 
       <div class="box-body">
         <div class="row">
@@ -33,9 +38,34 @@
 
         </div>
         <!-- /.col -->
-        <div class="col-md-6">
-            
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Start date</label>
 
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right onchange" name="start_date"
+              data-date-format="dd-mm-yyyy" id="start-date" placeholder="start">
+            </div>
+            <!-- /.input group -->
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>End date</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right onchange" name="end_date"
+              data-date-format="dd-mm-yyyy" id="end-date" placeholder="end">
+            </div>
+            <!-- /.input group -->
+          </div>
         </div>
         <!-- /.col -->
       </div>
@@ -67,9 +97,20 @@
 
 
 @section('script')
-
+<script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+<script src="{{asset('dist/js/utils.js')}}"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
+
+
+  $('#start-date').datepicker({
+    autoclose: true
+
+  });
+  $('#end-date').datepicker({
+    autoclose: true
+
+  });
 
   $("#user-id").select2();
 
