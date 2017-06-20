@@ -94,7 +94,7 @@ class TimeSheetReportController extends Controller
         ->where('projects.valid',1)
         ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
 
-        
+        // dd($query_time_report);
         
         $time_array = array();
 
@@ -115,50 +115,81 @@ class TimeSheetReportController extends Controller
 
         }
 
-        dd($time_array);
+        // dd($time_array);
 
-
+        /**
+         * fetching the total time that has been allocated for each projects for an user
+         */
         
+        $query_yearly_time_for_projects = DB::table('users_projects_connection')
+        ->select('project_id','allocated_days')
+        ->where('users_projects_connection.user_id',$user_id)
+        ->where('users_projects_connection.valid',1)->get();
+
+        $month_time_array = array();
+
+        foreach ($query_yearly_time_for_projects as $yearly_time) {
+
+            $days_from_years = $yearly_time->allocated_days;
+
+            //converting it into hours
+            $hours = floatval($days_from_years) * 8;
+            
+            //converting the yearly hours into monthly hours dividing by 30
+            
+            $monthly_hours = $hours/30;
+
+            $month_time_array[$yearly_time->project_id] = $monthly_hours;
+
+        }
 
 
-        $html = '<h1>HTML Example</h1>
-        Some special characters: &lt; € &euro; &#8364; &amp; è &egrave; &copy; &gt; \\slash \\\\double-slash \\\\\\triple-slash
-        <h2>List</h2>
-        List example:
-        <ol>
-        <li><b>bold text</b></li>
-        <li><i>italic text</i></li>
-        <li><u>underlined text</u></li>
-        <li><b>b<i>bi<u>biu</u>bi</i>b</b></li>
-        <li><a href="http://www.tecnick.com" dir="ltr">link to http://www.tecnick.com</a></li>
-        <li>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.<br />Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</li>
-        <li>SUBLIST
-        <ol>
-        <li>row one
-        <ul>
-        <li>sublist</li>
-        </ul>
-        </li>
-        <li>row two</li>
-        </ol>
-        </li>
-        <li><b>T</b>E<i>S</i><u>T</u> <del>line through</del></li>
-        <li><font size="+3">font + 3</font></li>
-        <li><small>small text</small> normal <small>small text</small> normal <sub>subscript</sub> normal <sup>superscript</sup> normal</li>
-        </ol>
-        <dl>
-        <dt>Coffee</dt>
-        <dd>Black hot drink</dd>
-        <dt>Milk</dt>
-        <dd>White cold drink</dd>
-        </dl>
-        <div style="text-align:center">IMAGES<br />
-        </div>';
+        // dd($month_time_array);
 
-        PDF::SetTitle('Hello World');
+
+        $user = User::where('id',$user_id)->first();
+
+        $project_names = array();
+
+        foreach ($query_time_report as $time_report) {
+            if(array_key_exists($time_report->project_id, $project_names)){
+
+            }else{
+                $project_names[$time_report->project_id] = $time_report->project_name;
+            }
+        }
+
+        // dd($project_names);
+
+        $project_name_line = "";
+
+        foreach ($project_names as $projects) {
+            $project_name_line =$project_name_line.'<tr><td>'.$projects.'</td></tr>';
+        }
+        
+        // dd($project_name_line);
+
+        $html = '<h1>Time Sheet Report</h1>
+        
+        <h3>Name: '.$user->name.'</h3>
+
+        <h4>Email: '.$user->email.'<h4>
+
+        <table>
+        <tr>
+        <th>Project Name </th>
+        <th>Monthly Hours</th> 
+        <th>Completed Hours</th>
+        </tr>'.$project_name_line.'
+        
+        </table>
+
+        ';
+
+        PDF::SetTitle('Time Sheet Reprot');
         PDF::AddPage();
         PDF::writeHTML($html, true, false, true, false, '');
-        PDF::Output('hello_world.pdf');
+        PDF::Output('time_sheet_report.pdf');
     }
 
     /**

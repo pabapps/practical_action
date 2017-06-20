@@ -243,13 +243,9 @@ class TimeSheetController extends Controller
 
                 $minute = $minute * 60;
 
-                $total_time = $hour + $minute;
-
-                
-                
+                $total_time = $hour + $minute;                
 
                 $user_seconds = $total_time;
-
 
 
                 $allocated_days = $time_sheet->allocated_days;
