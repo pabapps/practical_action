@@ -36,6 +36,25 @@ class TimeSheetReportController extends Controller
         return view('timesheet.reports.timeReport')->with('users',$users);
     }
 
+
+    function sum_the_time($time1, $time2) {
+      $times = array($time1, $time2);
+      $seconds = 0;
+      foreach ($times as $time)
+      {
+        list($hour,$minute,$second) = explode(':', $time);
+        $seconds += $hour*3600;
+        $seconds += $minute*60;
+        $seconds += $second;
+    }
+    $hours = floor($seconds/3600);
+    $seconds -= $hours*3600;
+    $minutes  = floor($seconds/60);
+    $seconds -= $minutes*60;
+    return "{$hours}:{$minutes}:{$seconds}";
+}
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -69,13 +88,35 @@ class TimeSheetReportController extends Controller
         $query_time_report = DB::table('time_sheet_user')
         ->join('projects','time_sheet_user.project_id','=','projects.id')
         ->join('users','time_sheet_user.user_id','=','users.id')
-        ->select('users.name','users.email','projects.project_name','projects.project_code',
-            'time_sheet_user.time_spent','time_sheet_user.date')->where('time_sheet_user.user_id',$user_id)
+        ->select('projects.project_name','projects.project_code',
+            'time_sheet_user.time_spent','time_sheet_user.project_id')->where('time_sheet_user.user_id',$user_id)
         ->where('time_sheet_user.valid',1)->where('time_sheet_user.sent_to_accounts',1)
         ->where('projects.valid',1)
         ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
 
-        dd($query_time_report);
+        
+        
+        $time_array = array();
+
+        foreach ($query_time_report as $time_report) {
+
+            if(array_key_exists($time_report->project_id, $time_array)){
+
+                $time = $time_array[$time_report->project_id];
+
+                $time2 = $time_report->time_spent;
+
+                $time_array[$time_report->project_id] = $this->sum_the_time($time,$time2);
+
+            }else{
+                $time_array[$time_report->project_id] = $time_report->time_spent;
+            }
+
+
+        }
+
+        dd($time_array);
+
 
         
 

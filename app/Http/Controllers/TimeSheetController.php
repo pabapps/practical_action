@@ -211,12 +211,6 @@ class TimeSheetController extends Controller
 
                 $time2 = $time_sheet->time_spent;
 
-                // $secs = strtotime($time2)-strtotime("00:00:00");
-
-                // $result = date("H:i:s",strtotime($time)+$secs);
-
-
-                // $array[$time_sheet->project_id] = $result ;
                 $array[$time_sheet->project_id] = $this->sum_the_time($time,$time2);
 
                 $not_exist = false;
