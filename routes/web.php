@@ -193,6 +193,9 @@ Route::resource('/timesheet','TimeSheetController');
 /**
  * time sheet reports
  */
+
+Route::get('/timesheet_Reports/get_user_projects','TimeSheetReportController@get_user_projects');
+
 Route::resource('/timesheet_Reports','TimeSheetReportController');
 
 

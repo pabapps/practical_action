@@ -54,6 +54,35 @@ class TimeSheetReportController extends Controller
     return "{$hours}:{$minutes}:{$seconds}";
 }
 
+/**
+ * this will get the projects that a user has been assigned 
+ */
+
+public function get_user_projects(Request $request){
+
+    $user_id = $request->id;
+
+    $search_term = $request->input('term');
+
+    $query_user_porjects = "
+    SELECT 
+    users_projects_connection.project_id AS id,
+    projects.project_name AS text
+    FROM users_projects_connection
+    JOIN projects
+    ON projects.id=users_projects_connection.project_id AND projects.valid=1 AND projects.completion_status=1
+    WHERE users_projects_connection.user_id='$user_id' AND users_projects_connection.valid=1 
+    AND projects.project_name LIKE '%{$search_term}%'
+    ";
+    
+    $projects = DB::select($query_user_porjects);
+
+    return response()->json($projects);
+
+
+}
+
+
 
     /**
      * Show the form for creating a new resource.

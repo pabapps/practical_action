@@ -22,12 +22,13 @@
 
       <div class="box-body">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
 
            <div class="form-group">
             <label>Users</label>
             <select id="user-id" name="user_id"  style="width: 100%;" class="form-control select2" >
               @if(isset($users))
+              <option value="-1"></option>
               @foreach($users as $user)
               <option value="{{$user->id}}">{{$user->name}}</option>
               @endforeach
@@ -68,19 +69,30 @@
           </div>
         </div>
         <!-- /.col -->
-      </div>
-      <!-- /.row -->
-      <div class="form-group">
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="col-md-4">
+
+         <div class="form-group">
+          <label>Projects</label>
+          <select id="user-projects" name="user_projects"  style="width: 100%;" multiple="multiple" class="form-control select2" >
+            
+          </select>
+        </div>
 
       </div>
     </div>
-    {!! Form::close() !!}
-    <!-- /.box-body -->
+    <!-- /.row -->
+    <div class="form-group">
 
+      <button type="submit" class="btn btn-primary">Submit</button>
+
+    </div>
   </div>
-  <!-- /.box -->
+  {!! Form::close() !!}
+  <!-- /.box-body -->
+
+</div>
+<!-- /.box -->
 </section>
 
 @if (count($errors) > 0)
@@ -115,6 +127,49 @@ $( document ).ready(function() {
   $("#user-id").select2();
 
 
+  $( "#user-id" ).change(function() {
+
+    var user_id = $('#user-id').val();
+
+    if(user_id!=-1){
+
+      $('#user-projects').select2({
+        placeholder: 'Select an option',
+        ajax: {
+          dataType: 'json',
+          url: '{{URL::to('/')}}/timesheet_Reports/get_user_projects',
+          delay: 250,
+          data: function(params) {
+            return {
+              term: params.term,
+              id : user_id
+            }
+          },
+          processResults: function (data, params) {
+            params.page = params.page || 1;
+            return {
+              results: data
+            };
+          },
+        }
+      });
+
+    }else{
+      alert("please select a user from the list");
+
+      return;
+
+    }
+
+    
+
+    
+  });
+
+
+  
+
+
 
 
 
@@ -123,7 +178,7 @@ $( document ).ready(function() {
 
 
 
-  </script>
-  @endsection
+</script>
+@endsection
 
 
