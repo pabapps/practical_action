@@ -268,7 +268,7 @@
               project_data.push(entry);
               project_table.row.add(entry).draw(false);
 
-              total = total + 1;
+              total = parseFloat(total) + parseFloat(value.allocate_days_percent);
 
               $("#total").val(total);
             });
@@ -447,7 +447,7 @@
 
                 project_data.push(entry);
 
-                total = total + 1;
+                total = parseFloat(total) + parseFloat(project_days_percent);
 
                 project_table.row.add(entry).draw(false);
 
@@ -477,7 +477,9 @@
     .row( $(this).parents('tr') )
     .index();
 
-    total = total - 1;
+    var deducted_percent = project_data[index][3];
+
+    total = parseFloat(total) - parseFloat(deducted_percent);
     // console.log(total);
         //remove index from data
         $('#total').val(total);
@@ -510,7 +512,7 @@
     });
   }else{
 
-    // alert("please fill in the details before submitting");
+    alert("please fill in the details before submitting");
 
   }
 });
@@ -543,6 +545,14 @@
     }
 
     // console.log(index);
+    
+    var deducted_percent = project_data[index][3];
+
+    total = parseFloat(total) - parseFloat(deducted_percent);
+
+    total = parseFloat(total) + parseFloat(allocate_percent);
+
+    $('#total').val(total);
 
     project_table.row( index ).remove().draw();
 
