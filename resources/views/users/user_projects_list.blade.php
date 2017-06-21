@@ -73,7 +73,7 @@
             </table>
 
             <div class="col-lg-4 pull-right">
-              <span class="">Total:</span><input type="text" name="amount" class="col-lg-10 pull-right" id="total" placeholder="Total" readonly>
+              <span class="">Total(%):</span><input type="text" name="amount" class="col-lg-10 pull-right" id="total" placeholder="Total" readonly>
             </div>
 
 
@@ -496,6 +496,16 @@
   //validation
 
   event.preventDefault();
+
+  var super_total = $("#total").val();
+
+  if(super_total >100){
+
+    alert("project allocation time cannot be more than 100%");
+
+    return;
+
+  }
 
 
   var $form = $( this ),
