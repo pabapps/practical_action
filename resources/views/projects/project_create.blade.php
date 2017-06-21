@@ -41,7 +41,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Project Code</label>
-            <input type="number" class="form-control" name="project_code" id="project-code" placeholder="please enter the code" value="{{old('project_code')}}" required>   
+            <input type="text" class="form-control" name="project_code" id="project-code" placeholder="please enter the code" value="{{old('project_code')}}" required>   
           </div>
 
           <div class="form-group">
