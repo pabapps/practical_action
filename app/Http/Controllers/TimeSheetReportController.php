@@ -74,7 +74,7 @@ public function get_user_projects(Request $request){
     WHERE users_projects_connection.user_id='$user_id' AND users_projects_connection.valid=1 
     AND projects.project_name LIKE '%{$search_term}%'
     ";
-    
+
     $projects = DB::select($query_user_porjects);
 
     return response()->json($projects);
@@ -103,7 +103,6 @@ public function get_user_projects(Request $request){
     public function store(Request $request)
     {   
 
-
         $user_id = $request->user_id;
 
         $start_date = $request->start_date;
@@ -113,6 +112,12 @@ public function get_user_projects(Request $request){
         $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->toDateString();
 
         $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
+
+        $user_projects = $request->user_projects;
+
+        // foreach ($user_projects as $projects) {
+        //     dd($projects);
+        // }
 
         $query_time_report = DB::table('time_sheet_user')
         ->join('projects','time_sheet_user.project_id','=','projects.id')

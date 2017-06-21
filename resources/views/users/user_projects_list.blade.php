@@ -299,14 +299,16 @@
                   if(project_days.length>=1){
                     var value = parseFloat(project_days);
 
-                    if(value >360){
+                    if(value >226){
 
-                      alert("ops! allocated days cannot be more than 360 days.");
+                      alert("ops! allocated days cannot be more than 226 days.");
+
+                      $("#allocate-days-modal").val("");
 
                       return
                     }
 
-                 value = (value/360) * (100) //converting days into percentage
+                 value = (value/226) * (100) //converting days into percentage
 
                  value = value.toFixed(2);
 
@@ -325,13 +327,15 @@
 
                     alert("ops! allocated time cannot be more than 100%.");
 
+                    $("#allocate-time-modal").val("")
+
                     return
 
                   }
 
                   value = (value/100)*(12); //12 is the number of months in an year
 
-                  pre_calculated_days = value * 30; //on an average 30 days in a month
+                  pre_calculated_days = value * 18.8; //on an average 18.8 days in a month
 
                   pre_calculated_days = Math.round(pre_calculated_days);
 
@@ -364,14 +368,14 @@
 
               var value = parseFloat(project_days);
 
-              if(value >360){
+              if(value >226){
 
-                alert("ops! allocated days cannot be more than 360 days.");
+                alert("ops! allocated days cannot be more than 226 days.");
 
                 return
               }
 
-              value = (value/360) * (100) //converting days into percentage
+              value = (value/226) * (100) //converting days into percentage, 226 days = 1 year
 
               value = value.toFixed(2);
 
@@ -403,7 +407,7 @@
 
               value = (value/100)*(12); //12 is the number of months in an year
 
-              pre_calculated_days = value * 30; //on an average 30 days in a month
+              pre_calculated_days = value * 18.8; //on an average 18.8 working days in a month
 
               pre_calculated_days = Math.round(pre_calculated_days);
 
@@ -515,7 +519,17 @@
 
     var allocated_days = $("#allocate-days-modal").val();
 
+    var allocate_percent = $("#allocate-time-modal").val();
+
     var project_id =$("#project-id-modal").val();
+
+    if(allocated_days.length == 0 || allocate_percent.length == 0){
+      alert("allocate days or allocate time cannot be empty! please fill up");
+
+      return;
+
+    } 
+    
 
     //finding out the index where the data is in the project_data array    
     for(var i=0; i<project_data.length ; i++){

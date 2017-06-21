@@ -74,7 +74,7 @@
 
          <div class="form-group">
           <label>Projects</label>
-          <select id="user-projects" name="user_projects"  style="width: 100%;" multiple="multiple" class="form-control select2" >
+          <select id="user-projects" name="user_projects[]"  style="width: 100%;" multiple="multiple" class="form-control select2" required>
             
           </select>
         </div>
