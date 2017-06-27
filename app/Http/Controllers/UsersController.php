@@ -398,6 +398,8 @@ class UsersController extends Controller
 
     public function submit_projects(Request $request){
 
+        // dd($request->all());
+
         $user_id = $request->user_id;
 
         $projects_data = $request->data;
