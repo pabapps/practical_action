@@ -730,6 +730,15 @@ class TimeSheetController extends Controller
 
     }
 
+    /**
+    *accounts manager sending the timesheet data back to the line manager for checking, most probably somethings didn't match that is why
+    */
+    public function accounts_manager_refer_back_to_line_manager(Request $request){
+
+        dd("working on it");
+
+    }
+
 
     public function previous_details_time_log_users(Request $request,$start_date,$end_date){
 
