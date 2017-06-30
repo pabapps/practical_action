@@ -114,7 +114,7 @@
 
       {!! Form::close() !!}
 
-      {!! Form::open(array('url'=>'/timesheet/linemanager_refer_back_subordinate', 'id'=>'reverse-form')) !!}
+      {!! Form::open(array('url'=>'timesheet/accounts_manager_refer_back_to_line_manager', 'id'=>'reverse-form')) !!}
       <div class="col-md-1">
         <div class="form-group">
 
@@ -234,7 +234,7 @@ $( document ).ready(function() {
   });
 
 
-   $( "#participant-form" ).submit(function(event){
+   $( "#reverse-form" ).submit(function(event){
 
     event.preventDefault();
 
@@ -254,10 +254,14 @@ $( document ).ready(function() {
 
       array[count] = data['id'];
 
+      console.log(data['id']);
+
       count++;
       
 
     });
+
+    
 
     var $form = $( this ),
     url = $form.attr( "action" ),
