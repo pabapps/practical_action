@@ -334,7 +334,7 @@ $( document ).ready(function() {
 
     }).done(function() {
 
-      alert("your time sheet has been sent to the accounts manager!");
+      alert("the timesheet has been sent for reporting");
 
       location.reload();
 

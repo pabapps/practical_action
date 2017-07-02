@@ -504,7 +504,7 @@ class TimeSheetController extends Controller
 
         }
 
-        \Mail::to($line_manager)->send(new WelcomeAgain($user));
+        //\Mail::to($line_manager)->send(new WelcomeAgain($user));
 
         dd("working");
 
@@ -755,7 +755,17 @@ class TimeSheetController extends Controller
     
     public function sending_timesheet_for_reporting(Request $request){
 
-        dd("working on it");
+        $array = $request->array_time_log;
+
+        foreach ($array as $single_value) {
+
+            DB::table('time_sheet_user')
+            ->where('id', $single_value)
+            ->update(['sent_to_accounts' => 2]);
+
+        }
+
+        dd("working");
 
     }
 
