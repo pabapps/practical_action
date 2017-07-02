@@ -749,6 +749,18 @@ class TimeSheetController extends Controller
 
     }
 
+    /**
+     * method for sending timesheet for reporting purpose
+     */
+    
+    public function sending_timesheet_for_reporting(Request $request){
+
+        dd("working on it");
+
+    }
+
+
+
 
     public function previous_details_time_log_users(Request $request,$start_date,$end_date){
 

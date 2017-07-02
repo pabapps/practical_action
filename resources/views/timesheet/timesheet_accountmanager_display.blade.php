@@ -103,7 +103,7 @@
         </table>
       </div>
 
-      {!! Form::open(array('url'=>'/timesheet/accounts_manager_refer_back_to_line_manager', 'id'=>'participant-form')) !!}
+      {!! Form::open(array('url'=>'/timesheet/sending_timesheet_for_reporting', 'id'=>'participant-form')) !!}
       <div class="col-md-1">
         <div class="form-group">
 
@@ -114,7 +114,7 @@
 
       {!! Form::close() !!}
 
-      {!! Form::open(array('url'=>'timesheet/accounts_manager_refer_back_to_line_manager', 'id'=>'reverse-form')) !!}
+      {!! Form::open(array('url'=>'/timesheet/accounts_manager_refer_back_to_line_manager', 'id'=>'reverse-form')) !!}
       <div class="col-md-1">
         <div class="form-group">
 
@@ -235,6 +235,61 @@ $( document ).ready(function() {
 
 
    $( "#reverse-form" ).submit(function(event){
+
+    event.preventDefault();
+
+    var array = [],count = 0;
+
+    if(table === undefined){
+
+      alert("please fill the table first");
+
+      return;
+
+    }
+
+
+    table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+      var data = this.data();
+
+      array[count] = data['id'];
+
+      console.log(data['id']);
+
+      count++;
+      
+
+    });
+
+    if(array.length == 0){
+
+      alert("there is no data");
+
+      return;
+
+    }
+
+    
+
+    var $form = $( this ),
+    url = $form.attr( "action" ),
+    token = $("[name='_token']").val();
+
+    $.post( url, {'array_time_log':array, '_token': token }, function( data ) {
+
+    }).done(function() {
+
+      alert("your time sheet has been sent to the accounts manager!");
+
+      location.reload();
+
+      
+    });
+
+  });
+
+
+   $( "#participant-form" ).submit(function(event){
 
     event.preventDefault();
 

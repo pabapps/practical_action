@@ -185,6 +185,9 @@ Route::get('/timesheet/{id}/edit_by_accounts','TimeSheetController@edit_by_accou
 //accounts manager sending the tiemsheet back the line manager for correction
 Route::post('/timesheet/accounts_manager_refer_back_to_line_manager','TimeSheetController@accounts_manager_refer_back_to_line_manager');
 
+//route for sending the timesheet for reporting
+Route::post('/timesheet/sending_timesheet_for_reporting','TimeSheetController@sending_timesheet_for_reporting');
+
 
 //testing pdf
 Route::get('/timesheet/pdf','TimeSheetController@test_pdf');
