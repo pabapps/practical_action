@@ -13,7 +13,8 @@
         </div>
       </div>
 
-      {!! Form::open(array('route' => array('projects.update', $project->id), 'id' => 'project-edit-form', 'method'=>'PUT')) !!}
+      {!! Form::open(array('route' => array('projects.update', $project->id),
+       'id' => 'project-edit-form', 'method'=>'PUT')) !!}
 
       <div class="box-body">
         <div class="row">

@@ -261,6 +261,14 @@ $( document ).ready(function() {
 
     });
 
+    if(array.length == 0){
+
+      alert("there is no data");
+
+      return;
+
+    }
+
     
 
     var $form = $( this ),
