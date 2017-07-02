@@ -70,6 +70,14 @@
               <option value="070000">7 hours</option>
               <option value="073000">7 hours 30 mins</option>
               <option value="080000">8 hours</option>
+              <option value="083000">8 hours 30 mins</option>
+              <option value="090000">9 hours</option>
+              <option value="093000">9 hours 30 mins</option>
+              <option value="100000">10 hours </option>
+              <option value="103000">10 hours 30 mins</option>
+              <option value="110000">11 hours </option>
+              <option value="113000">11 hours 30 mins</option>
+              <option value="120000">12 hours </option>
             </select>
           </div>
         </div>

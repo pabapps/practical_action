@@ -115,9 +115,7 @@ public function get_user_projects(Request $request){
 
         $user_projects = $request->user_projects;
 
-        // foreach ($user_projects as $projects) {
-        //     dd($projects);
-        // }
+        
 
         $query_time_report = DB::table('time_sheet_user')
         ->join('projects','time_sheet_user.project_id','=','projects.id')
@@ -169,11 +167,11 @@ public function get_user_projects(Request $request){
             //converting it into hours
             $hours = floatval($days_from_years) * 8;
             
-            //converting the yearly hours into monthly hours dividing by 30
+            //converting the yearly hours into monthly hours dividing by 18.8
             
-            $monthly_hours = $hours/30;
+            $monthly_hours = $hours/18.8;
 
-            $month_time_array[$yearly_time->project_id] = $monthly_hours;
+            $month_time_array[$yearly_time->project_id] = ceil($monthly_hours);
 
         }
 
@@ -207,13 +205,17 @@ public function get_user_projects(Request $request){
         
         <h3>Name: '.$user->name.'</h3>
 
-        <h4>Email: '.$user->email.'<h4>
+        <h4>Email: '.$user->email.'</h4>
+
+        <h4>Phone Number: '.$user->phone_num.'</h4>
+
+        <br>
 
         <table>
         <tr>
-        <th>Project Name </th>
-        <th>Monthly Hours</th> 
-        <th>Completed Hours</th>
+        <th><b>Project Name</b> </th>
+        <th><b>Monthly Hours</b></th> 
+        <th><b>Completed Hours</b></th>
         </tr>'.$project_name_line.'
         
         </table>
