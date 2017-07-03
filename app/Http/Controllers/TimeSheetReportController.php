@@ -183,23 +183,33 @@ public function get_user_projects(Request $request){
 
         $project_names = array();
 
+        $project_id = array();
+
+        $count = 0;
+
         foreach ($query_time_report as $time_report) {
             if(array_key_exists($time_report->project_id, $project_names)){
 
             }else{
                 $project_names[$time_report->project_id] = $time_report->project_name;
+
+                $project_id[$count] = $time_report->project_id;
+                $count++;
             }
         }
 
-        // dd($project_names);
 
         $project_name_line = "";
 
-        foreach ($project_names as $projects) {
-            $project_name_line =$project_name_line.'<tr><td>'.$projects.'</td></tr>';
+        for($i = 0; $i<count($project_id); $i++){
+            // dd($project_id[$i]);
+            // 
+            // dd($time_array[$project_id[$i]]);
+
+            $project_name_line =$project_name_line.'<tr><td>'.$project_names[$project_id[$i]].'</td><td>'.$month_time_array[$project_id[$i]].'</td><td>'.$time_array[$project_id[$i]].'</td></tr>';
+
         }
-        
-        // dd($project_name_line);
+
 
         $html = '<h1>Time Sheet Report</h1>
         
@@ -211,12 +221,13 @@ public function get_user_projects(Request $request){
 
         <br>
 
-        <table>
+        <table border="1">
         <tr>
         <th><b>Project Name</b> </th>
         <th><b>Monthly Hours</b></th> 
         <th><b>Completed Hours</b></th>
         </tr>'.$project_name_line.'
+
         
         </table>
 
