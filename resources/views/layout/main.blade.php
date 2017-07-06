@@ -89,7 +89,7 @@
               </li>
               <li class="user-footer">
                 <div class="pull-right">
-                  <a href="#">profile</a>
+                  <a href="{{URL::to('/')}}//user_profile/{{Auth::user()->id}}">profile</a>
                 </div>
               </li>
             </ul>

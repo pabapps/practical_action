@@ -207,7 +207,10 @@ Route::resource('/timesheet_Reports','TimeSheetReportController');
 
 Route::resource('/base_home','TimeChartController');
 
-
+/**
+ * routes for normal user profile
+ */
+Route::resource('/user_profile','UserProfileController');
 
 
 
