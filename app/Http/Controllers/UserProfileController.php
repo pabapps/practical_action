@@ -54,14 +54,46 @@ class UserProfileController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * displaying a user profile that's specific to an id.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        dd("testing id");
+        
+        $user = DB::table('users')->where('id', $id)->first();
+
+
+
+        $date = date_create($user->joining_date);
+
+        $date = date_format($date, "d-m-Y");
+
+        $matrix_manager = User::where('id', $user->matrix_manager_id)->first();
+
+        $line_manager = User::where('id', $user->line_manager_id)->first();
+
+        $user_designation_connection = UserDesignationModel::where('user_id',$id)
+        ->where('valid',1)->first();
+
+        
+
+        if(is_object($user_designation_connection)){
+
+            $user_designation = Designation::where('id',$user_designation_connection->designation_id)->first();
+
+            return view('userProfile.user_profile')->with('user',$user)->with('date',$date)->with('matrix_manager',$matrix_manager)
+            ->with('line_manager',$line_manager)->with('user_designation',$user_designation);
+        }else{
+
+            return view('userProfile.user_profile')->with('user',$user)->with('date',$date)->with('matrix_manager',$matrix_manager)
+            ->with('line_manager',$line_manager);
+
+        }
+
+
+
     }
 
     /**
