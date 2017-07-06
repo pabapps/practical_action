@@ -87,6 +87,11 @@
                   </form>
                 </div>
               </li>
+              <li class="user-footer">
+                <div class="pull-right">
+                  <a href="#">profile</a>
+                </div>
+              </li>
             </ul>
           </li>
           @endif
