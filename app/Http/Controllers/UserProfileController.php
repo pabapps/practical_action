@@ -61,7 +61,8 @@ class UserProfileController extends Controller
      */
     public function show($id)
     {
-        
+
+
         $user = DB::table('users')->where('id', $id)->first();
 
 
@@ -73,6 +74,7 @@ class UserProfileController extends Controller
         $matrix_manager = User::where('id', $user->matrix_manager_id)->first();
 
         $line_manager = User::where('id', $user->line_manager_id)->first();
+
 
         $user_designation_connection = UserDesignationModel::where('user_id',$id)
         ->where('valid',1)->first();
@@ -116,7 +118,59 @@ class UserProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+
+        if(!empty($request->password) && !empty($request->password_confirm)){
+
+            if($request->password != $request->password_confirm){
+
+                $request->session()->flash('alert-danger', 'password does not match!');
+
+                return redirect()->back();
+            }else{
+
+                $user = User::where('id',$id)->update(['password'=>bcrypt($request->password)]);
+
+            }
+        }
+
+
+        //updating name
+        if(!empty($request->name)){
+
+            $user = User::where('id',$id)->update(['name'=>$request->name]);
+
+        }
+
+        //updating email
+        if(!empty($request->email)){
+
+            $user = User::where('id',$id)->update(['email'=>$request->email]);
+
+        }
+
+        //updating phone number
+
+        if(!empty($request->phone_num)){
+
+            $user = User::where('id',$id)->update(['phone_num'=>$request->phone_num]);
+
+        }
+
+        //updating gender
+        if(!empty($request->gender)){
+
+            $user = User::where('id',$id)->update(['gender'=>$request->gender]);
+
+        }
+
+
+        $request->session()->flash('alert-success', 'data has been updated');
+
+
+        return redirect()->back();
+
+
     }
 
     /**

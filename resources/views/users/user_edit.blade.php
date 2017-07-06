@@ -97,7 +97,7 @@
                     <option value="male" selected>Male</option>
                     <option value="female">Female</option>
                     @else
-                    <option value="male">Female</option>
+                    <option value="male">Male</option>
                     <option value="female" selected>Female</option>
                     @endif
                   </select>  

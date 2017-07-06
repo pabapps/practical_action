@@ -13,7 +13,7 @@
           </div>
         </div>
         <!-- /.box-header -->
-        {!! Form::open(array('route' => array('users.update', $user->id), 'id' => 'user-edit-form', 'method'=>'PATCH')) !!}
+        {!! Form::open(array('route' => array('user_profile.update', $user->id), 'id' => 'user-edit-form', 'method'=>'PATCH')) !!}
 
 
         <div class="box-body">
@@ -63,20 +63,7 @@
               </div>
 
 
-              <div class="form-group">
-                <label>Roles</label>
-                <!-- <input type="text" class="form-control" name="sales_name" id="sales-name" placeholder="Enter sales center name" required>    -->
-                <div class="row">
-                  <div class="col-lg-11" style="padding-right:0;">
-                    <select id="role-id" name="role_id[]" placeholder="" style="width: 100%;" multiple="multiple"
-                     class="col-lg-8 form-control select2 validate[required]" >
-                      @if(isset($role->id))
-                      <option value='{{$role->id}}' selected>{{$role->name}}</option>
-                      @endif
-                    </select>
-                  </div>
-                </div>
-              </div>
+             
 
             </div>
 
@@ -97,7 +84,7 @@
                     <option value="male" selected>Male</option>
                     <option value="female">Female</option>
                     @else
-                    <option value="male">Female</option>
+                    <option value="male">Male</option>
                     <option value="female" selected>Female</option>
                     @endif
                   </select>  
@@ -119,7 +106,7 @@
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" class="form-control pull-right" name="joining_date" data-date-format="dd-mm-yyyy" id="joining-date" placeholder="joining date" value="{{$date}}">
+                    <input type="text" class="form-control pull-right" name="joining_date" data-date-format="dd-mm-yyyy" id="joining-date" placeholder="joining date" value="{{$date}}" readonly>
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -199,99 +186,17 @@
   $( document ).ready(function() {
 
 
-    $('#joining-date').datepicker({
-      autoclose: true
 
-    });
+    $('#line-manager').select2({});
 
 
-
-    $('#line-manager').select2({
-      placeholder: 'Select an option',
-      ajax: {
-        dataType: 'json',
-        url: '{{URL::to('/')}}/users/get_line_managers',
-        delay: 250,
-        data: function(params) {
-          return {
-            term: params.term,
-            id : "{{$user->id}}"
-          }
-        },
-        processResults: function (data, params) {
-          params.page = params.page || 1;
-          return {
-            results: data
-          };
-        },
-      }
-    });
+    $('#matrix-manager').select2({});
 
 
-    $('#matrix-manager').select2({
-      placeholder: 'Select an option',
-      ajax: {
-        dataType: 'json',
-        url: '{{URL::to('/')}}/users/get_line_managers',
-        delay: 250,
-        data: function(params) {
-          return {
-            term: params.term,
-            id : "{{$user->id}}"
-          }
-        },
-        processResults: function (data, params) {
-          params.page = params.page || 1;
-          return {
-            results: data
-          };
-        },
-      }
-    });
-
-
-    $('#designation').select2({
-      placeholder: 'Select an option',
-      ajax: {
-        dataType: 'json',
-        url: '{{URL::to('/')}}/select2/select2_all_designations',
-        delay: 250,
-        data: function(params) {
-          return {
-            term: params.term
-          }
-        },
-        processResults: function (data, params) {
-          params.page = params.page || 1;
-          return {
-            results: data
-          };
-        },
-      }
-    });
+    $('#designation').select2({});
 
   });
 
-
-    $('#role-id').select2({
-      placeholder: 'Select an option',
-      ajax: {
-        dataType: 'json',
-        url: '{{URL::to('/')}}/role/ajax/get_all_roles',
-        delay: 250,
-        data: function(params) {
-          return {
-            term: params.term
-          }
-        },
-        processResults: function (data, params) {
-          params.page = params.page || 1;
-          return {
-            results: data
-          };
-        },
-      }
-    });
 
 
     //ajax request
