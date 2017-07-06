@@ -62,8 +62,9 @@ class UserProfileController extends Controller
     public function show($id)
     {
 
+        $user_id=Crypt::decrypt($id);
 
-        $user = DB::table('users')->where('id', $id)->first();
+        $user = DB::table('users')->where('id', $user_id)->first();
 
 
 
@@ -76,7 +77,7 @@ class UserProfileController extends Controller
         $line_manager = User::where('id', $user->line_manager_id)->first();
 
 
-        $user_designation_connection = UserDesignationModel::where('user_id',$id)
+        $user_designation_connection = UserDesignationModel::where('user_id',$user_id)
         ->where('valid',1)->first();
 
         

@@ -89,7 +89,8 @@
               </li>
               <li class="user-footer">
                 <div class="pull-right">
-                  <a href="{{URL::to('/')}}//user_profile/{{Auth::user()->id}}">profile</a>
+                  <a href="{{URL::to('/')}}//user_profile/
+                  <?php echo Crypt::encrypt(Auth::user()->id)?>">profile</a>
                 </div>
               </li>
             </ul>
