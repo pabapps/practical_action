@@ -235,6 +235,15 @@ class UsersController extends Controller
 
         }
 
+        //updating user location
+        
+        if(!empty($request->user_location)){
+
+            $user = User::where('id',$id)->update(['user_location'=>$request->user_location]);
+
+        }
+
+
         //updating user designation
         if(!empty($request->designation)){
 
