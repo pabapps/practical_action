@@ -18,7 +18,9 @@
         </div>
       </div>
 
-      {!! Form::open(array('route'=>'timesheet_Reports.store', 'files'=>true, 'id'=>'department-form')) !!}
+      {{-- {!! Form::open(array('route'=>'timesheet_Reports.store', 'files'=>true, 'id'=>'department-form')) !!} --}}
+
+      {!! Form::open(array('url' => '/timesheet_Reports/specific_project', 'id' => 'role-form')) !!}
 
       <div class="box-body">
         <div class="row">
@@ -74,7 +76,7 @@
 
          <div class="form-group">
           <label>Projects</label>
-          <select id="user-projects" name="user_projects[]"  style="width: 100%;" multiple="multiple" class="form-control select2" required>
+          <select id="user-projects" name="user_projects"  style="width: 100%;"  class="form-control select2" required>
             
           </select>
         </div>

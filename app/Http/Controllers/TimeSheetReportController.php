@@ -25,15 +25,15 @@ class TimeSheetReportController extends Controller
     
     public function __construct()
     {
-        $this->middleware('auth');
+      $this->middleware('auth');
     }
 
     public function index()
     {
 
-        $users = DB::table('users')->select('id','name')->get();
+      $users = DB::table('users')->select('id','name')->get();
 
-        return view('timesheet.reports.timeReport')->with('users',$users);
+      return view('timesheet.reports.timeReport')->with('users',$users);
     }
 
 
@@ -46,13 +46,13 @@ class TimeSheetReportController extends Controller
         $seconds += $hour*3600;
         $seconds += $minute*60;
         $seconds += $second;
+      }
+      $hours = floor($seconds/3600);
+      $seconds -= $hours*3600;
+      $minutes  = floor($seconds/60);
+      $seconds -= $minutes*60;
+      return "{$hours}:{$minutes}:{$seconds}";
     }
-    $hours = floor($seconds/3600);
-    $seconds -= $hours*3600;
-    $minutes  = floor($seconds/60);
-    $seconds -= $minutes*60;
-    return "{$hours}:{$minutes}:{$seconds}";
-}
 
 /**
  * this will get the projects that a user has been assigned 
@@ -60,24 +60,24 @@ class TimeSheetReportController extends Controller
 
 public function get_user_projects(Request $request){
 
-    $user_id = $request->id;
+  $user_id = $request->id;
 
-    $search_term = $request->input('term');
+  $search_term = $request->input('term');
 
-    $query_user_porjects = "
-    SELECT 
-    users_projects_connection.project_id AS id,
-    projects.project_name AS text
-    FROM users_projects_connection
-    JOIN projects
-    ON projects.id=users_projects_connection.project_id AND projects.valid=1 AND projects.completion_status=1
-    WHERE users_projects_connection.user_id='$user_id' AND users_projects_connection.valid=1 
-    AND projects.project_name LIKE '%{$search_term}%'
-    ";
+  $query_user_porjects = "
+  SELECT 
+  users_projects_connection.project_id AS id,
+  projects.project_name AS text
+  FROM users_projects_connection
+  JOIN projects
+  ON projects.id=users_projects_connection.project_id AND projects.valid=1 AND projects.completion_status=1
+  WHERE users_projects_connection.user_id='$user_id' AND users_projects_connection.valid=1 
+  AND projects.project_name LIKE '%{$search_term}%'
+  ";
 
-    $projects = DB::select($query_user_porjects);
+  $projects = DB::select($query_user_porjects);
 
-    return response()->json($projects);
+  return response()->json($projects);
 
 
 }
@@ -103,49 +103,49 @@ public function get_user_projects(Request $request){
     public function store(Request $request)
     {   
 
-        $user_id = $request->user_id;
+      $user_id = $request->user_id;
 
-        $start_date = $request->start_date;
+      $start_date = $request->start_date;
 
-        $end_date = $request->end_date;
+      $end_date = $request->end_date;
 
-        $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->toDateString();
+      $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->toDateString();
 
-        $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
+      $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
 
-        $user_projects = $request->user_projects;
+      $user_projects = $request->user_projects;
 
-        
 
-        $query_time_report = DB::table('time_sheet_user')
-        ->join('projects','time_sheet_user.project_id','=','projects.id')
-        ->join('users','time_sheet_user.user_id','=','users.id')
-        ->select('projects.project_name','projects.project_code',
-            'time_sheet_user.time_spent','time_sheet_user.project_id')->where('time_sheet_user.user_id',$user_id)
-        ->where('time_sheet_user.valid',1)->where('time_sheet_user.sent_to_accounts',1)
-        ->where('projects.valid',1)
-        ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
+
+      $query_time_report = DB::table('time_sheet_user')
+      ->join('projects','time_sheet_user.project_id','=','projects.id')
+      ->join('users','time_sheet_user.user_id','=','users.id')
+      ->select('projects.project_name','projects.project_code',
+        'time_sheet_user.time_spent','time_sheet_user.project_id')->where('time_sheet_user.user_id',$user_id)
+      ->where('time_sheet_user.valid',1)->where('time_sheet_user.sent_to_accounts',1)
+      ->where('projects.valid',1)
+      ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
 
         // dd($query_time_report);
-        
-        $time_array = array();
 
-        foreach ($query_time_report as $time_report) {
+      $time_array = array();
 
-            if(array_key_exists($time_report->project_id, $time_array)){
+      foreach ($query_time_report as $time_report) {
 
-                $time = $time_array[$time_report->project_id];
+        if(array_key_exists($time_report->project_id, $time_array)){
 
-                $time2 = $time_report->time_spent;
+          $time = $time_array[$time_report->project_id];
 
-                $time_array[$time_report->project_id] = $this->sum_the_time($time,$time2);
+          $time2 = $time_report->time_spent;
 
-            }else{
-                $time_array[$time_report->project_id] = $time_report->time_spent;
-            }
+          $time_array[$time_report->project_id] = $this->sum_the_time($time,$time2);
 
-
+        }else{
+          $time_array[$time_report->project_id] = $time_report->time_spent;
         }
+
+
+      }
 
         // dd($time_array);
 
@@ -162,22 +162,18 @@ public function get_user_projects(Request $request){
 
         foreach ($query_yearly_time_for_projects as $yearly_time) {
 
-            $days_from_years = $yearly_time->allocated_days;
+          $days_from_years = $yearly_time->allocated_days;
 
             //converting it into hours
-            $hours = floatval($days_from_years) * 8;
-            
-            //converting the yearly hours into monthly hours dividing by 18.8
-            
-            $monthly_hours = $hours/18.8;
+          $hours = floatval($days_from_years) * 8;
 
-            $month_time_array[$yearly_time->project_id] = ceil($monthly_hours);
+            //converting the yearly hours into monthly hours dividing by 18.8
+
+          $monthly_hours = $hours/18.8;
+
+          $month_time_array[$yearly_time->project_id] = ceil($monthly_hours);
 
         }
-
-
-        // dd($month_time_array);
-
 
         $user = User::where('id',$user_id)->first();
 
@@ -188,14 +184,14 @@ public function get_user_projects(Request $request){
         $count = 0;
 
         foreach ($query_time_report as $time_report) {
-            if(array_key_exists($time_report->project_id, $project_names)){
+          if(array_key_exists($time_report->project_id, $project_names)){
 
-            }else{
-                $project_names[$time_report->project_id] = $time_report->project_name;
+          }else{
+            $project_names[$time_report->project_id] = $time_report->project_name;
 
-                $project_id[$count] = $time_report->project_id;
-                $count++;
-            }
+            $project_id[$count] = $time_report->project_id;
+            $count++;
+          }
         }
 
 
@@ -206,7 +202,7 @@ public function get_user_projects(Request $request){
             // 
             // dd($time_array[$project_id[$i]]);
 
-            $project_name_line =$project_name_line.'<tr><td>'.$project_names[$project_id[$i]].'</td><td>'.$month_time_array[$project_id[$i]].'</td><td>'.$time_array[$project_id[$i]].'</td></tr>';
+          $project_name_line =$project_name_line.'<tr><td>'.$project_names[$project_id[$i]].'</td><td>'.$month_time_array[$project_id[$i]].'</td><td>'.$time_array[$project_id[$i]].'</td></tr>';
 
         }
 
@@ -237,7 +233,44 @@ public function get_user_projects(Request $request){
         PDF::AddPage();
         PDF::writeHTML($html, true, false, true, false, '');
         PDF::Output('time_sheet_report.pdf');
-    }
+      }
+
+
+
+      /**
+       * report for specific project
+       */
+
+
+      public function get_report_for_specific_project(Request $request){
+
+        $user_id = $request->user_id;
+
+        $start_date = $request->start_date;
+
+        $end_date = $request->end_date;
+
+        $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->toDateString();
+
+        $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
+
+        $user_project = $request->user_project;
+
+
+        //calculating the number of days between two date range
+
+        $day1 = strtotime($start_date);
+
+        $day2 = strtotime($end_date);
+
+        $datediff =  $day2 - $day1;
+
+        $val = floor($datediff / (60 * 60 * 24)) + 1;
+
+        
+
+
+      }
 
     /**
      * Display the specified resource.
@@ -283,4 +316,4 @@ public function get_user_projects(Request $request){
     {
         //
     }
-}
+  }

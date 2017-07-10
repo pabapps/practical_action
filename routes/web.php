@@ -202,6 +202,11 @@ Route::resource('/timesheet','TimeSheetController');
 
 Route::get('/timesheet_Reports/get_user_projects','TimeSheetReportController@get_user_projects');
 
+/**
+ * rerports for specific projects
+ */
+Route::post('/timesheet_Reports/specific_project','TimeSheetReportController@get_report_for_specific_project');
+
 Route::resource('/timesheet_Reports','TimeSheetReportController');
 
 
