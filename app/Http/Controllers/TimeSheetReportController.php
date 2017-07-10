@@ -268,7 +268,42 @@ public function get_user_projects(Request $request){
         $val = floor($datediff / (60 * 60 * 24)) + 1;
 
         
+        $query_time_report = DB::table('time_sheet_user')
+        ->join('projects','time_sheet_user.project_id','=','projects.id')
+        ->join('users','time_sheet_user.user_id','=','users.id')
+        ->select('projects.project_name','projects.project_code',
+          'time_sheet_user.time_spent','time_sheet_user.project_id','time_sheet_user.date')->where('time_sheet_user.user_id',$user_id)
+        ->where('time_sheet_user.valid',1)->where('time_sheet_user.sent_to_accounts',1)
+        ->where('projects.valid',1)
+        ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
 
+        // dd($query_time_report);
+        
+         $time_array = array();
+
+        //need to add up the working hours if the date is same
+
+        for($i=0; $i<count($query_time_report); $i++){
+
+          $j = $i + 1;
+
+          //checking if j is not exeeding the array limit
+
+          if($j<count($query_time_report)){
+
+            //checking if the dates of the two consectutive arrays are same or not
+            //if same adding the working hours 
+            //else, just storing in seperate array
+
+            if($query_time_report[$j]->date == $query_time_report[$i]->date){
+
+            }else{
+              
+            }
+
+          }
+
+        }
 
       }
 
