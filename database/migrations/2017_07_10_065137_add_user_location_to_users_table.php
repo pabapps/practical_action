@@ -14,7 +14,7 @@ class AddUserLocationToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->time('time_spent');
+            $table->string('user_location')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddUserLocationToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('time_spent');
+            $table->dropColumn('user_location');
         });
     }
 }
