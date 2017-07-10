@@ -119,6 +119,13 @@
 
                 </div>
 
+                <div class="form-group">
+                  <label>User Location</label>
+                  <input type="text" class="form-control" id="user-location" name="user_location" 
+                  value="{{ $user->user_location }}" placeholder="User location" readonly>
+
+                </div>
+
               </div>
 
             </div>

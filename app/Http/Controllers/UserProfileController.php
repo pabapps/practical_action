@@ -165,6 +165,14 @@ class UserProfileController extends Controller
 
         }
 
+        // //updating user location
+        
+        // if(!empty($request->user_location)){
+
+        //     $user = User::where('id',$id)->update(['user_location'=>$request->user_location]);
+
+        // }
+
 
         $request->session()->flash('alert-success', 'data has been updated');
 
