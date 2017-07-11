@@ -275,35 +275,64 @@ public function get_user_projects(Request $request){
           'time_sheet_user.time_spent','time_sheet_user.project_id','time_sheet_user.date')->where('time_sheet_user.user_id',$user_id)
         ->where('time_sheet_user.valid',1)->where('time_sheet_user.sent_to_accounts',1)
         ->where('projects.valid',1)
-        ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
+        ->whereBetween('time_sheet_user.date',[$start_date,$end_date])
+        ->orderBy('time_sheet_user.date')->get();
 
         // dd($query_time_report);
         
-         $time_array = array();
+        $time_array = array();
 
         //need to add up the working hours if the date is same
 
         for($i=0; $i<count($query_time_report); $i++){
 
-          $j = $i + 1;
+          $time = $query_time_report[$i]->time_spent;
 
-          //checking if j is not exeeding the array limit
+          $date = $query_time_report[$i]->date;
+          
+          //checking for duplicate dates, if same dates are same simply adding the hours that is associated with
+          //the same dates. Otherwise, storing the date in another index of an array          
 
-          if($j<count($query_time_report)){
-
-            //checking if the dates of the two consectutive arrays are same or not
-            //if same adding the working hours 
-            //else, just storing in seperate array
+          for($j= $i+1; $j<count($query_time_report); $j++){
 
             if($query_time_report[$j]->date == $query_time_report[$i]->date){
 
+              $time2 = $query_time_report[$j]->time_spent;
+
+              $time = $this->sum_the_time($time,$time2);
+
             }else{
               
+              break;
             }
+          }
+
+          
+          
+          if(!array_key_exists($query_time_report[$i]->date, $time_array)){
+            $time_array[$query_time_report[$i]->date] = $time;
 
           }
 
         }
+
+        // dd(array_keys($time_array));
+
+
+        $keys_for_array = array_keys($time_array);
+
+        $days_time = array();
+
+        for($i=0; $i<count($keys_for_array); $i++){
+
+          list($year,$month,$day) = explode('-', $keys_for_array[$i]);
+
+          $days_time[$day] = $time_array[$keys_for_array[$i]];
+        }
+
+        dd($days_time);
+
+        
 
       }
 
