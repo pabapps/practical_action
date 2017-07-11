@@ -302,12 +302,10 @@ public function get_user_projects(Request $request){
               $time = $this->sum_the_time($time,$time2);
 
             }else{
-              
+
               break;
             }
           }
-
-          
           
           if(!array_key_exists($query_time_report[$i]->date, $time_array)){
             $time_array[$query_time_report[$i]->date] = $time;
@@ -318,20 +316,72 @@ public function get_user_projects(Request $request){
 
         // dd(array_keys($time_array));
 
-
+        //keys in this array are just the dates, each unique dates have time tagged along with it
         $keys_for_array = array_keys($time_array);
 
+        //this array is used for seperating the days from the long date (YYYY-mm-dd) taking only the (dd)
+        //and stroing the time in that day index
+        
         $days_time = array();
 
         for($i=0; $i<count($keys_for_array); $i++){
 
           list($year,$month,$day) = explode('-', $keys_for_array[$i]);
 
-          $days_time[$day] = $time_array[$keys_for_array[$i]];
+          if($day<10){
+            list($not_required,$x) = explode('0',$day);
+            $days_time[$x] = $time_array[$keys_for_array[$i]];
+
+          }else{
+            $days_time[$day] = $time_array[$keys_for_array[$i]];
+          }
         }
 
-        dd($days_time);
 
+        $user = User::where('id',$user_id)->first();
+
+
+
+        $pdf_line = "";
+
+        for($i=1; $i<=$val; $i++){
+
+          if(array_key_exists($i, $days_time)){
+            $pdf_line =$pdf_line.'<tr><td>'.$i.'</td><td>'.$days_time[$i].'</td><td>'." ".'</td><td>'." ".'</td></tr>';
+          }else{
+            $pdf_line =$pdf_line.'<tr><td>'.$i.'</td><td>'." ".'</td><td>'." ".'</td><td>'." ".'</td></tr>';
+          }
+
+        }
+
+
+        $html = '<h1>Time Sheet Report</h1>
+        
+        <h3>Name: '.$user->name.'</h3>
+
+        <h4>Email: '.$user->email.'</h4>
+
+        <h4>Phone Number: '.$user->phone_num.'</h4>
+
+        <br>
+
+        <table border="1">
+        <tr>
+        <th align="center"><b>Days</b> </th>
+        <th align="center" ><b>Hours</b></th> 
+        <th align="center" ><b>Place of performance</b></th>
+        <th align="center" ><b>Activities</b></th>
+        </tr>'.$pdf_line.'
+
+        
+        </table>
+
+        ';
+
+        PDF::SetTitle('Time Sheet Report');
+        PDF::AddPage();
+        PDF::writeHTML($html, true, false, true, false, '');
+        PDF::Output('time_sheet_report.pdf');
         
 
       }
