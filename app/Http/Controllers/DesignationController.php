@@ -100,13 +100,15 @@ class DesignationController extends Controller
 
         $designation_id=Crypt::decrypt($id);
 
+        // dd($designation_id);
+
         $designation = DB::table('designation')->join('department','department.id','=','designation.department_id')
         ->select('designation.id','designation.position_name','designation.department_id','department.department')
-        ->where('designation.valid',1)->first();
+        ->where('designation.valid',1)->where('designation.id',$designation_id)->get();
 
         // dd($designation);
 
-        return view('designations.designation_edit')->with('designation',$designation);
+        return view('designations.designation_edit')->with('designation',$designation[0]);
 
 
     }

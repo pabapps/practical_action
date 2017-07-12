@@ -347,9 +347,9 @@ public function get_user_projects(Request $request){
         for($i=1; $i<=$val; $i++){
 
           if(array_key_exists($i, $days_time)){
-            $pdf_line =$pdf_line.'<tr><td>'.$i.'</td><td>'.$days_time[$i].'</td><td>'." ".'</td><td>'." ".'</td></tr>';
+            $pdf_line =$pdf_line.'<tr><td align="center" >'.$i.'</td><td align="center" >'.$days_time[$i].'</td><td align="center" >'." ".'</td><td align="center" >'." ".'</td></tr>';
           }else{
-            $pdf_line =$pdf_line.'<tr><td>'.$i.'</td><td>'." ".'</td><td>'." ".'</td><td>'." ".'</td></tr>';
+            $pdf_line =$pdf_line.'<tr><td align="center" >'.$i.'</td><td align="center" >'." ".'</td><td>'." ".'</td><td align="center" >'." ".'</td></tr>';
           }
 
         }
