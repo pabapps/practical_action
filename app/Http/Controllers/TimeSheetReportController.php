@@ -283,7 +283,9 @@ public function get_user_projects(Request $request){
         
         $time_array = array();
 
-        $detials_of_dates = array();
+        $details_of_time = array();
+
+        $detials_of_activity = array();
 
         //need to add up the working hours if the date is same
 
@@ -298,9 +300,8 @@ public function get_user_projects(Request $request){
 
           $end_ul = "</ul>";
 
-          $list_array = "<li>"."time : ".$time."</li>" ;
-          $list_array = $list_array."<li>"."place : ".$query_time_report[$i]->location."</li>";
-          $list_array = $list_array . "<li>"."activity : ".$query_time_report[$i]->activity."</li>" ;
+          $list_time = "<li>".$time."</li>" ;
+          $list_array = "<li>".$query_time_report[$i]->activity."</li>" ;
           
           //checking for duplicate dates, if same dates are same simply adding the hours that is associated with
           //the same dates. Otherwise, storing the date in another index of an array          
@@ -313,9 +314,9 @@ public function get_user_projects(Request $request){
 
               $time = $this->sum_the_time($time,$time2);
 
-              $list_array = $list_array. "<li> time : ".$time2."</li>";
-              $list_array = $list_array."<li>"."place : ".$query_time_report[$j]->location."</li>";
-              $list_array = $list_array . "<li>"."activity : ".$query_time_report[$j]->activity."</li>" ;
+              $list_time = $list_time. "<li>".$time2."</li>";
+
+              $list_array = $list_array . "<li>".$query_time_report[$j]->activity."</li>" ;
 
               
             }else{
@@ -329,13 +330,17 @@ public function get_user_projects(Request $request){
 
             $detials_of_dates[$query_time_report[$i]->date] = $start_ul.$list_array.$end_ul;
 
+            $details_of_time[$query_time_report[$i]->date] = $start_ul.$list_time.$end_ul;
+
           }
 
         }
 
-
+        // dd($details_of_time);
 
         $modified_details_of_date = array();
+
+        $modified_details_of_time = array();
 
         // dd(array_keys($time_array));
 
@@ -357,24 +362,33 @@ public function get_user_projects(Request $request){
 
             $modified_details_of_date[$x] = $detials_of_dates[$keys_for_array[$i]];
 
+            $modified_details_of_time[$x] = $details_of_time[$keys_for_array[$i]];
+
           }else{
             $days_time[$day] = $time_array[$keys_for_array[$i]];
+
             $modified_details_of_date[$day] = $detials_of_dates[$keys_for_array[$i]];
+
+            $modified_details_of_time[$day] = $details_of_time[$keys_for_array[$i]];
           }
         }
 
         $user = User::where('id',$user_id)->first();
 
-        // dd($modified_details_of_date);
+        $total_time = "00:00:00";
+        
 
         $pdf_line = "";
 
         for($i=1; $i<=$val; $i++){
 
           if(array_key_exists($i, $days_time)){
-            $pdf_line =$pdf_line.'<tr><td align="center" >'.$i.'</td><td align="center" >'.$days_time[$i].'</td><td align="center" >'.$modified_details_of_date[$i].'</td></tr>';
+
+            $total_time = $this->sum_the_time($total_time,$days_time[$i]);
+
+            $pdf_line =$pdf_line.'<tr><td align="center" >'.$i.'</td><td align="center" >'.$days_time[$i].'</td><td align="center">'.$modified_details_of_time[$i].'</td><td align="center" >'.$modified_details_of_date[$i].'</td></tr>';
           }else{
-            $pdf_line =$pdf_line.'<tr><td align="center" >'.$i.'</td><td align="center" >'." ".'</td><td>'." ".'</td></tr>';
+            $pdf_line =$pdf_line.'<tr><td align="center" >'.$i.'</td><td align="center" >'." ".'</td><td>'." ".'</td><td>'." ".'</td></tr>';
           }
 
         }
@@ -392,12 +406,15 @@ public function get_user_projects(Request $request){
 
         <table border="1">
         <tr>
-        <th align="center"><b>Days</b> </th>
-        <th align="center" ><b>Hours</b></th> 
-        <th align="center" ><b>Details</b></th>
+        <th align="center" style="width:10%"><b>Days</b> </th>
+        <th align="center" style="width:20%"><b>Hours</b></th> 
+        <th align="center" style="width:30%"><b>time</b></th> 
+        <th align="center" style="width:40%" ><b>Details</b></th>
         </tr>'.$pdf_line.'
 
-        
+        <br>
+        <h4>Total time :'.$total_time.'</h4>
+
         </table>
 
         ';
