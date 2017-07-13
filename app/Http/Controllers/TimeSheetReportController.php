@@ -408,15 +408,26 @@ public function get_user_projects(Request $request){
         <tr>
         <th align="center" style="width:10%"><b>Days</b> </th>
         <th align="center" style="width:20%"><b>Hours</b></th> 
-        <th align="center" style="width:30%"><b>time</b></th> 
+        <th align="center" style="width:30%"><b>Time(in hours)</b></th> 
         <th align="center" style="width:40%" ><b>Details</b></th>
         </tr>'.$pdf_line.'
+        </table>
 
         <br>
         <h4>Total time :'.$total_time.'</h4>
+        
+        <br>
 
+
+        <table style="padding-top: 3cm;" >
+        <tr>
+        <th><b>Date, Signature of Staff Member</b></th>
+        <th><b>Date, Signature of Approving Authority</b></th>
+        </tr>
         </table>
-
+        
+    
+        
         ';
 
         PDF::SetTitle('Time Sheet Report');
