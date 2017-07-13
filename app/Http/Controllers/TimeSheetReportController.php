@@ -272,7 +272,8 @@ public function get_user_projects(Request $request){
         ->join('projects','time_sheet_user.project_id','=','projects.id')
         ->join('users','time_sheet_user.user_id','=','users.id')
         ->select('projects.project_name','projects.project_code',
-          'time_sheet_user.time_spent','time_sheet_user.project_id','time_sheet_user.date')->where('time_sheet_user.user_id',$user_id)
+          'time_sheet_user.time_spent','time_sheet_user.project_id','time_sheet_user.date','time_sheet_user.location',
+          'time_sheet_user.activity')->where('time_sheet_user.user_id',$user_id)
         ->where('time_sheet_user.valid',1)->where('time_sheet_user.sent_to_accounts',1)
         ->where('projects.valid',1)
         ->whereBetween('time_sheet_user.date',[$start_date,$end_date])
@@ -282,6 +283,8 @@ public function get_user_projects(Request $request){
         
         $time_array = array();
 
+        $detials_of_dates = array();
+
         //need to add up the working hours if the date is same
 
         for($i=0; $i<count($query_time_report); $i++){
@@ -289,6 +292,15 @@ public function get_user_projects(Request $request){
           $time = $query_time_report[$i]->time_spent;
 
           $date = $query_time_report[$i]->date;
+
+
+          $start_ul = "<ul>";
+
+          $end_ul = "</ul>";
+
+          $list_array = "<li>"."time : ".$time."</li>" ;
+          $list_array = $list_array."<li>"."place : ".$query_time_report[$i]->location."</li>";
+          $list_array = $list_array . "<li>"."activity : ".$query_time_report[$i]->activity."</li>" ;
           
           //checking for duplicate dates, if same dates are same simply adding the hours that is associated with
           //the same dates. Otherwise, storing the date in another index of an array          
@@ -301,6 +313,11 @@ public function get_user_projects(Request $request){
 
               $time = $this->sum_the_time($time,$time2);
 
+              $list_array = $list_array. "<li> time : ".$time2."</li>";
+              $list_array = $list_array."<li>"."place : ".$query_time_report[$j]->location."</li>";
+              $list_array = $list_array . "<li>"."activity : ".$query_time_report[$j]->activity."</li>" ;
+
+              
             }else{
 
               break;
@@ -310,9 +327,15 @@ public function get_user_projects(Request $request){
           if(!array_key_exists($query_time_report[$i]->date, $time_array)){
             $time_array[$query_time_report[$i]->date] = $time;
 
+            $detials_of_dates[$query_time_report[$i]->date] = $start_ul.$list_array.$end_ul;
+
           }
 
         }
+
+
+
+        $modified_details_of_date = array();
 
         // dd(array_keys($time_array));
 
@@ -332,24 +355,26 @@ public function get_user_projects(Request $request){
             list($not_required,$x) = explode('0',$day);
             $days_time[$x] = $time_array[$keys_for_array[$i]];
 
+            $modified_details_of_date[$x] = $detials_of_dates[$keys_for_array[$i]];
+
           }else{
             $days_time[$day] = $time_array[$keys_for_array[$i]];
+            $modified_details_of_date[$day] = $detials_of_dates[$keys_for_array[$i]];
           }
         }
 
-
         $user = User::where('id',$user_id)->first();
 
-
+        // dd($modified_details_of_date);
 
         $pdf_line = "";
 
         for($i=1; $i<=$val; $i++){
 
           if(array_key_exists($i, $days_time)){
-            $pdf_line =$pdf_line.'<tr><td align="center" >'.$i.'</td><td align="center" >'.$days_time[$i].'</td><td align="center" >'." ".'</td><td align="center" >'." ".'</td></tr>';
+            $pdf_line =$pdf_line.'<tr><td align="center" >'.$i.'</td><td align="center" >'.$days_time[$i].'</td><td align="center" >'.$modified_details_of_date[$i].'</td></tr>';
           }else{
-            $pdf_line =$pdf_line.'<tr><td align="center" >'.$i.'</td><td align="center" >'." ".'</td><td>'." ".'</td><td align="center" >'." ".'</td></tr>';
+            $pdf_line =$pdf_line.'<tr><td align="center" >'.$i.'</td><td align="center" >'." ".'</td><td>'." ".'</td></tr>';
           }
 
         }
@@ -369,8 +394,7 @@ public function get_user_projects(Request $request){
         <tr>
         <th align="center"><b>Days</b> </th>
         <th align="center" ><b>Hours</b></th> 
-        <th align="center" ><b>Place of performance</b></th>
-        <th align="center" ><b>Activities</b></th>
+        <th align="center" ><b>Details</b></th>
         </tr>'.$pdf_line.'
 
         
