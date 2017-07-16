@@ -116,13 +116,12 @@ public function get_user_projects(Request $request){
       $user_projects = $request->user_projects;
 
 
-
       $query_time_report = DB::table('time_sheet_user')
       ->join('projects','time_sheet_user.project_id','=','projects.id')
       ->join('users','time_sheet_user.user_id','=','users.id')
       ->select('projects.project_name','projects.project_code',
         'time_sheet_user.time_spent','time_sheet_user.project_id')->where('time_sheet_user.user_id',$user_id)
-      ->where('time_sheet_user.valid',1)->where('time_sheet_user.sent_to_accounts',1)
+      ->where('time_sheet_user.valid',1)->where('time_sheet_user.sent_to_accounts',2)
       ->where('projects.valid',1)
       ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
 
@@ -254,9 +253,9 @@ public function get_user_projects(Request $request){
 
         $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
 
-        $user_project = $request->user_project;
+        $user_project = $request->user_projects;
 
-
+        
         //calculating the number of days between two date range
 
         $day1 = strtotime($start_date);
@@ -274,7 +273,8 @@ public function get_user_projects(Request $request){
         ->select('projects.project_name','projects.project_code',
           'time_sheet_user.time_spent','time_sheet_user.project_id','time_sheet_user.date','time_sheet_user.location',
           'time_sheet_user.activity')->where('time_sheet_user.user_id',$user_id)
-        ->where('time_sheet_user.valid',1)->where('time_sheet_user.sent_to_accounts',1)
+        ->where('time_sheet_user.valid',1)->where('time_sheet_user.sent_to_accounts',2)
+        ->where('time_sheet_user.project_id',$user_project)
         ->where('projects.valid',1)
         ->whereBetween('time_sheet_user.date',[$start_date,$end_date])
         ->orderBy('time_sheet_user.date')->get();
