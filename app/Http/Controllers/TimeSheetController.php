@@ -408,10 +408,30 @@ class TimeSheetController extends Controller
 
         $time_sheet_id=Crypt::decrypt($id);
         
+        //creating an array which holds the amount of time spend on a project
+        $time_array = array("00:30:00"=>"30 mins","01:00:00"=>"1 hour","01:30:00"=>"1 hour 30 mins",
+            "02:00:00"=>"2 hours","02:30:00"=>"2 hours 30 mins","03:00:00"=>"3 hours","03:30:00"=>"3 hours 30 mins",
+            "04:00:00"=>"4 hours","04:30:00"=>"4 hours 30 mins","05:00:00"=>"5 hours","05:30:00"=>"5 hours 30 mins",
+            "06:00:00"=>"6 hours","06:30:00"=>"6 hours 30 mins","07:00:00"=>"7 hours","07:30:00"=>"7 hours 30 mins",
+            "08:00:00"=>"8 hours","08:30:00"=>"8 hours 30 mins","09:00:00"=>"9 hours","09:30:00"=>"9 hours 30 mins",
+            "10:00:00"=>"10 hours","10:30:00"=>"10 hours 30 mins","11:00:00"=>"11 hours","11:30:00"=>"11 hours 30 mins",
+            "12:00:00"=>"12 hours");
+
+        $time_array_value = array("00:30:00"=>"3000","01:00:00"=>"010000","01:30:00"=>"013000",
+            "02:00:00"=>"020000","02:30:00"=>"023000","03:00:00"=>"030000","03:30:00"=>"033000",
+            "04:00:00"=>"040000","04:30:00"=>"043000","05:00:00"=>"050000","05:30:00"=>"053000",
+            "06:00:00"=>"060000","06:30:00"=>"063000","07:00:00"=>"070000","07:30:00"=>"073000",
+            "08:00:00"=>"080000","08:30:00"=>"083000","09:00:00"=>"090000","09:30:00"=>"093000",
+            "10:00:00"=>"100000","10:30:00"=>"103000","11:00:00"=>"110000","11:30:00"=>"113000",
+            "12:00:00"=>"120000");
 
         $time_sheet_data = UserTimeSheetModel::findOrFail($time_sheet_id);
 
         $date = $time_sheet_data->date;
+
+        $hour_in_word = $time_array[$time_sheet_data->time_spent];
+
+        $hour_in_number = $time_array_value[$time_sheet_data->time_spent];
 
         $date=date_create($date);
         $date =  date_format($date,"d-m-Y");
@@ -421,7 +441,7 @@ class TimeSheetController extends Controller
         
 
         return view('timesheet.timesheet_edit')->with('time_sheet_data',$time_sheet_data)->with('project',$project)
-        ->with('date',$date)->with('user_id',$user_id);
+        ->with('date',$date)->with('user_id',$user_id)->with('hour_in_word',$hour_in_word)->with('hour_in_number',$hour_in_number);
 
 
 
