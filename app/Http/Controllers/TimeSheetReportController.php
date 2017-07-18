@@ -255,7 +255,7 @@ public function get_user_projects(Request $request){
 
         $user_project = $request->user_projects;
 
-        
+        // dd($user_project);
         //calculating the number of days between two date range
 
         $day1 = strtotime($start_date);

@@ -6,10 +6,10 @@
   <link rel="stylesheet" href="{{asset('plugins/datepicker/datepicker3.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
   @endsection
-	@section('content')
+  @section('content')
 
-	<section class="content">
-		<!-- SELECT2 EXAMPLE -->
+  <section class="content">
+    <!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
       <div class="box-header with-border">
         <h3 class="box-title">Time Sheet Edit</h3>
@@ -70,6 +70,14 @@
               <option value="070000">7 hours</option>
               <option value="073000">7 hours 30 mins</option>
               <option value="080000">8 hours</option>
+              <option value="083000">8 hours 30 mins</option>
+              <option value="090000">9 hours</option>
+              <option value="093000">9 hours 30 mins</option>
+              <option value="100000">10 hours </option>
+              <option value="103000">10 hours 30 mins</option>
+              <option value="110000">11 hours </option>
+              <option value="113000">11 hours 30 mins</option>
+              <option value="120000">12 hours </option>
             </select>
           </div>
         </div>
@@ -78,74 +86,75 @@
           <div class="form-group">
             <label>Activity</label>
             <select id="activity" name="activity"  class="form-control" required>
-               <option value="Project Management">Project Management</option>
-              <option value="Financial/Grants management">Financial/Grants management</option>
-              <option value="Communicaiton/Documentation">Communication/Documentation</option>
-              <option value="Knowledge mgt">Knowledge mgt</option>
-              <option value="meeting">Meeting</option>
-              <option value="Workshop/Training">Workshop/Training</option>
-              <option value="Exposure visit">Exposure visit</option>
-              <option value="Field visit">Field visit</option>
-              <option value="It support">It support</option>
-              <option value="Administrative work">Adminstrative work</option>
-              <option value="Logistic support">Logistic support</option>
-              <option value="HR management">HR management</option>
-              <option value="Monitoring">Monitoring</option>
-            </select>
-          </div>
+              <option value="{{$time_sheet_data->activity}}" selected >{{$time_sheet_data->activity}}</option>
+             <option value="Project Management">Project Management</option>
+             <option value="Financial/Grants management">Financial/Grants management</option>
+             <option value="Communicaiton/Documentation">Communication/Documentation</option>
+             <option value="Knowledge mgt">Knowledge mgt</option>
+             <option value="meeting">Meeting</option>
+             <option value="Workshop/Training">Workshop/Training</option>
+             <option value="Exposure visit">Exposure visit</option>
+             <option value="Field visit">Field visit</option>
+             <option value="It support">It support</option>
+             <option value="Administrative work">Adminstrative work</option>
+             <option value="Logistic support">Logistic support</option>
+             <option value="HR management">HR management</option>
+             <option value="Monitoring">Monitoring</option>
+           </select>
+         </div>
+       </div>
+
+       <div class="col-md-6">
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" id="location-modal" name="location_modal" class="form-control" placeholder="Dhaka...." value="{{$time_sheet_data->location}}" required>
         </div>
-
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Location</label>
-            <input type="text" id="location-modal" name="location_modal" class="form-control" placeholder="Dhaka...." value="{{$time_sheet_data->location}}" required>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Remarks</label>
-            <input type="text" id="remarks-modal"name="remarks_modal" class="form-control" placeholder="a short description of what you did.....(optional)" value="{{$time_sheet_data->remarks}}">
-          </div>
-        </div>
-
-        <div class="form-group hidden">
-            <label>User id</label>
-            @if(isset($user_id))
-            <input type="text" class="form-control" name="user_id" id="user-id"  value="{{$user_id}}" readonly>   
-            @endif
-          </div>
-
-          <div class="form-group hidden">
-            
-            
-            <input type="text" class="form-control" name="user_timesheet" id="user-timesheet"  value="1" readonly>   
-            
-          </div>
-
-        <!-- /.col -->
       </div>
-      <!-- /.row -->
-      @if($time_sheet_data->sent_to_manager != 0)
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Remarks</label>
+          <input type="text" id="remarks-modal"name="remarks_modal" class="form-control" placeholder="a short description of what you did.....(optional)" value="{{$time_sheet_data->remarks}}">
+        </div>
+      </div>
+
+      <div class="form-group hidden">
+        <label>User id</label>
+        @if(isset($user_id))
+        <input type="text" class="form-control" name="user_id" id="user-id"  value="{{$user_id}}" readonly>   
+        @endif
+      </div>
+
       <div class="form-group hidden">
 
-        <button type="submit" class="btn btn-primary">Update</button>
+
+        <input type="text" class="form-control" name="user_timesheet" id="user-timesheet"  value="1" readonly>   
 
       </div>
-      @else
-      <div class="form-group">
 
-        <button type="submit" class="btn btn-primary">Update</button>
-
-      </div>
-      @endif
-      
+      <!-- /.col -->
     </div>
-    {!! Form::close() !!}
-    <!-- /.box-body -->
+    <!-- /.row -->
+    @if($time_sheet_data->sent_to_manager != 0)
+    <div class="form-group hidden">
+
+      <button type="submit" class="btn btn-primary">Update</button>
+
+    </div>
+    @else
+    <div class="form-group">
+
+      <button type="submit" class="btn btn-primary">Update</button>
+
+    </div>
+    @endif
 
   </div>
-  <!-- /.box -->
+  {!! Form::close() !!}
+  <!-- /.box-body -->
+
+</div>
+<!-- /.box -->
 </section>
 
 @if (count($errors) > 0)
