@@ -204,7 +204,17 @@ class UsersController extends Controller
                     'matrix_manager_id'=>$request->matrix_manager]);
             }
 
+        }else if(!empty($request->line_manager)){
+
+            $user = User::where('id',$id)->update(['line_manager_id'=>$request->line_manager]);
+
+        }else if(!empty($request->matrix_manager)){
+
+            $user = User::where('id',$id)->update(['matrix_manager_id'=>$request->matrix_manager]);            
+
         }
+
+
 
         //updating name
         if(!empty($request->name)){
