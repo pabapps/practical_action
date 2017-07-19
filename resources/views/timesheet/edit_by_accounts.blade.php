@@ -54,6 +54,7 @@
           <div class="form-group">
             <label>Time</label>
             <select id="time-sheet" name="time_sheet"  class="form-control" required>
+              <option value="{{$hour_in_number}}" selected>{{$hour_in_word}}</option>
               <option value="3000">30 mins</option>
               <option value="010000">1 hour</option>
               <option value="013000">1 hour 30 mins</option>
@@ -86,6 +87,7 @@
           <div class="form-group">
             <label>Activity</label>
             <select id="activity" name="activity"  class="form-control" required>
+              <option value="{{$time_sheet_data->activity}}" selected >{{$time_sheet_data->activity}}</option>
                <option value="Project Management">Project Management</option>
               <option value="Financial/Grants management">Financial/Grants management</option>
               <option value="Communicaiton/Documentation">Communication/Documentation</option>
