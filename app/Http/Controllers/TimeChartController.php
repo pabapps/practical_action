@@ -130,7 +130,7 @@ class TimeChartController extends Controller
                  ->elementLabel('Time(%)')
                 ->responsive(true)
                 ->dimensions(1000, 400)
-                ->colors(['#00ff00', '#ff0000'])
+                ->colors(['#27ae60', '#f39c12'])
                 ->labels($test_project)
                 ->dataset('Competed (%) ',$test_array)
                 ->dataset('Remaining (%)', $remain_project);
