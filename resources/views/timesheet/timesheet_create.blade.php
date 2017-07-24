@@ -97,6 +97,29 @@
       </table>
       
     </div>
+
+    
+
+    <div class="box-body">
+      <h3 class="box-title">List of recent entries</h3>
+      <table id="recent-data" class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Project Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Activity</th>
+          </tr>
+        </thead>
+        <tbody>
+
+
+
+        </tbody>
+
+      </table>
+
+    </div>
     <!-- /.box-body -->
   </div>
   <!-- /.box -->
@@ -256,6 +279,25 @@ $( document ).ready(function() {
     "scrollX": true,
 
   });
+
+  //filling the datatable with the ajax request
+  
+
+
+  var dataSet= [
+  ["1","2","3","4"]
+  ];
+
+  $('#recent-data').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "scrollX": true,
+       data: dataSet,
+    });
 
   $('#entry-date').datepicker({
     autoclose: true
