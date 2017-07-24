@@ -112,7 +112,16 @@
           </tr>
         </thead>
         <tbody>
-
+          @if(isset($time_sheet_log))
+          @foreach($time_sheet_log as $time_sheet)
+          <tr>
+            <td>{{$time_sheet->project_name}}</td>
+            <td>{{$time_sheet->date}}</td>
+            <td>{{$time_sheet->time_spent}}</td>
+            <td>{{$time_sheet->activity}}</td>
+          </tr>
+          @endforeach
+          @endif
 
 
         </tbody>
@@ -281,22 +290,21 @@ $( document ).ready(function() {
   });
 
   //filling the datatable with the ajax request
+  // $.get( "{{URL::to('/')}}/timesheet/get_recently_created_timesheet",{ user_id: "{{$user_info->id}}" }, function( role_array ) {
+
+  // });
+
+
   
-
-
-  var dataSet= [
-  ["1","2","3","4"]
-  ];
 
   $('#recent-data').DataTable({
       "paging": true,
       "lengthChange": true,
-      "searching": false,
+      "searching": true,
       "ordering": true,
       "info": true,
       "autoWidth": false,
-      "scrollX": true,
-       data: dataSet,
+      "scrollX": true
     });
 
   $('#entry-date').datepicker({

@@ -303,7 +303,7 @@
 
     //ajax request
     $.get( "{{URL::to('/')}}/roles/roles_for_specific_user",{ user_id: "{{$user->id}}" }, function( role_array ) {
-      console.log(role_array);
+      // console.log(role_array);
 
       var object = JSON.parse(role_array);
 

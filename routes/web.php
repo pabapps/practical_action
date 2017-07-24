@@ -188,6 +188,9 @@ Route::post('/timesheet/accounts_manager_refer_back_to_line_manager','TimeSheetC
 //route for sending the timesheet for reporting
 Route::post('/timesheet/sending_timesheet_for_reporting','TimeSheetController@sending_timesheet_for_reporting');
 
+//route for the ajax request 
+Route::get('/timesheet/get_recently_created_timesheet','TimeSheetController@get_recently_created_timesheet');
+
 
 //testing pdf
 Route::get('/timesheet/pdf','TimeSheetController@test_pdf');
@@ -195,12 +198,6 @@ Route::get('/timesheet/pdf','TimeSheetController@test_pdf');
 
 Route::resource('/timesheet','TimeSheetController');
 
-
-/**
- * time sheet reports
- */
-
-Route::get('/timesheet_Reports/get_user_projects','TimeSheetReportController@get_user_projects');
 
 /**
  * rerports for specific projects

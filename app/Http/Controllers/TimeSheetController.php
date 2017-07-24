@@ -310,9 +310,9 @@ class TimeSheetController extends Controller
 
             foreach ($final_array as $array) {
                 if($array['project_id'] == $u_project->project_id ){                   
-                   $missing_project_id = -1;
-                   break;
-               }else{
+                 $missing_project_id = -1;
+                 break;
+             }else{
                 $missing_project_id = $u_project->project_id;
 
             }
@@ -334,7 +334,11 @@ class TimeSheetController extends Controller
 
         }
 
-
+        $time_sheet_log = DB::table('time_sheet_user')
+        ->join('projects','projects.id','=','time_sheet_user.project_id')
+        ->select('time_sheet_user.id','projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
+        ->where('time_sheet_user.user_id',$user->id)
+        ->where('time_sheet_user.sent_to_manager',0)->get();
 
 
 
@@ -342,7 +346,7 @@ class TimeSheetController extends Controller
 
     if(count($final_array)>0) {
         return view('timesheet.timesheet_create')->with('user_projects',$user_projects)->with('user_info',$user_info[0])
-        ->with('final_array',$final_array);
+        ->with('final_array',$final_array)->with('time_sheet_log',$time_sheet_log);
 
     }else{
 
@@ -945,31 +949,31 @@ class TimeSheetController extends Controller
         <h2>List</h2>
         List example:
         <ol>
-            <li><b>bold text</b></li>
-            <li><i>italic text</i></li>
-            <li><u>underlined text</u></li>
-            <li><b>b<i>bi<u>biu</u>bi</i>b</b></li>
-            <li><a href="http://www.tecnick.com" dir="ltr">link to http://www.tecnick.com</a></li>
-            <li>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.<br />Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</li>
-            <li>SUBLIST
-                <ol>
-                    <li>row one
-                        <ul>
-                            <li>sublist</li>
-                        </ul>
-                    </li>
-                    <li>row two</li>
-                </ol>
-            </li>
-            <li><b>T</b>E<i>S</i><u>T</u> <del>line through</del></li>
-            <li><font size="+3">font + 3</font></li>
-            <li><small>small text</small> normal <small>small text</small> normal <sub>subscript</sub> normal <sup>superscript</sup> normal</li>
+        <li><b>bold text</b></li>
+        <li><i>italic text</i></li>
+        <li><u>underlined text</u></li>
+        <li><b>b<i>bi<u>biu</u>bi</i>b</b></li>
+        <li><a href="http://www.tecnick.com" dir="ltr">link to http://www.tecnick.com</a></li>
+        <li>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.<br />Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</li>
+        <li>SUBLIST
+        <ol>
+        <li>row one
+        <ul>
+        <li>sublist</li>
+        </ul>
+        </li>
+        <li>row two</li>
+        </ol>
+        </li>
+        <li><b>T</b>E<i>S</i><u>T</u> <del>line through</del></li>
+        <li><font size="+3">font + 3</font></li>
+        <li><small>small text</small> normal <small>small text</small> normal <sub>subscript</sub> normal <sup>superscript</sup> normal</li>
         </ol>
         <dl>
-            <dt>Coffee</dt>
-            <dd>Black hot drink</dd>
-            <dt>Milk</dt>
-            <dd>White cold drink</dd>
+        <dt>Coffee</dt>
+        <dd>Black hot drink</dd>
+        <dt>Milk</dt>
+        <dd>White cold drink</dd>
         </dl>
         <div style="text-align:center">IMAGES<br />
         </div>';
@@ -981,6 +985,8 @@ class TimeSheetController extends Controller
 
 
     }
+
+    
 
 
 
