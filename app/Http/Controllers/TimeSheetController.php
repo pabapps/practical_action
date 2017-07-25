@@ -17,6 +17,8 @@ use Entrust;
 use App\Mail\Welcome;
 use App\Mail\WelcomeAgain;
 use PDF;
+use App\Jobs\SendEmail;
+
 
 
 class TimeSheetController extends Controller
@@ -528,9 +530,17 @@ class TimeSheetController extends Controller
 
         }
 
-        //\Mail::to($line_manager)->send(new WelcomeAgain($user));
+        // \Mail::to($line_manager)->queue(new WelcomeAgain($user));
+        
+        // $count = 20;
 
-        dd("working");
+        // for($i = 0 ; $i<$count; $i++ ){
+        //     $this->dispatch(new SendEmail($line_manager));
+        // }
+
+        dispatch(new SendEmail($line_manager));
+        // Log::info("Request Cycle with Queues Ends");
+        // dd("working");
 
 
     }
