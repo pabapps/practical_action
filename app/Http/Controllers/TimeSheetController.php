@@ -18,8 +18,8 @@ use App\Mail\Welcome;
 use App\Mail\WelcomeAgain;
 use PDF;
 use App\Jobs\SendEmail;
-
-
+use Carbon\Carbon;
+use Log;
 
 class TimeSheetController extends Controller
 {
@@ -530,16 +530,27 @@ class TimeSheetController extends Controller
 
         }
 
-        // \Mail::to($line_manager)->queue(new WelcomeAgain($user));
+        Log::info("Request Cycle with Queues Begins");
+
+
+        \Mail::to($line_manager)->queue(new WelcomeAgain($user));
         
         // $count = 20;
 
         // for($i = 0 ; $i<$count; $i++ ){
         //     $this->dispatch(new SendEmail($line_manager));
         // }
+        
+        // for($i=0; $i<10; $i++){
 
-        dispatch(new SendEmail($line_manager));
-        // Log::info("Request Cycle with Queues Ends");
+        //     $jobs = (new SendEmail($line_manager))->delay(60 * 5);
+
+        // dispatch($jobs);
+
+        // }
+
+        
+        Log::info("Request Cycle with Queues Ends");
         // dd("working");
 
 
