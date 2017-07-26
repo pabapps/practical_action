@@ -38,7 +38,7 @@ class SendEmail implements ShouldQueue
         
         $email = new WelcomeAgain($this->user);
 
-        Mail::to($this->user->email)->queue($email);
+        Mail::to($this->user->email)->send($email);
 
     }
 }

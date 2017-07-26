@@ -312,9 +312,9 @@ class TimeSheetController extends Controller
 
             foreach ($final_array as $array) {
                 if($array['project_id'] == $u_project->project_id ){                   
-                 $missing_project_id = -1;
-                 break;
-             }else{
+                   $missing_project_id = -1;
+                   break;
+               }else{
                 $missing_project_id = $u_project->project_id;
 
             }
@@ -533,7 +533,7 @@ class TimeSheetController extends Controller
         Log::info("Request Cycle with Queues Begins");
 
 
-        \Mail::to($line_manager)->queue(new WelcomeAgain($user));
+        // \Mail::to($line_manager)->queue(new WelcomeAgain($user));
         
         // $count = 20;
 
@@ -541,13 +541,13 @@ class TimeSheetController extends Controller
         //     $this->dispatch(new SendEmail($line_manager));
         // }
         
-        // for($i=0; $i<10; $i++){
+        
 
-        //     $jobs = (new SendEmail($line_manager))->delay(60 * 5);
+        $jobs = (new SendEmail($line_manager))->onConnection('database')->delay(60 * 5);
 
-        // dispatch($jobs);
+        dispatch($jobs);
 
-        // }
+        
 
         
         Log::info("Request Cycle with Queues Ends");
