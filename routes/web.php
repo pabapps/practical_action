@@ -204,6 +204,8 @@ Route::resource('/timesheet','TimeSheetController');
  */
 Route::post('/timesheet_Reports/specific_project','TimeSheetReportController@get_report_for_specific_project');
 
+Route::get('/timesheet_Reports/get_user_projects','TimeSheetReportController@get_user_projects');
+
 Route::resource('/timesheet_Reports','TimeSheetReportController');
 
 
