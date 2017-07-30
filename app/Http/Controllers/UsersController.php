@@ -168,7 +168,15 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
+        
+
+        if(!empty($request->skip_line_manager)){
+            $user = User::where('id',$id)->update(['byPass_line_manger'=>1]);
+        }else{
+            $user = User::where('id',$id)->update(['byPass_line_manger'=>0]);
+        }
+
+
 
         if(!empty($request->password) && !empty($request->password_confirm)){
 

@@ -142,7 +142,7 @@
                 <div class="form-group">
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" name="skip_line_manager">
+                      <input type="checkbox" name="skip_line_manager" value="1">
                       <b>Skip line manager</b>
                     </label>
                   </div>                  
