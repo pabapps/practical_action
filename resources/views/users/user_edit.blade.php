@@ -142,8 +142,13 @@
                 <div class="form-group">
                   <div class="checkbox">
                     <label>
+                      @if(isset($user->byPass_line_manger) && $user->byPass_line_manger ==1)
+                      <input type="checkbox" name="skip_line_manager" value="1" checked>
+                      <b>Skip line manager</b>
+                      @else
                       <input type="checkbox" name="skip_line_manager" value="1">
                       <b>Skip line manager</b>
+                      @endif
                     </label>
                   </div>                  
                 </div>
