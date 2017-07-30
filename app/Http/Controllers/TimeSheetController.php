@@ -312,9 +312,9 @@ class TimeSheetController extends Controller
 
             foreach ($final_array as $array) {
                 if($array['project_id'] == $u_project->project_id ){                   
-                   $missing_project_id = -1;
-                   break;
-               }else{
+                 $missing_project_id = -1;
+                 break;
+             }else{
                 $missing_project_id = $u_project->project_id;
 
             }
@@ -513,45 +513,52 @@ class TimeSheetController extends Controller
 
         $user = Auth::user();
 
-        //fetching the line manager
-        $line_manager_id = DB::table('users')
-        ->select('line_manager_id')
-        ->where('id',$user->id)->first();
-
-        $line_manager = User::where('id',$line_manager_id->line_manager_id)->first();
+        //checkign if the user has the permission to skip the checking of the line manager
+        if($user->byPass_line_manger == 1){
 
 
-        foreach ($array as $single_value) {
+            //user has the permission to skip the line manager
 
-            DB::table('time_sheet_user')
-            ->where('id', $single_value)
-            ->where('user_id', $user->id)
-            ->update(['sent_to_manager' => $line_manager_id->line_manager_id]);
+            foreach ($array as $single_value) {
+
+                DB::table('time_sheet_user')
+                ->where('id', $single_value)
+                ->update(['sent_to_accounts' => 1]);
+
+            }
+            
+
+        }else{
+
+            //fetching the line manager
+            $line_manager_id = DB::table('users')
+            ->select('line_manager_id')
+            ->where('id',$user->id)->first();
+
+            $line_manager = User::where('id',$line_manager_id->line_manager_id)->first();
+
+
+            foreach ($array as $single_value) {
+
+                DB::table('time_sheet_user')
+                ->where('id', $single_value)
+                ->where('user_id', $user->id)
+                ->update(['sent_to_manager' => $line_manager_id->line_manager_id]);
+
+            }
+
+            Log::info("Request Cycle with Queues Begins");        
+
+            $jobs = (new SendEmail($line_manager))->onConnection('database')->delay(10);
+
+            dispatch($jobs);
+
+            Log::info("Request Cycle with Queues Ends");
+        // dd("working");
 
         }
 
-        Log::info("Request Cycle with Queues Begins");
-
-
-        // \Mail::to($line_manager)->queue(new WelcomeAgain($user));
         
-        // $count = 20;
-
-        // for($i = 0 ; $i<$count; $i++ ){
-        //     $this->dispatch(new SendEmail($line_manager));
-        // }
-        
-        
-
-        $jobs = (new SendEmail($line_manager))->onConnection('database')->delay(10);
-
-        dispatch($jobs);
-
-        
-
-        
-        Log::info("Request Cycle with Queues Ends");
-        // dd("working");
 
 
     }
