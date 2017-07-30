@@ -543,7 +543,7 @@ class TimeSheetController extends Controller
         
         
 
-        $jobs = (new SendEmail($line_manager))->onConnection('database')->delay(60 * 5);
+        $jobs = (new SendEmail($line_manager))->onConnection('database')->delay(10);
 
         dispatch($jobs);
 
