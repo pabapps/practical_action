@@ -139,6 +139,15 @@
 
                 </div>
 
+                <div class="form-group">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" name="skip_line_manager">
+                      <b>Skip line manager</b>
+                    </label>
+                  </div>                  
+                </div>
+
               </div>
 
             </div>
@@ -146,7 +155,7 @@
           </div>
           <!-- /.row -->
 
-          <div class="col-md-6">
+          <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Role Table</h3>
