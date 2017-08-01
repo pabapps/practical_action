@@ -523,7 +523,7 @@ class TimeSheetController extends Controller
 
                 DB::table('time_sheet_user')
                 ->where('id', $single_value)
-                ->update(['sent_to_accounts' => 1]);
+                ->update(['sent_to_accounts' => 1,'sent_to_manager'=>-1]);
 
             }
             

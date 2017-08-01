@@ -394,7 +394,7 @@ public function get_user_projects(Request $request){
         }
 
 
-        $html = '<h1>Time Sheet Report</h1>
+        $html = '<h1 align="center" >Time Sheet Report</h1>
         
         <h3>Name: '.$user->name.'</h3>
 
