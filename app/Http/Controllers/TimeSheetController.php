@@ -547,14 +547,14 @@ class TimeSheetController extends Controller
 
             }
 
-            Log::info("Request Cycle with Queues Begins");        
+            // Log::info("Request Cycle with Queues Begins");        
 
-            $jobs = (new SendEmail($line_manager))->onConnection('database')->delay(10);
+            // $jobs = (new SendEmail($line_manager))->onConnection('database')->delay(10);
 
-            dispatch($jobs);
+            // dispatch($jobs);
 
-            Log::info("Request Cycle with Queues Ends");
-        // dd("working");
+            // Log::info("Request Cycle with Queues Ends");
+        
 
         }
 
