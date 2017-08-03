@@ -120,9 +120,9 @@
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            
+            @role('Admin')
             <li {!! Request::is('*projects') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/projects'}}"><i class="fa fa-circle-o"></i>Project list</a></li>
-            
+            @endrole
             
           </ul>
         </li>
