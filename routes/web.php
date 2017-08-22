@@ -224,6 +224,8 @@ Route::resource('/user_profile','UserProfileController');
  */
 
 // route for categories
+Route::get('/contact_categories/get_all_categories','CategoriesController@get_all_categories');
+
 Route::resource('/contact_categories','CategoriesController');
 
 

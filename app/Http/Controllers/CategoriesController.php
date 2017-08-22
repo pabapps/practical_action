@@ -26,7 +26,7 @@ class CategoriesController extends Controller
 
     public function index()
     {
-        dd("working on it");
+        return view('pabcontacts.categories.categories');
     }
 
     /**
@@ -36,8 +36,31 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        //
+        return view('pabcontacts.categories.category_create');
     }
+
+
+    public function get_all_categories(){
+
+        $query_category =  DB::table('categories')->select(['id', 'name'])->get();
+
+        $category_collection = collect($query_category);
+    // dd($reservation_collection);
+        return Datatables::of($category_collection)
+        ->addColumn('action', function ($category_collection) {
+            return 
+
+            ' <a href="'. url('/contact_categories') . '/' . 
+            Crypt::encrypt($category_collection->id) . 
+            '/edit' .'"' . 
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
+        })
+        ->editColumn('id', '{{$id}}')
+        ->setRowId('id')
+        ->make(true);
+
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -47,7 +70,15 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $category = new Categories;
+
+        $category->name = $request->category_name;
+        $category->save();
+
+        return redirect()->action('CategoriesController@index');
+
+        
     }
 
     /**
@@ -69,7 +100,7 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        dd("working on it");
     }
 
     /**
