@@ -219,6 +219,21 @@ Route::resource('/user_profile','UserProfileController');
 
 
 
+/**
+ * routes for pabcontacts
+ */
+
+// route for categories
+Route::resource('/contact_categories','CategoriesController');
+
+
+
+
+
+
+
+
+
 
 
 
