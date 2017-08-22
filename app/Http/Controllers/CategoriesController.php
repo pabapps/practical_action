@@ -100,7 +100,12 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        dd("working on it");
+        $id = Crypt::decrypt($id);
+
+        $category = Categories::where('id',$id)->first();
+
+        return view('pabcontacts.categories.category_edit')->with('category',$category);
+
     }
 
     /**
@@ -112,7 +117,13 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        Categories::where('id', $id)
+        ->update(['name' => $request->category_name]);
+
+        $request->session()->flash('alert-success', 'data has been successfully updated!');
+        return redirect()->action('CategoriesController@index'); 
+
     }
 
     /**
