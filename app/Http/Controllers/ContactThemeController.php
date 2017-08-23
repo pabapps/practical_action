@@ -36,7 +36,7 @@ class ContactThemeController extends Controller
      */
     public function create()
     {
-        dd("working on it");
+        return view('pabcontacts.theme.theme_create');
     }
 
     /**
