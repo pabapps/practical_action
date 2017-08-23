@@ -36,7 +36,7 @@ class ContactsController extends Controller
      */
     public function create()
     {
-        //
+        return view('pabcontacts.contacts.contacts_create');
     }
 
     /**

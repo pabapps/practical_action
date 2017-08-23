@@ -12,7 +12,7 @@
             <div class="box-header">
               <h3 class="box-title">List of categories</h3>
             </div>
-            <a href="contact_categories/create"><h1>Create new Categories</h1></a>
+            <a href="{{URL::to('/') . '/contact_categories/create'}}"><h1>Create new Categories</h1></a>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="categories" class="table table-bordered table-hover">

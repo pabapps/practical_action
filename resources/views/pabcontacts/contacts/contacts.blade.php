@@ -12,7 +12,7 @@
             <div class="box-header">
               <h3 class="box-title">Contact list</h3>
             </div>
-            <a href="contact_categories/create"><h1>Create new Contacts</h1></a>
+            <a href="{{URL::to('/') . '/pab_contacts/create'}}"><h1>Create new Contacts</h1></a>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="categories" class="table table-bordered table-hover">
