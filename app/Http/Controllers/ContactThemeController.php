@@ -23,10 +23,10 @@ class ContactThemeController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
-        //
+        return view('pabcontacts.theme.theme');
     }
 
     /**
@@ -36,7 +36,7 @@ class ContactThemeController extends Controller
      */
     public function create()
     {
-        //
+        dd("working on it");
     }
 
     /**

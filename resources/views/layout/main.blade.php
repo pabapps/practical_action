@@ -184,7 +184,7 @@
           </a>
           <ul class="treeview-menu">
             <li {!! Request::is('*contacts') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/contact_categories'}}"><i class="fa fa-circle-o"></i>Categories</a></li>
-            <li {!! Request::is('*contacts') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/contact_categories'}}"><i class="fa fa-circle-o"></i>Themes</a></li>
+            <li {!! Request::is('*contacts') ? ' class="active"' : null !!}><a href="{{URL::to('/') . '/contact_theme'}}"><i class="fa fa-circle-o"></i>Themes</a></li>
           </ul>
         </li>
   
