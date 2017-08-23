@@ -94,7 +94,11 @@ class ContactThemeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $id = Crypt::decrypt($id);
+
+        $theme = ContactsTheme::where('id',$id)->first();
+
+        return view('pabcontacts.theme.theme_edit')->with('theme',$theme);
     }
 
     /**
@@ -106,7 +110,11 @@ class ContactThemeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        ContactsTheme::where('id', $id)
+        ->update(['name' => $request->theme]);
+
+        $request->session()->flash('alert-success', 'data has been successfully updated!');
+        return redirect()->action('ContactThemeController@index'); 
     }
 
     /**
