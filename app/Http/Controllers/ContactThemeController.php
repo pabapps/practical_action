@@ -39,6 +39,26 @@ class ContactThemeController extends Controller
         return view('pabcontacts.theme.theme_create');
     }
 
+    public function get_all_contact_theme(){
+
+        $query_theme =  DB::table('themes')->select(['id', 'name'])->get();
+
+        $theme_collection = collect($query_theme);
+    // dd($reservation_collection);
+        return Datatables::of($theme_collection)
+        ->addColumn('action', function ($theme_collection) {
+            return 
+
+            ' <a href="'. url('/contact_theme') . '/' . 
+            Crypt::encrypt($theme_collection->id) . 
+            '/edit' .'"' . 
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
+        })
+        ->editColumn('id', '{{$id}}')
+        ->setRowId('id')
+        ->make(true);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -47,7 +67,12 @@ class ContactThemeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $contact_theme = new ContactsTheme;
+
+        $contact_theme->name = $request->theme;
+        $contact_theme->save();
+
+        return redirect()->action('ContactThemeController@index');
     }
 
     /**

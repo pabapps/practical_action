@@ -15,7 +15,7 @@
             <a href="{{URL::to('/') . '/contact_theme/create'}}"><h1>Create new theme</h1></a>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="categories" class="table table-bordered table-hover">
+              <table id="themes" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>id</th>
@@ -49,7 +49,7 @@
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script>
 $(document).ready(function() {
-  var table = $('#categories').DataTable( {
+  var table = $('#themes').DataTable( {
     "processing": true,
     "serverSide": true,
     "paging": true,
@@ -59,7 +59,7 @@ $(document).ready(function() {
     "info": true,
     "autoWidth": false,
     "scrollX": true,
-    "ajax": "{{URL::to('/')}}/contact_categories/get_all_categories",
+    "ajax": "{{URL::to('/')}}/contact_theme/get_all_contact_theme",
     "columns": [
     { "data": "id" },
     { "data": "name" },
