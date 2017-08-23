@@ -19,7 +19,6 @@ class CreateContactTable extends Migration
             $table->string('designation');
             $table->string('organization');
             $table->integer('category_id');
-            $table->integer('theme_id');
             $table->string('email1');
             $table->string('email2');
             $table->string('mobile');

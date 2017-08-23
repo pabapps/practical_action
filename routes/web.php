@@ -234,6 +234,12 @@ Route::get('/contact_theme/get_all_contact_theme','ContactThemeController@get_al
 Route::resource('/contact_theme','ContactThemeController');
 
 
+/**
+ * routes for contacts
+ */
+
+Route::resource('/pab_contacts','ContactsController');
+
 
 
 
