@@ -23,6 +23,7 @@ class CreateContactTable extends Migration
             $table->string('email2');
             $table->string('mobile');
             $table->string('phone');
+            $table->string('pic_path');
             $table->string('address');
             $table->timestamps();
         });

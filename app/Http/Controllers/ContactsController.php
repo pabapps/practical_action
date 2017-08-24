@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Categories;
 use App\ContactsTheme;
 use App\Contacts;
+use App\ContactThemePivot;
 use Datatables;
 use Crypt;
 use Auth;
@@ -77,7 +78,66 @@ class ContactsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validating
+        $this->validate($request,[
+
+            'name' =>'required',
+            'designation' =>'required',
+            'organization' =>'required',
+            'category_id' =>'required',
+            'theme_id' =>'required',
+            'primary_email' =>'required',
+            'mobile' =>'required',
+            'address' =>'required',
+            ]);
+
+
+        // typing to save the path of the pic
+        $file = $request->file('pic');
+
+        $file_name = time() . $file->getClientOriginalName();
+
+        $file->move('contacts/photos', $file_name);
+
+
+        $contact =  new Contacts;
+        $contact->name = $request->name;
+        $contact->designation = $request->designation;
+        $contact->organization = $request->organization;
+        $contact->category_id = $request->category_id;
+        $contact->email1 = $request->primary_email;
+        if(!empty($request->secondary_email)){
+            $contact->email2 = $request->secondary_email;
+        }
+        $contact->mobile = $request->mobile;
+        if(!empty($request->phone)){
+
+            $contact->phone = $request->phone;
+
+        }
+        if(!empty($request->file('pic'))){
+            $contact->pic_path = "/contacts/photos/{$file_name}";
+        }
+        $contact->address = $request->address;
+
+        $contact->save();
+
+        $themes = $request->theme_id;
+
+        foreach ($themes as $theme) {
+
+            $contact_theme = new ContactThemePivot;
+
+            $contact_theme->contact_id = $contact->id;
+            $contact_theme->theme_id = $theme;
+
+            $contact_theme->save();
+        }
+
+        return redirect()->back();
+
+
+
     }
 
     /**

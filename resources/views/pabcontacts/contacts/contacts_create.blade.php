@@ -49,7 +49,7 @@
             <label>Theme</label>
             <div class="row">
               <div class="col-lg-11" style="padding-right:0;">
-                <select id="theme-id" name="theme_id" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" multiple="multiple" required>
+                <select id="theme-id" name="theme_id[]" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" multiple="multiple" required>
 
                 </select>
               </div>
