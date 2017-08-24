@@ -57,7 +57,7 @@
           </div>
           
           <div class="form-group">
-            <label>Profile Pic</label>
+            <label>Picture</label>
             <input type="file" name="pic" accept="image/*" name="pic" id="pic">
           </div>
 
@@ -136,7 +136,7 @@ $( document ).ready(function() {
     placeholder: 'Select an option',
     ajax: {
       dataType: 'json',
-      url: '{{URL::to('/')}}/ajax/ajax_get_departments',
+      url: '{{URL::to('/')}}/pab_contacts/get_all_catogies',
       delay: 250,
       data: function(params) {
         return {

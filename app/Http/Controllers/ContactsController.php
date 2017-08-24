@@ -39,6 +39,21 @@ class ContactsController extends Controller
         return view('pabcontacts.contacts.contacts_create');
     }
 
+
+    public function get_all_categories(Request $request){
+        $search_term = $request->input('term');
+
+        $query_categories= "
+        SELECT categories.id , categories.name AS text
+        FROM categories WHERE categories.name LIKE '%{$search_term}%'";
+
+        $categories = DB::select($query_categories);
+
+    
+        return response()->json($categories);
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
