@@ -156,7 +156,7 @@ $( document ).ready(function() {
     placeholder: 'Select an option',
     ajax: {
       dataType: 'json',
-      url: '{{URL::to('/')}}/ajax/ajax_get_departments',
+      url: '{{URL::to('/')}}/pab_contacts/get_all_themes',
       delay: 250,
       data: function(params) {
         return {

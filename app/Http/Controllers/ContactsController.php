@@ -49,8 +49,23 @@ class ContactsController extends Controller
 
         $categories = DB::select($query_categories);
 
-    
+
         return response()->json($categories);
+
+    }
+
+    public function get_all_themes(Request $request){
+
+        $search_term = $request->input('term');
+
+        $query_themes= "
+        SELECT themes.id , themes.name AS text
+        FROM themes WHERE themes.name LIKE '%{$search_term}%'";
+
+        $themes = DB::select($query_themes);
+
+
+        return response()->json($themes);
 
     }
 
