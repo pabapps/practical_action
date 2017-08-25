@@ -30,6 +30,27 @@ class ContactsController extends Controller
         return view('pabcontacts.contacts.contacts');
     }
 
+    public function get_all_contacts(){
+
+         $query_category =  DB::table('categories')->select(['id', 'name'])->get();
+
+        $category_collection = collect($query_category);
+    // dd($reservation_collection);
+        return Datatables::of($category_collection)
+        ->addColumn('action', function ($category_collection) {
+            return 
+
+            ' <a href="'. url('/contact_categories') . '/' . 
+            Crypt::encrypt($category_collection->id) . 
+            '/edit' .'"' . 
+            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
+        })
+        ->editColumn('id', '{{$id}}')
+        ->setRowId('id')
+        ->make(true);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -88,7 +109,7 @@ class ContactsController extends Controller
             'theme_id' =>'required',
             'primary_email' =>'required',
             'mobile' =>'required',
-            'address' =>'required',
+            'address' =>'required', 
             ]);
 
 

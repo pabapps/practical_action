@@ -245,6 +245,9 @@ Route::get('/pab_contacts/get_all_catogies','ContactsController@get_all_categori
 //getting all the themes
 Route::get('/pab_contacts/get_all_themes','ContactsController@get_all_themes');
 
+//get all contacts
+Route::get('/pab_contacts_get_all_contacts','ContactsController@get_all_contacts');
+
 Route::resource('/pab_contacts','ContactsController');
 
 
