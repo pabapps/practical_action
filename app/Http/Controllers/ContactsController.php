@@ -31,25 +31,21 @@ class ContactsController extends Controller
     }
 
     public function get_all_contacts(){
+        $query_contacts =  DB::table('contacts')->select(['id', 'name'])->get();
 
-         $query_category =  DB::table('categories')->select(['id', 'name'])->get();
-
-        $category_collection = collect($query_category);
+       $contact_collection = collect($query_contacts);
     // dd($reservation_collection);
-        return Datatables::of($category_collection)
-        ->addColumn('action', function ($category_collection) {
-            return 
+       return Datatables::of($contact_collection)
+       ->addColumn('action', function ($contact_collection) {
+        return 
 
-            ' <a href="'. url('/contact_categories') . '/' . 
-            Crypt::encrypt($category_collection->id) . 
-            '/edit' .'"' . 
-            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
-        })
-        ->editColumn('id', '{{$id}}')
-        ->setRowId('id')
-        ->make(true);
+        ' <button  class="btn btn-primary btn-danger" data-toggle="modal" id="edit-button" data-target="#edit-modal"><i class="glyphicon   glyphicon-list"></i> Edit</button>';
+    })
+       ->editColumn('id', '{{$id}}')
+       ->setRowId('id')
+       ->make(true);
 
-    }
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -155,7 +151,7 @@ class ContactsController extends Controller
             $contact_theme->save();
         }
 
-        return redirect()->back();
+        return redirect()->action('ContactsController@index');
 
 
 
