@@ -162,6 +162,54 @@ class ContactsController extends Controller
     }
 
     /**
+     * 
+     */
+
+    public function get_specific_contact(Request $request){
+
+        $contact_id = $request->contact_id;
+
+        $contact_details = Contacts::where('id',$contact_id)->first();
+
+        $category = Categories::where('id',$contact_details->category_id)->first();
+
+        $contact_theme = ContactThemePivot::where('contact_id',$contact_id)->get();
+
+        $theme_array = array();
+
+        $theme_id = array();
+
+        $counter = 0;
+
+        foreach ($contact_theme as $c_theme) {
+            
+            $theme = ContactsTheme::where('id',$c_theme->theme_id)->first();
+
+            $theme_array[$counter] = $theme->name;
+
+            $theme_id[$counter] = $theme->id;
+
+            $counter = $counter + 1;
+
+        }
+
+        $final_array = array();
+
+        $final_array['contact'] = $contact_details;
+        $final_array['category'] = $category;
+        $file_array['theme_id'] = $theme_id;
+        $file_array['theme_array'] = $theme_array;
+
+
+
+        return json_encode($final_array);
+
+    }
+
+
+
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id

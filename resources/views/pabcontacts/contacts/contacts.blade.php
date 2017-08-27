@@ -55,11 +55,11 @@
         <div class="modal-body">
 
          <div class="row">
-         <div class="col-md-6">
+           <div class="col-md-6">
 
             <div class="box box-primary">
               <div class="box-body box-profile">
-                <img id="person-pic" class="img-responsive" src="../../dist/img/user4-128x128.jpg" alt="picture">
+                <img id="person-pic" class="img-responsive" src="" alt="picture">
 
                 <h3 class="profile-username text-center">Nina Mcintire</h3>
 
@@ -103,7 +103,7 @@
             <div class="col-lg-12">
               <select id="category-id" name="category_id" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" required>
 
-                </select>
+              </select>
             </div>
           </div>
         </div>
@@ -171,8 +171,8 @@
           <div class="row">
             <div class="col-lg-12">
               <textarea type="text" rows="4" class="form-control" name="address" id="address" placeholder="Please enter the address" value="{{old('address')}}" required>
-              
-            </textarea>
+
+              </textarea>
             </div>
           </div>
         </div>
@@ -205,6 +205,48 @@
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script>
   $(document).ready(function() {
+
+    $('#theme-id').select2({
+      placeholder: 'Select an option',
+      ajax: {
+        dataType: 'json',
+        url: '{{URL::to('/')}}/pab_contacts/get_all_themes',
+        delay: 250,
+        data: function(params) {
+          return {
+            term: params.term
+          }
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          return {
+            results: data
+          };
+        },
+      }
+    });
+
+    $('#category-id').select2({
+      placeholder: 'Select an option',
+      ajax: {
+        dataType: 'json',
+        url: '{{URL::to('/')}}/pab_contacts/get_all_catogies',
+        delay: 250,
+        data: function(params) {
+          return {
+            term: params.term
+          }
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          return {
+            results: data
+          };
+        },
+      }
+    });
+
+
     var table = $('#contacts').DataTable( {
       "processing": true,
       "serverSide": true,
@@ -233,51 +275,45 @@
 
      console.log(data['id']);
 
+     $.get(  "{{URL::to('/')}}/pab_contacts/get_specific_contact",{ contact_id: data['id'] }, function( final_array ) {
+
+      var object = JSON.parse(final_array);
+
+      console.log(object['contact']);
+
+      var pic_path = "{{URL::to('/')}}"+object['contact']['pic_path'];      
+
+      $("#person-pic").attr("src",pic_path);
+      $("#name").val(object['contact']['name']);
+      $("#designation").val(object['contact']['designation']);
+      $("#organization").val(object['contact']['organization']);
+      $("#primary-email").val(object['contact']['email1']);
+      $("#secondary-email").val(object['contact']['email2']);
+      $("#mobile").val(object['contact']['mobile']);
+      $("#phone").val(object['contact']['phone']);
+      $("#address").val(object['contact']['address']);
+
+      var category_id = object['category']['id'];
+      var category_name = object['category']['name'];
+
+      var $categoryOption = $("<option></option>").val(category_id).text(category_name)
+
+      $("#category-id").append($categoryOption).trigger('change');
+
+
+
+
+
+
+    });
+
      $("#edit-modal").modal('show');
 
    });
 
 
 
-    $('#theme-id').select2({
-      placeholder: 'Select an option',
-      ajax: {
-        dataType: 'json',
-        url: '{{URL::to('/')}}/pab_contacts/get_all_themes',
-        delay: 250,
-        data: function(params) {
-          return {
-            term: params.term
-          }
-        },
-        processResults: function (data, params) {
-          params.page = params.page || 1;
-          return {
-            results: data
-          };
-        },
-      }
-    });
 
-    $('#category-id').select2({
-    placeholder: 'Select an option',
-    ajax: {
-      dataType: 'json',
-      url: '{{URL::to('/')}}/pab_contacts/get_all_catogies',
-      delay: 250,
-      data: function(params) {
-        return {
-          term: params.term
-        }
-      },
-      processResults: function (data, params) {
-        params.page = params.page || 1;
-        return {
-          results: data
-        };
-      },
-    }
-  });
 
 
 

@@ -248,6 +248,8 @@ Route::get('/pab_contacts/get_all_themes','ContactsController@get_all_themes');
 //get all contacts
 Route::get('/pab_contacts/get_all_contacts','ContactsController@get_all_contacts');
 
+Route::get('/pab_contacts/get_specific_contact','ContactsController@get_specific_contact');
+
 Route::resource('/pab_contacts','ContactsController');
 
 
