@@ -39,7 +39,7 @@ class ContactsController extends Controller
        ->addColumn('action', function ($contact_collection) {
         return 
 
-        ' <button type="submit" class="btn btn-primary btn-danger"  data-target="#edit-modal" value= "'.$contact_collection->id.'"><i class="glyphicon   glyphicon-list"></i>Edit</button>';
+        ' <button type="submit" class="btn btn-primary btn-danger" ><i class="glyphicon   glyphicon-list"></i>Edit</button>';
     })
        ->editColumn('id', '{{$id}}')
        ->setRowId('id')

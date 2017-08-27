@@ -41,9 +41,9 @@
   <!-- /.row -->
 
   <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <div class="modal-header" style="border-bottom: 0px;height: 50px;">
+        <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -54,16 +54,16 @@
 
         <div class="modal-body">
 
+         
           <div class="form-group">
-            <label>Date:</label>
+            <label>Theme</label>
+            <div class="row">
+              <div class="col-lg-12">
+                <select id="theme-id" name="theme_id[]" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" multiple="multiple" required>
 
-            <div class="input-group date">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
+                </select>
               </div>
-              <input type="text" class="form-control pull-right" name="entry_date" data-date-format="dd-mm-yyyy" id="entry-date" required>
             </div>
-            <!-- /.input group -->
           </div>
 
 
@@ -124,7 +124,31 @@
 
      console.log(data);
 
+     $("#edit-modal").modal('show');
+
    });
+
+
+
+    $('#theme-id').select2({
+    placeholder: 'Select an option',
+    ajax: {
+      dataType: 'json',
+      url: '{{URL::to('/')}}/pab_contacts/get_all_themes',
+      delay: 250,
+      data: function(params) {
+        return {
+          term: params.term
+        }
+      },
+      processResults: function (data, params) {
+        params.page = params.page || 1;
+        return {
+          results: data
+        };
+      },
+    }
+  });
 
 
 
