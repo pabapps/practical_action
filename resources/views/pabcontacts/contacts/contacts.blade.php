@@ -279,8 +279,6 @@
 
       var object = JSON.parse(final_array);
 
-      console.log(object['contact']);
-
       var pic_path = "{{URL::to('/')}}"+object['contact']['pic_path'];      
 
       $("#person-pic").attr("src",pic_path);
@@ -296,11 +294,25 @@
       var category_id = object['category']['id'];
       var category_name = object['category']['name'];
 
-      var $categoryOption = $("<option></option>").val(category_id).text(category_name)
+      var categoryOption = $("<option></option>").val(category_id).text(category_name);
 
-      $("#category-id").append($categoryOption).trigger('change');
+      $("#category-id").append(categoryOption).trigger('change');
 
 
+      var themes = object['theme_array'];
+
+      // console.log(themeOption);
+
+      for (var i = 0; i < themes.length; i++) {
+        var $themeOption = $("<option></option>").val(themes[i]['id']).text(themes[i]['name']);
+
+        $('#theme-id').append($themeOption).trigger('change');
+
+
+      }
+
+
+      
 
 
 

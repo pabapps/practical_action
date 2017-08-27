@@ -173,11 +173,9 @@ class ContactsController extends Controller
 
         $category = Categories::where('id',$contact_details->category_id)->first();
 
-        $contact_theme = ContactThemePivot::where('contact_id',$contact_id)->get();
+        $contact_theme = DB::table('contact_theme')->select('id', 'theme_id')->where('contact_id',$contact_id)->get();
 
         $theme_array = array();
-
-        $theme_id = array();
 
         $counter = 0;
 
@@ -185,22 +183,19 @@ class ContactsController extends Controller
             
             $theme = ContactsTheme::where('id',$c_theme->theme_id)->first();
 
-            $theme_array[$counter] = $theme->name;
-
-            $theme_id[$counter] = $theme->id;
+            $theme_array[$counter] = $theme;
 
             $counter = $counter + 1;
 
         }
 
+
+
         $final_array = array();
 
         $final_array['contact'] = $contact_details;
         $final_array['category'] = $category;
-        $file_array['theme_id'] = $theme_id;
-        $file_array['theme_array'] = $theme_array;
-
-
+        $final_array['theme_array'] = $theme_array;
 
         return json_encode($final_array);
 
