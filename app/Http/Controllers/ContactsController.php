@@ -30,6 +30,10 @@ class ContactsController extends Controller
         return view('pabcontacts.contacts.contacts');
     }
 
+    /**
+     * resturns all the contacts to the front end through an ajax request
+     */
+
     public function get_all_contacts(){
         $query_contacts =  DB::table('contacts')->select(['id', 'name'])->get();
 

@@ -47,44 +47,153 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h3 class="modal-title">create new time sheet entry</h3>
+          <h3 class="modal-title">Details</h3>
         </div>
 
-        {!! Form::open(['method'=>'POST', 'action'=>['TimeSheetController@store'], 'id'=>'time-sheet-form']) !!}
+        {!! Form::open(['method'=>'POST', 'action'=>['TimeSheetController@store'], 'id'=>'eidt-form']) !!}
 
         <div class="modal-body">
 
-         
-          <div class="form-group">
-            <label>Theme</label>
-            <div class="row">
-              <div class="col-lg-12">
-                <select id="theme-id" name="theme_id[]" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" multiple="multiple" required>
+         <div class="row">
+         <div class="col-md-6">
 
-                </select>
+            <div class="box box-primary">
+              <div class="box-body box-profile">
+                <img id="person-pic" class="img-responsive" src="../../dist/img/user4-128x128.jpg" alt="picture">
+
+                <h3 class="profile-username text-center">Nina Mcintire</h3>
+
+                <p class="text-muted text-center">Software Engineer</p>
               </div>
+              <!-- /.box-body -->
             </div>
           </div>
-
-
-
-
-
-
         </div>
 
-        <div class="modal-footer">
-          <div class="col-lg-12 entry_panel_body ">
-            <h3></h3>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <div class="form-group">
+          <label>Name of the person</label>
+          <div class="row">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" name="name" id="name" placeholder="please enter the name of the person" value="{{old('name')}}" required>   
+            </div>
           </div>
         </div>
-        {!! Form::close() !!}
+
+        <div class="form-group">
+          <label>Designation</label>
+          <div class="row">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" name="designation" id="designation" placeholder="Designation of the person" value="{{old('designation')}}" required>   
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Organization</label>
+          <div class="row">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" name="organization" id="organization" placeholder="Please enter the organization" value="{{old('organization')}}" required>   
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Category</label>
+          <div class="row">
+            <div class="col-lg-12">
+              <select id="category-id" name="category_id" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" required>
+
+                </select>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label>Theme</label>
+          <div class="row">
+            <div class="col-lg-12">
+              <select id="theme-id" name="theme_id[]" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" multiple="multiple" required>
+
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Picture</label>
+          <div class="row">
+            <div class="col-lg-12">
+              <input type="file" name="pic" accept="image/*" name="pic" id="pic">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label>Email 1</label>
+          <div class="row">
+            <div class="col-lg-12">
+              <input type="email" class="form-control" name="primary_email" id="primary-email" placeholder="please enter primary email" value="{{old('primary_email')}}" required>   
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email 2</label>
+          <div class="row">
+            <div class="col-lg-12">
+              <input type="email" class="form-control" name="secondary_email" id="secondary-email" placeholder="please enter secondary email" value="{{old('secondary_email')}}" >   
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Mobile</label>
+          <div class="row">
+            <div class="col-lg-12">
+              <input type="number" class="form-control" name="mobile" id="mobile" placeholder="please enter the mobile number" value="{{old('mobile')}}" required>   
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Phone/Landline</label>
+          <div class="row">
+            <div class="col-lg-12">
+              <input type="number" class="form-control" name="phone" id="phone" placeholder="please enter the phone number" value="{{old('phone')}}" >   
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Address</label>
+          <div class="row">
+            <div class="col-lg-12">
+              <textarea type="text" rows="4" class="form-control" name="address" id="address" placeholder="Please enter the address" value="{{old('address')}}" required>
+              
+            </textarea>
+            </div>
+          </div>
+        </div>
+
+
+
 
       </div>
+
+      <div class="modal-footer">
+        <div class="col-lg-12 entry_panel_body ">
+          <h3></h3>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      {!! Form::close() !!}
+
     </div>
   </div>
+</div>
 
 </section>
 <!-- /.content -->
@@ -122,7 +231,7 @@
 
      data = table.row( this ).data();
 
-     console.log(data);
+     console.log(data['id']);
 
      $("#edit-modal").modal('show');
 
@@ -131,10 +240,30 @@
 
 
     $('#theme-id').select2({
+      placeholder: 'Select an option',
+      ajax: {
+        dataType: 'json',
+        url: '{{URL::to('/')}}/pab_contacts/get_all_themes',
+        delay: 250,
+        data: function(params) {
+          return {
+            term: params.term
+          }
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          return {
+            results: data
+          };
+        },
+      }
+    });
+
+    $('#category-id').select2({
     placeholder: 'Select an option',
     ajax: {
       dataType: 'json',
-      url: '{{URL::to('/')}}/pab_contacts/get_all_themes',
+      url: '{{URL::to('/')}}/pab_contacts/get_all_catogies',
       delay: 250,
       data: function(params) {
         return {
