@@ -108,6 +108,21 @@
           </div>
         </div>
 
+        <div class="box-header with-border">
+              <h3 class="box-title">Themes</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="theme-table" class="table table-bordered">
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Id</th>
+                  <th>Name</th>
+                </tr>
+                <tr>
+                </tr>
+              </table>
+            </div>
 
         <div class="form-group">
           <label>Theme</label>
@@ -298,21 +313,23 @@
 
       $("#category-id").append(categoryOption).trigger('change');
 
+      $("#theme-table td").remove();
+
 
       var themes = object['theme_array'];
 
-      // console.log(themeOption);
+      var count = 1;
 
-      for (var i = 0; i < themes.length; i++) {
-        var $themeOption = $("<option></option>").val(themes[i]['id']).text(themes[i]['name']);
+      var trHTML = '';
 
-        $('#theme-id').append($themeOption).trigger('change');
+      for (var i = 0; i < themes.length; i++) { 
+        
+       trHTML += '<tr><td>' + count + '</td><td>' + themes[i]['id'] + '</td><td>' + themes[i]['name']+ '</td></tr>';
 
+       count++;
+     }
 
-      }
-
-
-      
+     $('#theme-table').append(trHTML);
 
 
 
