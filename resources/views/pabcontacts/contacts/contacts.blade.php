@@ -50,7 +50,7 @@
           <h3 class="modal-title">Details</h3>
         </div>
 
-        {!! Form::open(['method'=>'POST', 'action'=>['TimeSheetController@store'], 'id'=>'eidt-form']) !!}
+        {!! Form::open(array('id'=>'edit-form')) !!}
 
         <div class="modal-body">
 
@@ -339,6 +339,34 @@
      $("#edit-modal").modal('show');
 
    });
+
+
+  $( "#edit-form" ).submit(function( event ) {
+    // Stop form from submitting normally
+    
+    event.preventDefault();
+    
+    console.log("testing");
+
+    // var $form = $( this ),
+    // url = $form.attr( "action" );
+
+    // // Send the data using post
+    // var posting = $.post( url, $form.serialize() );
+    // // Put the results in a div
+    // posting.done(function( data ) {
+
+    //   $('#add-new-entry').modal('toggle');
+
+    //   // location.reload();
+    //   window.location.assign('{{URL::to('/')}}/timesheet/create');
+
+    // });
+
+    
+
+
+  });  
 
 
 
