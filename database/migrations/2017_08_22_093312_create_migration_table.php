@@ -16,6 +16,7 @@ class CreateMigrationTable extends Migration
         Schema::create('themes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->tinyInteger('valid')->default(1); // 1 = valid, 0 = invalid (basically deleted or not)
             $table->timestamps();
         });
     }

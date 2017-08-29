@@ -37,19 +37,19 @@ class ContactsController extends Controller
     public function get_all_contacts(){
         $query_contacts =  DB::table('contacts')->select(['id', 'name'])->get();
 
-       $contact_collection = collect($query_contacts);
+        $contact_collection = collect($query_contacts);
     // dd($reservation_collection);
-       return Datatables::of($contact_collection)
-       ->addColumn('action', function ($contact_collection) {
-        return 
+        return Datatables::of($contact_collection)
+        ->addColumn('action', function ($contact_collection) {
+            return 
 
-        ' <button type="submit" class="btn btn-primary btn-danger" ><i class="glyphicon   glyphicon-list"></i>Edit</button>';
-    })
-       ->editColumn('id', '{{$id}}')
-       ->setRowId('id')
-       ->make(true);
+            ' <button type="submit" class="btn btn-primary btn-danger" ><i class="glyphicon   glyphicon-list"></i>Edit</button>';
+        })
+        ->editColumn('id', '{{$id}}')
+        ->setRowId('id')
+        ->make(true);
 
-   }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -112,13 +112,14 @@ class ContactsController extends Controller
             'address' =>'required', 
             ]);
 
-
+        if(!empty($request->file('pic'))){
         // typing to save the path of the pic
-        $file = $request->file('pic');
+            $file = $request->file('pic');
 
-        $file_name = time() . $file->getClientOriginalName();
+            $file_name = time() . $file->getClientOriginalName();
 
-        $file->move('contacts/photos', $file_name);
+            $file->move('contacts/photos', $file_name);
+        }
 
 
         $contact =  new Contacts;
@@ -180,7 +181,7 @@ class ContactsController extends Controller
         $counter = 0;
 
         foreach ($contact_theme as $c_theme) {
-            
+
             $theme = ContactsTheme::where('id',$c_theme->theme_id)->first();
 
             $theme_array[$counter] = $theme;
@@ -198,6 +199,113 @@ class ContactsController extends Controller
         $final_array['theme_array'] = $theme_array;
 
         return json_encode($final_array);
+
+    }
+
+
+    public function contact_update(Request $request){
+
+        $contact_id = $request->person_id;
+
+        if(!empty($request->name)){
+
+            Contacts::where('id', $contact_id)
+            ->update(['name' => $request->name]);
+        }
+
+        if(!empty($request->designation)){
+
+            Contacts::where('id', $contact_id)
+            ->update(['designation' => $request->designation]);
+
+        }
+
+        if(!empty($request->organization)){
+
+            Contacts::where('id', $contact_id)
+            ->update(['organization' => $request->organization]);
+
+        }
+
+        if(!empty($request->category_id)){
+
+            Contacts::where('id', $contact_id)
+            ->update(['category_id' => $request->category_id]);
+
+        }
+
+        if(!empty($request->theme_id)){
+
+
+            $old_contact_theme = ContactThemePivot::where('contact_id',$contact_id)->get();
+
+            foreach ($old_contact_theme as $array) {
+
+                ContactThemePivot::where('id',$array->id)->delete();
+
+            }
+
+            $themes = $request->theme_id;
+
+            foreach ($themes as $theme) {
+
+                $contact_theme = new ContactThemePivot;
+
+                $contact_theme->contact_id = $contact_id;
+                $contact_theme->theme_id = $theme;
+
+                $contact_theme->save();
+            }
+            
+
+        }
+
+        if(!empty($request->primary_email)){
+
+            Contacts::where('id', $contact_id)
+            ->update(['email1' => $request->primary_email]);
+
+        }
+
+        if(!empty($request->secondary_email)){
+
+            Contacts::where('id', $contact_id)
+            ->update(['email2' => $request->secondary_email]);
+
+        }
+
+        if(!empty($request->mobile)){
+
+            Contacts::where('id', $contact_id)
+            ->update(['mobile' => $request->mobile]);
+
+        }
+
+        if(!empty($request->phone)){
+
+            Contacts::where('id', $contact_id)
+            ->update(['phone' => $request->phone]);
+
+        }
+
+        if(!empty($request->file('pic'))){
+
+            $file = $request->file('pic');
+
+            $file_name = time() . $file->getClientOriginalName();
+
+            $file->move('contacts/photos', $file_name);
+
+            Contacts::where('id', $contact_id)
+            ->update(['pic_path' => "/contacts/photos/{$file_name}"]);
+
+
+        }
+
+
+        return redirect()->action('ContactsController@index'); 
+
+
 
     }
 
@@ -235,7 +343,7 @@ class ContactsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd("working on it");
     }
 
     /**

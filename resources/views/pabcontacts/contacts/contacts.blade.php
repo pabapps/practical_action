@@ -50,7 +50,8 @@
           <h3 class="modal-title">Details</h3>
         </div>
 
-        {!! Form::open(array('id'=>'edit-form')) !!}
+        
+        {!! Form::open(array('url'=>'/pab_contacts/contact_update', 'id'=>'inventory-issue-form')) !!}
 
         <div class="modal-body">
 
@@ -66,6 +67,15 @@
                 <p class="text-muted text-center">Software Engineer</p>
               </div>
               <!-- /.box-body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group hidden">
+          <label>Id</label>
+          <div class="row">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" name="person_id" id="person-id" placeholder="please enter the name of the person" value="{{old('person_id')}}" required>   
             </div>
           </div>
         </div>
@@ -109,20 +119,20 @@
         </div>
 
         <div class="box-header with-border">
-              <h3 class="box-title">Themes</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="theme-table" class="table table-bordered">
-                <tr>
-                  <th style="width: 10px">#</th>
-                  <th>Id</th>
-                  <th>Name</th>
-                </tr>
-                <tr>
-                </tr>
-              </table>
-            </div>
+          <h3 class="box-title">Themes</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="theme-table" class="table table-bordered">
+            <tr>
+              <th style="width: 10px">#</th>
+              <th>Id</th>
+              <th>Name</th>
+            </tr>
+            <tr>
+            </tr>
+          </table>
+        </div>
 
         <div class="form-group">
           <label>Theme</label>
@@ -139,7 +149,7 @@
           <label>Picture</label>
           <div class="row">
             <div class="col-lg-12">
-              <input type="file" name="pic" accept="image/*" name="pic" id="pic">
+              <input type="file" name="pic" accept="image/*" id="pic">
             </div>
           </div>
         </div>
@@ -281,6 +291,8 @@
       "order": [[1, 'asc']]
     } );
 
+    var contact_id = -1;
+
 
     $('#contacts tbody').on( 'click', 'tr', function () {
 
@@ -294,8 +306,11 @@
 
       var object = JSON.parse(final_array);
 
-      var pic_path = "{{URL::to('/')}}"+object['contact']['pic_path'];      
+      contact_id = data['id'];
 
+      var pic_path = "{{URL::to('/')}}"+object['contact']['pic_path']; 
+
+      $("#person-id").val(data['id']);
       $("#person-pic").attr("src",pic_path);
       $("#name").val(object['contact']['name']);
       $("#designation").val(object['contact']['designation']);
@@ -323,7 +338,7 @@
       var trHTML = '';
 
       for (var i = 0; i < themes.length; i++) { 
-        
+
        trHTML += '<tr><td>' + count + '</td><td>' + themes[i]['id'] + '</td><td>' + themes[i]['name']+ '</td></tr>';
 
        count++;
@@ -331,42 +346,14 @@
 
      $('#theme-table').append(trHTML);
 
-
-
-
-    });
+   });
 
      $("#edit-modal").modal('show');
 
    });
 
 
-  $( "#edit-form" ).submit(function( event ) {
-    // Stop form from submitting normally
     
-    event.preventDefault();
-    
-    console.log("testing");
-
-    // var $form = $( this ),
-    // url = $form.attr( "action" );
-
-    // // Send the data using post
-    // var posting = $.post( url, $form.serialize() );
-    // // Put the results in a div
-    // posting.done(function( data ) {
-
-    //   $('#add-new-entry').modal('toggle');
-
-    //   // location.reload();
-    //   window.location.assign('{{URL::to('/')}}/timesheet/create');
-
-    // });
-
-    
-
-
-  });  
 
 
 

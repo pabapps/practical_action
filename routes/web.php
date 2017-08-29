@@ -250,6 +250,9 @@ Route::get('/pab_contacts/get_all_contacts','ContactsController@get_all_contacts
 
 Route::get('/pab_contacts/get_specific_contact','ContactsController@get_specific_contact');
 
+//posting the updates for the contacts
+Route::post('/pab_contacts/contact_update','ContactsController@contact_update');
+
 Route::resource('/pab_contacts','ContactsController');
 
 
