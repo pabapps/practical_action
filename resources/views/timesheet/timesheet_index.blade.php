@@ -110,7 +110,7 @@
           </tbody>
           <tfoot>
             <tr>
-              
+
             </tr>
           </tfoot>
         </table>
@@ -135,6 +135,47 @@
   <!-- /.box -->
 </section>
 
+<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title">Delete Option</h3>
+      </div>
+
+
+      {!! Form::open(array('url'=>'/timesheet/delete', 'id'=>'inventory-issue-form','method' => 'get')) !!}
+
+      <div class="modal-body">
+
+      <h1>Are you sure you want to delete?</h1>
+
+        <div class="form-group hidden">
+          <label>Id</label>
+          <div class="row">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" name="time_log_id" id="time-log-id" placeholder="please enter the name of the person" value="{{old('person_id')}}" required>   
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <div class="col-lg-12 entry_panel_body ">
+          <h3></h3>
+          <button type="submit" class="btn btn-primary">Delete</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      {!! Form::close() !!}
+
+    </div>
+  </div>
+</div>
+
 @if (count($errors) > 0)
 <div class="alert alert-danger">
   <ul>
@@ -155,132 +196,151 @@
 <script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
 <script src="{{asset('dist/js/utils.js')}}"></script>
 <script type="text/javascript">
-$( document ).ready(function() {
+  $( document ).ready(function() {
 
-  $('#start-date').datepicker({
-    autoclose: true
+    $('#start-date').datepicker({
+      autoclose: true
 
-  });
-  $('#end-date').datepicker({
-    autoclose: true
-
-  });
-
-  var table;
-
-  $( "#project-select-id" ).click(function() {
-
-    event.preventDefault();
-
-    var project_id = $('#project-id').val();
-
-    var start_date = $("#start-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
-
-    var end_date = $("#end-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
-
-    var start_date_1=  $("#start-date").datepicker('getDate');
-    var end_date_1=$("#end-date").datepicker('getDate');
-
-    
-    if(start_date=="" || end_date==""){
-      alert("please select a start date and an end date");
-      return;
-    }
-
-
-    if(calcDaysBetween(start_date_1, end_date_1) < 0){
-      alert('"start" date cannot be more than "end" date');
-      return;
-    }
-
-    if(project_id == -1){
-
-      alert("It looks like you have not been assigned any projects yet.");
-
-      return;
-
-    }else{
-
-      table = $('#time-sheet-log').DataTable( {
-        "processing": true,
-        "serverSide": true,
-        "bDestroy": true,
-        "paging": false,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "scrollX": true,
-        "bDestroy": true,
-        "ajax": "{{URL::to('/')}}/timesheet/project_details_for_timesheet/"+project_id+"/"+start_date+"/"+end_date,
-        "columns": [
-        { "data": "project_name" },
-        { "data": "date" },
-        { "data": "time_spent" },
-        { "data": "activity" }, 
-        { "data": "action", name: 'action', orderable: false, searchable: false}
-        ],
-        "order": [[1, 'asc']]
-      } );
-      
-
-
-    }
-
-  });
-
-
-  $( "#participant-form" ).submit(function(event){
-
-    event.preventDefault();
-
-    var array = [],count = 0;
-
-    if(table === undefined){
-
-      alert("please select a project first");
-
-      return;
-
-    }
-
-
-    table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-      var data = this.data();
-
-      array[count] = data['id'];
-
-      count++;
-      
+    });
+    $('#end-date').datepicker({
+      autoclose: true
 
     });
 
-    var $form = $( this ),
-    url = $form.attr( "action" ),
-    token = $("[name='_token']").val();
 
-    $.post( url, {'array_time_log':array, '_token': token }, function( data ) {
 
-    }).done(function() {
+    var table;
 
-      alert("your time sheet has been sent to your line manager!");
+    $( "#project-select-id" ).click(function() {
 
-      location.reload();
+      event.preventDefault();
+
+      var project_id = $('#project-id').val();
+
+      var start_date = $("#start-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
+
+      var end_date = $("#end-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
+
+      var start_date_1=  $("#start-date").datepicker('getDate');
+      var end_date_1=$("#end-date").datepicker('getDate');
+
+
+      if(start_date=="" || end_date==""){
+        alert("please select a start date and an end date");
+        return;
+      }
+
+
+      if(calcDaysBetween(start_date_1, end_date_1) < 0){
+        alert('"start" date cannot be more than "end" date');
+        return;
+      }
+
+      if(project_id == -1){
+
+        alert("It looks like you have not been assigned any projects yet.");
+
+        return;
+
+      }else{
+
+        table = $('#time-sheet-log').DataTable( {
+          "processing": true,
+          "serverSide": true,
+          "bDestroy": true,
+          "paging": false,
+          "lengthChange": true,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "scrollX": true,
+          "bDestroy": true,
+          "ajax": "{{URL::to('/')}}/timesheet/project_details_for_timesheet/"+project_id+"/"+start_date+"/"+end_date,
+          "columns": [
+          { "data": "project_name" },
+          { "data": "date" },
+          { "data": "time_spent" },
+          { "data": "activity" }, 
+          { "data": "action", name: 'action', orderable: false, searchable: false}
+          ],
+          "order": [[1, 'asc']]
+        } );
+
+
+
+      }
+
+    });
+
+    $('#time-sheet-log tbody').on( 'click', 'tr', function () {
+
+      var cell = table.cell( this );
+
+      data = table.row( this ).data();
+
+      console.log(data['id']);
+
+      $("#time-log-id").val(data['id']);
+
+      $("#edit-modal").modal('show');
+
+    });
+
+
+    $( "#participant-form" ).submit(function(event){
+
+      event.preventDefault();
+
+      var array = [],count = 0;
+
+      if(table === undefined){
+
+        alert("please select a project first");
+
+        return;
+
+      }
+
+
+      table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+        var data = this.data();
+
+        array[count] = data['id'];
+
+        count++;
+
+
+      });
+
+      var $form = $( this ),
+      url = $form.attr( "action" ),
+      token = $("[name='_token']").val();
+
+      $.post( url, {'array_time_log':array, '_token': token }, function( data ) {
+
+      }).done(function() {
+
+        alert("your time sheet has been sent to your line manager!");
+
+        location.reload();
 
       // window.location.assign('{{URL::to('/')}}/set_trainer');
     });
 
 
+    });
+
+
+
+
+
   });
 
 
-});
 
 
-
-
-  </script>
-  @endsection
+</script>
+@endsection
 
 

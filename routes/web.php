@@ -195,6 +195,9 @@ Route::get('/timesheet/get_recently_created_timesheet','TimeSheetController@get_
 //testing pdf
 Route::get('/timesheet/pdf','TimeSheetController@test_pdf');
 
+//route for deleting a time log
+Route::get('/timesheet/delete','TimeSheetController@delete');
+
 
 Route::resource('/timesheet','TimeSheetController');
 

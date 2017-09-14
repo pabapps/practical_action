@@ -109,7 +109,8 @@ class TimeSheetController extends Controller
             ' <a href="'. url('/timesheet') . '/' . 
             Crypt::encrypt($time_collection->id) . 
             '/edit' .'"' . 
-            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Details</a>';
+            'class="btn btn-primary btn-info"><i class="glyphicon   glyphicon-list"></i> Info</a>'.
+            ' <button type="submit" class="btn btn-primary btn-danger" ><i class="glyphicon "></i>Delete</button>';
         })
         ->editColumn('id', '{{$id}}')
         ->setRowId('id')
@@ -134,6 +135,20 @@ class TimeSheetController extends Controller
     $minutes  = floor($seconds/60);
     $seconds -= $minutes*60;
     return "{$hours}:{$minutes}:{$seconds}";
+}
+
+/**
+ * delete funtion
+ */
+
+public function delete(Request $request){
+
+    $time_sheet_id = $request->time_log_id;
+
+    UserTimeSheetModel::destroy($time_sheet_id);
+
+    return redirect()->back();
+
 }
 
     /**
@@ -293,7 +308,7 @@ class TimeSheetController extends Controller
                     'final_deducted_time'=>$final_deducted_time,
                     'project_id'=>$time_sheet->project_id
 
-                    );
+                );
 
                 $counter++;
 
@@ -312,9 +327,9 @@ class TimeSheetController extends Controller
 
             foreach ($final_array as $array) {
                 if($array['project_id'] == $u_project->project_id ){                   
-                 $missing_project_id = -1;
-                 break;
-             }else{
+                   $missing_project_id = -1;
+                   break;
+               }else{
                 $missing_project_id = $u_project->project_id;
 
             }
@@ -331,7 +346,7 @@ class TimeSheetController extends Controller
                 'final_deducted_time'=>'-',
                 'project_id'=>$u_project->project_id
 
-                );
+            );
 
 
         }
@@ -497,7 +512,7 @@ class TimeSheetController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return "testing";
     }
 
     /**
@@ -554,7 +569,7 @@ class TimeSheetController extends Controller
             // dispatch($jobs);
 
             // Log::info("Request Cycle with Queues Ends");
-        
+
 
         }
 
