@@ -97,6 +97,7 @@
         <table id="time-sheet-log" class="table table-bordered table-hover">
           <thead>
             <tr>
+              <th>Id</th>
               <th>Project Name</th>
               <th>Date</th>
               <th>Time</th>
@@ -253,20 +254,16 @@
 
           var object = JSON.parse(time_sheet_log);
 
-          console.log(object);
-
           for (var i = 0; i < object.length; i++) {
 
-
-            console.log(object[i].project_name);
-
             table.row.add( [
+              object[i].id,
               object[i].project_name,
               object[i].date,
               object[i].time_spent,
               object[i].activity,
               '<a href="{{URL::to('/')}}/timesheet/'+object[i].id+'/edit" class="btn btn-primary btn-info"><i class="glyphicon   glyphicon-list"></i> Info</a>'
-               + '<a href="{{URL::to('/')}}/timesheet/'+object[i].id+'/edit" class="btn btn-primary btn-danger"><i class="glyphicon"></i> Delete</a>'
+              + '<button class="btn btn-danger delete-button" id="' + '">Delete</button>'
               ] ).draw( false );
 
 
@@ -274,26 +271,44 @@
           }
 
         });
-
-
-
       }
 
     });
 
-    $('#time-sheet-log tbody').on( 'click', 'tr', function () {
+    //delete row on button click
+    $('#time-sheet-log tbody').on( 'click', '.delete-button', function () {
+    //get the index of 
+    var index = table
+    .row( $(this).parents('tr') )
+    .index();
 
-      var cell = table.cell( this );
+    alert("You sure you want to delete?");
 
-      data = table.row( this ).data();
+    var data = table.row( $(this ).parents('tr')).data();
 
-      console.log(data['id']);
+    console.log(data[0]);
 
-      $("#time-log-id").val(data['id']);
 
-      $("#edit-modal").modal('show');
 
-    });
+    table
+    .row( $(this).parents('tr') )
+    .remove()
+    .draw();
+  } );
+
+    // $('#time-sheet-log tbody').on( 'click', 'tr', function () {
+
+    //   var cell = table.cell( this );
+
+    //   data = table.row( this ).data();
+
+    //   console.log(data['id']);
+
+    //   $("#time-log-id").val(data['id']);
+
+    //   $("#edit-modal").modal('show');
+
+    // });
 
 
     $( "#participant-form" ).submit(function(event){
