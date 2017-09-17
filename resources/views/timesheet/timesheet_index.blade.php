@@ -286,8 +286,10 @@
 
     var data = table.row( $(this ).parents('tr')).data();
 
-    console.log(data[0]);
+    ///timesheet/delete
+    var jqxhr = $.get("{{URL::to('/')}}/timesheet/delete", {time_log_id: data[0] }, function(time_sheet_log){
 
+    });
 
 
     table
@@ -329,7 +331,7 @@
       table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
         var data = this.data();
 
-        array[count] = data['id'];
+        array[count] = data[0];
 
         count++;
 

@@ -150,6 +150,7 @@ class TimeSheetController extends Controller
 
 public function delete(Request $request){
 
+
     $time_sheet_id = $request->time_log_id;
 
     UserTimeSheetModel::destroy($time_sheet_id);
