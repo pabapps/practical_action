@@ -150,7 +150,7 @@
 
       <div class="modal-body">
 
-      <h1>Are you sure you want to delete?</h1>
+        <h1>Are you sure you want to delete?</h1>
 
         <div class="form-group hidden">
           <label>Id</label>
@@ -209,7 +209,7 @@
 
 
 
-    var table;
+    var table = table = $('#time-sheet-log').DataTable({});
 
     $( "#project-select-id" ).click(function() {
 
@@ -244,28 +244,18 @@
 
       }else{
 
-        table = $('#time-sheet-log').DataTable( {
-          "processing": true,
-          "serverSide": true,
-          "bDestroy": true,
-          "paging": false,
-          "lengthChange": true,
-          "searching": true,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false,
-          "scrollX": true,
-          "bDestroy": true,
-          "ajax": "{{URL::to('/')}}/timesheet/project_details_for_timesheet/"+project_id+"/"+start_date+"/"+end_date,
-          "columns": [
-          { "data": "project_name" },
-          { "data": "date" },
-          { "data": "time_spent" },
-          { "data": "activity" }, 
-          { "data": "action", name: 'action', orderable: false, searchable: false}
-          ],
-          "order": [[1, 'asc']]
-        } );
+        console.log("working on it");
+
+
+        table.clear().draw();
+
+        var jqxhr = $.get("{{URL::to('/')}}/timesheet/project_details_for_timesheet", {project_id: project_id ,start_date: start_date,end_date:end_date }, function(time_sheet_log){
+
+          var object = JSON.parse(time_sheet_log);
+
+          console.log(object);
+
+        });
 
 
 

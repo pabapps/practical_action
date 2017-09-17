@@ -67,9 +67,15 @@ class TimeSheetController extends Controller
      * the data to the manager
      */
 
-    public function project_details_for_timesheet(Request $request,$id,$start_date,$end_date){
+    public function project_details_for_timesheet(Request $request){
 
         $user = AUTH::user();
+
+        $id = $request->project_id;
+
+        $start_date = $request->start_date;
+
+        $end_date = $request->end_date;
 
         $time_sheet_log = "";
 
@@ -99,22 +105,23 @@ class TimeSheetController extends Controller
         }
 
         // dd($time_sheet_log);
+        return json_encode($time_sheet_log);
 
-        $time_collection = collect($time_sheet_log);
+        // $time_collection = collect($time_sheet_log);
     // dd($reservation_collection);
-        return Datatables::of($time_collection)
-        ->addColumn('action', function ($time_collection) {
-            return 
+        // return Datatables::of($time_collection)
+        // ->addColumn('action', function ($time_collection) {
+        //     return 
 
-            ' <a href="'. url('/timesheet') . '/' . 
-            Crypt::encrypt($time_collection->id) . 
-            '/edit' .'"' . 
-            'class="btn btn-primary btn-info"><i class="glyphicon   glyphicon-list"></i> Info</a>'.
-            ' <button type="submit" class="btn btn-primary btn-danger" ><i class="glyphicon "></i>Delete</button>';
-        })
-        ->editColumn('id', '{{$id}}')
-        ->setRowId('id')
-        ->make(true);
+        //     ' <a href="'. url('/timesheet') . '/' . 
+        //     Crypt::encrypt($time_collection->id) . 
+        //     '/edit' .'"' . 
+        //     'class="btn btn-primary btn-info"><i class="glyphicon   glyphicon-list"></i> Info</a>'.
+        //     ' <button type="submit" class="btn btn-primary btn-danger" ><i class="glyphicon "></i>Delete</button>';
+        // })
+        // ->editColumn('id', '{{$id}}')
+        // ->setRowId('id')
+        // ->make(true);
 
 
 
