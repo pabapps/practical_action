@@ -255,6 +255,24 @@
 
           console.log(object);
 
+          for (var i = 0; i < object.length; i++) {
+
+
+            console.log(object[i].project_name);
+
+            table.row.add( [
+              object[i].project_name,
+              object[i].date,
+              object[i].time_spent,
+              object[i].activity,
+              '<a href="{{URL::to('/')}}/timesheet/'+object[i].id+'/edit" class="btn btn-primary btn-info"><i class="glyphicon   glyphicon-list"></i> Info</a>'
+               + '<a href="{{URL::to('/')}}/timesheet/'+object[i].id+'/edit" class="btn btn-primary btn-danger"><i class="glyphicon"></i> Delete</a>'
+              ] ).draw( false );
+
+
+
+          }
+
         });
 
 
