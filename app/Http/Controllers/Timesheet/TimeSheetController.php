@@ -58,44 +58,12 @@ class TimeSheetController extends Controller
     /**
      * fetching all the relavent timesheet info/log that the user had entered for this project but didnot submit
      * the data to the manager
+     for the page timeLog route: {http://localhost/practical_action/public/timesheet}
      */
 
     public function project_details_for_timesheet(Request $request){
 
-        $user = AUTH::user();
-
-        $id = $request->project_id;
-
-        $start_date = $request->start_date;
-
-        $end_date = $request->end_date;
-
-        $time_sheet_log = "";
-
-        $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->toDateString();
-        $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
-
-        if($id=="all"){
-
-            $time_sheet_log = DB::table('time_sheet_user')
-            ->join('projects','projects.id','=','time_sheet_user.project_id')
-            ->select('time_sheet_user.id','projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
-            ->where('time_sheet_user.user_id',$user->id)
-            ->where('time_sheet_user.sent_to_manager',0)
-            ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();            
-
-        }else{
-
-            $time_sheet_log = DB::table('time_sheet_user')
-            ->join('projects','projects.id','=','time_sheet_user.project_id')
-            ->select('time_sheet_user.id','projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
-            ->where('time_sheet_user.user_id',$user->id)
-            ->where('time_sheet_user.project_id',$id)
-            ->where('time_sheet_user.sent_to_manager',0)
-            ->whereBetween('time_sheet_user.date',[$start_date,$end_date])
-            ->get();
-
-        }
+       $time_sheet_log = helpForIndex::help_project_details_for_timesheet($request);
 
         // dd($time_sheet_log);
         return json_encode($time_sheet_log);
