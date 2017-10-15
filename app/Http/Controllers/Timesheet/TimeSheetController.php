@@ -108,24 +108,6 @@ class TimeSheetController extends Controller
         // dd($time_sheet_log);
         return json_encode($time_sheet_log);
 
-    //     $time_collection = collect($time_sheet_log);
-    // dd($reservation_collection);
-    //     return Datatables::of($time_collection)
-    //     ->addColumn('action', function ($time_collection) {
-    //         return 
-
-    //         ' <a href="'. url('/timesheet') . '/' . 
-    //         Crypt::encrypt($time_collection->id) . 
-    //         '/edit' .'"' . 
-    //         'class="btn btn-primary btn-info"><i class="glyphicon   glyphicon-list"></i> Info</a>'.
-    //         ' <button type="submit" class="btn btn-primary btn-danger" ><i class="glyphicon "></i>Delete</button>';
-    //     })
-    //     ->editColumn('id', '{{$id}}')
-    //     ->setRowId('id')
-    //     ->make(true);
-
-
-
     }
 
     function sum_the_time($time1, $time2) {
@@ -336,9 +318,9 @@ public function delete(Request $request){
 
             foreach ($final_array as $array) {
                 if($array['project_id'] == $u_project->project_id ){                   
-                   $missing_project_id = -1;
-                   break;
-               }else{
+                 $missing_project_id = -1;
+                 break;
+             }else{
                 $missing_project_id = $u_project->project_id;
 
             }
@@ -871,14 +853,7 @@ public function delete(Request $request){
         $time_collection = collect($time_sheet_log);
     // dd($reservation_collection);
         return Datatables::of($time_collection)
-        ->addColumn('action', function ($time_collection) {
-            return 
 
-            ' <a href="'. url('/timesheet') . '/' . 
-            Crypt::encrypt($time_collection->id) . 
-            '/edit' .'"' . 
-            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Details</a>';
-        })
         ->editColumn('id', '{{$id}}')
         ->setRowId('id')
         ->make(true);

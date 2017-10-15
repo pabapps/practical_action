@@ -66,7 +66,6 @@
               <th>Date</th>
               <th>Time</th>
               <th>Activity</th>
-              <th>Options</th>
             </tr>
           </thead>
           <tbody>
@@ -174,7 +173,7 @@ $('#search_form').submit(function( event ){
       { "data": "date" },
       { "data": "time_spent" },
       { "data": "activity" },
-      { "data": "action", name: 'action', orderable: false, searchable: false}
+     
       ],
       "order": [[1, 'asc']]
     } );
