@@ -141,65 +141,65 @@ Route::resource('/departments','DepartmentController');
 /**
  * route for time sheet
  */
-Route::get('/timesheet/project_details_for_timesheet','TimeSheetController@project_details_for_timesheet');
+Route::get('/timesheet/project_details_for_timesheet','Timesheet\TimeSheetController@project_details_for_timesheet');
 
 //route for sending time log for the porjects to their respective line manager
-Route::post('/timesheet/send_to_linemanager','TimeSheetController@send_to_linemanager');
+Route::post('/timesheet/send_to_linemanager','Timesheet\TimeSheetController@send_to_linemanager');
 
 //route for displaying the line manager page
 
-Route::get('/timesheet/display_line_manager','TimeSheetController@display_line_manager');
+Route::get('/timesheet/display_line_manager','Timesheet\TimeSheetController@display_line_manager');
 
 //when the line manager sends the time log to the accounts manager
-Route::post('/timesheet/submit_to_accounts_manager','TimeSheetController@submit_to_accounts_manager');
+Route::post('/timesheet/submit_to_accounts_manager','Timesheet\TimeSheetController@submit_to_accounts_manager');
 
-Route::get('/timesheet/lineManager_to_accountManager','TimeSheetController@lineManager_to_accountManager');
+Route::get('/timesheet/lineManager_to_accountManager','Timesheet\TimeSheetController@lineManager_to_accountManager');
 
 //getting the details of the timesheet that has been sent to accounts from line manager
 Route::get('/timesheet/lineManager_to_accountManager/old_records/{id}/{start_date}/{end_date}',
-	'TimeSheetController@old_records_for_line_managers');
+	'Timesheet\TimeSheetController@old_records_for_line_managers');
 
-Route::post('/timesheet/linemanager_refer_back_subordinate','TimeSheetController@line_manager_refering_subordinates');
+Route::post('/timesheet/linemanager_refer_back_subordinate','Timesheet\TimeSheetController@line_manager_refering_subordinates');
 
 //route for gethering the users who have submitted their time sheet to their line managers
-Route::get('/timesheet/get_submitted_users','TimeSheetController@get_submitted_users');
+Route::get('/timesheet/get_submitted_users','Timesheet\TimeSheetController@get_submitted_users');
 
-Route::get('/timesheet/time_log_for_submitted_users/{id}/{start_date}/{end_date}','TimeSheetController@time_log_for_submitted_users');
+Route::get('/timesheet/time_log_for_submitted_users/{id}/{start_date}/{end_date}','Timesheet\TimeSheetController@time_log_for_submitted_users');
 
 //previous/submitted time logs for the users
-Route::get('/timesheet/old_time_logs_users','TimeSheetController@old_time_logs_users');
+Route::get('/timesheet/old_time_logs_users','Timesheet\TimeSheetController@old_time_logs_users');
 
 //details of the previous time log for the user
 Route::get('/timesheet/previous_details_time_log_users/{start_date}/{end_date}',
-	'TimeSheetController@previous_details_time_log_users');
+	'Timesheet\TimeSheetController@previous_details_time_log_users');
 
 //route for accounts manager, the data that line manager sends to the accounts manager 
-Route::get('/timesheet/time_log_accounts_display','TimeSheetController@time_log_accounts_display');
+Route::get('/timesheet/time_log_accounts_display','Timesheet\TimeSheetController@time_log_accounts_display');
 
 Route::get('/timesheet/details_for_accounts_manager/{id}/{start_date}/{end_date}',
-	'TimeSheetController@details_for_accounts_manager');
+	'Timesheet\TimeSheetController@details_for_accounts_manager');
 
 //if accoutns manager wants to edit the time sheet
-Route::get('/timesheet/{id}/edit_by_accounts','TimeSheetController@edit_by_accounts');
+Route::get('/timesheet/{id}/edit_by_accounts','Timesheet\TimeSheetController@edit_by_accounts');
 
 //accounts manager sending the tiemsheet back the line manager for correction
-Route::post('/timesheet/accounts_manager_refer_back_to_line_manager','TimeSheetController@accounts_manager_refer_back_to_line_manager');
+Route::post('/timesheet/accounts_manager_refer_back_to_line_manager','Timesheet\TimeSheetController@accounts_manager_refer_back_to_line_manager');
 
 //route for sending the timesheet for reporting
-Route::post('/timesheet/sending_timesheet_for_reporting','TimeSheetController@sending_timesheet_for_reporting');
+Route::post('/timesheet/sending_timesheet_for_reporting','Timesheet\TimeSheetController@sending_timesheet_for_reporting');
 
 //route for the ajax request 
-Route::get('/timesheet/get_recently_created_timesheet','TimeSheetController@get_recently_created_timesheet');
+Route::get('/timesheet/get_recently_created_timesheet','Timesheet\TimeSheetController@get_recently_created_timesheet');
 
 
 //testing pdf
-Route::get('/timesheet/pdf','TimeSheetController@test_pdf');
+Route::get('/timesheet/pdf','Timesheet\TimeSheetController@test_pdf');
 
 //route for deleting a time log
-Route::get('/timesheet/delete','TimeSheetController@delete');
+Route::get('/timesheet/delete','Timesheet\TimeSheetController@delete');
 
 
-Route::resource('/timesheet','TimeSheetController');
+Route::resource('/timesheet','Timesheet\TimeSheetController');
 
 
 /**

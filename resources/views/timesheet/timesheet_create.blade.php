@@ -143,7 +143,7 @@
           <h3 class="modal-title">create new time sheet entry</h3>
         </div>
 
-        {!! Form::open(['method'=>'POST', 'action'=>['TimeSheetController@store'], 'id'=>'time-sheet-form']) !!}
+        {!! Form::open(['method'=>'POST', 'action'=>['Timesheet\TimeSheetController@store'], 'id'=>'time-sheet-form']) !!}
 
         <div class="modal-body">
           <div class="form-group" >
