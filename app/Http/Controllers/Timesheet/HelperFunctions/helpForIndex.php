@@ -24,8 +24,21 @@ use Log;
 
  class helpForIndex{
 
+ 	 //selecting the projects that this user has been assigned
+ 	public static function help_index(){
+
+ 		$user = Auth::user();
+ 		
+ 		$project_list = DB::table('users_projects_connection')
+        ->join('projects','projects.id','=','users_projects_connection.project_id')
+        ->select('users_projects_connection.project_id','projects.project_name')
+        ->where('users_projects_connection.user_id',$user->id)
+        ->where('users_projects_connection.valid',1)
+        ->get();
+
+        return $project_list;
+
+ 	}
 
 
-
- 	
  }

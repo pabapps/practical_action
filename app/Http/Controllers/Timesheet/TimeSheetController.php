@@ -22,6 +22,9 @@ use App\Jobs\SendEmail;
 use Carbon\Carbon;
 use Log;
 
+
+use App\Http\Controllers\Timesheet\HelperFunctions\helpForIndex;
+
 class TimeSheetController extends Controller
 {
     /**
@@ -36,20 +39,9 @@ class TimeSheetController extends Controller
     }
 
     public function index()
-    {
+    {   
 
-        //user info
-        $user = Auth::user();
-
-        //selecting the projects that this user has been assigned
-        $project_list = DB::table('users_projects_connection')
-        ->join('projects','projects.id','=','users_projects_connection.project_id')
-        ->select('users_projects_connection.project_id','projects.project_name')
-        ->where('users_projects_connection.user_id',$user->id)
-        ->where('users_projects_connection.valid',1)
-        ->get();
-
-
+        $project_list = helpForIndex::help_index();
         //checking if the are any projects that has been assigned to this user or not
         //if not then just show the page
 
