@@ -498,12 +498,12 @@ public function delete(Request $request){
         if($location==1){
 
             $request->session()->flash('alert-success', 'data has been successfully updated!');
-            return redirect()->action('TimeSheetController@index'); 
+            return redirect()->action('Timesheet\TimeSheetController@index'); 
 
         }else{
 
             $request->session()->flash('alert-success', 'data has been successfully updated!');
-            return redirect()->action('TimeSheetController@time_log_accounts_display');
+            return redirect()->action('Timesheet\TimeSheetController@time_log_accounts_display');
 
         }
 
