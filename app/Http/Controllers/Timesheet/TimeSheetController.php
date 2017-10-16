@@ -61,16 +61,16 @@ class TimeSheetController extends Controller
      for the page timeLog route: {http://localhost/practical_action/public/timesheet}
      */
 
-    public function project_details_for_timesheet(Request $request){
+     public function project_details_for_timesheet(Request $request){
 
-       $time_sheet_log = helpForIndex::help_project_details_for_timesheet($request);
+         $time_sheet_log = helpForIndex::help_project_details_for_timesheet($request);
 
         // dd($time_sheet_log);
-        return json_encode($time_sheet_log);
+         return json_encode($time_sheet_log);
 
-    }
+     }
 
-    function sum_the_time($time1, $time2) {
+     function sum_the_time($time1, $time2) {
       $times = array($time1, $time2);
       $seconds = 0;
       foreach ($times as $time)
@@ -112,8 +112,6 @@ public function delete(Request $request){
 
     	$user = Auth::user();
 
-        // dd("working");
-
 
     	/**
     	 * user id, name and designation 
@@ -136,14 +134,14 @@ public function delete(Request $request){
 
         }
 
+        //selecting all the projects that this current user has been assigned
+
         $user_projects = DB::table('users_projects_connection')
         ->join('projects','projects.id', '=','users_projects_connection.project_id')
         ->select('projects.project_name','users_projects_connection.project_id','users_projects_connection.allocated_time',
           'users_projects_connection.allocated_days')
         ->where('users_projects_connection.user_id',$user->id)
         ->where('users_projects_connection.valid',1)->get();
-
-        // dd($user_projects);
 
         /**
          * use time sheet details
@@ -190,8 +188,7 @@ public function delete(Request $request){
             }
         }
 
-        // dd($array);
-
+        
         //calculating the time, conveting days or the percentage into hours and mins
 
         $final_array = array();
@@ -226,6 +223,7 @@ public function delete(Request $request){
                 
                 $seconds = ($days * 8 * 3600);
 
+                //subtracting the total accumulated time from the given initial given time to get the remaining time 
 
                 $deducted_seconds = $seconds - $user_seconds;
 
@@ -278,9 +276,9 @@ public function delete(Request $request){
 
             foreach ($final_array as $array) {
                 if($array['project_id'] == $u_project->project_id ){                   
-                 $missing_project_id = -1;
-                 break;
-             }else{
+                   $missing_project_id = -1;
+                   break;
+               }else{
                 $missing_project_id = $u_project->project_id;
 
             }
@@ -302,15 +300,13 @@ public function delete(Request $request){
 
         }
 
-        $time_sheet_log = DB::table('time_sheet_user')
-        ->join('projects','projects.id','=','time_sheet_user.project_id')
-        ->select('time_sheet_user.id','projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
-        ->where('time_sheet_user.user_id',$user->id)
-        ->where('time_sheet_user.sent_to_manager',0)->get();
-
-
-
     }
+
+    $time_sheet_log = DB::table('time_sheet_user')
+    ->join('projects','projects.id','=','time_sheet_user.project_id')
+    ->select('time_sheet_user.id','projects.project_name','time_sheet_user.date','time_sheet_user.activity','time_sheet_user.time_spent')
+    ->where('time_sheet_user.user_id',$user->id)
+    ->where('time_sheet_user.sent_to_manager',0)->get();
 
     if(count($final_array)>0) {
         return view('timesheet.timesheet_create')->with('user_projects',$user_projects)->with('user_info',$user_info[0])
