@@ -45,6 +45,9 @@ Route::post('/user/submit_porjects','UsersController@submit_projects');
 //route for selecting the existing projects for the users
 Route::get('/user/user_connected_project','UsersController@user_connected_project'); 
 
+//modal submit request from use
+Route::post('/user/modal_designation','UsersController@modal_designation');
+
 Route::resource('/users','UsersController');
 
 

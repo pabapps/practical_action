@@ -184,6 +184,16 @@
 
   </div>
   {!! Form::close() !!}
+
+  <button type="submit" data-toggle="modal" class="btn bg-purple btn-flat margin" data-target="#add-new-entry">Add new entry</button>
+
+  <div id="app">
+    <testing>
+      
+    </testing>
+  </div>
+
+
   <!-- /.box-body -->
   <div class="form-group">
    @if (count($errors) > 0)
@@ -215,6 +225,7 @@
 <script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{asset('js/app.js')}}"></script>
 <script type="text/javascript">
 
   $( document ).ready(function() {
