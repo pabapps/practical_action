@@ -32,6 +32,17 @@
 								<!-- /.input group -->
 							</div>
 
+							<div class="form-group">
+								<label>New Line Manager</label>
+								<select class="js-example-basic-multiple " name="states[]" multiple="multiple">
+									<option value="AL">Alabama</option>
+									...
+									<option value="WY">Wyoming</option>
+								</select>
+
+								
+							</div>
+
 						</div>
 
 						<div class="modal-footer">
@@ -63,6 +74,8 @@ export default {
 		});
 
 		$("#entry-date").datepicker('setDate', new Date());
+
+		$('.js-example-basic-multiple').select2();
 	},
 
 	data () {

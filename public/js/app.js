@@ -1974,6 +1974,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -1988,6 +1999,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		});
 
 		$("#entry-date").datepicker('setDate', new Date());
+
+		$('.js-example-basic-multiple').select2();
 	},
 	data: function data() {
 		return {};
@@ -2011,7 +2024,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(33)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 33 */
@@ -2453,7 +2466,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-body"
   }, [_c('div', {
     staticClass: "form-group"
-  }, [_c('label', [_vm._v("Previous Line Manager")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.line_manager_name))])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _vm._m(2)])])])])])
+  }, [_c('label', [_vm._v("Previous Line Manager")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.line_manager_name))])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _vm._m(3)])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header",
@@ -2493,6 +2506,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "entry-date"
     }
   })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("New Line Manager")]), _vm._v(" "), _c('select', {
+    staticClass: "js-example-basic-multiple ",
+    attrs: {
+      "name": "states[]",
+      "multiple": "multiple"
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "AL"
+    }
+  }, [_vm._v("Alabama")]), _vm._v("\n\t\t\t\t\t\t\t\t...\n\t\t\t\t\t\t\t\t"), _c('option', {
+    attrs: {
+      "value": "WY"
+    }
+  }, [_vm._v("Wyoming")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-footer"
