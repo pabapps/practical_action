@@ -16,11 +16,8 @@
 
 						<div class="modal-body">
 							<div class="form-group" >
-								<label>Project Name</label>
-								<select id="project-name-modal" name="project_name_modal"  class="form-control " >
-
-
-								</select>
+								<label>Previous Line Manager</label>
+								<p>{{line_manager_name}}</p>
 							</div>
 
 							<div class="form-group">
@@ -56,6 +53,9 @@
 export default {
 
 	name: 'userEdit',
+
+	props:['line_manager_id','line_manager_name'],
+
 	mounted() {
 		$('#entry-date').datepicker({
 			autoclose: true

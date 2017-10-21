@@ -188,24 +188,34 @@
   <button type="submit" data-toggle="modal" class="btn bg-purple btn-flat margin" data-target="#add-new-entry">Add new entry</button>
 
   <div id="app">
-    <testing>
+    
+
+      @if(isset($user->line_manager_id))
+
+      <testing line_manager_id="{{$line_manager->id}}"  line_manager_name="{{$line_manager->name}}">
+
+        
+      </testing>
+      @else
+      <testing></testing>
+      @endif
       
-    </testing>
-  </div>
+
+    </div>
 
 
-  <!-- /.box-body -->
-  <div class="form-group">
-   @if (count($errors) > 0)
-   <div class="alert alert-danger">
-    <ul>
-      @foreach ($errors->all() as $error)
-      <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-  @endif
-</div>      
+    <!-- /.box-body -->
+    <div class="form-group">
+     @if (count($errors) > 0)
+     <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+    @endif
+  </div>      
 </div>
 <!-- /.box -->
 
@@ -337,7 +347,7 @@
       var trHTML = '';
 
       for (var i = 0; i < object.length; i++) { 
-        
+
        trHTML += '<tr><td>' + count + '</td><td>' + object[i].name + '</td><td>' + object[i].description+ '</td></tr>';
 
        count++;

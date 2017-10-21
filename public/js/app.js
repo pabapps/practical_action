@@ -1974,13 +1974,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
 	name: 'userEdit',
+
+	props: ['line_manager_id', 'line_manager_name'],
+
 	mounted: function mounted() {
 		$('#entry-date').datepicker({
 			autoclose: true
@@ -2449,7 +2449,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.onSubmit($event)
       }
     }
-  }, [_vm._m(1), _vm._v(" "), _vm._m(2)])])])])])
+  }, [_c('div', {
+    staticClass: "modal-body"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Previous Line Manager")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.line_manager_name))])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _vm._m(2)])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header",
@@ -2473,16 +2477,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("create new time sheet entry")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "modal-body"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', [_vm._v("Project Name")]), _vm._v(" "), _c('select', {
-    staticClass: "form-control ",
-    attrs: {
-      "id": "project-name-modal",
-      "name": "project_name_modal"
-    }
-  })]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', [_vm._v("Date:")]), _vm._v(" "), _c('div', {
     staticClass: "input-group date"
@@ -2498,7 +2492,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "data-date-format": "dd-mm-yyyy",
       "id": "entry-date"
     }
-  })])])])
+  })])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-footer"
