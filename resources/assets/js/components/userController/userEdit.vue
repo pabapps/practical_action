@@ -16,8 +16,13 @@
 
 						<div class="modal-body">
 							<div class="form-group" >
-								<label>Previous Line Manager</label>
+								<label>Previous Line Manager A</label>
 								<p>{{line_manager_name}}</p>
+							</div>
+
+							<div class="form-group" >
+								<label>Vue select2 library</label>
+								<v-select :value.sync="selected" :options="options"></v-select>
 							</div>
 
 							<div class="form-group">
@@ -80,7 +85,8 @@ export default {
 
 	data () {
 		return {
-
+			selected: null,
+			options: ['foo','bar','baz']
 		};
 	},
 	methods:{
