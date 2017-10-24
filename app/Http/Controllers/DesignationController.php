@@ -157,8 +157,10 @@ class DesignationController extends Controller
 
         // dd($users);
 
-        return response()->json($users);
+        // return response()->json($users);
 
+        return json_encode($users);
+        // return $users;
     }
 
 

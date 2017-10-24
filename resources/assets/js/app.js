@@ -17,13 +17,17 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
-Vue.component('testing', require('./components/userController/userEdit.vue'));
+ Vue.component('example', require('./components/Example.vue'));
+ Vue.component('testing', require('./components/userController/userEdit.vue'));
+ 
 
-import Vue from 'vue'
-import vSelect from 'vue-select'
-Vue.component('v-select', vSelect)
+ import Vue from 'vue'
+ import vSelect from 'vue-select'
+ Vue.component('v-select', vSelect)
 
-const app = new Vue({
-    el: '#app'
-});
+ var VueResource = require('vue-resource');
+ Vue.use(VueResource)
+
+ const app = new Vue({
+ 	el: '#app'
+ });

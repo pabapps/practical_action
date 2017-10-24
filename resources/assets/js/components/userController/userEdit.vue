@@ -17,12 +17,17 @@
 						<div class="modal-body">
 							<div class="form-group" >
 								<label>Previous Line Manager A</label>
-								<p>{{line_manager_name}}</p>
+								
 							</div>
 
 							<div class="form-group" >
 								<label>Vue select2 library</label>
-								<v-select :value.sync="selected" :options="options"></v-select>
+								<v-select
+								:on-search="getOptions"
+								:options="options"
+								label="text"
+								
+								></v-select>
 							</div>
 
 							<div class="form-group">
@@ -66,6 +71,7 @@
 </template>
 
 <script>
+
 export default {
 
 	name: 'userEdit',
@@ -86,12 +92,13 @@ export default {
 	data () {
 		return {
 			selected: null,
-			options: ['foo','bar','baz']
+			options: [],
+			name_to: ""
 		};
 	},
 	methods:{
 		onSubmit(){
-			console.log("testing");
+
 
 			axios.post('/user/modal_designation', {
 
@@ -104,6 +111,39 @@ export default {
 			});
 
 
+		},
+
+		getOptions(search, loading) {
+			this.name_to = "asdas";
+
+			loading(true)
+			this.$http.get('/select2/select2_all_designations', {
+				term: search
+			}).then(users => {
+				this.options = users.body;
+				loading(false);
+
+				console.log(this.options);
+			})
+
+			// this.$http.get('/select2/select2_all_designations', {
+			// 	term: search
+			// }).then(users => {
+			// 	// console.log(resp.data[0].id);
+			// 	var testing = JSON.parse(users);
+
+			// 	console.log(testing);
+
+			// 	for(var key in users.data){
+			// 		// console.log(resp.data[key].text);
+			// 		this.options[users.data[key].id] = users.data[key].text;
+			// 	}
+			// 	console.log(this.options);
+
+
+			// 	// this.options = resp.data.items
+			// 	loading(false)
+			// })
 		}
 	}
 };
