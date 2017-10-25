@@ -12577,6 +12577,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -12597,17 +12599,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	data: function data() {
 		return {
-			selected: '',
+			selected: [],
 			options: [],
 			name_to: ""
 		};
 	},
 
 	methods: {
+		consoleCallback: function consoleCallback(val) {
+
+			this.name_to = val.id;
+
+			console.log(val.id);
+		},
 		onSubmit: function onSubmit() {
 
 			axios.post('/user/modal_designation', {
-				firstName: selected
+				firstName: this.name_to
 			}).then(function (response) {
 				console.log(response);
 			}).catch(function (error) {
@@ -12616,8 +12624,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		getOptions: function getOptions(search, loading) {
 			var _this = this;
-
-			this.name_to = "asdas";
 
 			loading(true);
 			this.$http.get('/select2/select2_all_designations', {
@@ -12656,7 +12662,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(34)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 34 */
@@ -13101,6 +13107,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('label', [_vm._v("Vue select2 library")]), _vm._v(" "), _c('v-select', {
     attrs: {
       "on-search": _vm.getOptions,
+      "on-change": _vm.consoleCallback,
       "options": _vm.options,
       "label": "text"
     }

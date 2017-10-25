@@ -24,8 +24,10 @@
 								<label>Vue select2 library</label>
 								<v-select 
 								:on-search="getOptions"
+								:on-change="consoleCallback"
 								:options="options"
 								label="text"
+
 								
 								></v-select>
 							</div>
@@ -91,17 +93,25 @@ export default {
 
 	data () {
 		return {
-			selected: '',
+			selected: [],
 			options: [],
 			name_to: ""
 		};
 	},
 	methods:{
+
+		consoleCallback(val) {
+			
+			this.name_to = val.id;
+			
+			console.log(val.id);
+		},
+
 		onSubmit(){
 
 
 			axios.post('/user/modal_designation', {
-				 firstName: selected,
+				firstName: this.name_to
 			})
 			.then(function (response) {
 				console.log(response);
@@ -113,8 +123,11 @@ export default {
 
 		},
 
+
+
+
 		getOptions(search, loading) {
-			this.name_to = "asdas";
+			
 
 			loading(true)
 			this.$http.get('/select2/select2_all_designations', {
