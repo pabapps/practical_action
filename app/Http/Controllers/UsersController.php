@@ -573,7 +573,7 @@ class UsersController extends Controller
      * testing out the axios request
      */
     public function modal_designation(Request $request){
-        dd("working on it");
+        dd($request->all());
     }
 
 

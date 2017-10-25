@@ -22,7 +22,7 @@
 
 							<div class="form-group" >
 								<label>Vue select2 library</label>
-								<v-select
+								<v-select 
 								:on-search="getOptions"
 								:options="options"
 								label="text"
@@ -91,7 +91,7 @@ export default {
 
 	data () {
 		return {
-			selected: null,
+			selected: '',
 			options: [],
 			name_to: ""
 		};
@@ -101,7 +101,7 @@ export default {
 
 
 			axios.post('/user/modal_designation', {
-
+				 firstName: selected,
 			})
 			.then(function (response) {
 				console.log(response);

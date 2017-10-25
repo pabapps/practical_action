@@ -12597,7 +12597,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	data: function data() {
 		return {
-			selected: null,
+			selected: '',
 			options: [],
 			name_to: ""
 		};
@@ -12606,7 +12606,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	methods: {
 		onSubmit: function onSubmit() {
 
-			axios.post('/user/modal_designation', {}).then(function (response) {
+			axios.post('/user/modal_designation', {
+				firstName: selected
+			}).then(function (response) {
 				console.log(response);
 			}).catch(function (error) {
 				console.log(error);
