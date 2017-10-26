@@ -12568,24 +12568,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
 	name: 'userEdit',
 
-	props: ['line_manager_id', 'line_manager_name'],
+	props: ['user_designation_id', 'designation_name'],
 
 	mounted: function mounted() {
 		$('#entry-date').datepicker({
@@ -12595,13 +12584,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 		$("#entry-date").datepicker('setDate', new Date());
 
-		$('.js-example-basic-multiple').select2();
+		this.date = $("#entry-date").val();
 	},
 	data: function data() {
 		return {
 			selected: [],
 			options: [],
-			name_to: ""
+			name_to: "",
+			showModal: false,
+			date: ""
 		};
 	},
 
@@ -12615,9 +12606,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		onSubmit: function onSubmit() {
 
 			axios.post('/user/modal_designation', {
-				firstName: this.name_to
+				old_designation: this.user_designation_id,
+				new_designation: this.name_to,
+				date: this.date
 			}).then(function (response) {
 				console.log(response);
+				// location.reload();
 			}).catch(function (error) {
 				console.log(error);
 			});
@@ -12662,7 +12656,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(34)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 34 */
@@ -13102,16 +13096,86 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "modal-body"
-  }, [_vm._m(1), _vm._v(" "), _c('div', {
+  }, [_c('div', {
     staticClass: "form-group"
-  }, [_c('label', [_vm._v("Vue select2 library")]), _vm._v(" "), _c('v-select', {
+  }, [_c('label', [_vm._v("Old Designation")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.designation_name),
+      expression: "designation_name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "readonly": ""
+    },
+    domProps: {
+      "value": (_vm.designation_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.designation_name = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("New Designation")]), _vm._v(" "), _c('v-select', {
     attrs: {
       "on-search": _vm.getOptions,
       "on-change": _vm.consoleCallback,
       "options": _vm.options,
       "label": "text"
     }
-  })], 1), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3)]), _vm._v(" "), _vm._m(4)])])])])])
+  })], 1), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Date:")]), _vm._v(" "), _c('div', {
+    staticClass: "input-group date"
+  }, [_vm._m(1), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.date),
+      expression: "date"
+    }],
+    staticClass: "form-control pull-right",
+    attrs: {
+      "type": "text",
+      "name": "entry_date",
+      "data-date-format": "dd-mm-yyyy",
+      "id": "entry-date"
+    },
+    domProps: {
+      "value": (_vm.date)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.date = $event.target.value
+      }
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_c('div', {
+    staticClass: "col-lg-12 entry_panel_body "
+  }, [_c('h3'), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Submit")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal"
+    },
+    on: {
+      "close": function($event) {
+        _vm.showModal = false
+      }
+    }
+  }, [_vm._v("Close")])])])])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header",
@@ -13135,61 +13199,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("create new time sheet entry")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', [_vm._v("Previous Line Manager A")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', [_vm._v("Date:")]), _vm._v(" "), _c('div', {
-    staticClass: "input-group date"
-  }, [_c('div', {
     staticClass: "input-group-addon"
   }, [_c('i', {
     staticClass: "fa fa-calendar"
-  })]), _vm._v(" "), _c('input', {
-    staticClass: "form-control pull-right",
-    attrs: {
-      "type": "text",
-      "name": "entry_date",
-      "data-date-format": "dd-mm-yyyy",
-      "id": "entry-date"
-    }
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', [_vm._v("New Line Manager")]), _vm._v(" "), _c('select', {
-    staticClass: "js-example-basic-multiple ",
-    attrs: {
-      "name": "states[]",
-      "multiple": "multiple"
-    }
-  }, [_c('option', {
-    attrs: {
-      "value": "AL"
-    }
-  }, [_vm._v("Alabama")]), _vm._v("\n\t\t\t\t\t\t\t\t...\n\t\t\t\t\t\t\t\t"), _c('option', {
-    attrs: {
-      "value": "WY"
-    }
-  }, [_vm._v("Wyoming")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "modal-footer"
-  }, [_c('div', {
-    staticClass: "col-lg-12 entry_panel_body "
-  }, [_c('h3'), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary",
-    attrs: {
-      "type": "submit"
-    }
-  }, [_vm._v("Submit")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-default",
-    attrs: {
-      "type": "button",
-      "data-dismiss": "modal"
-    }
-  }, [_vm._v("Close")])])])
+  })])
 }]}
 module.exports.render._withStripped = true
 if (false) {

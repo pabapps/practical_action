@@ -192,7 +192,7 @@
 
       @if(isset($user->line_manager_id))
 
-      <testing line_manager_id="{{$line_manager->id}}"  line_manager_name="{{$line_manager->name}}">
+      <testing user_designation_id="{{$user_designation->id}}"  designation_name="{{$user_designation->position_name}}">
 
         
       </testing>

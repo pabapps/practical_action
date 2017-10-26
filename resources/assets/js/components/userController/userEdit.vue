@@ -11,17 +11,17 @@
 					</div>
 					
 
-					<form method="POST" @submit.prevent="onSubmit">
+					<form method="POST" @submit.prevent="onSubmit" >
 
 
 						<div class="modal-body">
 							<div class="form-group" >
-								<label>Previous Line Manager A</label>
-								
+								<label>Old Designation</label>
+								<input type="text" class="form-control" v-model="designation_name" readonly>
 							</div>
 
 							<div class="form-group" >
-								<label>Vue select2 library</label>
+								<label>New Designation</label>
 								<v-select 
 								:on-search="getOptions"
 								:on-change="consoleCallback"
@@ -39,20 +39,9 @@
 									<div class="input-group-addon">
 										<i class="fa fa-calendar"></i>
 									</div>
-									<input type="text" class="form-control pull-right" name="entry_date" data-date-format="dd-mm-yyyy" id="entry-date" >
+									<input type="text" class="form-control pull-right" name="entry_date" data-date-format="dd-mm-yyyy" id="entry-date" v-model="date">
 								</div>
 								<!-- /.input group -->
-							</div>
-
-							<div class="form-group">
-								<label>New Line Manager</label>
-								<select class="js-example-basic-multiple " name="states[]" multiple="multiple">
-									<option value="AL">Alabama</option>
-									...
-									<option value="WY">Wyoming</option>
-								</select>
-
-								
 							</div>
 
 						</div>
@@ -60,8 +49,8 @@
 						<div class="modal-footer">
 							<div class="col-lg-12 entry_panel_body ">
 								<h3></h3>
-								<button type="submit" class="btn btn-primary">Submit</button>
-								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary" >Submit</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal" @close="showModal = false">Close</button>
 							</div>
 						</div>
 
@@ -78,7 +67,7 @@ export default {
 
 	name: 'userEdit',
 
-	props:['line_manager_id','line_manager_name'],
+	props:['user_designation_id','designation_name'],
 
 	mounted() {
 		$('#entry-date').datepicker({
@@ -88,14 +77,16 @@ export default {
 
 		$("#entry-date").datepicker('setDate', new Date());
 
-		$('.js-example-basic-multiple').select2();
+		this.date = $("#entry-date").val();
 	},
 
 	data () {
 		return {
 			selected: [],
 			options: [],
-			name_to: ""
+			name_to: "",
+			showModal: false,
+			date:""
 		};
 	},
 	methods:{
@@ -111,10 +102,13 @@ export default {
 
 
 			axios.post('/user/modal_designation', {
-				firstName: this.name_to
+				old_designation : this.user_designation_id,
+				new_designation: this.name_to,
+				date: this.date
 			})
 			.then(function (response) {
 				console.log(response);
+				// location.reload();
 			})
 			.catch(function (error) {
 				console.log(error);
