@@ -12574,7 +12574,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	name: 'userEdit',
 
-	props: ['user_designation_id', 'designation_name'],
+	props: ['user_designation_id', 'designation_name', "user_id"],
 
 	mounted: function mounted() {
 		$('#entry-date').datepicker({
@@ -12601,17 +12601,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			this.name_to = val.id;
 
-			console.log(val.id);
+			// console.log(val.id);
 		},
 		onSubmit: function onSubmit() {
 
 			axios.post('/user/modal_designation', {
 				old_designation: this.user_designation_id,
 				new_designation: this.name_to,
-				date: this.date
+				date: this.date,
+				user_id: this.user_id
 			}).then(function (response) {
 				console.log(response);
-				// location.reload();
+				location.reload();
 			}).catch(function (error) {
 				console.log(error);
 			});
@@ -12656,7 +12657,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(34)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 34 */

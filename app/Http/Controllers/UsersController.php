@@ -573,7 +573,33 @@ class UsersController extends Controller
      * testing out the axios request
      */
     public function modal_designation(Request $request){
-        dd($request->all());
+        
+        $old_designation = $request->old_designation;
+
+        $new_designation = $request->new_designation;
+
+        $date = $request->date;
+
+        $user_id = $request->user_id;
+
+        DB::table('user_designation_connection')
+            ->where('designation_id', $old_designation)
+            ->where('user_id',$user_id)
+            ->update(['valid' => 0,'end_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
+
+        $updated_designation = new UserDesignationModel;
+
+        $updated_designation->designation_id = $new_designation;
+
+        $updated_designation->user_id = $user_id;
+
+        $updated_designation->valid = 1;
+
+        $updated_designation->start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString();
+
+        $updated_designation->save();
+
+        dd("done");
     }
 
 

@@ -67,7 +67,7 @@ export default {
 
 	name: 'userEdit',
 
-	props:['user_designation_id','designation_name'],
+	props:['user_designation_id','designation_name',"user_id"],
 
 	mounted() {
 		$('#entry-date').datepicker({
@@ -95,7 +95,7 @@ export default {
 			
 			this.name_to = val.id;
 			
-			console.log(val.id);
+			// console.log(val.id);
 		},
 
 		onSubmit(){
@@ -104,11 +104,12 @@ export default {
 			axios.post('/user/modal_designation', {
 				old_designation : this.user_designation_id,
 				new_designation: this.name_to,
-				date: this.date
+				date: this.date,
+				user_id : this.user_id
 			})
 			.then(function (response) {
 				console.log(response);
-				// location.reload();
+				location.reload();
 			})
 			.catch(function (error) {
 				console.log(error);
