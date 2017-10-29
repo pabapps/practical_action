@@ -148,8 +148,12 @@ class UsersController extends Controller
 
             $user_designation = Designation::where('id',$user_designation_connection->designation_id)->first();
 
+            $start_date = $user_designation_connection->start_date;
+
+            $date = date("d-m-Y", strtotime($start_date));
+
             return view('users.user_edit')->with('user',$user)->with('date',$date)->with('matrix_manager',$matrix_manager)
-            ->with('line_manager',$line_manager)->with('user_designation',$user_designation);
+            ->with('line_manager',$line_manager)->with('user_designation',$user_designation)->with('user_designation_date',$date);
         }else{
 
             return view('users.user_edit')->with('user',$user)->with('date',$date)->with('matrix_manager',$matrix_manager)
@@ -168,7 +172,7 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
 
         if(!empty($request->skip_line_manager)){
             $user = User::where('id',$id)->update(['byPass_line_manger'=>1]);
@@ -263,7 +267,10 @@ class UsersController extends Controller
 
 
         //updating user designation
-        if(!empty($request->designation)){
+        if(!empty($request->designation) && !empty($request->designation_changed_date)){
+
+
+            $date = $request->designation_changed_date;
 
 
             $user_designation = UserDesignationModel::where('user_id',$id)->where('valid',1)->first();
@@ -276,11 +283,12 @@ class UsersController extends Controller
                 //and create a new designation
                 if($user_designation->designation_id != $request->designation){
 
-                    $designation = UserDesignationModel::where('user_id',$id)->update(['valid'=>0]);
+                    $designation = UserDesignationModel::where('user_id',$id)->update(['valid'=>0,'end_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
 
                     $designation = new UserDesignationModel;
                     $designation->user_id = $id;
                     $designation->designation_id = $request->designation;
+                    $designation->start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString();
                     $designation->valid=1 ;
 
                     $designation->save();
@@ -289,7 +297,7 @@ class UsersController extends Controller
 
             }else{
 
-                
+
 
                 //if old data does not exist, create a designation for this user
 
@@ -297,6 +305,7 @@ class UsersController extends Controller
                 $designation->user_id = $id;
                 $designation->designation_id = $request->designation;
                 $designation->valid=1 ;
+                $designation->start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString();
 
                 $designation->save();
 
@@ -305,48 +314,52 @@ class UsersController extends Controller
 
             
 
-        }
+        }else{
+          $request->session()->flash('alert-danger', 'please enter the necessary fields properly');
+
+          return redirect()->back();
+      }
 
         //updating the joining date
 
-        if(!empty($request->joining_date)){
+      if(!empty($request->joining_date)){
 
-            $user = User::where('id',$id)->update(['joining_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $request->joining_date)->toDateString()]);
+        $user = User::where('id',$id)->update(['joining_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $request->joining_date)->toDateString()]);
 
-        }
+    }
 
         //creating the roles of an user
-        if(!empty($request->role_id)){
+    if(!empty($request->role_id)){
 
             //removing any previous roles
-            DB::table('role_user')->where('user_id', '=',$id)->delete();
+        DB::table('role_user')->where('user_id', '=',$id)->delete();
 
-            $roles = $request->role_id;
+        $roles = $request->role_id;
 
             //saving the new roles
 
-            foreach ($roles as $role) {
+        foreach ($roles as $role) {
 
-                $role_object = Role::where('id',$role)->first();
+            $role_object = Role::where('id',$role)->first();
 
-                $user = User::findOrFail($id);
+            $user = User::findOrFail($id);
 
-                $user->attachRole($role_object); 
-
-            }
-
-
+            $user->attachRole($role_object); 
 
         }
 
 
-        $request->session()->flash('alert-success', 'data has been updated');
+
+    }
+
+
+    $request->session()->flash('alert-success', 'data has been updated');
 
         // return redirect()->back();
 
-        return redirect()->action('UsersController@index');
+    return redirect()->action('UsersController@index');
 
-    }
+}
 
     /**
      * creating/edting user projects
@@ -573,7 +586,7 @@ class UsersController extends Controller
      * testing out the axios request
      */
     public function modal_designation(Request $request){
-        
+
         $old_designation = $request->old_designation;
 
         $new_designation = $request->new_designation;
@@ -583,9 +596,9 @@ class UsersController extends Controller
         $user_id = $request->user_id;
 
         DB::table('user_designation_connection')
-            ->where('designation_id', $old_designation)
-            ->where('user_id',$user_id)
-            ->update(['valid' => 0,'end_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
+        ->where('designation_id', $old_designation)
+        ->where('user_id',$user_id)
+        ->update(['valid' => 0,'end_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
 
         $updated_designation = new UserDesignationModel;
 

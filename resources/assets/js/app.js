@@ -20,6 +20,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  Vue.component('example', require('./components/Example.vue'));
  Vue.component('testing', require('./components/userController/userEdit.vue'));
  
+ 
 
  import Vue from 'vue'
  import vSelect from 'vue-select'

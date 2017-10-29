@@ -1,4 +1,11 @@
     @extends('layout.main')
+    @section('styles')
+
+
+    <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker-bs3.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/datepicker/datepicker3.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
+    @endsection
     @section('content')
 
     <section class="content">
@@ -53,6 +60,22 @@
               <option value='{{$user_designation->id}}' selected>{{$user_designation->position_name}}</option>
               @endif
             </select>
+          </div>
+
+          <div class="form-group">
+            <label>Designation Changed Date:</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              @if(isset($user_designation_date))
+              <input type="text" class="form-control pull-right" name="designation_changed_date" data-date-format="dd-mm-yyyy" id="designation-changed-date"  value="{{$user_designation_date}}" >
+              @else
+              <input type="text" class="form-control pull-right" name="designation_changed_date" data-date-format="dd-mm-yyyy" id="designation-changed-date"  value="{{user_designation_date}}" >
+              @endif
+            </div>
+            <!-- /.input group -->
           </div>
 
 
@@ -185,37 +208,21 @@
   </div>
   {!! Form::close() !!}
 
-  <button type="submit" data-toggle="modal" class="btn bg-purple btn-flat margin" data-target="#add-new-entry">Add new entry</button>
-
-  <div id="app">
-    
-
-      @if(isset($user->line_manager_id))
-
-      <testing user_designation_id="{{$user_designation->id}}"  designation_name="{{$user_designation->position_name}}" user_id="{{$user->id}}">
-
-        
-      </testing>
-      @else
-      <testing></testing>
-      @endif
-      
-
-    </div>
+ 
 
 
-    <!-- /.box-body -->
-    <div class="form-group">
-     @if (count($errors) > 0)
-     <div class="alert alert-danger">
-      <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-    @endif
-  </div>      
+  <!-- /.box-body -->
+  <div class="form-group">
+   @if (count($errors) > 0)
+   <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+  @endif
+</div>      
 </div>
 <!-- /.box -->
 
@@ -242,6 +249,11 @@
 
 
     $('#joining-date').datepicker({
+      autoclose: true
+
+    });
+
+    $('#designation-changed-date').datepicker({
       autoclose: true
 
     });
