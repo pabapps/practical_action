@@ -209,7 +209,7 @@ $( document ).ready(function() {
         "processing": true,
         "serverSide": true,
         "bDestroy": true,
-        "paging": true,
+        "paging": false,
         "lengthChange": true,
         "searching": true,
         "ordering": true,
@@ -254,7 +254,7 @@ $( document ).ready(function() {
 
       array[count] = data['id'];
 
-      console.log(data['id']);
+      // console.log(data['id']);
 
       count++;
       
@@ -308,8 +308,6 @@ $( document ).ready(function() {
       var data = this.data();
 
       array[count] = data['id'];
-
-      console.log(data['id']);
 
       count++;
       
