@@ -15,6 +15,9 @@ use App\Projects;
 use Entrust;
 use PDF;
 
+
+use App\Http\Controllers\Timesheet\HelperFunctions\helperForTimeSheetReport;
+
 class TimeSheetReportController extends Controller
 {
     /**
@@ -255,7 +258,7 @@ public function get_user_projects(Request $request){
 
         $user_project = $request->user_projects;
 
-        // dd($user_project);
+        helperForTimeSheetReport::get_designation_for_report($user_id,$start_date,$end_date);
         //calculating the number of days between two date range
 
         $day1 = strtotime($start_date);
