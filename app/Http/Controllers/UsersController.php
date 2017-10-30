@@ -269,7 +269,6 @@ class UsersController extends Controller
         //updating user designation
         if(!empty($request->designation) && !empty($request->designation_changed_date)){
 
-
             $date = $request->designation_changed_date;
 
 
@@ -293,11 +292,15 @@ class UsersController extends Controller
 
                     $designation->save();
 
+                }else{
+
+                    //if the data matches that means the old user_desgnationa and the requested 
+                    //designation is the same. Therefore, just updating the start_date in the database
+
+                     $designation = UserDesignationModel::where('user_id',$id)->where('designation_id',$user_designation->designation_id)->update(['start_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
                 }
 
             }else{
-
-
 
                 //if old data does not exist, create a designation for this user
 
