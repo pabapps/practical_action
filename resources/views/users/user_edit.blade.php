@@ -72,7 +72,7 @@
               @if(isset($user_designation_date))
               <input type="text" class="form-control pull-right" name="designation_changed_date" data-date-format="dd-mm-yyyy" id="designation-changed-date"  value="{{$user_designation_date}}" >
               @else
-              <input type="text" class="form-control pull-right" name="designation_changed_date" data-date-format="dd-mm-yyyy" id="designation-changed-date"  value="{{user_designation_date}}" >
+              <input type="text" class="form-control pull-right" name="designation_changed_date" data-date-format="dd-mm-yyyy" id="designation-changed-date"  value="" >
               @endif
             </div>
             <!-- /.input group -->

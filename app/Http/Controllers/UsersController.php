@@ -152,6 +152,8 @@ class UsersController extends Controller
 
             $designation_date = date("d-m-Y", strtotime($start_date));
 
+            // dd($designation_date);
+
             return view('users.user_edit')->with('user',$user)->with('date',$date)->with('matrix_manager',$matrix_manager)
             ->with('line_manager',$line_manager)->with('user_designation',$user_designation)->with('user_designation_date',$designation_date);
         }else{
@@ -289,7 +291,7 @@ class UsersController extends Controller
 
                  //another small check to make sure that the new date has to be greated than the old designation date
 
-                 if($date>$old_designation_date){
+                 if(strtotime($date)>strtotime($old_designation_date)){
                     $designation = UserDesignationModel::where('user_id',$id)->update(['valid'=>0,'end_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
 
                     $designation = new UserDesignationModel;
