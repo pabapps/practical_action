@@ -150,10 +150,10 @@ class UsersController extends Controller
 
             $start_date = $user_designation_connection->start_date;
 
-            $date = date("d-m-Y", strtotime($start_date));
+            $designation_date = date("d-m-Y", strtotime($start_date));
 
             return view('users.user_edit')->with('user',$user)->with('date',$date)->with('matrix_manager',$matrix_manager)
-            ->with('line_manager',$line_manager)->with('user_designation',$user_designation)->with('user_designation_date',$date);
+            ->with('line_manager',$line_manager)->with('user_designation',$user_designation)->with('user_designation_date',$designation_date);
         }else{
 
             return view('users.user_edit')->with('user',$user)->with('date',$date)->with('matrix_manager',$matrix_manager)
