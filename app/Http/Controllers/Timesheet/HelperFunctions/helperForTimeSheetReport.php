@@ -29,7 +29,10 @@ class helperForTimeSheetReport {
 
 	public static function get_designation_for_report($user_id, $start_date, $end_date){
 		
-		dd($user_id);
+		$user_designation = UserDesignationModel::where('user_id',$user_id)->get();
+
+		dd($user_designation);
+
 
 
 	}

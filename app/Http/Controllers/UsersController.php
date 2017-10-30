@@ -282,6 +282,14 @@ class UsersController extends Controller
                 //and create a new designation
                 if($user_designation->designation_id != $request->designation){
 
+
+                 $old_designation_date = date_create($user_designation->start_date);
+
+                 $old_designation_date = date_format($old_designation_date, "d-m-Y");
+
+                 //another small check to make sure that the new date has to be greated than the old designation date
+
+                 if($date>$old_designation_date){
                     $designation = UserDesignationModel::where('user_id',$id)->update(['valid'=>0,'end_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
 
                     $designation = new UserDesignationModel;
@@ -291,76 +299,83 @@ class UsersController extends Controller
                     $designation->valid=1 ;
 
                     $designation->save();
-
                 }else{
 
-                    //if the data matches that means the old user_desgnationa and the requested 
-                    //designation is the same. Therefore, just updating the start_date in the database
+                    $request->session()->flash('alert-danger', 'please set the date properly! It cannot be smaller than the previous date');
 
-                     $designation = UserDesignationModel::where('user_id',$id)->where('designation_id',$user_designation->designation_id)->update(['start_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
+                    return redirect()->back();
+
                 }
 
             }else{
 
+                    //if the data matches that means the old user_desgnationa and the requested 
+                    //designation is the same. Therefore, just updating the start_date in the database
+
+             $designation = UserDesignationModel::where('user_id',$id)->where('designation_id',$user_designation->designation_id)->update(['start_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
+         }
+
+     }else{
+
                 //if old data does not exist, create a designation for this user
 
-                $designation = new UserDesignationModel;
-                $designation->user_id = $id;
-                $designation->designation_id = $request->designation;
-                $designation->valid=1 ;
-                $designation->start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString();
+        $designation = new UserDesignationModel;
+        $designation->user_id = $id;
+        $designation->designation_id = $request->designation;
+        $designation->valid=1 ;
+        $designation->start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString();
 
-                $designation->save();
+        $designation->save();
 
 
-            }
+    }
 
-            
 
-        }else{
-          $request->session()->flash('alert-danger', 'please enter the necessary fields properly');
 
-          return redirect()->back();
-      }
+}else{
+  $request->session()->flash('alert-danger', 'please enter the necessary fields properly');
+
+  return redirect()->back();
+}
 
         //updating the joining date
 
-      if(!empty($request->joining_date)){
+if(!empty($request->joining_date)){
 
-        $user = User::where('id',$id)->update(['joining_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $request->joining_date)->toDateString()]);
+    $user = User::where('id',$id)->update(['joining_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $request->joining_date)->toDateString()]);
 
-    }
+}
 
         //creating the roles of an user
-    if(!empty($request->role_id)){
+if(!empty($request->role_id)){
 
             //removing any previous roles
-        DB::table('role_user')->where('user_id', '=',$id)->delete();
+    DB::table('role_user')->where('user_id', '=',$id)->delete();
 
-        $roles = $request->role_id;
+    $roles = $request->role_id;
 
             //saving the new roles
 
-        foreach ($roles as $role) {
+    foreach ($roles as $role) {
 
-            $role_object = Role::where('id',$role)->first();
+        $role_object = Role::where('id',$role)->first();
 
-            $user = User::findOrFail($id);
+        $user = User::findOrFail($id);
 
-            $user->attachRole($role_object); 
-
-        }
-
-
+        $user->attachRole($role_object); 
 
     }
 
 
-    $request->session()->flash('alert-success', 'data has been updated');
+
+}
+
+
+$request->session()->flash('alert-success', 'data has been updated');
 
         // return redirect()->back();
 
-    return redirect()->action('UsersController@index');
+return redirect()->action('UsersController@index');
 
 }
 
