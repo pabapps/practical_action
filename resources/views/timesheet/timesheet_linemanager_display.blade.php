@@ -88,6 +88,7 @@
         <table id="time-sheet-log" class="table table-bordered table-hover">
           <thead>
             <tr>
+              <th>Id</th>
               <th>Project Name</th>
               <th>Date</th>
               <th>Time</th>
@@ -159,209 +160,209 @@
 <script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
 <script src="{{asset('dist/js/utils.js')}}"></script>
 <script type="text/javascript">
-$( document ).ready(function() {
+  $( document ).ready(function() {
 
-  $('#start-date').datepicker({
-    autoclose: true
+    $('#start-date').datepicker({
+      autoclose: true
 
-  });
-  $('#end-date').datepicker({
-    autoclose: true
+    });
+    $('#end-date').datepicker({
+      autoclose: true
 
-  });
+    });
 
 
-  $('#user-id').select2({
-    placeholder: 'Select an option',
-    ajax: {
-      dataType: 'json',
-      url: '{{URL::to('/')}}/timesheet/get_submitted_users',
-      delay: 250,
-      data: function(params) {
-        return {
-          term: params.term
+    $('#user-id').select2({
+      placeholder: 'Select an option',
+      ajax: {
+        dataType: 'json',
+        url: '{{URL::to('/')}}/timesheet/get_submitted_users',
+        delay: 250,
+        data: function(params) {
+          return {
+            term: params.term
+          }
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          return {
+            results: data
+          };
+        },
+      }
+    });
+
+    var table = $('#time-sheet-log').DataTable( {});
+
+    $( "#user-select-id" ).click(function() {
+
+      event.preventDefault();
+
+      var user_id = $('#user-id').val();
+
+
+      var start_date = $("#start-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
+
+      var end_date = $("#end-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
+
+      var start_date_1=  $("#start-date").datepicker('getDate');
+      var end_date_1=$("#end-date").datepicker('getDate');
+
+
+      if(start_date=="" || end_date==""){
+        alert("please select a start date and an end date");
+        return;
+      }
+
+
+      if(calcDaysBetween(start_date_1, end_date_1) < 0){
+        alert('"start" date cannot be more than "end" date');
+        return;
+      }
+
+      if(user_id == null ){
+
+        alert("OPS! please select an user and the month.");
+
+        return;
+
+      }else{
+
+       table.clear().draw();
+
+       var jqxhr = $.get("{{URL::to('/')}}/timesheet/time_log_for_submitted_users", {user_id: user_id ,start_date: start_date,end_date:end_date }, function(time_sheet_log){
+
+        var object = JSON.parse(time_sheet_log);
+
+        for (var i = 0; i < object.length; i++) {
+
+          table.row.add( [
+            object[i].id,
+            object[i].project_name,
+            object[i].date,
+            object[i].time_spent,
+            object[i].activity,
+            '<a href="{{URL::to('/')}}/timesheet/'+object[i].id+'/edit" class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Details</a>'
+            ] ).draw( false );
+
+
+
         }
-      },
-      processResults: function (data, params) {
-        params.page = params.page || 1;
-        return {
-          results: data
-        };
-      },
-    }
-  });
 
-  var table;
+      });
 
-  $( "#user-select-id" ).click(function() {
+     }
 
-    event.preventDefault();
-
-    var user_id = $('#user-id').val();
-
-    
-    var start_date = $("#start-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
-
-    var end_date = $("#end-date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
-
-    var start_date_1=  $("#start-date").datepicker('getDate');
-    var end_date_1=$("#end-date").datepicker('getDate');
-
-    
-    if(start_date=="" || end_date==""){
-      alert("please select a start date and an end date");
-      return;
-    }
+   });
 
 
-    if(calcDaysBetween(start_date_1, end_date_1) < 0){
-      alert('"start" date cannot be more than "end" date');
-      return;
-    }
+    $( "#participant-form" ).submit(function(event){
 
-    if(user_id == null ){
+      event.preventDefault();
 
-      alert("OPS! please select an user and the month.");
+      var array = [],count = 0;
 
-      return;
+      if(table === undefined){
 
-    }else{
+        alert("please fill the table first");
 
-      table = $('#time-sheet-log').DataTable( {
-        "processing": true,
-        "serverSide": true,
-        "bDestroy": true,
-        "paging": false,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "scrollX": true,
-        "ajax": "{{URL::to('/')}}/timesheet/time_log_for_submitted_users/"+user_id+"/"+start_date+"/"+end_date,
-        "columns": [
-        { "data": "project_name" },
-        { "data": "date" },
-        { "data": "time_spent" },
-        { "data": "activity" },
-        { "data": "action", name: 'action', orderable: false, searchable: false}
-        ],
-        "order": [[1, 'asc']]
-      } );
-      
+        return;
+
+      }
 
 
-    }
+      table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+        var data = this.data();
 
-  });
+        array[count] = data[0];
 
-
-  $( "#participant-form" ).submit(function(event){
-
-    event.preventDefault();
-
-    var array = [],count = 0;
-
-    if(table === undefined){
-
-      alert("please fill the table first");
-
-      return;
-
-    }
+        count++;
 
 
-    table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-      var data = this.data();
+      });
 
-      array[count] = data['id'];
 
-      count++;
-      
+      var $form = $( this ),
+      url = $form.attr( "action" ),
+      token = $("[name='_token']").val();
+
+      $.post( url, {'array_time_log':array, '_token': token }, function( data ) {
+
+      }).done(function() {
+
+        // alert("your time sheet has been sent to the accounts manager!");
+
+        // location.reload();
+
+
+      });
 
     });
 
-    var $form = $( this ),
-    url = $form.attr( "action" ),
-    token = $("[name='_token']").val();
 
-    $.post( url, {'array_time_log':array, '_token': token }, function( data ) {
+    $( "#reverse-form" ).submit(function(event){
 
-    }).done(function() {
+      event.preventDefault();
 
-      alert("your time sheet has been sent to the accounts manager!");
+      var array = [],count = 0;
 
-      location.reload();
+      if(table === undefined){
 
-      
+        alert("please fill the table first");
+
+        return;
+
+      }
+
+
+      table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+        var data = this.data();
+
+        array[count] = data['id'];
+
+        count++;
+
+
+      });
+
+      if(count==0){
+        alert("sorry!! you cananot submit the table without any data");
+        return;
+      }
+
+      var $form = $( this ),
+      url = $form.attr( "action" ),
+      token = $("[name='_token']").val();
+
+      $.post( url, {'array_time_log':array, '_token': token }, function( data ) {
+
+      }).done(function() {
+
+        alert("The time sheet has been sent back for correction!");
+
+        location.reload();
+
+
+      });
+
     });
 
-  });
 
 
-  $( "#reverse-form" ).submit(function(event){
-
-    event.preventDefault();
-
-    var array = [],count = 0;
-
-    if(table === undefined){
-
-      alert("please fill the table first");
-
-      return;
-
-    }
 
 
-    table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-      var data = this.data();
 
-      array[count] = data['id'];
 
-      count++;
-      
 
-    });
 
-    if(count==0){
-      alert("sorry!! you cananot submit the table without any data");
-      return;
-    }
 
-    var $form = $( this ),
-    url = $form.attr( "action" ),
-    token = $("[name='_token']").val();
-
-    $.post( url, {'array_time_log':array, '_token': token }, function( data ) {
-
-    }).done(function() {
-
-      alert("The time sheet has been sent back for correction!");
-
-      location.reload();
-
-      
-    });
 
   });
 
 
 
 
-
-
-
-
-
-
-
-});
-
-
-
-
-  </script>
-  @endsection
+</script>
+@endsection
 
 

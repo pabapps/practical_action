@@ -75,4 +75,12 @@ class helperForTimeSheetReport {
 
 	}
 
+
+	public static function check_month($start_date, $end_date){
+
+		$date_string = explode("-",$start_date);
+
+		// dd($date_string);
+	}
+
 }

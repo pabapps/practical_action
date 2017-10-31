@@ -567,10 +567,12 @@ public function delete(Request $request){
      * by the sub ordinates view(timesheet_linemanager)
      */
     
-    public function time_log_for_submitted_users($id,$start_date,$end_date){
+    public function time_log_for_submitted_users(Request $request){
 
-        $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->toDateString();
-        $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->toDateString();
+        // dd("working");
+
+        $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->start_date)->toDateString();
+        $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->end_date)->toDateString();
 
 
 
@@ -578,29 +580,15 @@ public function delete(Request $request){
         ->join('projects','time_sheet_user.project_id','=','projects.id')
         ->select('projects.project_name','time_sheet_user.id AS id','time_sheet_user.time_spent',
             'time_sheet_user.date','time_sheet_user.activity')
-        ->where('time_sheet_user.user_id',$id)->where('time_sheet_user.valid',1)
+        ->where('time_sheet_user.user_id',$request->user_id)->where('time_sheet_user.valid',1)
         ->where('time_sheet_user.sent_to_manager','!=',0)
         ->where('time_sheet_user.sent_to_accounts',0)
         ->whereBetween('time_sheet_user.date',[$start_date,$end_date])->get();
 
         // dd($time_sheet_log);
 
-        // return response()->json($time_sheet_log);
+        return json_encode($time_sheet_log);
 
-        $time_collection = collect($time_sheet_log);
-    // dd($reservation_collection);
-        return Datatables::of($time_collection)
-        ->addColumn('action', function ($time_collection) {
-            return 
-
-            ' <a href="'. url('/timesheet') . '/' . 
-            Crypt::encrypt($time_collection->id) . 
-            '/edit' .'"' . 
-            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Details</a>';
-        })
-        ->editColumn('id', '{{$id}}')
-        ->setRowId('id')
-        ->make(true);
 
     }
 
@@ -612,6 +600,8 @@ public function delete(Request $request){
     public function submit_to_accounts_manager(Request $request){
 
         $array = $request->array_time_log;
+
+        dd($array);
 
         foreach ($array as $single_value) {
 

@@ -210,7 +210,7 @@
 
 
 
-    var table = table = $('#time-sheet-log').DataTable({});
+    var  table = $('#time-sheet-log').DataTable({});
 
     $( "#project-select-id" ).click(function() {
 
@@ -245,7 +245,6 @@
 
       }else{
 
-        console.log("working on it");
 
 
         table.clear().draw();
@@ -346,9 +345,9 @@
 
       }).done(function() {
 
-        // alert("your time sheet has been sent to your line manager!");
+        alert("your time sheet has been sent to your line manager!");
 
-        // location.reload();
+        location.reload();
 
       // window.location.assign('{{URL::to('/')}}/set_trainer');
     });

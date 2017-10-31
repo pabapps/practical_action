@@ -261,6 +261,8 @@ public function get_user_projects(Request $request){
         $user_designation =  helperForTimeSheetReport::get_designation_for_report($user_id,$request->start_date,$request->end_date);
         //calculating the number of days between two date range
 
+        $check_month = helperForTimeSheetReport::check_month($request->start_date,$request->end_date);
+
         $day1 = strtotime($start_date);
 
         $day2 = strtotime($end_date);
