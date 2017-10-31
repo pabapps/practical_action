@@ -27,7 +27,9 @@ use Log;
 
 class helperForTimeSheetReport {
 	
-
+	//this method hepls to find the designation for the given user_id based on the provided
+	//start_date and the end_date. Designation might change in any month so this method helps to 
+	//find the designation of the given user_id based on the given dates
 	public static function get_designation_for_report($user_id, $start_date, $end_date){
 		
 		$user_designation = UserDesignationModel::where('user_id',$user_id)->get();
