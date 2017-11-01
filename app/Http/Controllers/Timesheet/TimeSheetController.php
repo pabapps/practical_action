@@ -601,7 +601,7 @@ public function delete(Request $request){
 
         $array = $request->array_time_log;
 
-        dd($array);
+        // dd($array);
 
         foreach ($array as $single_value) {
 

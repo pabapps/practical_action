@@ -290,9 +290,9 @@
 
       }).done(function() {
 
-        // alert("your time sheet has been sent to the accounts manager!");
+        alert("your time sheet has been sent to the accounts manager!");
 
-        // location.reload();
+        location.reload();
 
 
       });
@@ -318,7 +318,7 @@
       table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
         var data = this.data();
 
-        array[count] = data['id'];
+        array[count] = data[0];
 
         count++;
 
