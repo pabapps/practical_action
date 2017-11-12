@@ -49,24 +49,7 @@
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script>
 $(document).ready(function() {
-  var table = $('#themes').DataTable( {
-    "processing": true,
-    "serverSide": true,
-    "paging": true,
-    "lengthChange": true,
-    "searching": true,
-    "ordering": true,
-    "info": true,
-    "autoWidth": false,
-    "scrollX": true,
-    "ajax": "{{URL::to('/')}}/contact_theme/get_all_contact_theme",
-    "columns": [
-    { "data": "id" },
-    { "data": "name" },
-    { "data": "action", name: 'action', orderable: false, searchable: false}
-    ],
-    "order": [[1, 'asc']]
-  } );
+  
 });
 </script>
 @endsection
