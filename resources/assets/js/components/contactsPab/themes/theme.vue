@@ -1,16 +1,23 @@
 <template>
+	<div>
+		<p>working on it</p>
+	</div>
 </template>
 
 <script>
 export default {
 
-  name: 'theme',
+	name: 'theme',
 
-  data () {
-    return {
+	mounted() {
+		console.log("testing");
+	},
 
-    }
-  }
+	data () {
+		return {
+
+		}
+	}
 }
 </script>
 

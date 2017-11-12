@@ -19,6 +19,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
  Vue.component('example', require('./components/Example.vue'));
  Vue.component('testing', require('./components/userController/userEdit.vue'));
+ Vue.component('practical-theme', require('./components/contactsPab/themes/theme.vue'));
  
  
 
