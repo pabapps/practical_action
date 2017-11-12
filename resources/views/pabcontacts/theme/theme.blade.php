@@ -15,6 +15,11 @@
             <a href="{{URL::to('/') . '/contact_theme/create'}}"><h1>Create new theme</h1></a>
             <!-- /.box-header -->
             <div class="box-body">
+
+              <div id="app">
+                <practical-theme></practical-theme>
+              </div>
+              <practical-theme></practical-theme>
               <table id="themes" class="table table-bordered table-hover">
                 <thead>
                 <tr>
