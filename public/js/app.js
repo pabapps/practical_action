@@ -12821,18 +12821,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	name: 'theme',
 
-	mounted: function mounted() {
-		console.log("testing");
-	},
+	mounted: function mounted() {},
 	data: function data() {
 		return {
-			date: ""
+			theme: ""
 		};
 	},
 
 	methods: {
 		onSubmit: function onSubmit() {
 			console.log("working ");
+			axios.get('xyz', {
+				theme: this.theme
+			}).then(function (response) {
+				console.log(response);
+				// location.reload();
+			}).catch(function (error) {
+				console.log(error);
+			});
 		}
 	}
 });
@@ -13002,7 +13008,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(8)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 38 */
@@ -13552,7 +13558,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "data-toggle": "modal",
       "data-target": "#myModal"
     }
-  }, [_vm._v(".btn.bg-purple")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("New Theme")]), _vm._v(" "), _c('div', {
     staticClass: "modal fade",
     attrs: {
       "id": "myModal",
@@ -13576,24 +13582,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-body"
   }, [_c('div', {
     staticClass: "form-group"
-  }, [_c('label', [_vm._v("Old Designation")]), _vm._v(" "), _c('input', {
+  }, [_c('label', [_vm._v("Theme")]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.date),
-      expression: "date"
+      value: (_vm.theme),
+      expression: "theme"
     }],
     staticClass: "form-control",
     attrs: {
       "type": "text"
     },
     domProps: {
-      "value": (_vm.date)
+      "value": (_vm.theme)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.date = $event.target.value
+        _vm.theme = $event.target.value
       }
     }
   })])]), _vm._v(" "), _vm._m(1)])])])])])

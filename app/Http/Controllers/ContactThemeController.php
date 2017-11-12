@@ -66,14 +66,18 @@ class ContactThemeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+
+        dd($request->all());
         $contact_theme = new ContactsTheme;
 
         $contact_theme->name = $request->theme;
         $contact_theme->save();
 
-        return redirect()->action('ContactThemeController@index');
+        // return redirect()->action('ContactThemeController@index');
     }
+
+
 
     /**
      * Display the specified resource.

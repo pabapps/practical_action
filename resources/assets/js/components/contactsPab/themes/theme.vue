@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button type="button" class="btn bg-purple margin" data-toggle="modal" data-target="#myModal">.btn.bg-purple</button>
+		<button type="button" class="btn bg-purple margin" data-toggle="modal" data-target="#myModal">New Theme</button>
 
 		<!-- Modal -->
 		<div id="myModal" class="modal fade" role="dialog">
@@ -14,8 +14,8 @@
 						</div>
 						<div class="modal-body">
 							<div class="form-group" >
-								<label>Old Designation</label>
-								<input type="text" class="form-control" v-model="date">
+								<label>Theme</label>
+								<input type="text" class="form-control" v-model="theme">
 							</div>
 
 						</div>
@@ -37,17 +37,27 @@ export default {
 	name: 'theme',
 
 	mounted() {
-		console.log("testing");
+		
 	},
 
 	data () {
 		return {
-			date:""
+			theme:""
 		}
 	},
 	methods:{
 		onSubmit(){
 			console.log("working ");
+			axios.get('xyz', {
+				theme : this.theme
+			})
+			.then(function (response) {
+				console.log(response);
+				// location.reload();
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
 		}
 	}
 }
