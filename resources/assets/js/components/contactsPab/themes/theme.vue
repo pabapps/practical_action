@@ -2,6 +2,23 @@
 	<div>
 		<button type="button" class="btn bg-purple margin" data-toggle="modal" data-target="#myModal">New Theme</button>
 
+		<table id="themes" class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>Name</th>
+					<th>Edit</th>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+			<tfoot>
+				<tr>
+				</tr>
+			</tfoot>
+		</table>
+
 		<!-- Modal -->
 		<div id="myModal" class="modal fade" role="dialog">
 			<div class="modal-dialog">
@@ -48,7 +65,7 @@ export default {
 	methods:{
 		onSubmit(){
 			console.log("working ");
-			axios.get('/contact_theme', {
+			axios.post('/contact_theme', {
 				theme : this.theme
 			})
 			.then(function (response) {

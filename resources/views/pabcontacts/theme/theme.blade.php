@@ -12,7 +12,6 @@
             <div class="box-header">
               <h3 class="box-title">List of themes</h3>
             </div>
-            <a href="{{URL::to('/') . '/contact_theme/create'}}"><h1>Create new theme</h1></a>
             <!-- /.box-header -->
             <div class="box-body">
 
@@ -20,22 +19,7 @@
                 <practical-theme></practical-theme>
               </div>
               <practical-theme></practical-theme>
-              <table id="themes" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>id</th>
-                  <th>Name</th>
-                  <th>Edit</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-                <tfoot>
-                <tr>
-                </tr>
-                </tfoot>
-              </table>
+             
             </div>
             <!-- /.box-body -->
           </div>
