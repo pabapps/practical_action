@@ -57,7 +57,15 @@ class ContactThemeController extends Controller
         $theme_store->save();
     }
 
-   
+    public function get_all_themes(){
+
+        $themes = ContactsTheme::where('valid', 1)->get();
+
+        return json_encode($themes);
+
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -77,7 +85,7 @@ class ContactThemeController extends Controller
      */
     public function edit($id)
     {
-        //
+       
     }
 
     /**

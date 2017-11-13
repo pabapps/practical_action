@@ -54,6 +54,30 @@ export default {
 	name: 'theme',
 
 	mounted() {
+
+		var table = $('#themes').DataTable( {});
+
+		table.clear().draw();
+
+		var jqxhr = $.get("/contact_theme/get_all_themes",function(themes){
+
+			var object = JSON.parse(themes);
+
+			// console.log(object);
+
+			for (var i = 0; i < object.length; i++) {
+
+				table.row.add( [
+					object[i].id,
+					object[i].name,
+					'<a href="/contact_theme/'+object[i].id+'/edit" class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Details</a>'
+					] ).draw( false );
+
+
+
+			}
+
+		});
 		
 	},
 
@@ -81,4 +105,5 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
 </style>

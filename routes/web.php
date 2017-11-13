@@ -235,6 +235,8 @@ Route::get('/contact_categories/get_all_categories','CategoriesController@get_al
 Route::resource('/contact_categories','CategoriesController');
 
 //route for theme
+Route::get('/contact_theme/get_all_themes','ContactThemeController@get_all_themes');
+
 Route::resource('/contact_theme','ContactThemeController');
 
 

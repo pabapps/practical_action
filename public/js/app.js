@@ -12838,7 +12838,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	name: 'theme',
 
-	mounted: function mounted() {},
+	mounted: function mounted() {
+
+		var table = $('#themes').DataTable({});
+
+		table.clear().draw();
+
+		var jqxhr = $.get("/contact_theme/get_all_themes", function (themes) {
+
+			var object = JSON.parse(themes);
+
+			// console.log(object);
+
+			for (var i = 0; i < object.length; i++) {
+
+				table.row.add([object[i].id, object[i].name, '<a href="/contact_theme/' + object[i].id + '/edit" class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Details</a>']).draw(false);
+			}
+		});
+	},
 	data: function data() {
 		return {
 			theme: ""
@@ -13025,7 +13042,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(8)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 38 */
