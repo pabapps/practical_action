@@ -48,7 +48,7 @@ export default {
 	methods:{
 		onSubmit(){
 			console.log("working ");
-			axios.get('xyz', {
+			axios.get('/contact_theme', {
 				theme : this.theme
 			})
 			.then(function (response) {

@@ -12831,7 +12831,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	methods: {
 		onSubmit: function onSubmit() {
 			console.log("working ");
-			axios.get('xyz', {
+			axios.get('/contact_theme', {
 				theme: this.theme
 			}).then(function (response) {
 				console.log(response);

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Categories;
 use App\ContactsTheme;
+use App\Contacts;
+use App\ContactThemePivot;
 use Datatables;
 use Crypt;
 use Auth;
@@ -18,15 +20,15 @@ class ContactThemeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     public function __construct()
     {
         $this->middleware('auth');
     }
-
+    
     public function index()
     {
-        return view('pabcontacts.theme.theme');
+        //
     }
 
     /**
@@ -36,27 +38,7 @@ class ContactThemeController extends Controller
      */
     public function create()
     {
-        return view('pabcontacts.theme.theme_create');
-    }
-
-    public function get_all_contact_theme(){
-
-        $query_theme =  DB::table('themes')->select(['id', 'name'])->get();
-
-        $theme_collection = collect($query_theme);
-    // dd($reservation_collection);
-        return Datatables::of($theme_collection)
-        ->addColumn('action', function ($theme_collection) {
-            return 
-
-            ' <a href="'. url('/contact_theme') . '/' . 
-            Crypt::encrypt($theme_collection->id) . 
-            '/edit' .'"' . 
-            'class="btn btn-primary btn-danger"><i class="glyphicon   glyphicon-list"></i> Edit</a>';
-        })
-        ->editColumn('id', '{{$id}}')
-        ->setRowId('id')
-        ->make(true);
+        //
     }
 
     /**
@@ -66,18 +48,9 @@ class ContactThemeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-
-        dd($request->all());
-        $contact_theme = new ContactsTheme;
-
-        $contact_theme->name = $request->theme;
-        $contact_theme->save();
-
-        // return redirect()->action('ContactThemeController@index');
+    {
+        //
     }
-
-
 
     /**
      * Display the specified resource.
@@ -98,11 +71,7 @@ class ContactThemeController extends Controller
      */
     public function edit($id)
     {
-        $id = Crypt::decrypt($id);
-
-        $theme = ContactsTheme::where('id',$id)->first();
-
-        return view('pabcontacts.theme.theme_edit')->with('theme',$theme);
+        //
     }
 
     /**
@@ -114,11 +83,7 @@ class ContactThemeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        ContactsTheme::where('id', $id)
-        ->update(['name' => $request->theme]);
-
-        $request->session()->flash('alert-success', 'data has been successfully updated!');
-        return redirect()->action('ContactThemeController@index'); 
+        //
     }
 
     /**
