@@ -89,9 +89,7 @@
 
           <div class="form-group">
             <label>Address</label>
-            <textarea type="text" rows="4" class="form-control" name="address" id="address" placeholder="Please enter the address" value="{{old('address')}}" required>
-              
-            </textarea>
+            <textarea type="text" rows="4" class="form-control" name="address" id="address" placeholder="Please enter the address" value="{{old('address')}}" required></textarea>
           </div>
 
 
