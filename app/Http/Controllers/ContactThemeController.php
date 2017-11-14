@@ -99,7 +99,10 @@ class ContactThemeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        ContactsTheme::where('id', $id)
+        ->update(['name' => $request->theme]);
+
+        return redirect()->action('ContactThemeController@index');
     }
 
     /**
