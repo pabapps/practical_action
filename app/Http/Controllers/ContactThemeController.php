@@ -85,7 +85,9 @@ class ContactThemeController extends Controller
      */
     public function edit($id)
     {
-       
+        $theme = ContactsTheme::find($id);
+
+        return view('pabcontacts.theme.theme_edit')->with('theme',$theme);
     }
 
     /**

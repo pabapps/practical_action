@@ -94,7 +94,7 @@ export default {
 			})
 			.then(function (response) {
 				console.log(response);
-				// location.reload();
+				location.reload();
 			})
 			.catch(function (error) {
 				console.log(error);

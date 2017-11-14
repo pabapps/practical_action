@@ -12869,7 +12869,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				theme: this.theme
 			}).then(function (response) {
 				console.log(response);
-				// location.reload();
+				location.reload();
 			}).catch(function (error) {
 				console.log(error);
 			});
