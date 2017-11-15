@@ -12823,7 +12823,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		console.log("testing");
 		axios.get('/pab_contacts/get_all_contacts', {}).then(function (response) {
 			self.skills = response.data;
-			console.log(self.skills);
+			console.log(self.skills[0].id);
 		}).catch(function (error) {
 			console.log(error);
 		});

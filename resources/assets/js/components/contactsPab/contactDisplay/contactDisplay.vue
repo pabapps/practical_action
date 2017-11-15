@@ -41,7 +41,7 @@ export default {
 		})
 		.then(function (response) {
 			self.skills = response.data
-			console.log(self.skills);
+			console.log(self.skills[0].id);
 		})
 		.catch(function (error) {
 			console.log(error);
