@@ -35,19 +35,14 @@ class ContactsController extends Controller
      */
 
     public function get_all_contacts(){
-        $query_contacts =  DB::table('contacts')->select(['id', 'name'])->get();
 
-        $contact_collection = collect($query_contacts);
-    // dd($reservation_collection);
-        return Datatables::of($contact_collection)
-        ->addColumn('action', function ($contact_collection) {
-            return 
+        // dd("testing");
 
-            ' <button type="submit" class="btn btn-primary btn-danger" ><i class="glyphicon   glyphicon-list"></i>Edit</button>';
-        })
-        ->editColumn('id', '{{$id}}')
-        ->setRowId('id')
-        ->make(true);
+        $query_contacts =  DB::table('contacts')->select(['id', 'name','email1'])->get();
+
+        // $contact_collection = collect($query_contacts);
+
+        return json_encode($query_contacts);
 
     }
 

@@ -26,10 +26,30 @@ export default {
 
 	name: 'contactDisplay',
 
+
+	
 	data () {
 		return {
-
+			skills:[]
 		}
+	},
+	mounted:  function (){
+
+		console.log("testing");
+		axios.get('/pab_contacts/get_all_contacts', {
+
+		})
+		.then(function (response) {
+			self.skills = response.data
+			console.log(self.skills);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+
+	},
+	methods:{
+
 	}
 }
 </script>

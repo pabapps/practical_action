@@ -12813,8 +12813,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	name: 'contactDisplay',
 
 	data: function data() {
-		return {};
-	}
+		return {
+			skills: []
+		};
+	},
+
+	mounted: function mounted() {
+
+		console.log("testing");
+		axios.get('/pab_contacts/get_all_contacts', {}).then(function (response) {
+			self.skills = response.data;
+			console.log(self.skills);
+		}).catch(function (error) {
+			console.log(error);
+		});
+	},
+	methods: {}
 });
 
 /***/ }),
@@ -13089,7 +13103,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 40 */
