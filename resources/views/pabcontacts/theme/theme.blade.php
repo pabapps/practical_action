@@ -18,7 +18,7 @@
               <div id="app">
                 <practical-theme></practical-theme>
               </div>
-              <practical-theme></practical-theme>
+              
              
             </div>
             <!-- /.box-body -->

@@ -14,24 +14,12 @@
         </div>
         <a href="{{URL::to('/') . '/pab_contacts/create'}}"><h1>Create new Contacts</h1></a>
         <!-- /.box-header -->
-        <div class="box-body">
-          <table id="contacts" class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>id</th>
-                <th>Name</th>
-                <th>Edit</th>
-              </tr>
-            </thead>
-            <tbody>
 
-            </tbody>
-            <tfoot>
-              <tr>
-              </tr>
-            </tfoot>
-          </table>
+
+        <div id="app">
+          
         </div>
+        
         <!-- /.box-body -->
       </div>
       <!-- /.box -->
@@ -51,6 +39,7 @@
 <!-- DataTables -->
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{asset('js/app.js')}}"></script>
 <script>
   $(document).ready(function() {
 
