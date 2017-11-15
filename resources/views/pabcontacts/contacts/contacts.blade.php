@@ -17,7 +17,7 @@
 
 
         <div id="app">
-          
+          <practical-contact-display></practical-contact-display>
         </div>
         
         <!-- /.box-body -->
