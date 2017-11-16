@@ -7,6 +7,7 @@
 						<th>id</th>
 						<th>Name</th>
 						<th>Email</th>
+						<th>Edit</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -14,6 +15,7 @@
 						<td>{{skill.id}}</td>
 						<td>{{skill.name}}</td>
 						<td>{{skill.email1}}</td>
+						<td><button v-on:click="greet(skill.id)" class="btn btn-primary" >Submit</button></td>
 					</tr>
 
 				</tbody>
@@ -76,6 +78,9 @@ export default {
 
 			
 
+		},
+		greet(id){
+			console.log(id);
 		}
 
 	}

@@ -12812,6 +12812,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -12855,6 +12857,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			// 	console.log(error);
 			// });
 
+		},
+		greet: function greet(id) {
+			console.log(id);
 		}
 	}
 });
@@ -13131,7 +13136,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 40 */
@@ -13820,10 +13825,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "contacts"
     }
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.contacts), function(skill) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(skill.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(skill.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(skill.email1))])])
+    return _c('tr', [_c('td', [_vm._v(_vm._s(skill.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(skill.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(skill.email1))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-primary",
+      on: {
+        "click": function($event) {
+          _vm.greet(skill.id)
+        }
+      }
+    }, [_vm._v("Submit")])])])
   })), _vm._v(" "), _vm._m(1)])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("id")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")])])])
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("id")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Edit")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('tfoot', [_c('tr')])
 }]}
