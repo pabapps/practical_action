@@ -12807,28 +12807,56 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
 	name: 'contactDisplay',
+
+	props: ['contacts'],
 
 	data: function data() {
 		return {
 			skills: []
 		};
 	},
-
 	mounted: function mounted() {
+		var _this = this;
 
-		console.log("testing");
-		axios.get('/pab_contacts/get_all_contacts', {}).then(function (response) {
-			self.skills = response.data;
-			console.log(self.skills[0].id);
-		}).catch(function (error) {
-			console.log(error);
+		$('#contacts').DataTable();
+
+		this.backEnd();
+
+		this.$http.get('/pab_contacts/get_all_contacts', {}).then(function (query_contacts) {
+			_this.skills = query_contacts.body;
+
+			// console.log(this.skills[0].name);
 		});
+
+		console.log(this.contacts);
 	},
-	methods: {}
+
+	methods: {
+		backEnd: function backEnd() {
+
+			console.log("testing");
+			// axios.get('/pab_contacts/get_all_contacts', {
+
+			// })
+			// .then(function (response) {
+			// 	this.skills = response.data
+			// 	console.log(this.skills);
+			// })
+			// .catch(function (error) {
+			// 	console.log(error);
+			// });
+
+		}
+	}
 });
 
 /***/ }),
@@ -13103,7 +13131,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 40 */
@@ -13784,8 +13812,6 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
     staticClass: "box-body"
   }, [_c('table', {
@@ -13793,7 +13819,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "contacts"
     }
-  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("id")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Edit")])])]), _vm._v(" "), _c('tbody'), _vm._v(" "), _c('tfoot', [_c('tr')])])])])
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.contacts), function(skill) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(skill.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(skill.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(skill.email1))])])
+  })), _vm._v(" "), _vm._m(1)])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("id")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('tfoot', [_c('tr')])
 }]}
 module.exports.render._withStripped = true
 if (false) {

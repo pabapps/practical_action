@@ -17,7 +17,7 @@
 
 
         <div id="app">
-          <practical-contact-display></practical-contact-display>
+          <practical-contact-display :contacts="{{$query_contacts}}"></practical-contact-display>
         </div>
         
         <!-- /.box-body -->

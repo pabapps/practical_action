@@ -27,7 +27,11 @@ class ContactsController extends Controller
 
     public function index()
     {
-        return view('pabcontacts.contacts.contacts');
+         $query_contacts =  DB::table('contacts')->select(['id', 'name','email1'])->get();
+
+        // $contact_collection = collect($query_contacts);
+
+        return view('pabcontacts.contacts.contacts')->with('query_contacts',$query_contacts);
     }
 
     /**

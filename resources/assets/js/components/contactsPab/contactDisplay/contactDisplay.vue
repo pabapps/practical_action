@@ -6,10 +6,15 @@
 					<tr>
 						<th>id</th>
 						<th>Name</th>
-						<th>Edit</th>
+						<th>Email</th>
 					</tr>
 				</thead>
 				<tbody>
+					<tr v-for="skill in contacts">
+						<td>{{skill.id}}</td>
+						<td>{{skill.name}}</td>
+						<td>{{skill.email1}}</td>
+					</tr>
 
 				</tbody>
 				<tfoot>
@@ -26,6 +31,7 @@ export default {
 
 	name: 'contactDisplay',
 
+	props:['contacts'],
 
 	
 	data () {
@@ -33,22 +39,44 @@ export default {
 			skills:[]
 		}
 	},
-	mounted:  function (){
+	mounted (){
 
-		console.log("testing");
-		axios.get('/pab_contacts/get_all_contacts', {
+		$('#contacts').DataTable();
 
-		})
-		.then(function (response) {
-			self.skills = response.data
-			console.log(self.skills[0].id);
-		})
-		.catch(function (error) {
-			console.log(error);
-		});
+		this.backEnd();
+
+		this.$http.get('/pab_contacts/get_all_contacts', {
+				
+			}).then(query_contacts => {
+				this.skills = query_contacts.body;
+
+				// console.log(this.skills[0].name);
+			})
+
+
+			console.log(this.contacts);
 
 	},
 	methods:{
+
+		backEnd(){
+
+			console.log("testing");
+			// axios.get('/pab_contacts/get_all_contacts', {
+
+			// })
+			// .then(function (response) {
+			// 	this.skills = response.data
+			// 	console.log(this.skills);
+			// })
+			// .catch(function (error) {
+			// 	console.log(error);
+			// });
+
+
+			
+
+		}
 
 	}
 }
