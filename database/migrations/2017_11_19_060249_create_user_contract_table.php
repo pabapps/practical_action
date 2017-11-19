@@ -15,7 +15,18 @@ class CreateUserContractTable extends Migration
     {
         Schema::create('contract', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->tinyInteger('valid')->default(1); // 1 = valid, 0 = invalid (basically contract is over)
+            $table->date('start_date');
+            $table->date('end_date');
+
             $table->timestamps();
+
+
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+
+            
         });
     }
 
