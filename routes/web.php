@@ -263,6 +263,10 @@ Route::resource('/pab_contacts','ContactsController');
 
 
 
+/**
+*contracts routes
+**/
+Route::resource('/contracts',"Contract\ContractController");
 
 
 
