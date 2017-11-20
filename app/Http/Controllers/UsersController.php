@@ -14,7 +14,7 @@ use App\UserProjectModel;
 use App\Designation;
 use App\Role;
 
-use App\UserControllerHelperClass\UserContract;
+use App\UserControllerHelperClass\UserContractHelper;
 
 class UsersController extends Controller
 {
@@ -353,7 +353,7 @@ if(!empty($request->joining_date)){
 if(!empty($request->contract_start_date) || !empty($request->contract_end_date)){
     // dd("working on it");
 
-    $district_name = UserContract::userContract($request); 
+    $district_name = UserContractHelper::userContract($request,$id); 
 }
 
         //creating the roles of an user
