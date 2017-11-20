@@ -19,7 +19,7 @@ class ContractController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
     }
@@ -28,6 +28,24 @@ class ContractController extends Controller
     public function index()
     {
         return view("contract.contract");
+    }
+
+
+    public function get_all_users(Request $request){
+        $search_term = $request->input('term');
+
+        $query_users= "
+        SELECT users.id , users.name  AS text
+        FROM users
+        WHERE users.name LIKE '%{$search_term}%' AND users.valid=1";
+
+        $users = DB::select($query_users);
+
+        // dd($users);
+
+        // return response()->json($users);
+
+        return json_encode($users);
     }
 
     /**

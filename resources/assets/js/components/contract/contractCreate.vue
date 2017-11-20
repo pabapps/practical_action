@@ -25,13 +25,24 @@
 						</div>
 
 						<div class="form-group">
-							<label>Date:</label>
+							<label>Start Date:</label>
 
 							<div class="input-group date">
 								<div class="input-group-addon">
 									<i class="fa fa-calendar"></i>
 								</div>
-								<input type="text" class="form-control pull-right" name="entry_date" data-date-format="dd-mm-yyyy" id="entry-date" v-model="date">
+								<input type="text" class="form-control pull-right" name="entry_date" data-date-format="dd-mm-yyyy" id="start-date" v-model="startDate">
+							</div>
+							<!-- /.input group -->
+						</div>
+						<div class="form-group">
+							<label>End Date:</label>
+
+							<div class="input-group date">
+								<div class="input-group-addon">
+									<i class="fa fa-calendar"></i>
+								</div>
+								<input type="text" class="form-control pull-right" name="entry_date" data-date-format="dd-mm-yyyy" id="end-date" v-model="endDate">
 							</div>
 							<!-- /.input group -->
 						</div>
@@ -53,20 +64,27 @@ export default {
 
 	name: 'contractCreate',
 	mounted(){
-		$('#entry-date').datepicker({
+		$('#start-date').datepicker({
+			autoclose: true
+
+		});
+		$('#end-date').datepicker({
 			autoclose: true
 
 		});
 
-		$("#entry-date").datepicker('setDate', new Date());
+		$("#start-date").datepicker('setDate', new Date());
+		$("#end-date").datepicker('setDate', new Date());
 
-		this.date = $("#entry-date").val();
+		this.startDate = $("#start-date").val();
+		this.endDate = $("#end-date").val();
 	},
 	data () {
 		return {
 
 			options: [],
-			date:"",
+			startDate:"",
+			endDate:"",
 			name_to: ""
 
 		}
@@ -95,7 +113,7 @@ export default {
 			
 
 			loading(true)
-			this.$http.get('/select2/select2_all_designations', {
+			this.$http.get('/contracts/get_all_users', {
 				term: search
 			}).then(users => {
 				this.options = users.body;

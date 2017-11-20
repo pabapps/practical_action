@@ -266,6 +266,8 @@ Route::resource('/pab_contacts','ContactsController');
 /**
 *contracts routes
 **/
+//get all the users for the 
+Route::get('/contracts/get_all_users',"Contract\ContractController@get_all_users");
 Route::resource('/contracts',"Contract\ContractController");
 
 

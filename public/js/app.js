@@ -13021,25 +13021,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
 	name: 'contractCreate',
 	mounted: function mounted() {
-		$('#entry-date').datepicker({
+		$('#start-date').datepicker({
+			autoclose: true
+
+		});
+		$('#end-date').datepicker({
 			autoclose: true
 
 		});
 
-		$("#entry-date").datepicker('setDate', new Date());
+		$("#start-date").datepicker('setDate', new Date());
+		$("#end-date").datepicker('setDate', new Date());
 
-		this.date = $("#entry-date").val();
+		this.startDate = $("#start-date").val();
+		this.endDate = $("#end-date").val();
 	},
 	data: function data() {
 		return {
 
 			options: [],
-			date: "",
+			startDate: "",
+			endDate: "",
 			name_to: ""
 
 		};
@@ -13069,7 +13087,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this = this;
 
 			loading(true);
-			this.$http.get('/select2/select2_all_designations', {
+			this.$http.get('/contracts/get_all_users', {
 				term: search
 			}).then(function (users) {
 				_this.options = users.body;
@@ -13239,7 +13257,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 39 */
@@ -13772,32 +13790,59 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })], 1), _vm._v(" "), _c('div', {
     staticClass: "form-group"
-  }, [_c('label', [_vm._v("Date:")]), _vm._v(" "), _c('div', {
+  }, [_c('label', [_vm._v("Start Date:")]), _vm._v(" "), _c('div', {
     staticClass: "input-group date"
   }, [_vm._m(1), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.date),
-      expression: "date"
+      value: (_vm.startDate),
+      expression: "startDate"
     }],
     staticClass: "form-control pull-right",
     attrs: {
       "type": "text",
       "name": "entry_date",
       "data-date-format": "dd-mm-yyyy",
-      "id": "entry-date"
+      "id": "start-date"
     },
     domProps: {
-      "value": (_vm.date)
+      "value": (_vm.startDate)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.date = $event.target.value
+        _vm.startDate = $event.target.value
       }
     }
-  })])]), _vm._v(" "), _vm._m(2)])])])])])
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("End Date:")]), _vm._v(" "), _c('div', {
+    staticClass: "input-group date"
+  }, [_vm._m(2), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.endDate),
+      expression: "endDate"
+    }],
+    staticClass: "form-control pull-right",
+    attrs: {
+      "type": "text",
+      "name": "entry_date",
+      "data-date-format": "dd-mm-yyyy",
+      "id": "end-date"
+    },
+    domProps: {
+      "value": (_vm.endDate)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.endDate = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _vm._m(3)])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header"
@@ -13810,6 +13855,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("×")]), _vm._v(" "), _c('h4', {
     staticClass: "modal-title"
   }, [_vm._v("New Contract")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "input-group-addon"
+  }, [_c('i', {
+    staticClass: "fa fa-calendar"
+  })])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "input-group-addon"
