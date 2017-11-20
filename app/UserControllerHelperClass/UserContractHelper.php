@@ -17,6 +17,7 @@ class UserContractHelper{
 
 		$last_data_object = collect($old_contract_data)->last();
 
+
 		if(is_null($last_data_object)){
 			//since the object is null, means there is no data related to this particular
 			//user contract. Therefore, has to create a new record to make the contract fro this user
@@ -31,7 +32,6 @@ class UserContractHelper{
 
 			$new_contract->save();
 
-			dd("working on it");
 
 
 		}
