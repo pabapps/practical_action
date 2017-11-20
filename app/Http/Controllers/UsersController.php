@@ -14,6 +14,8 @@ use App\UserProjectModel;
 use App\Designation;
 use App\Role;
 
+use App\UserControllerHelperClass\UserContract;
+
 class UsersController extends Controller
 {
     /**
@@ -346,6 +348,12 @@ if(!empty($request->joining_date)){
 
     $user = User::where('id',$id)->update(['joining_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $request->joining_date)->toDateString()]);
 
+}
+
+if(!empty($request->contract_start_date) || !empty($request->contract_end_date)){
+    // dd("working on it");
+
+    $district_name = UserContract::userContract($request); 
 }
 
         //creating the roles of an user

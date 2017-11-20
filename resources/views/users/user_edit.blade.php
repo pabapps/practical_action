@@ -85,6 +85,13 @@
 
           </div>
 
+          <div class="form-group">
+            <label>User Location</label>
+            <input type="text" class="form-control" id="user-location" name="user_location" 
+            value="{{ $user->user_location }}" placeholder="User location">
+
+          </div>
+
 
           <div class="form-group">
             <label>Roles</label>
@@ -146,6 +153,28 @@
             </div>
             <!-- /.input group -->
           </div>
+          <div class="form-group">
+            <label>Contract Start date:</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right" name="contract_start_date" data-date-format="dd-mm-yyyy" id="contract-start-date" value="">
+            </div>
+            <!-- /.input group -->
+          </div>
+          <div class="form-group">
+            <label>Contract End date:</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right" name="contract_end_date" data-date-format="dd-mm-yyyy" id="contract-end-date" value="">
+            </div>
+            <!-- /.input group -->
+          </div>
 
 
           <div class="form-group">
@@ -155,12 +184,7 @@
 
           </div>
 
-          <div class="form-group">
-            <label>User Location</label>
-            <input type="text" class="form-control" id="user-location" name="user_location" 
-            value="{{ $user->user_location }}" placeholder="User location">
-
-          </div>
+          
 
           <div class="form-group">
             <div class="checkbox">
@@ -254,6 +278,14 @@
     });
 
     $('#designation-changed-date').datepicker({
+      autoclose: true
+
+    });
+    $('#contract-start-date').datepicker({
+      autoclose: true
+
+    });
+    $('#contract-end-date').datepicker({
       autoclose: true
 
     });
