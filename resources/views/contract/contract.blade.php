@@ -2,6 +2,9 @@
 @section('styles')
 <!-- DataTables -->
 <link rel="stylesheet" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker-bs3.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/datepicker/datepicker3.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
 @endsection
 @section('content')
 <!-- Main content -->
@@ -14,7 +17,7 @@
         </div>
 
         <div id="app">
-          
+          <practical-contract-create></practical-contract-create>
         </div>
         
         <!-- /.box-body -->
@@ -36,11 +39,13 @@
 <!-- DataTables -->
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+<script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 <script src="{{asset('js/app.js')}}"></script>
 <script>
   $(document).ready(function() {
 
-   
+
 
   });
 </script>
