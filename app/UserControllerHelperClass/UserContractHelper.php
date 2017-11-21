@@ -34,6 +34,16 @@ class UserContractHelper{
 
 
 
+		}else{
+
+			//the object is not null, in that case we need to check is the object is valid or not. If the object is valid, we are going to just update the existing record with teh changed data. However, if it's invalid, we have to create a new record for this particular user
+
+
+
+
+			 
+
+
 		}
 
 
