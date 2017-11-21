@@ -22,31 +22,42 @@ class UserContractHelper{
 			//since the object is null, means there is no data related to this particular
 			//user contract. Therefore, has to create a new record to make the contract fro this user
 
-			$new_contract = new UserContract;
-
-			$new_contract->user_id = $id;
-
-			$new_contract->start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_start_date)->toDateString();
-
-			$new_contract->end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_end_date)->toDateString();
-
-			$new_contract->save();
-
-
+			static::create_contract($request,$id);
 
 		}else{
 
 			//the object is not null, in that case we need to check is the object is valid or not. If the object is valid, we are going to just update the existing record with teh changed data. However, if it's invalid, we have to create a new record for this particular user
 
+			if($last_data_object->valid == 1){
+				//update the existing record
+
+				UserContract::where('user_id', $id)
+				->update(['start_date' =>  \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_start_date)->toDateString(),
+					'end_date'=> \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_end_date)->toDateString()]);
 
 
 
-			 
-
+			}else{
+				//well, as the object is invalid need to create a new object
+				static::create_contract($request,$id);
+			}
 
 		}
 
 
+	}
+
+
+	private static function create_contract(Request $request,$id){
+		$new_contract = new UserContract;
+
+		$new_contract->user_id = $id;
+
+		$new_contract->start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_start_date)->toDateString();
+
+		$new_contract->end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_end_date)->toDateString();
+
+		$new_contract->save();
 	}
 
 }
