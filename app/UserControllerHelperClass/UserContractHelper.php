@@ -60,4 +60,14 @@ class UserContractHelper{
 		$new_contract->save();
 	}
 
+
+	//checking the contract of each and every users from the contractlist to see how long their contract will last
+	public static function contract_check(){
+
+		$contract_list = UserContract::where('valid',1)->get();
+
+		
+
+	} 
+
 }

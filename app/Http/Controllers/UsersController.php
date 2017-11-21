@@ -31,6 +31,10 @@ class UsersController extends Controller
 
     public function index()
     {
+        // dd("working on it");
+
+        UserContractHelper::contract_check();
+
         return view('users.users_list');
     }
 
