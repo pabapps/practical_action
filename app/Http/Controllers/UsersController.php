@@ -353,11 +353,23 @@ if(!empty($request->joining_date)){
 if(!empty($request->contract_start_date) && !empty($request->contract_end_date)){
     // dd("working on it");
 
-    $district_name = UserContractHelper::userContract($request,$id); 
+    $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_start_date);
+    $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_end_date);
+
+    if(strtotime($end_date) < strtotime($start_date)){
+        $request->session()->flash('alert-danger', 'End date cannot be smaller than the start date');
+
+        return redirect()->back();
+    }else{
+
+        $district_name = UserContractHelper::userContract($request,$id); 
+
+    }
+
 }else{
    $request->session()->flash('alert-danger', 'Date fields cannot be empty');
 
-     return redirect()->back();
+   return redirect()->back();
 }
 
         //creating the roles of an user
