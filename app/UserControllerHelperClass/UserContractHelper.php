@@ -66,7 +66,18 @@ class UserContractHelper{
 
 		$contract_list = UserContract::where('valid',1)->get();
 
-		
+		$today_date = date("Y-m-d");
+
+		foreach ($contract_list as $list) {
+			
+			if(strtotime($today_date) > strtotime($list->end_date)){
+
+				UserContract::where('user_id', $list->user_id)
+				->update(['valid' =>  0]);
+
+			}
+
+		}
 
 	} 
 
