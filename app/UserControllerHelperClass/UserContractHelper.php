@@ -94,12 +94,44 @@ class UserContractHelper{
 
 		$active_user_array = array();
 
-
 		$count = 1;
 
 		foreach ($active_user_list as $user_list) {
 			
-			// $user_contract = UserContract::where();
+			$user_contract = UserContract::where('user_id',$user_list->id)->where('valid',1)->first();
+
+
+			if(is_null($user_contract)){
+
+				$active_user_array[$count] = array(
+					"user_id"=>$user_list->id,
+					"user_name"=>$user_list->name,
+					"user_contract_time"=>'-'
+				);
+
+				$count++;
+
+			}else{
+				//need to calculate time time difference 
+				$today_date = date("Y-m-d");
+
+				$date1 = new \DateTime($today_date);
+				$date2 = new \DateTime($user_contract->end_date);
+
+				$diff = $date2->diff($date1)->format("%a");
+
+				dd($diff);
+
+
+				$active_user_array[$count] = array(
+					"user_id"=>$user_list->id,
+					"user_name"=>$user_list->name,
+					"user_contract_time"=>'-'
+				);
+
+				$count++;
+
+			}
 
 		}
 
