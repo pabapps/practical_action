@@ -120,13 +120,27 @@ class UserContractHelper{
 
 				$diff = $date2->diff($date1)->format("%a");
 
-				dd($diff);
+				// dd($diff);
+				$convert = (string)$diff; // days you want to convert
+
+				$years = ($convert / 365) ; // days / 365 days
+				$years = floor($years); // Remove all decimals
+
+
+
+				$month = ($convert % 365) / 30.5; // I choose 30.5 for Month (30,31) ;)
+				$month = floor($month); // Remove all decimals
+				
+
+				$days = ($convert % 365) % 30.5; // the rest of days
+
+				dd($years.' years - '.$month.' month - '.$days.' days');
 
 
 				$active_user_array[$count] = array(
 					"user_id"=>$user_list->id,
 					"user_name"=>$user_list->name,
-					"user_contract_time"=>'-'
+					"user_contract_time"=>$diff
 				);
 
 				$count++;
