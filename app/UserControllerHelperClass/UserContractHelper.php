@@ -81,4 +81,55 @@ class UserContractHelper{
 
 	} 
 
+	/**
+	 *need to create a list of users along with the contract 
+	 */
+
+
+	public static function active_user_list(){
+
+
+		$active_user_list = User::where('valid',1)->get();
+
+
+		$active_user_array = array();
+
+
+		$count = 1;
+
+		foreach ($active_user_list as $user_list) {
+			
+			// $user_contract = UserContract::where();
+
+		}
+
+
+
+
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

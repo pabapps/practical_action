@@ -35,6 +35,10 @@ class UsersController extends Controller
 
         UserContractHelper::contract_check();
 
+        
+        UserContractHelper::active_user_list();
+
+
         return view('users.users_list');
     }
 
