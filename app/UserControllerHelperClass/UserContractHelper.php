@@ -6,6 +6,7 @@ use Crypt;
 use Auth;
 use App\User;
 use App\UserContract;
+use Carbon\Carbon;
 
 
 class UserContractHelper{
@@ -118,23 +119,18 @@ class UserContractHelper{
 				$date1 = new \DateTime($today_date);
 				$date2 = new \DateTime($user_contract->end_date);
 
-				$diff = $date2->diff($date1)->format("%a");
+				// dd($user_contract->end_date);
 
-				// dd($diff);
-				$convert = (string)$diff; // days you want to convert
+				$o_month = substr($user_contract->end_date,5,2); 
+				$o_day = substr($user_contract->end_date,8,2); 
+				$o_year = substr($user_contract->end_date,0,4); 
 
-				$years = ($convert / 365) ; // days / 365 days
-				$years = floor($years); // Remove all decimals
+				$test_date = \Carbon\Carbon::createFromDate($o_year, $o_month, $o_day )->diff(Carbon::now())->format('%y years, %m months and %d days');// => "23 years, 6 months and 26 days"
+
+				dd($test_date);
 
 
 
-				$month = ($convert % 365) / 30.5; // I choose 30.5 for Month (30,31) ;)
-				$month = floor($month); // Remove all decimals
-				
-
-				$days = ($convert % 365) % 30.5; // the rest of days
-
-				dd($years.' years - '.$month.' month - '.$days.' days');
 
 
 				$active_user_array[$count] = array(
