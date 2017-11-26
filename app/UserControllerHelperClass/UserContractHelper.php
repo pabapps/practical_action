@@ -7,6 +7,8 @@ use Auth;
 use App\User;
 use App\UserContract;
 use Carbon\Carbon;
+use App\Designation;
+use App\UserDesignationModel;
 
 
 class UserContractHelper{
@@ -104,11 +106,31 @@ class UserContractHelper{
 
 			if(is_null($user_contract)){
 
-				$active_user_array[$count] = array(
-					"user_id"=>$user_list->id,
-					"user_name"=>$user_list->name,
-					"user_contract_time"=>'-'
-				);
+				$user_designation_model  = UserDesignationModel::where('user_id',$user_list->id)->where('valid',1)->first();
+
+				if(is_null($user_designation_model)){
+					
+					$active_user_array[$count] = array(
+						"user_id"=>$user_list->id,
+						"user_name"=>$user_list->name,
+						"user_contract_time"=>'-',
+						"user_designation"=>'-'
+					);
+
+				}else{
+
+					$user_designation = Designation::where('id',$user_designation_model->designation_id)->first();
+
+					$active_user_array[$count] = array(
+						"user_id"=>$user_list->id,
+						"user_name"=>$user_list->name,
+						"user_contract_time"=>'-',
+						"user_designation"=>$user_designation->position_name
+					);
+
+				}
+
+				
 
 				$count++;
 
@@ -127,14 +149,35 @@ class UserContractHelper{
 
 				$test_date = \Carbon\Carbon::createFromDate($o_year, $o_month, $o_day )->diff(Carbon::now())->format('%y years, %m months and %d days');// => "23 years, 6 months and 26 days"
 
+				$user_designation_model  = UserDesignationModel::where('user_id',$user_list->id)->where('valid',1)->first();
 
-				$active_user_array[$count] = array(
-					"user_id"=>$user_list->id,
-					"user_name"=>$user_list->name,
-					"user_contract_time"=>$test_date
-				);
+				if(is_null($user_designation_model)){
 
-				$count++;
+					$active_user_array[$count] = array(
+						"user_id"=>$user_list->id,
+						"user_name"=>$user_list->name,
+						"user_contract_time"=>'-',
+						"user_designation"=>'-'
+					);
+
+				}else{
+
+					$user_designation = Designation::where('id',$user_designation_model->designation_id)->first();
+
+
+
+					$active_user_array[$count] = array(
+						"user_id"=>$user_list->id,
+						"user_name"=>$user_list->name,
+						"user_contract_time"=>$test_date,
+						"user_designation"=>$user_designation->position_name
+					);
+
+					$count++;
+
+				}
+
+				
 
 			}
 
@@ -142,7 +185,7 @@ class UserContractHelper{
 
 		}
 
-		// dd($active_user_array);
+		dd($active_user_array);
 
 
 
