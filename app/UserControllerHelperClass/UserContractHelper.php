@@ -127,23 +127,22 @@ class UserContractHelper{
 
 				$test_date = \Carbon\Carbon::createFromDate($o_year, $o_month, $o_day )->diff(Carbon::now())->format('%y years, %m months and %d days');// => "23 years, 6 months and 26 days"
 
-				dd($test_date);
-
-
-
-
 
 				$active_user_array[$count] = array(
 					"user_id"=>$user_list->id,
 					"user_name"=>$user_list->name,
-					"user_contract_time"=>$diff
+					"user_contract_time"=>$test_date
 				);
 
 				$count++;
 
 			}
 
+
+
 		}
+
+		// dd($active_user_array);
 
 
 
