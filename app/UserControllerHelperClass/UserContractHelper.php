@@ -197,7 +197,7 @@ class UserContractHelper{
 
 		// dd($active_user_array);
 
-
+		return $active_user_array;
 
 
 

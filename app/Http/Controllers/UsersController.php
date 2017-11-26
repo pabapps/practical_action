@@ -36,10 +36,10 @@ class UsersController extends Controller
         UserContractHelper::contract_check();
 
         
-        UserContractHelper::active_user_list();
+        $active_user_list =  UserContractHelper::active_user_list();
 
 
-        return view('users.users_list');
+        return view('users.users_list')->with('active_user_list',$active_user_list);
     }
 
     public function get_all_users(){
