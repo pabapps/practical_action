@@ -14,26 +14,10 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="products" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>id</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Gender</th>
-                  <th>Edit</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-                <tfoot>
-                <tr>
-                  
-                </tr>
-                </tfoot>
-              </table>
+               <div id="app">
+                <practical-user-list></practical-user-list>
+              </div>
+              
             </div>
             <!-- /.box-body -->
           </div>
@@ -50,29 +34,10 @@
 <!-- DataTables -->
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{asset('js/app.js')}}"></script>
 <script>
 $(document).ready(function() {
-  var table = $('#products').DataTable( {
-    "processing": true,
-    "serverSide": true,
-    "paging": true,
-    "lengthChange": true,
-    "searching": true,
-    "ordering": true,
-    "info": true,
-    "autoWidth": false,
-    "scrollX": true,
-    "ajax": "{{URL::to('/')}}/users/get_all_users",
-    "columns": [
-    { "data": "id" },
-    { "data": "name" },
-    { "data": "email" },
-    { "data": "phone_num" },
-    { "data": "gender" },
-    { "data": "action", name: 'action', orderable: false, searchable: false}
-    ],
-    "order": [[1, 'asc']]
-  } );
+  
 });
 </script>
 @endsection
