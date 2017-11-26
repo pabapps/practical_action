@@ -9,6 +9,7 @@ use App\UserContract;
 use Carbon\Carbon;
 use App\Designation;
 use App\UserDesignationModel;
+use App\Department;
 
 
 class UserContractHelper{
@@ -114,18 +115,24 @@ class UserContractHelper{
 						"user_id"=>$user_list->id,
 						"user_name"=>$user_list->name,
 						"user_contract_time"=>'-',
-						"user_designation"=>'-'
+						"user_designation"=>'-',
+						"user_department"=>'-'
 					);
 
 				}else{
 
 					$user_designation = Designation::where('id',$user_designation_model->designation_id)->first();
 
+					$user_department = Department::where('id',$user_designation->department_id)->first();
+
+					
+
 					$active_user_array[$count] = array(
 						"user_id"=>$user_list->id,
 						"user_name"=>$user_list->name,
 						"user_contract_time"=>'-',
-						"user_designation"=>$user_designation->position_name
+						"user_designation"=>$user_designation->position_name,
+						"user_department"=>$user_department->department
 					);
 
 				}
@@ -151,26 +158,29 @@ class UserContractHelper{
 
 				$user_designation_model  = UserDesignationModel::where('user_id',$user_list->id)->where('valid',1)->first();
 
+				$user_department = Department::where('id',$user_designation->department_id)->first();
+
+
 				if(is_null($user_designation_model)){
 
 					$active_user_array[$count] = array(
 						"user_id"=>$user_list->id,
 						"user_name"=>$user_list->name,
 						"user_contract_time"=>'-',
-						"user_designation"=>'-'
+						"user_designation"=>'-',
+						"user_department"=>'-'
 					);
 
 				}else{
 
 					$user_designation = Designation::where('id',$user_designation_model->designation_id)->first();
 
-
-
 					$active_user_array[$count] = array(
 						"user_id"=>$user_list->id,
 						"user_name"=>$user_list->name,
 						"user_contract_time"=>$test_date,
-						"user_designation"=>$user_designation->position_name
+						"user_designation"=>$user_designation->position_name,
+						"user_department"=>$user_department->department
 					);
 
 					$count++;
@@ -185,7 +195,7 @@ class UserContractHelper{
 
 		}
 
-		dd($active_user_array);
+		// dd($active_user_array);
 
 
 
