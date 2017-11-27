@@ -1,17 +1,29 @@
 <template>
 	<div>
-		<table id="active-user-lists" class="table table-bordered table-hover">
+		<table id="user-lists" class="table table-bordered table-hover">
 			<thead>
 				<tr>
 					<th>id</th>
 					<th>Name</th>
-					<th>Email</th>
-					<th>Phone</th>
-					<th>Gender</th>
+					<th>Department</th>
+					<th>Designation</th>
+					<th>Contract</th>
 					<th>Edit</th>
 				</tr>
 			</thead>
 			<tbody>
+
+				<tr v-for="user_list in active_user_lists">
+					<td>{{user_list.user_id}}</td>
+					<td>{{user_list.user_name}}</td>
+					<td>{{user_list.user_department}}</td>
+					<td>{{user_list.user_designation}}</td>
+					<td>{{user_list.user_contract_time}}</td>
+					<td><button class="btn btn-primary" >Edit</button>
+						<button class="btn btn-primary" >Projects</button>
+					</td>
+					
+				</tr>
 
 			</tbody>
 			<tfoot>
@@ -28,32 +40,32 @@ export default {
 
 	name: 'userList',
 
+	props:['active_user_lists'],
+
 	mounted(){
 
-		/*"processing": true,
-			"serverSide": true,
-			"paging": true,
-			"lengthChange": true,
-			"searching": true,
-			"ordering": true,
-			"info": true,
-			"autoWidth": false,
-			"scrollX": true,*/
+		//console.log(this.active_user_lists);
 
-		var table = $('#active-user-lists').DataTable( {
+			 $('#user-lists').DataTable( {
+				"paging": true,
+				"lengthChange": true,
+				"searching": true,
+				"ordering": true,
+				"info": true,
+				"autoWidth": false,
+				"scrollX": true
+			} );
 
+		},
 
-		} );
+		data () {
+			return {
 
-	},
-
-	data () {
-		return {
-
+			}
 		}
 	}
-}
-</script>
+	</script>
 
-<style lang="css" scoped>
-</style>
+
+	<style lang="css" scoped>
+	</style>

@@ -15,7 +15,7 @@
             <!-- /.box-header -->
             <div class="box-body">
                <div id="app">
-                <practical-user-list></practical-user-list>
+                <practical-user-list :active_user_lists="{{$active_user_list}}"></practical-user-list>
               </div>
               
             </div>
