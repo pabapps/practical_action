@@ -136,7 +136,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $user_id=Crypt::decrypt($id);
+        // $user_id=Crypt::decrypt($id);
+        $user_id= $id;
 
 
         $user = User::where('valid',  1)->where('id',$user_id)->first();
@@ -419,7 +420,8 @@ return redirect()->action('UsersController@index');
 
     public function user_projects(Request $request , $id){
 
-        $user_id=Crypt::decrypt($id);
+        // $user_id=Crypt::decrypt($id);
+        $user_id = $id;
 
         $user = User::where('id',$user_id)->first();
 

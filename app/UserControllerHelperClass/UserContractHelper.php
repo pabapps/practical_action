@@ -158,6 +158,8 @@ class UserContractHelper{
 
 				$user_designation_model  = UserDesignationModel::where('user_id',$user_list->id)->where('valid',1)->first();
 
+				$user_designation = Designation::where('id',$user_designation_model->designation_id)->first();
+
 				$user_department = Department::where('id',$user_designation->department_id)->first();
 
 

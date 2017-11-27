@@ -13319,6 +13319,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	data: function data() {
 		return {};
+	},
+
+	methods: {
+		user_edit: function user_edit(id) {
+			window.location.replace('/users/' + id + '/edit', '_blank');
+			// window.open("{{URL::to('/') . '/users/"+id+"/roles_list'}}", '_blank');
+		},
+		user_project: function user_project(id) {
+			window.location.replace('/user/' + id + '/user_projects', '_blank');
+		}
 	}
 });
 
@@ -13334,7 +13344,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 41 */
@@ -14017,16 +14027,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "user-lists"
     }
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.active_user_lists), function(user_list) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(user_list.user_id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user_list.user_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user_list.user_department))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user_list.user_designation))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user_list.user_contract_time))]), _vm._v(" "), _vm._m(1, true)])
-  })), _vm._v(" "), _vm._m(2)])])
+    return _c('tr', [_c('td', [_vm._v(_vm._s(user_list.user_id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user_list.user_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user_list.user_department))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user_list.user_designation))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user_list.user_contract_time))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-primary",
+      on: {
+        "click": function($event) {
+          _vm.user_edit(user_list.user_id)
+        }
+      }
+    }, [_vm._v("Edit")]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-primary",
+      on: {
+        "click": function($event) {
+          _vm.user_project(user_list.user_id)
+        }
+      }
+    }, [_vm._v("Projects")])])])
+  })), _vm._v(" "), _vm._m(1)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("id")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Department")]), _vm._v(" "), _c('th', [_vm._v("Designation")]), _vm._v(" "), _c('th', [_vm._v("Contract")]), _vm._v(" "), _c('th', [_vm._v("Edit")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('td', [_c('button', {
-    staticClass: "btn btn-primary"
-  }, [_vm._v("Edit")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary"
-  }, [_vm._v("Projects")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('tfoot', [_c('tr')])
 }]}
