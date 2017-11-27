@@ -65,11 +65,11 @@ export default {
 		},
 		methods:{
 			user_edit(id){
-				window.location.replace('/users/'+id+'/edit', '_blank');
+				window.location.href='/users/'+id+'/edit', '_blank';
 				// window.open("{{URL::to('/') . '/users/"+id+"/roles_list'}}", '_blank');
 			},
 			user_project(id){
-				window.location.replace('/user/'+id+'/user_projects', '_blank');
+				window.location.href='/user/'+id+'/user_projects', '_blank';
 			}
 
 		}
