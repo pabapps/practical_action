@@ -206,7 +206,16 @@ class UserContractHelper{
 	}
 
 
+	public static function sendmail_to_active_users(){
+		// dd("working on it");
 
+		$user_contract = UserContract::where('valid',1)->get();
+
+		
+
+		
+
+	} 
 
 
 
