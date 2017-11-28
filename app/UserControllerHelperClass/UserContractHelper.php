@@ -208,9 +208,33 @@ class UserContractHelper{
 
 	public static function sendmail_to_active_users(){
 		// dd("working on it");
-
 		$user_contract = UserContract::where('valid',1)->get();
 
+		foreach ($user_contract as $contract) {
+
+			$date2 = new \DateTime($contract->end_date);
+
+			$o_month = substr($contract->end_date,5,2); 
+			$o_day = substr($contract->end_date,8,2); 
+			$o_year = substr($contract->end_date,0,4); 
+
+			$test_date = \Carbon\Carbon::createFromDate($o_year, $o_month, $o_day )->diff(Carbon::now())->format('%y, %m, %d');
+
+			$array_date = explode(",",$test_date);
+
+			$months = $array_date[1];
+			$days = $array_date[2];
+
+			//if, month is less than 2, mail should be sent form the server
+			if($months<2){
+				
+				$user = User::where('id',$contract->user_id)->first();
+
+				
+
+			}
+			
+		}
 		
 
 		
