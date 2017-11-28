@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\User;
 
 class ContractNotificationMail extends Mailable
 {
@@ -16,10 +17,11 @@ class ContractNotificationMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $user;
+    public function __construct(User $user)
     {
-        //
-    }
+       $this->user = $user;
+   }
 
     /**
      * Build the message.
@@ -28,6 +30,6 @@ class ContractNotificationMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->markdown('email.contractNotification');
     }
 }
