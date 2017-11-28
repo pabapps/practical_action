@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Mail;
 use App\Mail\ContractNotificationMail;
 
+
 class ContractNotificationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -19,9 +20,14 @@ class ContractNotificationJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+
+    protected $user;
+    protected $time;
+
+    public function __construct($user,$time)
     {
-        //
+        $this->user = $user;
+        $this->time = $time;
     }
 
     /**
@@ -31,6 +37,11 @@ class ContractNotificationJob implements ShouldQueue
      */
     public function handle()
     {
-        //
+        //php artisan queue:work database
+        $email = new ContractNotificationMail($this->user,$this->time);
+
+        // Mail::to($this->user->email)->cc("raihan.zaman@practicalaction.org.bd")->send($email);
+         Mail::to("raihan.zaman@practicalaction.org.bd")->send($email);
+
     }
 }

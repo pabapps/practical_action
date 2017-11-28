@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use App\Designation;
 use App\UserDesignationModel;
 use App\Department;
+use Log;
+use App\Jobs\ContractNotificationJob;
 
 
 class UserContractHelper{
@@ -228,9 +230,18 @@ class UserContractHelper{
 			//if, month is less than 2, mail should be sent form the server
 			if($months<2){
 				
-				$user = User::where('id',$contract->user_id)->first();
+				//mail should be sent to the hr personal
+				$user = User::where('id',1)->first();
 
-				
+				// dd($user);
+
+				Log::info("Request Cycle with Queues Begins");        
+
+				$jobs = (new ContractNotificationJob($user,$test_date))->onConnection('database')->delay(10);
+
+				dispatch($jobs);
+
+				Log::info("Request Cycle with Queues Ends");
 
 			}
 			

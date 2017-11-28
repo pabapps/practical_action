@@ -18,9 +18,11 @@ class ContractNotificationMail extends Mailable
      * @return void
      */
     public $user;
-    public function __construct(User $user)
+    public $time;
+    public function __construct(User $user,$time)
     {
        $this->user = $user;
+       $this->time = $time;
    }
 
     /**
