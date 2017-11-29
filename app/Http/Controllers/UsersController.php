@@ -370,7 +370,7 @@ if(!empty($request->contract_start_date) && !empty($request->contract_end_date))
         return redirect()->back();
     }else{
 
-        $district_name = UserContractHelper::userContract($request,$id); 
+        $district_name = UserContractHelper::create_userContract($request,$id); 
 
     }
 

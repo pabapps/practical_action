@@ -17,7 +17,7 @@ use App\Jobs\ContractNotificationJob;
 class UserContractHelper{
 
 
-	public static function userContract(Request $request,$id){
+	public static function create_userContract(Request $request,$id){
 		
 		$old_contract_data = UserContract::where('user_id',$id)->get();
 
