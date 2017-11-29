@@ -13,6 +13,7 @@ use App\UserDesignationModel;
 use App\UserProjectModel;
 use App\Designation;
 use App\Role;
+use App\UserContract;
 
 use App\UserControllerHelperClass\UserContractHelper;
 
@@ -151,6 +152,7 @@ class UsersController extends Controller
         ->where('valid',1)->first();
 
         //user contract date {start_date,end_date}
+       UserContractHelper::get_user_contract($user_id);
 
         if(is_object($user_designation_connection)){
 

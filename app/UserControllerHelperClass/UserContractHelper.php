@@ -252,8 +252,41 @@ class UserContractHelper{
 
 	} 
 
+	/*
+	fetching the contract of an specific user from the given id
+	*/
 
+	public static function get_user_contract($user_id){
 
+		$user_contract = UserContract::where('user_id',$user_id)->where('valid',1)->first();
+
+		$contract_array = array();
+
+		if(is_null($user_contract)){
+
+			$contract_array = array(
+				"start_date" => '',
+				"end_date" => ''
+			);
+			
+		}else{
+
+			$start_date = date("d-m-Y", strtotime($user_contract->start_date));
+
+			$end_date = date("d-m-Y", strtotime($user_contract->end_date));
+
+			$contract_array = array(
+				"start_date" => $start_date,
+				"end_date" => $end_date
+			);
+
+			
+
+		}
+
+		
+
+	}
 
 
 
