@@ -284,7 +284,7 @@ class UserContractHelper{
 
 		}
 
-		
+		return $contract_array;
 
 	}
 

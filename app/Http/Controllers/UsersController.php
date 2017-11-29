@@ -152,7 +152,7 @@ class UsersController extends Controller
         ->where('valid',1)->first();
 
         //user contract date {start_date,end_date}
-       UserContractHelper::get_user_contract($user_id);
+        $user_contract =  UserContractHelper::get_user_contract($user_id);
 
         if(is_object($user_designation_connection)){
 
@@ -165,11 +165,11 @@ class UsersController extends Controller
             // dd($designation_date);
 
             return view('users.user_edit')->with('user',$user)->with('date',$date)->with('matrix_manager',$matrix_manager)
-            ->with('line_manager',$line_manager)->with('user_designation',$user_designation)->with('user_designation_date',$designation_date);
+            ->with('line_manager',$line_manager)->with('user_designation',$user_designation)->with('user_designation_date',$designation_date)->with('user_contract',$user_contract);
         }else{
 
             return view('users.user_edit')->with('user',$user)->with('date',$date)->with('matrix_manager',$matrix_manager)
-            ->with('line_manager',$line_manager);
+            ->with('line_manager',$line_manager)->with('user_contract',$user_contract);
 
         }
 

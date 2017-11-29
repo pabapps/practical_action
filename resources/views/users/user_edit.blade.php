@@ -160,7 +160,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <input type="text" class="form-control pull-right" name="contract_start_date" data-date-format="dd-mm-yyyy" id="contract-start-date" value="">
+              <input type="text" class="form-control pull-right" name="contract_start_date" data-date-format="dd-mm-yyyy" id="contract-start-date" value="{{$user_contract['start_date']}}">
             </div>
             <!-- /.input group -->
           </div>
@@ -171,7 +171,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <input type="text" class="form-control pull-right" name="contract_end_date" data-date-format="dd-mm-yyyy" id="contract-end-date" value="">
+              <input type="text" class="form-control pull-right" name="contract_end_date" data-date-format="dd-mm-yyyy" id="contract-end-date" value="{{$user_contract['end_date']}}">
             </div>
             <!-- /.input group -->
           </div>
