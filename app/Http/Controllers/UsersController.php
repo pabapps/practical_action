@@ -33,14 +33,8 @@ class UsersController extends Controller
     {
         // dd("working on it");
 
-        UserContractHelper::contract_check();
-
         
         $active_user_list =  UserContractHelper::active_user_list();
-
-        //need to send mail to the users who's contract is going to end given that 2 months(60 days) time 
-        //left
-        UserContractHelper::sendmail_to_active_users();
 
         return view('users.users_list')->with('active_user_list',$active_user_list);
     }
@@ -156,7 +150,7 @@ class UsersController extends Controller
         $user_designation_connection = UserDesignationModel::where('user_id',$user_id)
         ->where('valid',1)->first();
 
-        
+        //user contract date {start_date,end_date}
 
         if(is_object($user_designation_connection)){
 

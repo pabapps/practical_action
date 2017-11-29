@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\UserControllerHelperClass\UserContractHelper;
 
 class SendContractNotification extends Command
 {
@@ -11,14 +12,14 @@ class SendContractNotification extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'PracticalAction:ContractNotification';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'sends an email daily to the Hr, letting them know which person contract is going to end';
 
     /**
      * Create a new command instance.
@@ -37,6 +38,11 @@ class SendContractNotification extends Command
      */
     public function handle()
     {
-        //
-    }
+       
+       UserContractHelper::contract_check();
+
+        //need to send mail to the users who's contract is going to end given that 2 months(60 days) time 
+        //left
+       UserContractHelper::sendmail_to_active_users();
+   }
 }
