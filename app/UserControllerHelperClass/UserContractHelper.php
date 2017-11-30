@@ -224,11 +224,12 @@ class UserContractHelper{
 
 			$array_date = explode(",",$test_date);
 
+			$year = $array_date[0];
 			$months = $array_date[1];
 			$days = $array_date[2];
 
 			//if, month is less than 2, mail should be sent form the server
-			if($months<2){
+			if($year==0 && $months<2){
 				
 				//mail should be sent to the hr personal
 				$user = User::where('id',1)->first();

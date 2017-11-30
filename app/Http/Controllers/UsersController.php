@@ -33,7 +33,7 @@ class UsersController extends Controller
     public function index()
     {
         // dd("working on it");
-
+         // UserContractHelper::sendmail_to_active_users();
         
         $active_user_list =  UserContractHelper::active_user_list();
 
