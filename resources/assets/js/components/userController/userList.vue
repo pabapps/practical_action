@@ -5,9 +5,11 @@
 				<tr>
 					<th>id</th>
 					<th>Name</th>
-					<th>Department</th>
 					<th>Designation</th>
+					<th>Department</th>
 					<th>Contract</th>
+					<th>Start Date</th>
+					<th>End Date</th>
 					<th>Edit</th>
 				</tr>
 			</thead>
@@ -16,9 +18,11 @@
 				<tr v-for="user_list in active_user_lists">
 					<td>{{user_list.user_id}}</td>
 					<td>{{user_list.user_name}}</td>
-					<td>{{user_list.user_department}}</td>
 					<td>{{user_list.user_designation}}</td>
+					<td>{{user_list.user_department}}</td>
 					<td>{{user_list.user_contract_time}}</td>
+					<td>{{user_list.start_date}}</td>
+					<td>{{user_list.end_date}}</td>
 					<td><button v-on:click="user_edit(user_list.user_id)" class="btn btn-primary" >Edit</button>
 						<button v-on:click="user_project(user_list.user_id)" class="btn btn-primary" >Projects</button>
 					</td>

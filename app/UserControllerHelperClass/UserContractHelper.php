@@ -118,7 +118,9 @@ class UserContractHelper{
 						"user_name"=>$user_list->name,
 						"user_contract_time"=>'-',
 						"user_designation"=>'-',
-						"user_department"=>'-'
+						"user_department"=>'-',
+						"start_time"=>'-',
+						"end_time"=>'-'
 					);
 
 				}else{
@@ -134,7 +136,9 @@ class UserContractHelper{
 						"user_name"=>$user_list->name,
 						"user_contract_time"=>'-',
 						"user_designation"=>$user_designation->position_name,
-						"user_department"=>$user_department->department
+						"user_department"=>$user_department->department,
+						"start_time"=>'-',
+						"end_time"=>'-'
 					);
 
 				}
@@ -170,9 +174,11 @@ class UserContractHelper{
 					$active_user_array[$count] = array(
 						"user_id"=>$user_list->id,
 						"user_name"=>$user_list->name,
-						"user_contract_time"=>'-',
+						"user_contract_time"=>$test_date,
 						"user_designation"=>'-',
-						"user_department"=>'-'
+						"user_department"=>'-',
+						"start_time"=>$user_contract->start_time,
+						"end_time"=>$user_contract->end_time
 					);
 
 				}else{
@@ -184,7 +190,9 @@ class UserContractHelper{
 						"user_name"=>$user_list->name,
 						"user_contract_time"=>$test_date,
 						"user_designation"=>$user_designation->position_name,
-						"user_department"=>$user_department->department
+						"user_department"=>$user_department->department,
+						"start_time"=>$user_contract->start_time,
+						"end_time"=>$user_contract->end_time
 					);
 
 					$count++;
