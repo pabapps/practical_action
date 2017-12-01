@@ -119,8 +119,8 @@ class UserContractHelper{
 						"user_contract_time"=>'-',
 						"user_designation"=>'-',
 						"user_department"=>'-',
-						"start_time"=>'-',
-						"end_time"=>'-'
+						"start_date"=>'-',
+						"end_date"=>'-'
 					);
 
 				}else{
@@ -137,8 +137,8 @@ class UserContractHelper{
 						"user_contract_time"=>'-',
 						"user_designation"=>$user_designation->position_name,
 						"user_department"=>$user_department->department,
-						"start_time"=>'-',
-						"end_time"=>'-'
+						"start_date"=>'-',
+						"end_date"=>'-'
 					);
 
 				}
@@ -169,6 +169,8 @@ class UserContractHelper{
 				$user_department = Department::where('id',$user_designation->department_id)->first();
 
 
+
+
 				if(is_null($user_designation_model)){
 
 					$active_user_array[$count] = array(
@@ -177,8 +179,8 @@ class UserContractHelper{
 						"user_contract_time"=>$test_date,
 						"user_designation"=>'-',
 						"user_department"=>'-',
-						"start_time"=>$user_contract->start_time,
-						"end_time"=>$user_contract->end_time
+						"start_date"=>$user_contract->start_date,
+						"end_date"=>$user_contract->end_date
 					);
 
 				}else{
@@ -191,8 +193,8 @@ class UserContractHelper{
 						"user_contract_time"=>$test_date,
 						"user_designation"=>$user_designation->position_name,
 						"user_department"=>$user_department->department,
-						"start_time"=>$user_contract->start_time,
-						"end_time"=>$user_contract->end_time
+						"start_date"=>$user_contract->start_date,
+						"end_date"=>$user_contract->end_date
 					);
 
 					$count++;
