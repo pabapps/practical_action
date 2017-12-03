@@ -279,7 +279,7 @@ class UserContractHelper{
 
 			$contract_array = array(
 				"start_date" => '',
-				"end_date" => ''
+				"end_date" => '',
 			);
 			
 		}else{
@@ -290,7 +290,8 @@ class UserContractHelper{
 
 			$contract_array = array(
 				"start_date" => $start_date,
-				"end_date" => $end_date
+				"end_date" => $end_date,
+				"early_notify_email"=>$user_contract->early_notify_month
 			);
 
 			

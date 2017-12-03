@@ -182,14 +182,17 @@
           </div>
 
           <div class="form-group">
-            <label>Early Notification</label>
+            <label>Early Notification (Month/Months)</label>
             <select  class="form-control" id="early-notification" name="early_notification">
-              <option value='1'>1 Month</option>
-              <option value='2'>2 Months</option>
-              <option value='3'>3 Months</option>
-              <option value='4'>4 Months</option>
-              <option value='5'>5 Months</option>
-              <option value='6'>6 Months</option>
+              @if(isset($user_contract['early_notify_email']))
+              <option value="{{$user_contract['early_notify_email']}}">{{$user_contract['early_notify_email']}}</option>
+              @endif
+              <option value='1'>1</option>
+              <option value='2'>2</option>
+              <option value='3'>3</option>
+              <option value='4'>4</option>
+              <option value='5'>5</option>
+              <option value='6'>6</option>
             </select>
 
           </div>
