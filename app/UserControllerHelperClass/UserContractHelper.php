@@ -39,7 +39,7 @@ class UserContractHelper{
 
 				UserContract::where('user_id', $id)
 				->update(['start_date' =>  \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_start_date)->toDateString(),
-					'end_date'=> \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_end_date)->toDateString()]);
+					'end_date'=> \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_end_date)->toDateString(),'early_notify_month'=>$request->early_notification]);
 
 
 
@@ -62,6 +62,8 @@ class UserContractHelper{
 		$new_contract->start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_start_date)->toDateString();
 
 		$new_contract->end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_end_date)->toDateString();
+
+		$new_contract->early_notify_month = $request->early_notification;
 
 		$new_contract->save();
 	}
