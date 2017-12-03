@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Designation;
 use App\UserDesignationModel;
 use App\Department;
+use App\UserContractNotification;
 use Log;
 use App\Jobs\ContractNotificationJob;
 
@@ -228,6 +229,10 @@ class UserContractHelper{
 
 			$date2 = new \DateTime($contract->end_date);
 
+			$early_notify_month = $contract->early_notify_month;
+
+			// dd($early_notify_month);
+
 			$o_month = substr($contract->end_date,5,2); 
 			$o_day = substr($contract->end_date,8,2); 
 			$o_year = substr($contract->end_date,0,4); 
@@ -241,12 +246,12 @@ class UserContractHelper{
 			$days = $array_date[2];
 
 			//if, month is less than 2, mail should be sent form the server
-			if($year==0 && $months<2){
+			if($year==0 && $months<=$early_notify_month && $early_notify_month!=0){
 				
 				//mail should be sent to the hr personal
 				$user = User::where('id',1)->first();
 
-				// dd($user);
+				
 
 				Log::info("Request Cycle with Queues Begins");        
 
@@ -264,6 +269,14 @@ class UserContractHelper{
 		
 
 	} 
+
+	/**
+	 * checking if the mail is sent within the last 7 days for a an user, if yes return false otherwise true
+	 * @return [type] [description]
+	 */
+	private static function check_if_mail_sent(){
+
+	}
 
 	/*
 	fetching the contract of an specific user from the given id
