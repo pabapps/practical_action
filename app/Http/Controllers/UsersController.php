@@ -364,11 +364,6 @@ if(!empty($request->contract_start_date) && !empty($request->contract_end_date))
     $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_start_date);
     $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->contract_end_date);
 
-   if(empty($request->early_notification)){
-     $request->session()->flash('alert-danger', 'Please set the early notification type');
-
-        return redirect()->back();
-   }
 
     if(strtotime($end_date) < strtotime($start_date)){
         $request->session()->flash('alert-danger', 'End date cannot be smaller than the start date');

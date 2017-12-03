@@ -183,8 +183,14 @@
 
           <div class="form-group">
             <label>Early Notification</label>
-            <input type="number" class="form-control" id="early-notification" name="early_notification"
-            placeholder="Before how many months you want the email notifiation to start" >
+            <select  class="form-control" id="early-notification" name="early_notification">
+              <option value='1'>1 Month</option>
+              <option value='2'>2 Months</option>
+              <option value='3'>3 Months</option>
+              <option value='4'>4 Months</option>
+              <option value='5'>5 Months</option>
+              <option value='6'>6 Months</option>
+            </select>
 
           </div>
 
