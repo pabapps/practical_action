@@ -251,7 +251,9 @@ class UserContractHelper{
 				//mail should be sent to the hr personal
 				$user = User::where('id',1)->first();
 
-				
+				$mail_sent = static::check_if_mail_sent($user);
+
+				dd($mail_sent);
 
 				Log::info("Request Cycle with Queues Begins");        
 
@@ -271,10 +273,22 @@ class UserContractHelper{
 	} 
 
 	/**
-	 * checking if the mail is sent within the last 7 days for a an user, if yes return false otherwise true
-	 * @return [type] [description]
+	 * checking if the mail is sent within the last 7 days for a an user
+	 * @return [boolean] [ if yes return false otherwise true ]
 	 */
-	private static function check_if_mail_sent(){
+	private static function check_if_mail_sent(User $user){
+
+		$previous_mail_sent_info = UserContractNotification::where("user_id",$user->id)->get();
+
+		$last_mail_sent_ingo = collect($previous_mail_sent_info)->last();
+
+		//where there is no data about ther user
+
+		if(is_null($last_mail_sent_ingo)){
+			return false;
+		}else{
+			dd("working on the last");
+		}		
 
 	}
 
