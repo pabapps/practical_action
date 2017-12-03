@@ -108,6 +108,11 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label>Remarks</label>
+          <textarea rows="4" cols="40" class="form-control" placeholder="If anything important you want to mention (Optional)"></textarea>
+        </div>
+
       </div>
 
       <div class="col-md-6">
@@ -176,6 +181,13 @@
             <!-- /.input group -->
           </div>
 
+          <div class="form-group">
+            <label>Early Notification</label>
+            <input type="number" class="form-control" id="early-notification" name="early_notification"
+            placeholder="Before how many months you want the email notifiation to start" >
+
+          </div>
+
 
           <div class="form-group">
             <label>Confirm password</label>
@@ -183,6 +195,8 @@
             placeholder="please enter your password again" >
 
           </div>
+
+
 
           
 
@@ -232,7 +246,7 @@
   </div>
   {!! Form::close() !!}
 
- 
+
 
 
   <!-- /.box-body -->
