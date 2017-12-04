@@ -278,17 +278,21 @@ class UserContractHelper{
 			
 		}
 
-		dd($mail_sender_array);
+		// dd($mail_sender_array);
+		if(count($mail_sender_array)>0){
+			dd("working on it");
 
+			Log::info("Request Cycle with Queues Begins");        
+
+			$jobs = (new ContractNotificationJob($user,$test_date))->onConnection('database')->delay(10);
+
+			dispatch($jobs);
+
+			Log::info("Request Cycle with Queues Ends");
+		}
 		
 
-		// Log::info("Request Cycle with Queues Begins");        
-
-		// $jobs = (new ContractNotificationJob($user,$test_date))->onConnection('database')->delay(10);
-
-		// dispatch($jobs);
-
-		// Log::info("Request Cycle with Queues Ends");
+		
 
 
 	}
