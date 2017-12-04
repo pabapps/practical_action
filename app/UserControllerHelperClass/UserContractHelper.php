@@ -225,6 +225,9 @@ class UserContractHelper{
 		// dd("working on it");
 		$user_contract = UserContract::where('valid',1)->get();
 
+		$mail_sender_array = array();
+		$count = 1;
+
 		foreach ($user_contract as $contract) {
 
 			$date2 = new \DateTime($contract->end_date);
@@ -232,6 +235,7 @@ class UserContractHelper{
 			$early_notify_month = $contract->early_notify_month;
 
 			// dd($early_notify_month);
+
 
 			$o_month = substr($contract->end_date,5,2); 
 			$o_day = substr($contract->end_date,8,2); 
@@ -245,48 +249,69 @@ class UserContractHelper{
 			$months = $array_date[1];
 			$days = $array_date[2];
 
+
+
 			//if, month is less than 2, mail should be sent form the server
 			if($year==0 && $months<=$early_notify_month && $early_notify_month!=0){
-				
+
 				//mail should be sent to the hr personal
 				$user = User::where('id',1)->first();
 
-				$mail_sent = static::check_if_mail_sent($user);
+				$mail_sent = static::check_if_mail_sent($contract);
 
-				dd($mail_sent);
+				if($mail_sent==false){
+					//send  mail
+					$mail_sender_array[$count] = array(
+						'user_id' =>$contract->user_id,
+						'time'=> $year." Year, ".$months." months, ".$days." days"
+					);
 
-				Log::info("Request Cycle with Queues Begins");        
+					$count = $count + 1;
 
-				$jobs = (new ContractNotificationJob($user,$test_date))->onConnection('database')->delay(10);
+					
+				}else{
+					//mail already sent
+				}
 
-				dispatch($jobs);
-
-				Log::info("Request Cycle with Queues Ends");
-
+				
 			}
 			
 		}
-		
+
+		dd($mail_sender_array);
 
 		
 
-	} 
+		// Log::info("Request Cycle with Queues Begins");        
+
+		// $jobs = (new ContractNotificationJob($user,$test_date))->onConnection('database')->delay(10);
+
+		// dispatch($jobs);
+
+		// Log::info("Request Cycle with Queues Ends");
+
+
+	}
+
+
 
 	/**
 	 * checking if the mail is sent within the last 7 days for a an user
 	 * @return [boolean] [ if yes return false otherwise true ]
 	 */
-	private static function check_if_mail_sent(User $user){
+	private static function check_if_mail_sent($user){
 
-		$previous_mail_sent_info = UserContractNotification::where("user_id",$user->id)->get();
+		$previous_mail_sent_info = UserContractNotification::where("user_id",$user->user_id)->where("valid",1)->get();
 
 		$last_mail_sent_info = collect($previous_mail_sent_info)->last();
 
 		//where there is no data about ther user
 
+
+
 		if(is_null($last_mail_sent_info)){
 
-			static::add_user_to_notofication_log($user->id);
+			static::add_user_to_notofication_log($user->user_id);
 			return false;
 		}else{
 
@@ -304,9 +329,9 @@ class UserContractHelper{
 
 			if($days_without_space>=7){
 				//mail need to be sent
-				static::add_user_to_notofication_log($user->id);
+				static::add_user_to_notofication_log($user->user_id);
 				return false;
-				
+
 			}else{
 				//no need to send any mails
 				return true;
