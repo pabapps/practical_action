@@ -285,10 +285,30 @@ class UserContractHelper{
 		//where there is no data about ther user
 
 		if(is_null($last_mail_sent_ingo)){
+
+			static::add_user_to_notofication_log($user->id);
 			return false;
 		}else{
-			dd("working on the last");
+			
 		}		
+
+	}
+
+
+	private static function add_user_to_notofication_log($user_id){
+
+		$today_date = date("Y-m-d");
+
+		// dd($today_date);
+
+		$new_log = new UserContractNotification;
+
+		$new_log->user_id = $user_id;
+		$new_log->mail_sent_date = $today_date;
+		$new_log->valid = 1;
+
+		$new_log->save();
+
 
 	}
 
