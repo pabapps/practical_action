@@ -280,16 +280,37 @@ class UserContractHelper{
 
 		$previous_mail_sent_info = UserContractNotification::where("user_id",$user->id)->get();
 
-		$last_mail_sent_ingo = collect($previous_mail_sent_info)->last();
+		$last_mail_sent_info = collect($previous_mail_sent_info)->last();
 
 		//where there is no data about ther user
 
-		if(is_null($last_mail_sent_ingo)){
+		if(is_null($last_mail_sent_info)){
 
 			static::add_user_to_notofication_log($user->id);
 			return false;
 		}else{
-			
+
+			$o_month = substr($last_mail_sent_info->mail_sent_date,5,2); 
+			$o_day = substr($last_mail_sent_info->mail_sent_date,8,2); 
+			$o_year = substr($last_mail_sent_info->mail_sent_date,0,4); 
+
+			$test_date = \Carbon\Carbon::createFromDate($o_year, $o_month, $o_day )->diff(Carbon::now())->format('%y, %m, %d');
+
+			$array_date = explode(",",$test_date);
+
+			$days = $array_date[2];
+
+			$days_without_space = str_replace(' ', '', $days);
+
+			if($days_without_space>=7){
+				//mail need to be sent
+				static::add_user_to_notofication_log($user->id);
+				return false;
+				
+			}else{
+				//no need to send any mails
+				return true;
+			}
 		}		
 
 	}
