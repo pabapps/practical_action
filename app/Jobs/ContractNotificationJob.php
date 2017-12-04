@@ -28,6 +28,8 @@ class ContractNotificationJob implements ShouldQueue
     {
         $this->user = $user;
         $this->time = $time;
+
+        // dd($time);
     }
 
     /**
@@ -37,8 +39,11 @@ class ContractNotificationJob implements ShouldQueue
      */
     public function handle()
     {
+         // dd($this->time);
+
         //php artisan queue:work database
         $email = new ContractNotificationMail($this->user,$this->time);
+
 
         // Mail::to($this->user->email)->cc("raihan.zaman@practicalaction.org.bd")->send($email);
          Mail::to("raihan.zaman@practicalaction.org.bd")->send($email);

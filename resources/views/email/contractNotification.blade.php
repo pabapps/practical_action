@@ -1,6 +1,12 @@
 @component('mail::message')
 
-{{$user->name}} is going to over soon! Please issue the contract or you can just ignore it! {{$time}}
+@foreach ($time as $tim)
+
+{{$tim['user_name']}} is going to over soon! Please issue the contract or you can just ignore it! {{$tim['time']}} <br>
+
+@endforeach
+
+
 
 
 Thanks,<br>

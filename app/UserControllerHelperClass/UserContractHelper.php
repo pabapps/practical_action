@@ -255,14 +255,19 @@ class UserContractHelper{
 			if($year==0 && $months<=$early_notify_month && $early_notify_month!=0){
 
 				//mail should be sent to the hr personal
-				$user = User::where('id',1)->first();
+				
 
 				$mail_sent = static::check_if_mail_sent($contract);
 
 				if($mail_sent==false){
 					//send  mail
+
+					$user = User::where('id',$contract->user_id)->first();
+
+
 					$mail_sender_array[$count] = array(
 						'user_id' =>$contract->user_id,
+						'user_name' =>$user->name,
 						'time'=> $year." Year, ".$months." months, ".$days." days"
 					);
 
@@ -280,11 +285,14 @@ class UserContractHelper{
 
 		// dd($mail_sender_array);
 		if(count($mail_sender_array)>0){
-			dd("working on it");
+			
+			// dd("working");
+
+			$user = User::where('id',1)->first();
 
 			Log::info("Request Cycle with Queues Begins");        
 
-			$jobs = (new ContractNotificationJob($user,$test_date))->onConnection('database')->delay(10);
+			$jobs = (new ContractNotificationJob($user,$mail_sender_array))->onConnection('database')->delay(10);
 
 			dispatch($jobs);
 
