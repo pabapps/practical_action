@@ -13,6 +13,8 @@ use App\Department;
 use App\UserContractNotification;
 use Log;
 use App\Jobs\ContractNotificationJob;
+use Mail;
+use App\Mail\ContractNotificationMail;
 
 
 class UserContractHelper{
@@ -289,6 +291,7 @@ class UserContractHelper{
 			// dd("working");
 
 			$user = User::where('id',1)->first();
+			
 
 			Log::info("Request Cycle with Queues Begins");        
 

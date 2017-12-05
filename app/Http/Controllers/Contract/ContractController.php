@@ -48,6 +48,12 @@ class ContractController extends Controller
         return json_encode($users);
     }
 
+    //working on it
+
+    public function end_notify_contract_users(){
+        dd("working on it");
+    }
+
     /**
      * Show the form for creating a new resource.
      *

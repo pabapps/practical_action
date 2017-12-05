@@ -48,6 +48,8 @@ Route::get('/user/user_connected_project','UsersController@user_connected_projec
 //modal submit request from use
 Route::post('/user/modal_designation','UsersController@modal_designation');
 
+Route::get('users/end_notfy_users','UsersController@end_notify_contract_users')->name('endUserNotification');
+
 Route::resource('/users','UsersController');
 
 
@@ -268,6 +270,9 @@ Route::resource('/pab_contacts','ContactsController');
 **/
 //get all the users for the 
 Route::get('/contracts/get_all_users',"Contract\ContractController@get_all_users");
+
+
+
 Route::resource('/contracts',"Contract\ContractController");
 
 

@@ -40,6 +40,11 @@ class UsersController extends Controller
         return view('users.users_list')->with('active_user_list',$active_user_list);
     }
 
+
+    public function end_notify_contract_users(){
+        dd("working on it");
+    }
+
     public function get_all_users(){
 
         // dd("working on it");

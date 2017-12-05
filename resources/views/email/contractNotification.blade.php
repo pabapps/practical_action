@@ -9,6 +9,8 @@
 
 
 
+[example link]({{route('endUserNotification')}})
+
 Thanks,<br>
 Practical Action
 @endcomponent
