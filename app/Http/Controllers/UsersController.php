@@ -34,79 +34,100 @@ class UsersController extends Controller
     public function index()
     {
         // dd("working on it");
-         UserContractHelper::sendmail_to_active_users();
-        
-        $active_user_list =  UserContractHelper::active_user_list();
+       UserContractHelper::sendmail_to_active_users();
 
-        return view('users.users_list')->with('active_user_list',$active_user_list);
-    }
+       $active_user_list =  UserContractHelper::active_user_list();
+
+       return view('users.users_list')->with('active_user_list',$active_user_list);
+   }
 
     //shows all the users who's contracts are about to go out
-    public function end_notify_contract_users(){
-        
-        $user_contract_list = UserContractNotification::where("valid",1)->get();
+   public function end_notify_contract_users(){
+
+    $user_contract_list = UserContractNotification::where("valid",1)->get();
 
         // dd($user_contract_list);
 
-        $user_contract_list =  json_encode($user_contract_list);
+    $user_contract_array = array();
+    $count = 1;
 
-        return view('users.contract.contractList')->with('user_contract_list',$user_contract_list);
+    foreach ($user_contract_list as $user_contract) {
+        $contract_data = UserContract::where('user_id',$user_contract->user_id)->get();
+
+        $contract = collect($contract_data)->last();
+
+        $user = User::where("id",$user_contract->user_id)->where("valid",1)->first();
+
+        $user_contract_array[$count] = array(
+            "id"=>$user->id,
+            "user_name"=>$user->name,
+            "start_date"=>$contract_data->start_date,
+            "end_date"=>$contract_data->end_date
+        );
+
+        $count = $count + 1;
 
     }
 
-    public function get_all_users(){
+    $user_contract_list =  json_encode($user_contract_array);
+
+    return view('users.contract.contractList')->with('user_contract_list',$user_contract_list);
+
+}
+
+public function get_all_users(){
 
         // dd("working on it");
 
-        $query_get_all_users="
-        SELECT 
-        id,
-        users.name,
-        users.email,
-        users.phone_num,
-        users.gender
-        FROM users
-        WHERE users.valid=1
-        ";
-        $users=DB::select($query_get_all_users);
-        $users_collection= collect($users);
+    $query_get_all_users="
+    SELECT 
+    id,
+    users.name,
+    users.email,
+    users.phone_num,
+    users.gender
+    FROM users
+    WHERE users.valid=1
+    ";
+    $users=DB::select($query_get_all_users);
+    $users_collection= collect($users);
         // return Datatables::of(User::all())->make(true);
     // dd($reservation_collection);
-        return Datatables::of($users_collection)
-        ->addColumn('action', function ($users_collection) {
-            return ' <a href="'. url('/users') . '/' . 
-            Crypt::encrypt($users_collection->id) . 
-            '/edit' .'"' . 
-            'class="btn btn-primary btn-danger"><i class="glyphicon "></i> Edit</a>'.
-            ' <a href="'. url('/user') . '/' . 
-            Crypt::encrypt($users_collection->id) . 
-            '/user_projects' .'"' . 
-            'class="btn btn-primary btn-success"><i class="glyphicon "></i>Projects</a>';
-        })
-        ->editColumn('id', '{{$id}}')
-        ->setRowId('id')
-        ->make(true);
+    return Datatables::of($users_collection)
+    ->addColumn('action', function ($users_collection) {
+        return ' <a href="'. url('/users') . '/' . 
+        Crypt::encrypt($users_collection->id) . 
+        '/edit' .'"' . 
+        'class="btn btn-primary btn-danger"><i class="glyphicon "></i> Edit</a>'.
+        ' <a href="'. url('/user') . '/' . 
+        Crypt::encrypt($users_collection->id) . 
+        '/user_projects' .'"' . 
+        'class="btn btn-primary btn-success"><i class="glyphicon "></i>Projects</a>';
+    })
+    ->editColumn('id', '{{$id}}')
+    ->setRowId('id')
+    ->make(true);
 
-    }
+}
 
 
-    public function get_line_managers(Request $request){ 
+public function get_line_managers(Request $request){ 
 
-        $id = $request->id;
+    $id = $request->id;
 
-        $search_term = $request->input('term');
+    $search_term = $request->input('term');
 
-        $query_users= "
-        SELECT users.id , users.name AS text
-        FROM users WHERE users.id!= '$id' AND users.name LIKE '%{$search_term}%' AND users.valid=1";
+    $query_users= "
+    SELECT users.id , users.name AS text
+    FROM users WHERE users.id!= '$id' AND users.name LIKE '%{$search_term}%' AND users.valid=1";
 
-        $users = DB::select($query_users);
+    $users = DB::select($query_users);
 
         // dd($users);
 
-        return response()->json($users);
+    return response()->json($users);
 
-    }
+}
 
     /**
      * Show the form for creating a new resource.
@@ -309,13 +330,13 @@ class UsersController extends Controller
                 if($user_designation->designation_id != $request->designation){
 
 
-                   $old_designation_date = date_create($user_designation->start_date);
+                 $old_designation_date = date_create($user_designation->start_date);
 
-                   $old_designation_date = date_format($old_designation_date, "d-m-Y");
+                 $old_designation_date = date_format($old_designation_date, "d-m-Y");
 
                  //another small check to make sure that the new date has to be greated than the old designation date
 
-                   if(strtotime($date)>strtotime($old_designation_date)){
+                 if(strtotime($date)>strtotime($old_designation_date)){
                     $designation = UserDesignationModel::where('user_id',$id)->update(['valid'=>0,'end_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
 
                     $designation = new UserDesignationModel;
@@ -338,10 +359,10 @@ class UsersController extends Controller
                     //if the data matches that means the old user_desgnationa and the requested 
                     //designation is the same. Therefore, just updating the start_date in the database
 
-               $designation = UserDesignationModel::where('user_id',$id)->where('designation_id',$user_designation->designation_id)->update(['start_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
-           }
+             $designation = UserDesignationModel::where('user_id',$id)->where('designation_id',$user_designation->designation_id)->update(['start_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
+         }
 
-       }else{
+     }else{
 
                 //if old data does not exist, create a designation for this user
 
@@ -390,9 +411,9 @@ if(!empty($request->contract_start_date) && !empty($request->contract_end_date))
     }
 
 }else{
-   $request->session()->flash('alert-danger', 'Date fields cannot be empty');
+ $request->session()->flash('alert-danger', 'Date fields cannot be empty');
 
-   return redirect()->back();
+ return redirect()->back();
 }
 
         //creating the roles of an user

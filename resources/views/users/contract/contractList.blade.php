@@ -15,7 +15,7 @@
             <!-- /.box-header -->
             <div class="box-body">
                <div id="app">
-                
+                <practical-user-contract-list :user_contract_list="{{$user_contract_list}}"></practical-user-contract-list>
               </div>
               
             </div>
