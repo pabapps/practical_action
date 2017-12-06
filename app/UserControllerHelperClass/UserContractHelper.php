@@ -414,6 +414,11 @@ class UserContractHelper{
 
 	public static function contract_end_mail_notification(Request $request){
 
+		// dd("testing");
+
+		UserContractNotification::where('user_id', $request->user_id)
+				->update(['valid'=>0]);
+
 	}
 
 

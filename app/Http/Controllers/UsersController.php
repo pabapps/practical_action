@@ -78,7 +78,7 @@ class UsersController extends Controller
 
 public function contract_end_mail_notification(Request $request){
 
-        UserContractHelper::UserContractHelper($request);
+        UserContractHelper::contract_end_mail_notification($request);
     
 }
 

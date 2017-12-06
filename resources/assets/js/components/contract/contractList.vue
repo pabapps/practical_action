@@ -66,12 +66,12 @@ export default {
 		end_notification(id){
 			console.log(id);
 
-			axios.post('/user', {
-				firstName: 'Fred',
-				lastName: 'Flintstone'
+			axios.post('/users/contract_end_mail_notification', {
+				user_id: id
 			})
 			.then(function (response) {
 				console.log(response);
+				location.reload();
 			})
 			.catch(function (error) {
 				console.log(error);
