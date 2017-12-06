@@ -75,6 +75,13 @@ class UsersController extends Controller
 
 }
 
+
+public function contract_end_mail_notification(Request $request){
+
+        UserContractHelper::UserContractHelper($request);
+    
+}
+
 public function get_all_users(){
 
         // dd("working on it");
@@ -128,6 +135,9 @@ public function get_line_managers(Request $request){
     return response()->json($users);
 
 }
+
+
+
 
     /**
      * Show the form for creating a new resource.

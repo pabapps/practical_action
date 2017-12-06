@@ -410,9 +410,11 @@ class UserContractHelper{
 
 	}
 
+	//stops mail notification to be sent to the hr for the requested user contract
 
+	public static function contract_end_mail_notification(Request $request){
 
-
+	}
 
 
 

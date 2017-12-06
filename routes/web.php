@@ -50,6 +50,8 @@ Route::post('/user/modal_designation','UsersController@modal_designation');
 
 Route::get('users/end_notfy_users','UsersController@end_notify_contract_users')->name('endUserNotification');
 
+Route::post('/users/contract_end_mail_notification','UsersController@contract_end_mail_notification');
+
 Route::resource('/users','UsersController');
 
 
