@@ -65,6 +65,17 @@ export default {
 
 		end_notification(id){
 			console.log(id);
+
+			axios.post('/user', {
+				firstName: 'Fred',
+				lastName: 'Flintstone'
+			})
+			.then(function (response) {
+				console.log(response);
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
 		}
 
 	}
