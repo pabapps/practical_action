@@ -46,8 +46,11 @@ class UsersController extends Controller
         
         $user_contract_list = UserContractNotification::where("valid",1)->get();
 
-        dd($user_contract_list);
+        // dd($user_contract_list);
 
+        $user_contract_list =  json_encode($user_contract_list);
+
+        return view('users.contract.contractList')->with('user_contract_list',$user_contract_list);
 
     }
 
