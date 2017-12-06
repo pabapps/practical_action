@@ -14,6 +14,7 @@ use App\UserProjectModel;
 use App\Designation;
 use App\Role;
 use App\UserContract;
+use App\UserContractNotification;
 
 use App\UserControllerHelperClass\UserContractHelper;
 
@@ -40,9 +41,14 @@ class UsersController extends Controller
         return view('users.users_list')->with('active_user_list',$active_user_list);
     }
 
-
+    //shows all the users who's contracts are about to go out
     public function end_notify_contract_users(){
-        dd("working on it");
+        
+        $user_contract_list = UserContractNotification::where("valid",1)->get();
+
+        dd($user_contract_list);
+
+
     }
 
     public function get_all_users(){
