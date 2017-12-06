@@ -61,8 +61,8 @@ class UsersController extends Controller
         $user_contract_array[$count] = array(
             "id"=>$user->id,
             "user_name"=>$user->name,
-            "start_date"=>$contract_data->start_date,
-            "end_date"=>$contract_data->end_date
+            "start_date"=>$contract->start_date,
+            "end_date"=>$contract->end_date
         );
 
         $count = $count + 1;

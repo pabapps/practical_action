@@ -13,6 +13,16 @@
 			</thead>
 			<tbody>
 
+				<tr v-for="user_list in user_contract_list">
+					<td>{{user_list.id}}</td>
+					<td>{{user_list.user_name}}</td>
+					<td>{{user_list.start_date}}</td>
+					<td>{{user_list.end_date}}</td>
+					<td><button v-on:click="end_notification(user_list.id)" class="btn btn-primary" >End Notification</button>
+					</td>
+					
+				</tr>
+
 				
 
 			</tbody>
@@ -50,6 +60,13 @@ export default {
 		return {
 
 		}
+	},
+	methods:{
+
+		end_notification(id){
+			console.log(id);
+		}
+
 	}
 }
 </script>
