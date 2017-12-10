@@ -200,12 +200,14 @@
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
+              @role('Humane Resource')
             <li {!! Request::is('*Settings') ? ' class="active"' : null !!} ><a href="{{URL::to('/') . '/register'}}"><i class="fa fa-circle-o"></i>Register Users</a></li>
             <li {!! Request::is('*Settings') ? ' class="active"' : null !!} ><a href="{{URL::to('/') . '/users'}}"><i class="fa fa-circle-o"></i>Users list</a></li>
             <li {!! Request::is('*Settings') ? ' class="active"' : null !!} ><a href="{{URL::to('/') . '/roles'}}"><i class="fa fa-circle-o"></i>Roles</a></li>
             <li {!! Request::is('*Settings') ? ' class="active"' : null !!} ><a href="{{URL::to('/') . '/permissions'}}"><i class="fa fa-circle-o"></i>Permissions</a></li>
             <li {!! Request::is('*Settings') ? ' class="active"' : null !!} ><a href="{{URL::to('/') . '/roles/user_roles'}}"><i class="fa fa-circle-o"></i>User Roles</a></li>
             <li {!! Request::is('*Settings') ? ' class="active"' : null !!} ><a href="{{URL::to('/') . '/permissions/roles_list'}}"><i class="fa fa-circle-o"></i>Role permission</a></li>
+            @endrole
           </ul>
         </li>    
       </ul>
