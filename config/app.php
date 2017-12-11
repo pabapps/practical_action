@@ -181,6 +181,7 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
         Elibyy\TCPDF\ServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
     ],
 
@@ -234,7 +235,8 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
-        'PDF' => Elibyy\TCPDF\Facades\TCPDF::class
+        'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
 
     ],
 
