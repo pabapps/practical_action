@@ -14,7 +14,7 @@
         </div>
 
         <div id="app">
-          <practical-contact-display :contacts="{{$query_contacts}}"></practical-contact-display>
+          <practical-contact-edit :contacts="{{$query_contacts}}"></practical-contact-edit>
         </div>
         
         <!-- /.box-body -->
