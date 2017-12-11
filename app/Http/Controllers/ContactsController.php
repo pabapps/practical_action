@@ -332,7 +332,7 @@ class ContactsController extends Controller
      */
     public function edit($id)
     {
-        //
+        dd("testing this ");
     }
 
     /**
