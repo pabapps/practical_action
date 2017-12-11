@@ -25,6 +25,50 @@
 				</tfoot>
 			</table>
 		</div>
+
+		
+
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Modal Header</h4>
+					</div>
+					<div class="modal-body">
+						<section class="content">
+
+
+									<!-- Profile Image -->
+									<div class="box box-primary">
+										<div class="box-body box-profile">
+											<img class="profile-user-img img-responsive " src="" alt="User profile picture" id="contact-image" height="200" width="200">
+
+
+											<h3 class="profile-username text-center">Nina Mcintire</h3>
+
+										</div>
+										<!-- /.box-body -->
+									</div>
+									<!-- /.box -->
+								
+							
+						</section>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
 	</div>
 </template>
 
@@ -35,7 +79,7 @@ export default {
 
 	props:['contacts'],
 
-	
+
 	data () {
 		return {
 			skills:[]
@@ -88,7 +132,12 @@ export default {
 				}
 			})
 			.then(function (response) {
-				console.log(response.data['category'].name);
+				console.log(response.data['contact'].pic_path);
+				$('#myModal').modal('show');
+
+
+				var edit_save = document.getElementById("contact-image");
+				edit_save.src = ""+response.data['contact'].pic_path;
 			})
 			.catch(function (error) {
 				console.log(error);
