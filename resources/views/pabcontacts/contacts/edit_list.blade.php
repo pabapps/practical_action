@@ -12,9 +12,6 @@
         <div class="box-header">
           <h3 class="box-title">Contact list</h3>
         </div>
-        <a href="{{URL::to('/') . '/pab_contacts/create'}}"><h1>Create new Contacts</h1></a>
-        <!-- /.box-header -->
-
 
         <div id="app">
           <practical-contact-display :contacts="{{$query_contacts}}"></practical-contact-display>

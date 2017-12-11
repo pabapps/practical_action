@@ -27,12 +27,12 @@ class ContactsController extends Controller
 
     public function index()
     {
-         $query_contacts =  DB::table('contacts')->select(['id', 'name','email1'])->get();
+       $query_contacts =  DB::table('contacts')->select(['id', 'name','email1'])->get();
 
         // $contact_collection = collect($query_contacts);
 
-        return view('pabcontacts.contacts.contacts')->with('query_contacts',$query_contacts);
-    }
+       return view('pabcontacts.contacts.contacts')->with('query_contacts',$query_contacts);
+   }
 
     /**
      * resturns all the contacts to the front end through an ajax request
@@ -109,7 +109,7 @@ class ContactsController extends Controller
             'primary_email' =>'required',
             'mobile' =>'required',
             'address' =>'required', 
-            ]);
+        ]);
 
         if(!empty($request->file('pic'))){
         // typing to save the path of the pic
@@ -332,8 +332,12 @@ class ContactsController extends Controller
      */
     public function edit($id)
     {
-        dd("testing this ");
-    }
+      $query_contacts =  DB::table('contacts')->select(['id', 'name','email1'])->get();
+
+        // $contact_collection = collect($query_contacts);
+
+      return view('pabcontacts.contacts.edit_list')->with('query_contacts',$query_contacts);
+  }
 
     /**
      * Update the specified resource in storage.
