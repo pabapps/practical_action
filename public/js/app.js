@@ -12841,8 +12841,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			// console.log(this.skills[0].name);
 		});
-
-		console.log(this.contacts);
 	},
 
 	methods: {
@@ -12863,6 +12861,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		greet: function greet(id) {
 			console.log(id);
+
+			axios.get('/pab_contacts/get_specific_contact', {
+				params: {
+					contact_id: id
+				}
+			}).then(function (response) {
+				console.log(response.data['category'].name);
+			}).catch(function (error) {
+				console.log(error);
+			});
 		}
 	}
 });
@@ -13460,7 +13468,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 46 */
@@ -14487,7 +14495,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.greet(skill.id)
         }
       }
-    }, [_vm._v("Submit")])])])
+    }, [_vm._v("Details")])])])
   })), _vm._v(" "), _vm._m(1)])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("id")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Edit")])])])

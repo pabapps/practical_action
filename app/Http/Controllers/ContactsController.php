@@ -167,6 +167,8 @@ class ContactsController extends Controller
 
     public function get_specific_contact(Request $request){
 
+        // dd($request->contact_id);
+
         $contact_id = $request->contact_id;
 
         $contact_details = Contacts::where('id',$contact_id)->first();

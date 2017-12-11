@@ -15,7 +15,7 @@
 						<td>{{skill.id}}</td>
 						<td>{{skill.name}}</td>
 						<td>{{skill.email1}}</td>
-						<td><button v-on:click="greet(skill.id)" class="btn btn-primary" >Submit</button></td>
+						<td><button v-on:click="greet(skill.id)" class="btn btn-primary" >Details</button></td>
 					</tr>
 
 				</tbody>
@@ -48,15 +48,15 @@ export default {
 		this.backEnd();
 
 		this.$http.get('/pab_contacts/get_all_contacts', {
-				
-			}).then(query_contacts => {
-				this.skills = query_contacts.body;
+
+		}).then(query_contacts => {
+			this.skills = query_contacts.body;
 
 				// console.log(this.skills[0].name);
 			})
 
 
-			console.log(this.contacts);
+
 
 	},
 	methods:{
@@ -81,6 +81,19 @@ export default {
 		},
 		greet(id){
 			console.log(id);
+
+			axios.get('/pab_contacts/get_specific_contact', {
+				params: {
+					contact_id: id
+				}
+			})
+			.then(function (response) {
+				console.log(response.data['category'].name);
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+
 		}
 
 	}
