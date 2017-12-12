@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker-bs3.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/datepicker/datepicker3.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/bootstrap_toggle/css/bootstrap-toggle.min.css')}}">
+   
     @endsection
     @section('content')
 
@@ -198,19 +200,6 @@
           </div>
 
           <div class="form-group">
-            <label>Service End date:</label>
-
-            <div class="input-group date">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <input type="text" class="form-control pull-right" name="service_end_date" data-date-format="dd-mm-yyyy" id="service-end-date" value="">
-            </div>
-            <!-- /.input group -->
-          </div>
-
-
-          <div class="form-group">
             <label>Confirm password</label>
             <input type="password" class="form-control" id="password_confirm" name="password_confirm"
             placeholder="please enter your password again" >
@@ -234,6 +223,9 @@
               </label>
             </div>                  
           </div>
+
+          <input type="checkbox" checked data-toggle="toggle">
+
 
         </div>
 
@@ -301,7 +293,7 @@
 <script src="{{asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
-<script src="{{asset('js/app.js')}}"></script>
+<script src="{{asset('plugins/bootstrap_toggle/js/bootstrap-toggle.min.js')}}"></script>
 <script type="text/javascript">
 
   $( document ).ready(function() {
@@ -324,12 +316,6 @@
       autoclose: true
 
     });
-    $('#service-end-date').datepicker({
-      autoclose: true
-
-    });
-
-
 
     $('#line-manager').select2({
       placeholder: 'Select an option',
