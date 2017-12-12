@@ -34,7 +34,7 @@ class TimeSheetReportController extends Controller
     public function index()
     {
 
-      $users = DB::table('users')->select('id','name')->get();
+      $users = DB::table('users')->select('id','name')->where('valid',1)->get();
 
       return view('timesheet.reports.timeReport')->with('users',$users);
     }

@@ -37,19 +37,19 @@ class UsersController extends Controller
         if(Entrust::hasRole('Humane Resource')){
 
         // dd("working on it");
-         UserContractHelper::sendmail_to_active_users();
+           UserContractHelper::sendmail_to_active_users();
 
-         $active_user_list =  UserContractHelper::active_user_list();
+           $active_user_list =  UserContractHelper::active_user_list();
 
-         return view('users.users_list')->with('active_user_list',$active_user_list);
-     }else{
-      return redirect()->back();
+           return view('users.users_list')->with('active_user_list',$active_user_list);
+       }else{
+          return redirect()->back();
 
+      }
   }
-}
 
     //shows all the users who's contracts are about to go out
-public function end_notify_contract_users(){
+  public function end_notify_contract_users(){
 
     $user_contract_list = UserContractNotification::where("valid",1)->get();
 
@@ -347,13 +347,13 @@ public function get_line_managers(Request $request){
                 if($user_designation->designation_id != $request->designation){
 
 
-                   $old_designation_date = date_create($user_designation->start_date);
+                 $old_designation_date = date_create($user_designation->start_date);
 
-                   $old_designation_date = date_format($old_designation_date, "d-m-Y");
+                 $old_designation_date = date_format($old_designation_date, "d-m-Y");
 
                  //another small check to make sure that the new date has to be greated than the old designation date
 
-                   if(strtotime($date)>strtotime($old_designation_date)){
+                 if(strtotime($date)>strtotime($old_designation_date)){
                     $designation = UserDesignationModel::where('user_id',$id)->update(['valid'=>0,'end_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
 
                     $designation = new UserDesignationModel;
@@ -376,10 +376,10 @@ public function get_line_managers(Request $request){
                     //if the data matches that means the old user_desgnationa and the requested 
                     //designation is the same. Therefore, just updating the start_date in the database
 
-               $designation = UserDesignationModel::where('user_id',$id)->where('designation_id',$user_designation->designation_id)->update(['start_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
-           }
+             $designation = UserDesignationModel::where('user_id',$id)->where('designation_id',$user_designation->designation_id)->update(['start_date'=>\Carbon\Carbon::createFromFormat('d-m-Y', $date)->toDateString()]);
+         }
 
-       }else{
+     }else{
 
                 //if old data does not exist, create a designation for this user
 
@@ -428,9 +428,9 @@ if(!empty($request->contract_start_date) && !empty($request->contract_end_date))
     }
 
 }else{
-   $request->session()->flash('alert-danger', 'Date fields cannot be empty');
+ $request->session()->flash('alert-danger', 'Date fields cannot be empty');
 
-   return redirect()->back();
+ return redirect()->back();
 }
 
         //creating the roles of an user
@@ -457,7 +457,11 @@ if(!empty($request->role_id)){
 
 }
 
+if(empty($request->valid_toggle)){
+ 
+   $user = User::where('id',$id)->update(['valid'=>0]);
 
+}
 
 
 $request->session()->flash('alert-success', 'data has been updated');

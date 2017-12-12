@@ -224,7 +224,7 @@
             </div>                  
           </div>
 
-          <input type="checkbox" id="toggle-deactive" checked data-toggle="toggle" data-on="Active" data-off="Inactive">
+          <input type="checkbox" id="toggle-deactive" data-on="Active" data-off="Inactive" data-toggle="toggle" name="valid_toggle">
 
 
         </div>
@@ -317,12 +317,13 @@
 
     });
 
-    $(function() {
-      $('#toggle-deactive').bootstrapToggle({
-       on: 'Active',
-       off: 'Inactive'
-     });
-    })
+    if(true){
+      $('#toggle-deactive').bootstrapToggle('on');
+    }else{
+      $('#toggle-deactive').bootstrapToggle('off');  
+    }
+    
+    
 
     $('#line-manager').select2({
       placeholder: 'Select an option',
