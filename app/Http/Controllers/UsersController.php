@@ -457,6 +457,12 @@ if(!empty($request->role_id)){
 
 }
 
+//setting service end date
+
+if(!empty($request->service_end_date)){
+    
+}
+
 
 $request->session()->flash('alert-success', 'data has been updated');
 
