@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{asset('plugins/datepicker/datepicker3.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/bootstrap_toggle/css/bootstrap-toggle.min.css')}}">
-   
+
     @endsection
     @section('content')
 
@@ -224,7 +224,7 @@
             </div>                  
           </div>
 
-          <input type="checkbox" checked data-toggle="toggle">
+          <input type="checkbox" id="toggle-deactive" checked data-toggle="toggle" data-on="Active" data-off="Inactive">
 
 
         </div>
@@ -316,6 +316,13 @@
       autoclose: true
 
     });
+
+    $(function() {
+      $('#toggle-deactive').bootstrapToggle({
+       on: 'Active',
+       off: 'Inactive'
+     });
+    })
 
     $('#line-manager').select2({
       placeholder: 'Select an option',
