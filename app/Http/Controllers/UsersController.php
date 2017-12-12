@@ -37,7 +37,7 @@ class UsersController extends Controller
         if(Entrust::hasRole('Humane Resource')){
 
         // dd("working on it");
-         // UserContractHelper::sendmail_to_active_users();
+         UserContractHelper::sendmail_to_active_users();
 
          $active_user_list =  UserContractHelper::active_user_list();
 

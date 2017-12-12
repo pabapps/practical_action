@@ -197,6 +197,18 @@
 
           </div>
 
+          <div class="form-group">
+            <label>Service End date:</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right" name="service_end_date" data-date-format="dd-mm-yyyy" id="service-end-date" value="">
+            </div>
+            <!-- /.input group -->
+          </div>
+
 
           <div class="form-group">
             <label>Confirm password</label>
@@ -309,6 +321,10 @@
 
     });
     $('#contract-end-date').datepicker({
+      autoclose: true
+
+    });
+    $('#service-end-date').datepicker({
       autoclose: true
 
     });
