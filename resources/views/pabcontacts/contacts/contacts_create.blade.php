@@ -1,6 +1,15 @@
 	@extends('layout.main')
 	@section('content')
 
+  <style type="text/css">
+    
+    .avatar img {
+    max-width: 150px;
+    height: 160px;
+    margin-top: 10px;
+}
+  </style>
+  
 	<section class="content">
 		<!-- SELECT2 EXAMPLE -->
     <div class="box box-default">
