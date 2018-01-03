@@ -310,6 +310,10 @@ class ContactsController extends Controller
 
     }
 
+    public function duplicate_email_validation(Request $request)
+    {
+        dd($request->all());
+    }
 
 
 

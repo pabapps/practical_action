@@ -263,6 +263,9 @@ Route::get('/pab_contacts/get_specific_contact','ContactsController@get_specific
 //posting the updates for the contacts
 Route::post('/pab_contacts/contact_update','ContactsController@contact_update');
 
+//email check
+Route::get('/pab_contacts/email_validation','ContactsController@duplicate_email_validation');
+
 Route::resource('/pab_contacts','ContactsController');
 
 

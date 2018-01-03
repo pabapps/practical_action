@@ -199,7 +199,12 @@
     });
 
     $( "#primary-email" ).focusout(function() {
-      console.log("testing");
+
+
+      $.get( "{{URL::to('/')}}//pab_contacts/email_validation",{ user_id: "testing" }, function( data ){
+
+      });
+
     })
 
 
