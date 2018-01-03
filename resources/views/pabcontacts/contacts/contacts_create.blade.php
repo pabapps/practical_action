@@ -20,7 +20,7 @@
           <div class="col-md-6">
 
            <div class="form-group">
-            <label>Name of the person</label>
+            <label>Name of the person *</label>
             <input type="text" class="form-control" name="name" id="name" placeholder="please enter the name of the person" value="{{old('name')}}" required>   
           </div>
 
@@ -30,12 +30,12 @@
           </div>
 
           <div class="form-group">
-            <label>Organization</label>
+            <label>Organization *</label>
             <input type="text" class="form-control" name="organization" id="organization" placeholder="Please enter the organization" value="{{old('organization')}}" required>   
           </div>
 
           <div class="form-group">
-            <label>Category</label>
+            <label>Category *</label>
             <div class="row">
               <div class="col-lg-11" style="padding-right:0;">
                 <select id="category-id" name="category_id" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" required>
@@ -46,7 +46,7 @@
           </div>
 
           <div class="form-group">
-            <label>Theme</label>
+            <label>Theme *</label>
             <div class="row">
               <div class="col-lg-11" style="padding-right:0;">
                 <select id="theme-id" name="theme_id[]" placeholder="" style="width: 100%;" class="col-lg-8 form-control select2 validate[required]" multiple="multiple" required>
@@ -68,7 +68,7 @@
         <div class="col-md-6">
             
             <div class="form-group">
-            <label>Email 1</label>
+            <label>Email 1 *</label>
             <input type="email" class="form-control" name="primary_email" id="primary-email" placeholder="please enter primary email" value="{{old('primary_email')}}" required>   
           </div>
 
