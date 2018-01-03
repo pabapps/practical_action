@@ -59,6 +59,8 @@
           <div class="form-group">
             <label>Picture</label>
             <input type="file" name="pic" accept="image/*" name="pic" id="pic">
+            <div class="avatar"> <img id="blah" src="#" alt="your image" /></div>
+
           </div>
 
 
@@ -66,8 +68,8 @@
         </div>
         <!-- /.col -->
         <div class="col-md-6">
-            
-            <div class="form-group">
+
+          <div class="form-group">
             <label>Email 1 *</label>
             <input type="email" class="form-control" name="primary_email" id="primary-email" placeholder="please enter primary email" value="{{old('primary_email')}}" required>   
           </div>
@@ -127,58 +129,75 @@
 @section('script')
 
 <script type="text/javascript">
-$( document ).ready(function() {
+  $( document ).ready(function() {
 
-  
-  $('#category-id').select2({
-    placeholder: 'Select an option',
-    ajax: {
-      dataType: 'json',
-      url: '{{URL::to('/')}}/pab_contacts/get_all_catogies',
-      delay: 250,
-      data: function(params) {
-        return {
-          term: params.term
+
+    $('#category-id').select2({
+      placeholder: 'Select an option',
+      ajax: {
+        dataType: 'json',
+        url: '{{URL::to('/')}}/pab_contacts/get_all_catogies',
+        delay: 250,
+        data: function(params) {
+          return {
+            term: params.term
+          }
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          return {
+            results: data
+          };
+        },
+      }
+    });
+
+    $('#theme-id').select2({
+      placeholder: 'Select an option',
+      ajax: {
+        dataType: 'json',
+        url: '{{URL::to('/')}}/pab_contacts/get_all_themes',
+        delay: 250,
+        data: function(params) {
+          return {
+            term: params.term
+          }
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          return {
+            results: data
+          };
+        },
+      }
+    });
+
+    function readURL(input) {
+
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          $('#blah').attr('src', e.target.result);
         }
-      },
-      processResults: function (data, params) {
-        params.page = params.page || 1;
-        return {
-          results: data
-        };
-      },
+
+        reader.readAsDataURL(input.files[0]);
+      }
     }
+
+    $("#pic").change(function() {
+      readURL(this);
+    });
+
+
+
+
   });
 
-  $('#theme-id').select2({
-    placeholder: 'Select an option',
-    ajax: {
-      dataType: 'json',
-      url: '{{URL::to('/')}}/pab_contacts/get_all_themes',
-      delay: 250,
-      data: function(params) {
-        return {
-          term: params.term
-        }
-      },
-      processResults: function (data, params) {
-        params.page = params.page || 1;
-        return {
-          results: data
-        };
-      },
-    }
-  });
 
 
 
-
-});
-
-
-
-
-  </script>
-  @endsection
+</script>
+@endsection
 
 
